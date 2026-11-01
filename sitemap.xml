@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://liupeng.icu/2021/06/19/%E9%A1%B9%E7%9B%AE%E4%BA%A7%E5%93%81%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA/</loc>
+    
+    <lastmod>2026-11-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://liupeng.icu/2024/07/11/2024-07-11-csdn-140361132/</loc>
     
     <lastmod>2026-11-01</lastmod>
@@ -426,15 +435,6 @@
   
   <url>
     <loc>https://liupeng.icu/2021/06/19/2016-06-07-JavaScript-good-parts-note1/</loc>
-    
-    <lastmod>2026-11-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://liupeng.icu/2021/06/19/%E9%A1%B9%E7%9B%AE%E4%BA%A7%E5%93%81%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA/</loc>
     
     <lastmod>2026-11-01</lastmod>
     
@@ -3249,7 +3249,7 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/Sublime-jshint-csslint/</loc>
+    <loc>https://liupeng.icu/tags/jekyll-RubyGems/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3263,28 +3263,7 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/jekyll-RubyGems/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://liupeng.icu/tags/GitHub-%E5%90%8C%E6%AD%A5-fork/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://liupeng.icu/tags/tools-CSS-reveal-%E9%85%8D%E8%89%B2/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://liupeng.icu/tags/Baidu-ife-HTML-CSS-task/</loc>
+    <loc>https://liupeng.icu/tags/Sublime-jshint-csslint/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3298,14 +3277,21 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/JavaScript-%E4%BD%9C%E7%94%A8%E5%9F%9F-%E6%85%95%E8%AF%BE%E7%BD%91-ife/</loc>
+    <loc>https://liupeng.icu/tags/GitHub-%E5%90%8C%E6%AD%A5-fork/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/JavaScript-%E6%85%95%E8%AF%BE%E7%BD%91-this-ife/</loc>
+    <loc>https://liupeng.icu/tags/Baidu-ife-HTML-CSS-task/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://liupeng.icu/tags/tools-CSS-reveal-%E9%85%8D%E8%89%B2/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3319,7 +3305,7 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/JavaScript-%E5%87%BD%E6%95%B0-%E6%85%95%E8%AF%BE%E7%BD%91-ife/</loc>
+    <loc>https://liupeng.icu/tags/JavaScript-%E4%BD%9C%E7%94%A8%E5%9F%9F-%E6%85%95%E8%AF%BE%E7%BD%91-ife/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3327,6 +3313,20 @@
   
   <url>
     <loc>https://liupeng.icu/tags/%E9%9D%A2%E8%AF%95-Lenovo-%E5%AE%9E%E4%B9%A0-JavaScript/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://liupeng.icu/tags/JavaScript-%E5%87%BD%E6%95%B0-%E6%85%95%E8%AF%BE%E7%BD%91-ife/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://liupeng.icu/tags/JavaScript-%E6%85%95%E8%AF%BE%E7%BD%91-this-ife/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3375,13 +3375,6 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/jekyll-%E7%AB%AF%E5%8F%A3-markdown-Foxit-RubyGems-HTML-CSS/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://liupeng.icu/tags/JavaScript-Ajax-URL-HistoryApi-pushState-pjax/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -3389,7 +3382,7 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/%E5%AF%B9%E8%B1%A1-%E5%87%BD%E6%95%B0-this-%E9%97%AD%E5%8C%85-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E4%BD%9C%E7%94%A8%E5%9F%9F/</loc>
+    <loc>https://liupeng.icu/tags/jekyll-%E7%AB%AF%E5%8F%A3-markdown-Foxit-RubyGems-HTML-CSS/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3410,6 +3403,13 @@
   </url>
   
   <url>
+    <loc>https://liupeng.icu/tags/%E5%AF%B9%E8%B1%A1-%E5%87%BD%E6%95%B0-this-%E9%97%AD%E5%8C%85-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E4%BD%9C%E7%94%A8%E5%9F%9F/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://liupeng.icu/tags/%E5%87%BD%E6%95%B0-JavaScript/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -3417,14 +3417,14 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/Git-GitHub-%E5%88%86%E6%94%AF/</loc>
+    <loc>https://liupeng.icu/tags/ES2015-ES6-ES5-babel/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/ES2015-ES6-ES5-babel/</loc>
+    <loc>https://liupeng.icu/tags/Git-GitHub-%E5%88%86%E6%94%AF/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3550,7 +3550,14 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/windows-python-saprk-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
+    <loc>https://liupeng.icu/tags/u8/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://liupeng.icu/tags/R/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3564,7 +3571,7 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/tags/windows-api/</loc>
+    <loc>https://liupeng.icu/tags/windows-python-saprk-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3592,21 +3599,14 @@
   </url>
   
   <url>
+    <loc>https://liupeng.icu/tags/windows-api/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://liupeng.icu/tags/%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://liupeng.icu/tags/u8/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://liupeng.icu/tags/R/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3622,6 +3622,13 @@
   </url>
   
   <url>
+    <loc>https://liupeng.icu/categories/Bootstrap/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://liupeng.icu/categories/Sublime/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -3629,7 +3636,7 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/categories/Bootstrap/</loc>
+    <loc>https://liupeng.icu/categories/JavaScript/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3643,13 +3650,6 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/categories/Tools/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://liupeng.icu/categories/HTML-CSS/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -3657,7 +3657,7 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/categories/JavaScript/</loc>
+    <loc>https://liupeng.icu/categories/Tools/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3734,14 +3734,14 @@
   </url>
   
   <url>
-    <loc>https://liupeng.icu/categories/python/</loc>
+    <loc>https://liupeng.icu/categories/windows/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://liupeng.icu/categories/windows/</loc>
+    <loc>https://liupeng.icu/categories/python/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

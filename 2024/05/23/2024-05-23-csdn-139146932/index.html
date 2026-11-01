@@ -225,14 +225,14 @@ var _hmt = _hmt || [];
 <p>示例代码：<br>    #include “myschema.capnp.h”<br>    #include &lt;capnp&#x2F;message.h&gt;<br>    #include &lt;capnp&#x2F;serialize-packed.h&gt;<br>    #include <iostream></p>
 <p>    void writeAddressBook(int fd) {<br>        ::capnp::MallocMessageBuilder message;</p>
 <p>        AddressBook::Builder addressBook &#x3D; message.initRoot<AddressBook>();<br>        ::capnp::List<Person>::Builder people &#x3D; addressBook.initPeople(2);</p>
-<p>        Person::Builder alice &#x3D; people[0];<br>        alice.setId(123);<br>        alice.setName(“Alice”);<br>        alice.setEmail(“<a href="mailto:&#97;&#x6c;&#105;&#99;&#x65;&#x40;&#x65;&#x78;&#x61;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#x63;&#111;&#x6d;">alice@example.com</a>“);<br>        &#x2F;&#x2F; Type shown for explanation purposes; normally you’d use auto.<br>        ::capnp::List<a href="Person::PhoneNumber">Person::PhoneNumber</a>::Builder alicePhones &#x3D;<br>            alice.initPhones(1);<br>        alicePhones[0].setNumber(“555-1212”);<br>        alicePhones[0].setType(Person::PhoneNumber::Type::MOBILE);<br>        alice.getEmployment().setSchool(“MIT”);</p>
-<p>        Person::Builder bob &#x3D; people[1];<br>        bob.setId(456);<br>        bob.setName(“Bob”);<br>        bob.setEmail(“<a href="mailto:&#98;&#x6f;&#x62;&#x40;&#x65;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#x2e;&#99;&#111;&#x6d;">bob@example.com</a>“);<br>        auto bobPhones &#x3D; bob.initPhones(2);<br>        bobPhones[0].setNumber(“555-4567”);<br>        bobPhones[0].setType(Person::PhoneNumber::Type::HOME);<br>        bobPhones[1].setNumber(“555-7654”);<br>        bobPhones[1].setType(Person::PhoneNumber::Type::WORK);<br>        bob.getEmployment().setUnemployed();</p>
+<p>        Person::Builder alice &#x3D; people[0];<br>        alice.setId(123);<br>        alice.setName(“Alice”);<br>        alice.setEmail(“<a href="mailto:&#x61;&#108;&#105;&#x63;&#x65;&#64;&#x65;&#120;&#x61;&#x6d;&#x70;&#108;&#x65;&#x2e;&#x63;&#x6f;&#x6d;">alice@example.com</a>“);<br>        &#x2F;&#x2F; Type shown for explanation purposes; normally you’d use auto.<br>        ::capnp::List<a href="Person::PhoneNumber">Person::PhoneNumber</a>::Builder alicePhones &#x3D;<br>            alice.initPhones(1);<br>        alicePhones[0].setNumber(“555-1212”);<br>        alicePhones[0].setType(Person::PhoneNumber::Type::MOBILE);<br>        alice.getEmployment().setSchool(“MIT”);</p>
+<p>        Person::Builder bob &#x3D; people[1];<br>        bob.setId(456);<br>        bob.setName(“Bob”);<br>        bob.setEmail(“<a href="mailto:&#x62;&#x6f;&#x62;&#x40;&#101;&#120;&#97;&#109;&#x70;&#108;&#x65;&#46;&#x63;&#x6f;&#x6d;">bob@example.com</a>“);<br>        auto bobPhones &#x3D; bob.initPhones(2);<br>        bobPhones[0].setNumber(“555-4567”);<br>        bobPhones[0].setType(Person::PhoneNumber::Type::HOME);<br>        bobPhones[1].setNumber(“555-7654”);<br>        bobPhones[1].setType(Person::PhoneNumber::Type::WORK);<br>        bob.getEmployment().setUnemployed();</p>
 <p>        writePackedMessageToFd(fd, message);<br>    }</p>
 <p>    void printAddressBook(int fd) {<br>        ::capnp::PackedFdMessageReader message(fd);</p>
 <p>        AddressBook::Reader addressBook &#x3D; message.getRoot<AddressBook>();</p>
 <p>        for (Person::Reader person : addressBook.getPeople()) {<br>            std::cout &lt;&lt; person.getName().cStr() &lt;&lt; “: “<br>                &lt;&lt; person.getEmail().cStr() &lt;&lt; std::endl;<br>            for (Person::PhoneNumber::Reader phone : person.getPhones()) {<br>                const char* typeName &#x3D; “UNKNOWN”;<br>                switch (phone.getType()) {<br>                case Person::PhoneNumber::Type::MOBILE: typeName &#x3D; “mobile”; break;<br>                case Person::PhoneNumber::Type::HOME: typeName &#x3D; “home”; break;<br>                case Person::PhoneNumber::Type::WORK: typeName &#x3D; “work”; break;<br>                }<br>                std::cout &lt;&lt; “  “ &lt;&lt; typeName &lt;&lt; “ phone: “<br>                    &lt;&lt; phone.getNumber().cStr() &lt;&lt; std::endl;<br>            }<br>            Person::Employment::Reader employment &#x3D; person.getEmployment();<br>            switch (employment.which()) {<br>            case Person::Employment::UNEMPLOYED:<br>                std::cout &lt;&lt; “  unemployed” &lt;&lt; std::endl;<br>                break;<br>            case Person::Employment::EMPLOYER:<br>                std::cout &lt;&lt; “  employer: “<br>                    &lt;&lt; employment.getEmployer().cStr() &lt;&lt; std::endl;<br>                break;<br>            case Person::Employment::SCHOOL:<br>                std::cout &lt;&lt; “  student at: “<br>                    &lt;&lt; employment.getSchool().cStr() &lt;&lt; std::endl;<br>                break;<br>            case Person::Employment::SELF_EMPLOYED:<br>                std::cout &lt;&lt; “  self-employed” &lt;&lt; std::endl;<br>                break;<br>            }<br>        }<br>    }</p>
 <p>    void test() {<br>        auto file &#x3D; fopen(“example.bin”, “wt+”);<br>        if (!file)<br>            return;<br>        int fd &#x3D; fileno(file); &#x2F;&#x2F;如果是W+ 这里文件被清空的影响<br>        writeAddressBook(fd);<br>        fclose(file);<br>        fflush(file);<br>        file &#x3D; fopen(“example.bin”, “rb+”);<br>        fd &#x3D; fileno(file);<br>        printAddressBook(fd);<br>        fclose(file);<br>    }</p>
-<p>运行输出：<br>    Alice: <a href="mailto:&#97;&#108;&#105;&#99;&#x65;&#x40;&#x65;&#x78;&#97;&#109;&#112;&#x6c;&#101;&#x2e;&#x63;&#111;&#x6d;">alice@example.com</a><br>      mobile phone: 555-1212<br>      student at: MIT<br>    Bob: <a href="mailto:&#98;&#x6f;&#x62;&#64;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#46;&#x63;&#x6f;&#109;">bob@example.com</a><br>      home phone: 555-4567<br>      work phone: 555-7654<br>      unemployed  
+<p>运行输出：<br>    Alice: <a href="mailto:&#x61;&#x6c;&#105;&#99;&#x65;&#64;&#x65;&#x78;&#97;&#x6d;&#112;&#x6c;&#101;&#x2e;&#99;&#x6f;&#x6d;">alice@example.com</a><br>      mobile phone: 555-1212<br>      student at: MIT<br>    Bob: <a href="mailto:&#x62;&#111;&#x62;&#x40;&#x65;&#x78;&#97;&#109;&#x70;&#x6c;&#101;&#46;&#99;&#111;&#109;">bob@example.com</a><br>      home phone: 555-4567<br>      work phone: 555-7654<br>      unemployed  
   </p>
 <p>其它类似参考：<br><a target="_blank" rel="noopener" href="https://github.com/protocolbuffers/protobuf" title="GitHub - protocolbuffers&#x2F;protobuf: Protocol Buffers - Google&#39;s data interchange format">GitHub - protocolbuffers&#x2F;protobuf: Protocol Buffers - Google’s data interchange format</a><br>    <a target="_blank" rel="noopener" href="https://github.com/evanw" title="evanw (Evan Wallace) · GitHub">evanw (Evan Wallace) · GitHub</a></p>
 <hr>
@@ -552,7 +552,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
+                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,19 +560,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">GitHub 同步 fork</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
+                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -580,11 +568,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScript 作用域 慕课网 ife</a>
+                <a href="javascript:void(0)" class="js-tag color5">GitHub 同步 fork</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -592,11 +584,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">JavaScript 函数 慕课网 ife</a>
+                <a href="javascript:void(0)" class="js-tag color3">JavaScript 作用域 慕课网 ife</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">JavaScript 函数 慕课网 ife</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -624,15 +624,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jekyll 端口 markdown Foxit RubyGems HTML CSS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">jekyll 端口 markdown Foxit RubyGems HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -644,15 +640,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">函数 JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
+                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -724,7 +724,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color3">u8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -732,7 +736,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -748,15 +752,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">u8</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
             
             <div class="clearfix"></div>
