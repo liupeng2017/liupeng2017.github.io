@@ -1,0 +1,130 @@
+/* 看板娘聊天面板 —— 独立命名空间 cp-*，不复用 yilia 的类名，避免和主题升级打架。
+   定位靠右下角，和 live2d canvas 让开一点距离；z-index 压在 canvas 之上、遮罩层之下。 */
+.cp-root {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  color: #2b2f36;
+}
+
+.cp-fab {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #ffd8a8, #ff9f7a);
+  color: #4a2a1c;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.cp-fab:hover { transform: translateY(-2px); box-shadow: 0 7px 18px rgba(0, 0, 0, .22); }
+.cp-fab-dot { position: absolute; top: 3px; right: 4px; width: 8px; height: 8px; border-radius: 50%; background: #3ecf6a; opacity: 0; }
+.cp-fab-dot.on, .cp-root:not(.cp-open) .cp-fab-dot { opacity: 1; }
+.cp-open .cp-fab { transform: scale(.86); opacity: .55; }
+
+/* 旁边站着看板娘时，把入口挪到她左侧：模型宽 150px + 16px 间隙，避免按钮压在人身上。
+   点模型本身也能开合（companion.js 的捕获层），所以两个入口都在，不冲突。 */
+.cp-root.cp-dock-live2d .cp-fab { right: 166px; }
+.cp-root.cp-dock-live2d .cp-hint { right: 220px; }
+
+.cp-hint {
+  position: absolute;
+  right: 54px;
+  bottom: 10px;
+  max-width: 168px;
+  padding: 7px 11px;
+  border-radius: 14px 14px 4px 14px;
+  background: #fff7ec;
+  border: 1px solid #f2d6b3;
+  color: #6a4a25;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+}
+.cp-hint.cp-show { opacity: 1; transform: translateY(0); }
+
+.cp-panel {
+  position: absolute;
+  right: 0;
+  bottom: 56px;
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  height: 392px;
+  max-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  background: #fffdfa;
+  border: 1px solid #ece2d4;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .18);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(.98);
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
+.cp-panel.cp-on { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+.cp-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: linear-gradient(120deg, #fff2df, #ffe3d3);
+  border-bottom: 1px solid #f0dfc9;
+}
+.cp-avatar {
+  width: 26px; height: 26px; flex: none;
+  border-radius: 50%;
+  background: #ff9f7a; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+}
+.cp-title { font-weight: 600; }
+.cp-title em { display: block; font-style: normal; font-size: 11px; font-weight: 400; color: #8a765d; }
+.cp-close { margin-left: auto; border: 0; background: transparent; font-size: 20px; line-height: 1; color: #8a765d; cursor: pointer; }
+.cp-close:hover { color: #d9534f; }
+
+.cp-list { flex: 1 1 auto; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.cp-msg { max-width: 84%; padding: 8px 11px; border-radius: 12px; line-height: 1.55; word-break: break-word; white-space: pre-wrap; animation: cp-in .18s ease-out; }
+.cp-msg-bot { align-self: flex-start; background: #f4efe7; border-bottom-left-radius: 4px; }
+.cp-msg-me { align-self: flex-end; background: #dcecff; border-bottom-right-radius: 4px; }
+.cp-typing { letter-spacing: 2px; color: #a9a29a; }
+@keyframes cp-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.cp-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px 0; }
+.cp-chip { border: 1px solid #e6d9c6; background: #fff; border-radius: 999px; padding: 4px 10px; font-size: 12px; color: #6a5b48; cursor: pointer; }
+.cp-chip:hover { background: #fff2df; }
+
+.cp-form { display: flex; gap: 8px; padding: 10px 12px 12px; border-top: 1px solid #f0e6d8; }
+.cp-form textarea {
+  flex: 1 1 auto; min-height: 34px; max-height: 78px; resize: none;
+  border: 1px solid #e0d6c8; border-radius: 10px; padding: 7px 10px;
+  font: inherit; background: #fff; color: inherit;
+}
+.cp-form textarea:focus { outline: none; border-color: #ffb27a; }
+.cp-send { flex: none; border: 0; border-radius: 10px; padding: 0 14px; background: #ff9f7a; color: #fff; cursor: pointer; font-size: 13px; }
+.cp-send:hover { background: #f78a61; }
+
+/* 移动端：面板宽度铺满，按钮往左上挪，避免压住看板娘 */
+@media (max-width: 640px) {
+  .cp-root { right: 10px; bottom: 10px; }
+  .cp-panel { width: calc(100vw - 24px); height: 58vh; bottom: 52px; }
+  .cp-hint { right: 50px; }
+  /* 屏幕窄，166px 的避让会把按钮挤到面板外面；手机端一律贴回右下角 */
+  .cp-root.cp-dock-live2d .cp-fab { right: 0; }
+  .cp-root.cp-dock-live2d .cp-hint { right: 50px; }
+}
