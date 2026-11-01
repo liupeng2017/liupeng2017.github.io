@@ -9,17 +9,17 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>windows bat | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;146609373  1234567891011121314151617181920212223242526272829303132333435363738# 文件名称提取，不显示后缀与其它信息dir &#x2F;B &#x2F;A | for &#x2F;f &quot;de">
+  <meta name="description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="windows bat">
 <meta property="og:url" content="https://liupeng.icu/2025/03/28/2025-03-28-csdn-146609373/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;146609373  1234567891011121314151617181920212223242526272829303132333435363738# 文件名称提取，不显示后缀与其它信息dir &#x2F;B &#x2F;A | for &#x2F;f &quot;de">
+<meta property="og:description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2025-03-28T11:53:00.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:37:56.989Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:02.773Z">
 <meta property="article:author" content="liupeng">
-<meta property="article:tag" content="hello">
+<meta property="article:tag" content="私密">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
@@ -207,11 +207,31 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/146609373">https://blog.csdn.net/qq_30220519/article/details/146609373</a></p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文件名称提取，不显示后缀与其它信息</span></span><br><span class="line"><span class="built_in">dir</span> /B /A | <span class="keyword">for</span> /f <span class="string">&quot;delims=&quot;</span> %i <span class="keyword">in</span> (<span class="string">&#x27;dir /B /A&#x27;</span>) <span class="keyword">do</span> @<span class="built_in">echo</span> %~ni</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只显示文件名</span></span><br><span class="line"><span class="built_in">dir</span> /B /A-D    </span><br><span class="line"></span><br><span class="line">linux</span><br><span class="line"></span><br><span class="line">https://blog.csdn.net/yb546822612/article/details/105225138	ubunut开启ssh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定时清理假死进程</span></span><br><span class="line">taskkill.exe /F /FI <span class="string">&quot;status eq NOT RESPONDING&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制杀掉clion卡死进程</span></span><br><span class="line">taskkill.exe /F /IM <span class="string">&quot;sample.exe&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 判断是否是数字</span></span><br><span class="line"><span class="built_in">set</span> one_dir=1234</span><br><span class="line"><span class="built_in">echo</span> %one_dir%|findstr <span class="string">&quot;^[0-9][0-9]*$&quot;</span> &amp;&amp; (</span><br><span class="line">	<span class="built_in">echo</span> 是数字) || (</span><br><span class="line">	<span class="built_in">echo</span> 是字母)</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 获取一级文件夹</span></span><br><span class="line"><span class="keyword">for</span> /f  %%i <span class="keyword">in</span> (<span class="string">&#x27;dir/b/a:d&#x27;</span>) <span class="keyword">do</span> <span class="built_in">echo</span>  %%i</span><br><span class="line"></span><br><span class="line"><span class="comment"># 程序添加管理员</span></span><br><span class="line"><span class="built_in">set</span> <span class="built_in">df</span>=%~dp0test.exe</span><br><span class="line">reg add <span class="string">&quot;HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers&quot;</span> /v %<span class="built_in">df</span>% /t REG_SZ /d <span class="string">&quot;RUNASADMIN&quot;</span> /f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取输入</span></span><br><span class="line"><span class="built_in">set</span> /p var=请输入----</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找占用端口</span></span><br><span class="line">netstat -aon|findstr <span class="string">&quot;8081&quot;</span></span><br><span class="line"></span><br><span class="line">WIN10 + <span class="built_in">shift</span> + S 截图</span><br><span class="line"></span><br><span class="line">certutil -hashfile ./NotoSans.ttf  MD2/MD4/MD5/SHA1/SHA256/SHA384/SHA512</span><br></pre></td></tr></table></figure>
-
+        <div class="hbe hbe-container" id="hexo-blog-encrypt"
+     data-hbe-format="4"
+     data-wpm="密码不正确，请重新输入。"
+     data-whm="密码不正确，请重新输入。"
+     data-salt="ad1025ed86c7d24ff97fa93b410f4d50a046bc122457a55e0ae68ae0a1515c32"
+     data-nonce="eadba00172fccb01bad8a116"
+     data-kdf-iterations="600000"
+     data-auto-save="false">
+  <script id="hbeData" type="hbeData">
+    bb078171ef1183be0e9d4a2fcb0d23235ea335608c7bc70b3d7750338cf3fb613d7217b6ec0ea7aaf27358998826abb769d769910f3b0b00e5c049bc3900ab82b1e6dabf1f3a8a5591d603bf250331011a15ce5888f5f40119248e0a893cd552a4a4bb205cc18de3ba8b551419b6ed0367b6e1e92c4bcf73ea03e1654a6a286d1a6fce820e240c583eaac58ba826923c1d36ad721761076c602b300aa221fba637dbd9fe23a1147c9e20c5959d0276637973b6a13ac4ab7b72ccc14431603498fd824dceb775b7726b24ee6c118d5c0aeef16060024a61bc9728ac613b4c6b35ad1b9a3833137d15f44e79bfd44a57e1b373d33594c020cd9ddce5e2d38b778c305daa35dd796e8e73775e5903c949babafcde1787dab3a128c5fbbe04ca81378f5ba3e7f094ad353b0fb8deac4bfcb3f8fca2d43e498f26feabc26709ad4ef83f63ed9403f0438a0403450d8b5208f01de5317373fa03736b631a0dea32557b80971793152f115dcbd1e87da53c622cde394989f29c618d2f33b2911faed20f623c2f3f818c308fe38abaa9175138045cf1069dca8ebfe0b34e1a290a3ef4d09c25e3593a5b20923399768f2bc26d24c5211e4f5d4bfa62c74de9bca01ccd36a44e52a6953b891d6858148f586e62c9fb1ad0bc006e1cd98f81b6c6a9d3c059a3a6c7cd12440896a88785055e430aee070915a057be2ab4357b8a5d65ba8782022ac8994eaa85ecc6d8b01759296e8c53c2c07a76bf5ae783bc10434bbbf5a5d20b7b4f6a319efe59c97a47c5c1605cd83686c5872cde078d96a7bc89680308d6cbaf85e4581e443d2b27f62b594607a5b912ac81c632e7c7e8c4aa5cc21b38c0a5e68e756aa7a27fa08f76e183feac46e37b67a4eb8004200cd05926fa8cf0f582975e7b273e3fb16edade348d3b56d58b0082133f2c1e80957e7be92c8c95b8da7f8fe9f6145391e9db02901854ff3134303b133dea45579074a07f9c72dc1cfc5750c8e1db3a5b8dbe53aec64f4e8cc9ecce2a0e83aebbde08141237529f32aeeddd19ab26a293fb09f721d3f2b687f26d5d223f9a74da6da569daa5abf554b1a8c1e4aef29415031d5545e4554f9b8ed1de3620a3d0acc9f5cb46256ceac5dfdc3502994fe835c8c3c4f4562626c5c45831f2736da1c7a5103c5049053cd9b88a8ea3475851b6dd553ed783ae326ef5f98470b24d9f587f02c2f44f052590bbb92b604f9668d332b54f128800f748ee7bf74a5a28b546810526eb40cde27414f31cd429a79366746f6bbb186a0ec09b24f7c88db465142e987bb600d1d1ed166e7199b0e6cdfe9ee8a8d22500c65512c8c993160852c7649d40d108bdd4ffc05af196db99c91dcdcdac84bd83b8194ddcec0b93bbc772b885672796bd1e7573189b319e2b50a1c191cf72e35a0506e64d167b62c858feddaee98ffe98846b0f3e2e675b9fcbf52e04a6de8a3d53051256d413d40c6ff96ce755c4be07af3eab0c32c8c0e7ec866eb47cacc6d1412690c80fc36edaabd52a1447aef696f5400d7fbafb9b6b0037df41b60e29fbac5ffc434894f300b0036603d46d07d58019c19b3efaf60dd4587b6ff9959fb0a093bfd0b2aa6f6c3e0290b7b757e679d271aeac4d6dcd45c0b6d92b4939bd226ae35b72b6904ac5ef6065d7f0a90465fd8edcc9ed5f60b8f0359edd37c5ed0c73a08b13305197d32b974c5b3b39aa96f052b4db1e8da9862fcee66c6fa5ae660c239e47d95fcf610fa82a3cbe107754cc860cd54cda3f24ec8cba31ee901d426140f70c8002c437c59d3fc8de770f72862bad4ba1b52eb21aa8bd17248076124c12e868f5c13df745273b41e183eba1dde9ecc2feff16b0d431599c34b5b5a19288a910c8f8e3d6240194d03f6fd45d2997e7dc2feec4cf94432909d48a3f7635e9d5d412871999259fa4edd167963ea4383c390bd9ad708e3b8884922ed4879682fe6bcb468429f38e3b56dc2ba7288c78d00d520a9d1ee4e23f1e99747b9b6e21f874737fd3b0b4995e1b6c9a4df4c53be1847aaa48b643f801f118a10bad31c245b1263a5d93dc1862c0e8347f546fe0573fe3cd61b5fffebc9b520dae8917ad644674581dd03f401042900f5b96ab680815e246d4408261cd020b84b99be95f90bf2686284e62f8b695a7f93675e633a3a2c0fdd4b272b0b4f513698cabf8ffe09a48a6d013ea823fa0f42af40a8a8ea265e696b98e418fb947f4bf1718384d94a297676f674aa0d62a6ff759f47b631109d18acb977d2549029b8aead7622a3260ecdeb3297c9892f4f8ff657945f18a491b09aa0248ce4315d0a96fd6c983bd5864b0a587a89f15aecca4076c7373816d0291663ea5f6eb38d2823c7e568a176db1baa1230c827d9dc9c2d2f97c7a93ecbb6c276d48146a5e009bf46215d5f62d5b437cb1636e948742f73ffc650dc5e3a58e3315d98c639445f997d5b379975226677b600ca7f4ec2613f694aa6f24df8afa1a16593e6f3d046165aae88013a98d66cb2c39604fc725fb06e728e9bc50fc383984a5796a5cc573b150e8c7b4415f3b107b9fb91ac23742647e300f0b84484e788b297124d4fc87c43c1212393b63d3d5f28a8b690f3a5f590a0af12e75bebfc32f8671699b4b8ab36fcce3f2c837a6c3d33f62a058d2520e8ce3bcad431008fcacec7bb2448b62f926d1f69d2c2e4fb2da3c2bc82c50fde9f061910db68514257d61e312c6520acb4e106b1a9160ede37fa1ab4d9f4f416329d784f8e662bab178d705761970f7876fda9ca5e1b560dc7b4a6b5b3ec7b56b062c59bb2a44987dfbd0be9e47d4dd717dda417483b32f3a9f53813a4ce8598b9e5f5af1713bc42b010213e63c267b6e395cd0d32b5430ce3ee2b04dda13f13f05c979cd6bede9993c6b962ae0d9f4d47db8e58a5e1e30011f3aec16249fc934c15946b63a2900b43e24022f6a9b5bffa069052cd0195ef9b3ae953b2025a3aec6f1eb541c9ca338b59b586a15eccb90b4a6c4cee97469ff6ac9d3c3e7a23d9403b2b6d6d4497e2fb620f8df08ea1f9b973c0763ffdc517d0db0ce8918892227d57961fc3564e2833bfb1d8397e6ea7221cba9526769acce58b4f3039594f6e03a572208b34f8a7500e28e81aee5d13db04816c93ce3cc2876cd756cfa41eacb5dcdb51fe29181390aa26543f689ea38f74064daf657de4e84618fdcae55dd3f823ecb23052b3f2670b9c94bdfdc01308730b25b171ddd6384e770282e1a799dc69f500816d2ec5381fc9c2ace5fdd8901a36af759bc7c9f6e69cfaef1048e549c599ea46df4275d8a1057e5ccf129f944b89fa07fdd03f40a205a0b7e302a6fe8d3fb7c503f2022550d8c3728f5e367514234a61eccb29ac59f68c16c6ced81253149ce38dd283ba2972b75652afd9e3dbb93ab0fc3bf9fb5904a15c7c8afac74338f8586e978a14a0491f1e6feca6c55f0bdbc1c8a9e1291dc4bfb4268291183e12c1ed1447df0d0658b3ccb2341b0284aedd8d990463d8c719ea4e3192d153155d2485bb5067f7723617ec409947ff1167ce40ed6ab2cb61c1a817da81262f706a64f93d021610c5b38b4ff7e644e820757bc8804adfd2baaa6ce8bb97a7e8285896dbebc26c425e899103764af9abbd3e8aa5415c942bf0657181cd6eb23cd79319f191ee7655a17a72b686472caa21e907259acf0a82947dabcb0c002d8e246cc4c921d8425ecc4182e9f60620168b60f67db6acdf2ff1e2e2a3c734cbba3b46ff3173d4abb94b3be9e48aa5c4f8a194cb936c36e06094c3e7b5d47c9143cd1b640d0b2d40612fc7497bb29bc2c627575485b43eb16a7ef924b4a4ae766f135b598cfcaa960abefaa686df2de596075d90216d67355ad9c6e9ea213c5201eb1a6027d95996a9a7ba04f3b2cc19b03a18a2b3f568f56ed4491406e99960cfe37f348de90c0791681a9e568d468d9de816fac0260a365319931ab7d99f0f1fff7db497a6e6a5033a8ca97f60868a65d60abcca9fb80a4c9f586480755aa78eb7816aae1091cb3d6d747a66f27fefe1bbeeec427ba58f581a8f5c382b3112f89cf5ce2bb9018c13807343d5c2159774a5b2b0cb23c6c945b5198c6bd4f7a1090fe67ca81965f598640f3681f2d92408ec9c4d7c1039cbc2b3ba978bed8f52d7c557dec2ae9edd256ce48a638456eb8699463f149cccc7b064d076230bb94653ae6d11621eb8dac79ecad9bc6b7b8519cd99ed99a8dcecea3f592c470eaeea4354fd2e5a5a023bcd9e37e0e203c2c743cbbe4100fdfaac5349a98ee153d12677d4c6251d47dc0274d56ba587aaf3c867c0ea012ae564bf041fdcbbe6cb1e60e29f617166d1863795e9879568dd8e780532639bc5a215bc6dd90cd012c1a93a54e197bc0b8461206737c625f18b002b269139e4a99cff03a1b7d81c007a85af2b219439929caeb6d1c79655a7f32b9756793d75357dd6a18924e40bee2035c1311e5e936846b18af5d61cba44889ab8ad2f73fc4d05e56c68cf1e20850202d14d74f6a8564986c9d43716c4103b7baadb65527820257add35102f7e42b763e61591b50dcd7c3aa1bd8a66a09b1c96fee45247f374e19151600d7e1ffed3ef892eb8f320dd324d8ee4c211778b99bb8a813325502b81d1828d9e68810e3c3c4f3b7b424a4338b327f0605ece50541e16b06978614f8fefecae90c981f3ded204f92e09a4c2f01afda2b6f7fe5b9d4ee6861e342114073e4f010644a4592118c93e18005d44e48bfa9e5ef3da9f4f801205a11e47ba858873be4d72f44bea7a03abb001fe0b0f3d68280f134459991c7e463a2a05409bebca27dbff82e879647b456ce33ca0de89b1e8ada936f9dafd4f613643e7c2823dab651778cd72c4ffbc8eff1040e993f8e741a90ba371c1584a2eec74310ba9097cbb4fbd901b5cdd455eadb57c7a8c147f2248d0bfbe634ed757bbf135e4eaa05623102eec60c168a526a3737319d5d84f55a32eece098aa8dde9b508e42dc5c9f610189d04477d6905cce047647b940256dd7dd27094902a35cf801f31e3a49259ed1052e13ad41aad122a244df58789cde07e7afe46e4511b89260c83ee29262e5bbe6cc14c9fac450d9ae30360ef5870c32331da037831f5a54bd412df52ffd0204c33ffcdbaa4681c53628062a99b4eda185fafd29b0bcd63024f0168c6d211d0ff2aba3c40fd334d46d32c72fa9c455c20dea69bc03629bea131eb2bcc897d5100bcba454a48bea7bcc05d1c809101b6aca757b9c0474ba4667c62eb6044e14d88051d2c38b371b2daec7035a5d45fb7547f59864d5965959b0deab90feffe11d4f9e9da4cc22c91a3cb31b7261599226ff972affa7fe4beee7e96de95a9cf1ffa227b0b7286bbabd9363c95cb150deb2b1e17e23ca792ed74c35e104ef52128c77c2697e9684c2da58138348eb36459e4411203642caa19bf211f2e78a93a0a387b1babe3d61e784e54272ff04a9d060ca88892147dff28e0bbe10e0794409d8d20531172ff6288c4368ff2806e27ace905730f55a723598ce03a1191eda1c739d7fe24fc21976ac54a4051c80073a5aada841636c1a7791da19c4c75cc8a151891bafdff983e9f59bdc16ed52516f8bb93e671c69e69e76df2c055331545d63089258bd2e70080252187de2d0944d5534ef73623ba1a1f4d6792628f5b69094109e0407bbba6b64353dcb017a022df903c307a143ea3b8adb9bbc8a5ed854e37a9e402a94b93e7ac8c0a5924e1bcee6f5e78cff60eb6fea80db2c8f56194b9a29273dc4cd7699e56764decddfa10f6f51c0b165a01c9446b6f6778a71d64ebf9e7c2b7e7b7f7edf79cada17791f333adb1ca286049a361866b29d77eb00a40711ef8bbce0b8772a2af9e1cbe62e062c1f89b89b07d59baa414b8dc7ad8c6deb5f3a18716335c62910fb12769b34cb1292ad1fcce4257ec178a9372901be3e9c41998ceb2fb497b7ab23f623de976a686232158b18d5bdc57a7baf90b50bd087140267646450eb2e06f67b063be46bf6bf2c44bf78eabd61212a446dd915db7d0c630a41453ef4d59d9df5fda7e0a656ad382f2a4f53f7048d14485c6e994f01a00f790db56fb245c923551946881af6d5a6adb093b3a664535e3124f2b87f6c6d26416b349319038f6f22e9e7b45492d2bdd2bd96c7941fbfe53d16a071b70130cb25a88f7623b092b74c1587ddaf304719dfd5c992d9d432ae339feb64a5bdfba4dbbe3adde2cf896a79af25080f134f1730fd897c2436637ef83242248e518033378f02085418c2281b3b8ad6386546d2b5018abc2d27c95bd1f86ded6ed5534a59a7c5679de1b44f8371a43b39bf01564d9f5919dd753769c5a9fffdfac80b0c6a0a97bde9aee3ac098f73515bdd52f1e11fd7690f4f5101b9898a572077df239bd6180d818e990ce1460d3c0b39836023fb2e52511008a4e0aa9c8f50f1fcdd943528d1117c699887b8e07c7c5d6eb72f7841142358816bbf937abe5d68673fbc5fbea553be26414852d3a07714fd301e8a9e1411d18586a2c22d764a82c2b7c1368f3a109d14a697c3ed7925d95ba0b1279eee635c9314e98e8b1c7a6b2f67f75b20bfcc37524767effb0b486a6c9912de30b03f78094cf2eee0c67dab0b19da7a440a935c8de923054
+  </script>
+  <div class="hbe hbe-content">
+    <form id="hbeForm" class="hbe hbe-form">
+      <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">您好，查看本文需要密码。</span>
+      </label>
+    </div>
+      <button class="hbe hbe-button" type="submit">解密</button>
+      <div class="hbe hbe-error" role="alert" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.a3b9f59caa.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
       
 
       
@@ -245,6 +265,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -609,11 +640,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -673,6 +704,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -693,10 +728,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -705,11 +736,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -722,10 +757,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

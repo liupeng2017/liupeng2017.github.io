@@ -9,17 +9,17 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>C双指针元素去重 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140409033  需求在尾部插⼊、删除元素是⽐较⾼效的，时间复杂度 是 O(1)，但是如果在中间或者开头插⼊、删除元素，就会涉及数据的搬移，时间复杂度为 O(N)，效率较低。  代码1234567891011121314151617181920">
+  <meta name="description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140409033  需求在尾部插⼊、删除元素是⽐较⾼效的，时间复杂度 是 O(1)，但是如果在中间或者开头插⼊、删除元素，就会涉及数据的搬移，时间复杂度为 O(N)，效率较低。  代码123456789101112131">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C双指针元素去重">
 <meta property="og:url" content="https://liupeng.icu/2024/07/14/2024-07-14-csdn-140409033/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140409033  需求在尾部插⼊、删除元素是⽐较⾼效的，时间复杂度 是 O(1)，但是如果在中间或者开头插⼊、删除元素，就会涉及数据的搬移，时间复杂度为 O(N)，效率较低。  代码1234567891011121314151617181920">
+<meta property="og:description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140409033  需求在尾部插⼊、删除元素是⽐较⾼效的，时间复杂度 是 O(1)，但是如果在中间或者开头插⼊、删除元素，就会涉及数据的搬移，时间复杂度为 O(N)，效率较低。  代码123456789101112131">
 <meta property="og:locale">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/b8fb4f87d7b82913.png">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/1378625ad1415cc8.jpg">
 <meta property="article:published_time" content="2024-07-14T06:17:51.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:37:58.620Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:04.219Z">
 <meta property="article:author" content="liupeng">
 <meta property="article:tag" content="hello">
 <meta name="twitter:card" content="summary">
@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140409033">https://blog.csdn.net/qq_30220519/article/details/140409033</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140409033">https://blog.csdn.net/qq_30220519/article/details/140409033</a></p>
 </blockquote>
 <h6 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h6><p>在尾部插⼊、删除元素是⽐较⾼效的，时间复杂度 是 O(1)，但是如果在中间或者开头插⼊、删除元素，就会涉及数据的搬移，时间复杂度为 O(N)，效率较低。 </p>
 <h6 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 相邻元素去重</span></span><br><span class="line"><span class="function"><span class="type">int</span>	<span class="title">removeDuplicates</span><span class="params">(<span class="type">int</span>* nums, <span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>	(n	==	<span class="number">0</span>)	<span class="keyword">return</span>	<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span>	slow	=	<span class="number">0</span>,	fast	=	<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>	(fast	&lt;	n)	&#123;</span><br><span class="line">		<span class="keyword">if</span>	(nums[fast]	!=	nums[slow])	&#123;</span><br><span class="line">			slow++;</span><br><span class="line">			<span class="comment">//	维护	nums[0..slow]	⽆重复</span></span><br><span class="line">			nums[slow]	=	nums[fast];</span><br><span class="line">		&#125;</span><br><span class="line">		fast++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//	⻓度为索引	+	1</span></span><br><span class="line">	<span class="keyword">return</span>	slow	+	<span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 相同元素去重 set</span></span><br><span class="line"> <span class="function"><span class="type">int</span> <span class="title">toSet</span><span class="params">(<span class="type">int</span>* nums, _Bool* flag, <span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>	(n	==	<span class="number">0</span>)	<span class="keyword">return</span>	<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span>	slow	=	<span class="number">0</span>,	fast	=	<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>	(fast	&lt;	n)	&#123;</span><br><span class="line">        <span class="type">int</span>  hashcode = nums[fast] % n;</span><br><span class="line">		<span class="keyword">if</span>	(nums[fast]	!=	nums[slow] &amp;&amp; !flag[hashcode])	&#123;</span><br><span class="line">		    flag[hashcode] = <span class="number">1</span>;</span><br><span class="line">			slow++;</span><br><span class="line">			<span class="comment">//	维护	nums[0..slow]	⽆重复</span></span><br><span class="line">			nums[slow]	=	nums[fast];</span><br><span class="line">		&#125;</span><br><span class="line">		fast++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//	⻓度为索引	+	1</span></span><br><span class="line">	<span class="keyword">return</span>	slow	+	<span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     <span class="type">int</span> a[<span class="number">10</span>] = &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>&#125;;</span><br><span class="line">     <span class="type">int</span> size = <span class="built_in">removeDuplicates</span>(a, <span class="number">10</span>);</span><br><span class="line">     <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; ++i)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, a[i]);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;\n &quot;</span>);</span><br><span class="line">     </span><br><span class="line">    _Bool flag[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;    </span><br><span class="line">    size = <span class="built_in">toSet</span>(a, flag, <span class="number">10</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; ++i)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, a[i]);</span><br><span class="line">     </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
@@ -620,11 +620,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -684,6 +684,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -704,10 +708,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -716,11 +716,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -733,10 +737,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

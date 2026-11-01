@@ -9,17 +9,17 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>C++ keyboard and mouse跨平台模拟 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;139508363  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#inclu">
+  <meta name="description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;139508363  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ keyboard and mouse跨平台模拟">
 <meta property="og:url" content="https://liupeng.icu/2024/06/06/2024-06-06-csdn-139508363/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;139508363  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#inclu">
+<meta property="og:description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;139508363  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
 <meta property="og:locale">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/b8fb4f87d7b82913.png">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/1378625ad1415cc8.jpg">
 <meta property="article:published_time" content="2024-06-06T11:34:57.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:37:59.628Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:04.887Z">
 <meta property="article:author" content="liupeng">
 <meta property="article:tag" content="hello">
 <meta name="twitter:card" content="summary">
@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139508363">https://blog.csdn.net/qq_30220519/article/details/139508363</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139508363">https://blog.csdn.net/qq_30220519/article/details/139508363</a></p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;CPPBot&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span> <span class="comment">// for std::cout</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    CPPBot bot;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get screen dimension;</span></span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> width = bot.<span class="built_in">screenWidth</span>();</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> height = bot.<span class="built_in">screenHeight</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// center mouse</span></span><br><span class="line">    bot.<span class="built_in">mousePosition</span>(width/<span class="number">2</span>,height/<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// clic</span></span><br><span class="line">    bot.<span class="built_in">mouse</span>(CPPBot::LEFT);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// print a,r,t,h,u,r</span></span><br><span class="line">    bot.<span class="built_in">keyboard</span>(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">    bot.<span class="built_in">keyboard</span>(<span class="string">&#x27;r&#x27;</span>);</span><br><span class="line">    bot.<span class="built_in">keyboard</span>(<span class="string">&#x27;t&#x27;</span>);</span><br><span class="line">    bot.<span class="built_in">keyboard</span>(<span class="string">&#x27;h&#x27;</span>);</span><br><span class="line">    bot.<span class="built_in">keyboard</span>(<span class="string">&#x27;u&#x27;</span>);</span><br><span class="line">    bot.<span class="built_in">keyboard</span>(<span class="string">&#x27;r&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// selection</span></span><br><span class="line">    bot.<span class="built_in">mousePosition</span>(width/<span class="number">2</span>,height/<span class="number">2</span>);</span><br><span class="line">    bot.<span class="built_in">mousePress</span>(CPPBot::LEFT);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i&lt;<span class="number">300</span>; i+=<span class="number">3</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        _sleep(<span class="number">10000</span>);</span><br><span class="line">        bot.<span class="built_in">mousePosition</span>(width/<span class="number">2</span>-i,height/<span class="number">2</span>-i);</span><br><span class="line">    &#125;</span><br><span class="line">    bot.<span class="built_in">mouseRelease</span>(CPPBot::LEFT);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// take a screenshot</span></span><br><span class="line">    <span class="type">const</span> <span class="type">unsigned</span> <span class="type">char</span>* screen = bot.<span class="built_in">screen</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sum each component;</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> red = <span class="number">0</span>;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> green = <span class="number">0</span>;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> blue = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> y = <span class="number">0</span>; y&lt;height; ++y)</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> x = <span class="number">0</span>; x&lt;width;  ++x)</span><br><span class="line">    &#123;</span><br><span class="line">        red   += screen[<span class="number">0</span> + <span class="number">3</span> * (x + width * y) ];</span><br><span class="line">        green += screen[<span class="number">1</span> + <span class="number">3</span> * (x + width * y) ];</span><br><span class="line">        blue  += screen[<span class="number">2</span> + <span class="number">3</span> * (x + width * y) ];</span><br><span class="line">    &#125;</span><br><span class="line">    red   /= width * height;</span><br><span class="line">    green /= width * height;</span><br><span class="line">    blue  /= width * height;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;mean color = (&quot;</span> &lt;&lt; red &lt;&lt; <span class="string">&quot;,&quot;</span> &lt;&lt; green &lt;&lt; <span class="string">&quot;,&quot;</span> &lt;&lt; blue &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -617,11 +617,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -681,6 +681,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -701,10 +705,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -713,11 +713,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -730,10 +734,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

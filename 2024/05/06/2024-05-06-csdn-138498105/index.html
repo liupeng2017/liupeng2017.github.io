@@ -9,17 +9,17 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>gprof性能分析 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;138498105  针对代码调优，不侵入函数，图表分析，调用链路优化 LINUX: 1.Linux下cmake环境配置 2.git checkout lp&#x2F;gprof 3.gprof使用手册：GNU gprof 3.启动docker环境">
+  <meta name="description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;138498105  针对代码调优，不侵入函数，图表分析，调用链路优化 LINUX: 1.Linux下cmake环境配置 2.git checkout lp&#x2F;gprof 3.gprof使用手册：GNU gprof">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gprof性能分析">
 <meta property="og:url" content="https://liupeng.icu/2024/05/06/2024-05-06-csdn-138498105/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;138498105  针对代码调优，不侵入函数，图表分析，调用链路优化 LINUX: 1.Linux下cmake环境配置 2.git checkout lp&#x2F;gprof 3.gprof使用手册：GNU gprof 3.启动docker环境">
+<meta property="og:description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;138498105  针对代码调优，不侵入函数，图表分析，调用链路优化 LINUX: 1.Linux下cmake环境配置 2.git checkout lp&#x2F;gprof 3.gprof使用手册：GNU gprof">
 <meta property="og:locale">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/b8fb4f87d7b82913.png">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/1378625ad1415cc8.jpg">
 <meta property="article:published_time" content="2024-05-06T08:03:19.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:38:00.338Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:05.729Z">
 <meta property="article:author" content="liupeng">
 <meta property="article:tag" content="hello">
 <meta name="twitter:card" content="summary">
@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/138498105">https://blog.csdn.net/qq_30220519/article/details/138498105</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/138498105">https://blog.csdn.net/qq_30220519/article/details/138498105</a></p>
 </blockquote>
 <p>针对代码调优，不侵入函数，图表分析，调用链路优化</p>
 <p>LINUX:</p>
@@ -655,11 +655,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -719,6 +719,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -739,10 +743,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -751,11 +751,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -768,10 +772,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

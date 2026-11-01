@@ -9,18 +9,18 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>C++仿C#实现事件处理 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;141283598  测试1234567891011121314151617181920212223242526272829303132333435363738394041424344454647#include &quot;beacon&#x2F;beac">
+  <meta name="description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;141283598  测试1234567891011121314151617181920212223242526272829303132333435363738394041424344454647#include &amp;quo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++仿C#实现事件处理">
 <meta property="og:url" content="https://liupeng.icu/2024/08/17/2024-08-17-csdn-141283598/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;141283598  测试1234567891011121314151617181920212223242526272829303132333435363738394041424344454647#include &quot;beacon&#x2F;beac">
+<meta property="og:description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;141283598  测试1234567891011121314151617181920212223242526272829303132333435363738394041424344454647#include &amp;quo">
 <meta property="og:locale">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141283598/b7442ed349550ab1.png">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/b8fb4f87d7b82913.png">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/1378625ad1415cc8.jpg">
 <meta property="article:published_time" content="2024-08-17T09:14:28.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:37:58.294Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:03.731Z">
 <meta property="article:author" content="liupeng">
 <meta property="article:tag" content="hello">
 <meta name="twitter:card" content="summary">
@@ -212,7 +212,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141283598">https://blog.csdn.net/qq_30220519/article/details/141283598</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141283598">https://blog.csdn.net/qq_30220519/article/details/141283598</a></p>
 </blockquote>
 <h6 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;beacon/beacon.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">mouseEvent</span> : <span class="keyword">public</span> beacon::args &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">mouseEvent</span>(<span class="type">int</span> x, <span class="type">int</span> y) : <span class="built_in">x</span>(x), <span class="built_in">y</span>(y) &#123;&#125;</span><br><span class="line">    <span class="type">int</span> x, y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">object</span> : <span class="keyword">public</span> beacon::sender &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">mouseHandler</span> : <span class="keyword">public</span> beacon::multi_handler &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Button</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">on_event</span><span class="params">(beacon::sender* sender, beacon::args* args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> event = args-&gt;<span class="built_in">to</span>&lt;mouseEvent&gt;();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Mouse event at %d, %d\n&quot;</span>, event.x, event.y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="function">mouseEvent <span class="title">event</span><span class="params">(<span class="number">10</span>, <span class="number">20</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    object sender;</span><br><span class="line">    Button button;</span><br><span class="line"></span><br><span class="line">    mouseHandler handler;</span><br><span class="line">    handler.<span class="built_in">addListener</span>&lt;mouseEvent&gt;(beacon::callback::<span class="built_in">bind</span>(&amp;Button::on_event, &amp;button));</span><br><span class="line">    handler.<span class="built_in">raise</span>(&amp;sender, &amp;event);</span><br><span class="line">    </span><br><span class="line">    beacon::interval inter;</span><br><span class="line">    inter.<span class="built_in">set</span>(<span class="number">1000</span>, [](<span class="type">const</span> <span class="type">char</span>* msg)&#123; <span class="built_in">puts</span>(msg); &#125;, <span class="string">&quot;Hello, World!&quot;</span>);</span><br><span class="line">    std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">milliseconds</span>(<span class="number">10000</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -626,11 +626,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -690,6 +690,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -710,10 +714,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -722,11 +722,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -739,10 +743,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

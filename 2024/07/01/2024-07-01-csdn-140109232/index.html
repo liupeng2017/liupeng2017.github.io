@@ -9,17 +9,17 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>C++仿SKData实现C原生指针管理 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140109232  123456789101112131415161718192021222324template&lt;typename T, typename SizeT &#x3D; size_t&gt;class HBData &#123;publ">
+  <meta name="description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140109232  123456789101112131415161718192021222324template&lt;typename T, typename SizeT &#x3D; size_t&gt;class HBDa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++仿SKData实现C原生指针管理">
 <meta property="og:url" content="https://liupeng.icu/2024/07/01/2024-07-01-csdn-140109232/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140109232  123456789101112131415161718192021222324template&lt;typename T, typename SizeT &#x3D; size_t&gt;class HBData &#123;publ">
+<meta property="og:description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140109232  123456789101112131415161718192021222324template&lt;typename T, typename SizeT &#x3D; size_t&gt;class HBDa">
 <meta property="og:locale">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/b8fb4f87d7b82913.png">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/1378625ad1415cc8.jpg">
 <meta property="article:published_time" content="2024-07-01T12:18:52.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:37:58.745Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:04.371Z">
 <meta property="article:author" content="liupeng">
 <meta property="article:tag" content="hello">
 <meta name="twitter:card" content="summary">
@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140109232">https://blog.csdn.net/qq_30220519/article/details/140109232</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140109232">https://blog.csdn.net/qq_30220519/article/details/140109232</a></p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> SizeT = <span class="type">size_t</span>&gt;</span><br><span class="line"><span class="keyword">class</span> HBData &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">HBData</span>() : <span class="built_in">data</span>(<span class="literal">nullptr</span>), <span class="built_in">size</span>(<span class="number">0</span>), <span class="built_in">isDeepCopy</span>(<span class="literal">false</span>) &#123;&#125;</span><br><span class="line">    <span class="built_in">HBData</span>(<span class="type">const</span> T* other_data, <span class="type">size_t</span> other_size, <span class="type">bool</span> release) : <span class="built_in">data</span>(other_data), <span class="built_in">size</span>(other_size), <span class="built_in">isDeepCopy</span>(release) &#123;&#125;</span><br><span class="line">    <span class="built_in">HBData</span>(<span class="type">const</span> HBData&amp; other) &#123;</span><br><span class="line">        <span class="keyword">if</span>(isDeepCopy &amp;&amp; data)</span><br><span class="line">            <span class="keyword">delete</span>[] data;</span><br><span class="line">        data = <span class="keyword">new</span> T[other.size];</span><br><span class="line">        <span class="keyword">auto</span> len = <span class="keyword">sizeof</span>(T) * other.size;</span><br><span class="line">        <span class="built_in">memcpy_s</span>(data, len, other.data, len);</span><br><span class="line">        size = other.size;</span><br><span class="line">        isDeepCopy = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ~<span class="built_in">HBData</span>() &#123;</span><br><span class="line">        <span class="keyword">if</span>(isDeepCopy &amp;&amp; data)</span><br><span class="line">            <span class="keyword">delete</span>[] data;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">const</span> T* data;</span><br><span class="line">    SizeT size;</span><br><span class="line">    <span class="type">bool</span> isDeepCopy;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -620,11 +620,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -684,6 +684,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -704,10 +708,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -716,11 +716,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -733,10 +737,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -9,21 +9,18 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>CMake基础教程二 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;146609684  # 设置 MAKESILENT 为 FALSE 以显示编译命令  if (NOT DEFINED ENV{MAKESILENT})    set(MAKESILENT FALSE CACHE INTERNAL “Disable">
+  <meta name="description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMake基础教程二">
 <meta property="og:url" content="https://liupeng.icu/2025/03/28/2025-03-28-csdn-146609684/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;146609684  # 设置 MAKESILENT 为 FALSE 以显示编译命令  if (NOT DEFINED ENV{MAKESILENT})    set(MAKESILENT FALSE CACHE INTERNAL “Disable">
+<meta property="og:description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:locale">
-<meta property="og:image" content="https://liupeng.icu/images/csdn/156773083/05f11fd31dd8466e.png">
-<meta property="og:image" content="https://liupeng.icu/images/csdn/156773083/e349bc39c2d46b88.jpg">
 <meta property="article:published_time" content="2025-03-28T12:01:41.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:37:56.985Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:02.768Z">
 <meta property="article:author" content="liupeng">
-<meta property="article:tag" content="hello">
+<meta property="article:tag" content="私密">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://liupeng.icu/images/csdn/156773083/05f11fd31dd8466e.png">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
   
@@ -210,55 +207,31 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/146609684">https://blog.csdn.net/qq_30220519/article/details/146609684</a></p>
-</blockquote>
-<p># 设置 MAKESILENT 为 FALSE 以显示编译命令</p>
-<blockquote>
-<p>if (NOT DEFINED ENV{MAKESILENT})<br>    set(MAKESILENT FALSE CACHE INTERNAL “Disable silent mode”)<br>endif ()<br>set(MAKESILENT FALSE CACHE INTERNAL “Disable silent mode”)</p>
-</blockquote>
-<p> # 设置 CMAKE_VERBOSE_MAKEFILE 为 ON 以显示编译命令</p>
-<blockquote>
-<p>set(CMAKE_VERBOSE_MAKEFILE ON)</p>
-<p>-DCMAKE_VERBOSE_MAKEFILE:BOOL&#x3D;ON  <br>cmake –build . – –verbose<br>ninja -d explain</p>
-</blockquote>
-<p> # rpath</p>
-<blockquote>
-<p>set(CMAKE_INSTALL_RPATH “$ORIGIN.:$ORIGIN&#x2F;lib:${CMAKE_INSTALL_PREFIX}&#x2F;lib”)<br>set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)<br>set(CMAKE_SKIP_BUILD_RPATH FALSE)<br>set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)</p>
-</blockquote>
-<p> # CMAKE模块依赖图生成</p>
-<blockquote>
-<p>cmake –graphviz&#x3D;test.dot build<br><a target="_blank" rel="noopener" href="https://dreampuf.github.io/GraphvizOnline/">https://dreampuf.github.io/GraphvizOnline/</a> 查看.dot文件</p>
-</blockquote>
-<p> # 项目转换</p>
-<blockquote>
-<p>am2cmake   make项目转cmake项目<br>qmake converter qmake项目转cmake项目<br>vcproj2cmake.ps1  Visual Studio项目转cmake项目<br>gencmake  自动推导为cmake项目</p>
-</blockquote>
-<p> # 查找外部程序</p>
-<blockquote>
-<p>find_program(QT_DEPLOY_EXECUTABLE windeployqt macdeployqt HINTS “${QtBinDir}”)</p>
-<p>set(CMAKE_PREFIX_PATH “D:\\program\\Qt6\\6.8.0\\msvc2022_64”)</p>
-</blockquote>
-<p> # emcc cmake config</p>
-<blockquote>
-<p>if (CMAKE_SYSTEM_NAME MATCHES “Emscripten”)<br>  target_link_options(demo PRIVATE “-lembind”)<br>  target_include_directories(demo PRIVATE bridge&#x2F;Module)<br>  target_sources(demo PRIVATE bridge&#x2F;Module&#x2F;data.cpp bridge&#x2F;Module&#x2F;provider.cpp)</p>
-<p>  set(_JS_PATH ${PROJECT_SOURCE_DIR}&#x2F;bridge&#x2F;JS)<br>  SET(JS_PARAM “ ${JS_PARAM} \<br>    –pre-js ${_JS_PATH}&#x2F;1.js \<br>    –pre-js ${_JS_PATH}&#x2F;2.js \<br>    –js-library ${_JS_PATH}&#x2F;jslib.js”)</p>
-<p>  # 设置内存参数<br>  SET(MEM_LINK_CONF “\<br> -s INITIAL_MEMORY&#x3D;16MB \<br> -s ALLOW_MEMORY_GROWTH&#x3D;1 \<br> -s MEMORY_GROWTH_GEOMETRIC_STEP&#x3D;1 \<br> -s MEMORY_GROWTH_GEOMETRIC_CAP&#x3D;64MB \<br> -s TOTAL_STACK&#x3D;8MB \<br> -s MAXIMUM_MEMORY&#x3D;4096MB “)</p>
-<p>SET(CMAKE_EXE_LINKER_FLAGS<br>            “ -fexceptions -s DISABLE_EXCEPTION_CATCHING&#x3D;0  \<br>            -O3 –emit-symbol-map -DGR_GL_CHECK_ALLOC_WITH_GET_ERROR&#x3D;0 \<br>   ${MEM_LINK_CONF} \<br>   ${JS_PARAM} \<br>   -std&#x3D;c++17 \<br>  –bind \<br>  -s MODULARIZE&#x3D;1 \<br>  -s DEMANGLE_SUPPORT&#x3D;1 \<br>  -s NO_EXIT_RUNTIME&#x3D;1 \<br>  -s WARN_UNALIGNED&#x3D;1 \<br>  -s WASM&#x3D;1 \<br>  -s EXPORT_NAME&#x3D;\“${PROJECT_NAME}Init\“”<br>    )</p>
-<p>  set(CMAKE_EXECUTABLE_SUFFIX “.js”)<br>  SET(DEBUG_SRC_SITE <a target="_blank" rel="noopener" href="http://xxx.xxx.xxx.xxx/">http://xxx.xxx.xxx.xxx</a>)<br>  SET(DEBUG_INFO “-g4 –source-map-base ${DEBUG_SRC_SITE} ${DEBUG_LINK_WEBSOCKET}”)<br>  SET(LINK_OPT “-sWASM_BIGINT -sERROR_ON_WASM_CHANGES_AFTER_LINK”)<br>  SET(SRC_DIR ..&#x2F;Asset@Asset&#x2F;)<br>  SET(FILELOAD_LINK_CONF “ –embed-file ${SRC_DIR} -s FORCE_FILESYSTEM&#x3D;1 -s FILESYSTEM&#x3D;1”)<br>  SET(DEBUG_INFO “-gseparate-dwarf \<br>    -s SEPARATE_DWARF_URL&#x3D;${DEBUG_SRC_SITE}&#x2F;project.wasm.debug.wasm”)<br>    <br>  -sASYNCIFY -s STACK_OVERFLOW_CHECK&#x3D;2 -s EXCEPTION_DEBUG&#x3D;1 -s RUNTIME_LOGGING&#x3D;1  &#x2F;&#x2F; 这些参数严重影响链接速度<br>endif ()</p>
-<p>#ifdef __EMSCRIPTEN__<br>#include &lt;emscripten.h&gt;<br>#include &lt;emscripten&#x2F;bind.h&gt;<br>EMSCRIPTEN_BINDINGS(Msg)<br>{<br>  emscripten::function(“func”, &amp;func);</p>
-<p>  emscripten::value_object<Data>(“Data”)<br>      .field(“buffer”, &amp;Data::buffer)<br>      .field(“length”, &amp;Data::length)</p>
-<p>  &#x2F;&#x2F;注册vector类<br>  emscripten::register_vector<Data>(“Datas”);<br>}<br>#endif</p>
-</blockquote>
-<p># std::set改值</p>
-<blockquote>
-<p>auto oldKey &#x3D; variationUSet.extract(val);<br>oldKey.value().value &#x3D; variation.value;<br>variationUSet.insert(std::move(oldKey));</p>
-</blockquote>
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://pengliu.blog.csdn.net/article/details/139924257" title="CMake基础教程_cmake -b build-CSDN博客">CMake基础教程_cmake -b build-CSDN博客</a> </p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
+        <div class="hbe hbe-container" id="hexo-blog-encrypt"
+     data-hbe-format="4"
+     data-wpm="密码不正确，请重新输入。"
+     data-whm="密码不正确，请重新输入。"
+     data-salt="fea093192107bc0576fce1ddc2183d0c2e18ae953016dc5d8b72c7d4ccd95b29"
+     data-nonce="d71ff63b313ec3acf2939388"
+     data-kdf-iterations="600000"
+     data-auto-save="false">
+  <script id="hbeData" type="hbeData">
+    1e43da11d874efab12bc86b124a5d4b31b140822591bb6f6f085e11550da10950d39d6017fce6a0416436867dcd29acb5e0874ead72e08273a81a42f70688d276978cf1dc7fd323eed576aee17f97041b551e3dc7166715d2b88fa366fa7d32aa9435041c1af603123a162342af63c59cc9c76abec508dc74bce31979ac9fa4c4534f352da4cb00014b8433481f264a6c938e3e673921619b931d5e1106d46db57a08b25ba65b0f575d4ee72e34cf6f3719e6800bee8d191741c5c6fc38e862f4f826e7daccc2877338c1186c5fc7112a71471359784d861a99606cf3de925b00b55523ddad82305c79fb1f437ae1cb27b8a85c4bfe6755324b2aaefd7d363492ae7c503846d88e4c3551fe44e32a07f2a245e166b4d1edefb1661b90a47d1b46cdb237923e07e57a2f203b65dba7e0684a73bfd3f2371d1d8aa40006f0c9a32c4a4cd865a320e795eb622d08b454bf53090e396e81f26e5db5ab5c1000253a2c99f7b8409ee078351a22747b1cc9265e5089153ea084cb82db502133c2aa90ffc8c940dc6dceb067a819fb584d78650ba5f9efa09e49156d7609dc93402f66bf3cba95f47e61d2a483edbfd20fdccd31521496e6ce8bf56f6dd26dc09a94bfc6eaed450da39ceefb63da02687ef79dea0610e33fc274cd771cbd75017c7e021fe9f0220742c363c4d20c756607fec549c806c7f7cd798f2c027c765ffe6af38abdc1bd8115b3cd152d4cff56659e560d71c8ce92600c86e492e6881ac75bd77998c7164a478663047548f09e67b46f0000c83be538a3c11f878777f9ff7d25c22a3867393898aab67708ff782e10cd031d6b637bde4f9b927c9626748c407beb0c90b5c55152bdf71d344059fe4dce24410dc6f10535543b2736a20582835b6b7322de9efacb03be4db69341c7382ae4991c92b2860660313662224b08eb4147e1a8dd9a2ca3b50906835be97bcf2deeb576a8963d82dbbc5726f935238daf0b2ad91fa1e23bae49ade15b63f8fc533be8e15ff87996fd50a1e59b002d5d9dcf06eccb708681371caff4494320a6c8e57f9ac3153067e460ba258e334088293b9d8db47b4d2e3b3a3a2d95fc6685bb47c9556ee900e3810514e8cafb690407645b294bfe4c69eba1ec85b3aec2f1da46bcbec6f49494717a51006755c636e92da37b1676888d6552e3490e71226def7c6a8001a14381bbd90fb9456a16c77048ee156405e264c8500c43900a7668cfe7bdf2f39fca3cd524607edf50ba2ad6d6b37c3ef366ef2e18ac9cc8ec04181df769024020a16b731df21b74653b97910cbe8601819738c1ea08af3c35fd9a553fc5641106fd91dccd6145048d76d62d96cf96b387b655f544fa05cd87e77aecae1ed260019355d19fe53a835474666023e6f324bb7d3596daa44718acd7c859ff517da2e9bcfd8a8818c4db2f0a52c9833e694304a3cec99f5edbb6e000436bfbdf22e4115267873f2220b87b17925c5dfd332db8ede5b1b2119a871ea4f23239d55813bfef99f35981d264ec2018802a2e6dede1ff9a57dad50ee56b6ac4f77bfefce8ba6993ba77ae75843c8929d2d9f46c97017ab96abf001024aff63d5f5cfaa1d83781a366899187ccc9c4993bdab4adc74f0faafa9386ca2fdde1fc6f483d7764fb2f4311fa1ca5be39f47826decae5b97fb01d6fcfd807876410ba44a9b44f8dac1304a38154c658c9981e2eea78a7253c1c12ce54ee70be15884cef06ee6e77ced28b319dfd1c466176d60f9397d8c9d543d814b691fdb7bcb5684f89f87fc3d3394fba0ae07b4301df9c69b9f3a3a943358fe84a91747101f5353c9e40938c702e353cb4f783a767950b20ea2318c2a7db5197a8f906adca9ecffea4bfe0bbe6c036a33729536f7aa8611d6da12229907c85695e34693dc86931aabb9944389724daf88e31fea471bea8d980d24a34c760ca26a93da980a6894821592ecce8328fba45f2bc63d4e8b7ee229f9eb64b93044e571900b7f26e87599aef4ead1e5dc7e6ee487355a6bbe3406ae2a2023568366bc905a743e598a4ae30bc5b881c48d644f0c28e9f15e106549d102e3385bcce78653f545983b0b38da716a7ff15d6f91499713c480de67868d280730118afe9a93800331e0ab601eca6b299041804e267230701719736fc606a0d8ca8e1d803da62a58b5a002beb2873fda441762a0e871527af8186d3c8824315ff348e331de24a8cc399948534481972b4ac9ce4e486337b402e119a201d1d219d6f31b6860eee527d76bd7c34a5d370b6a6beb243dae0873c2f17b2a67fe43ea5ff61ea8bf8851c9806c7eca02a097a84f32122b221c602d4a26f178745b1f5fc4e15b8eabc628cb90459e2d221021e5bc2471dba73c97e78c8a1cfdc67163e6f47f91b03868c44f4c5e1e038ab08367a2f2f2c22e5023bd091c52e4d9b0e18d7d42d3d3c2d0a71c06f0ad4c7667e012da668ddd70e7e1103783e27facc91aca83e6927377202991fe40225e3b1235868fe809b46ea095ffc9dc035609f2d99221d19ec7129d1da794dfa37c2e8dcad9e2094d8bfa511066001692eba662c05b67bc48efb91cd38106c2452a63f5644a56ad320d0bf2ff044abd69dd40f502f704fdb9d7595a2d5b4c3a5129cfc3d7c219168d107cbf6ca609c50626101bdf3678827ecedcaa49ad9fc207f18a8329b9392ccdfd98444315b933b39129f3ee014e2b29dc3eb6a73720c7d1bc6f58c2b981764b55ab3746243158a919ce878ca4ebc8387cdfad72d204676fd08b2b5fecee629bb4bc7eca0d68470fa0abd00aadd1b68a22da7f2f4b1d964185a3e2b21e2f0bc8c3f7b273d3fff99c0d6837aabd8b36c3e9eb233439f9a623fd270c5c1b682d5a57c46fb9fb3560c90a7e33572a946c6016358a8a8968eee9dacf549a1660035706a1e5fe94cd87599fd1df31cd99f63a98c7ffdf45198f54eefc5f8f095a6b12e1ee5a07673574219771dfd9e13c7c56926751789c60963fd3a2c587c4883ec4ffe3772fc2a466fae8f050a9fdb5631d5c586912203afb59079a0d7869716c7dbe1f558dde0b261321c44504aca87161dfaa67a7fad48252f69a73889d718f037045dcf5e848f4dc8c50bd57ccf826e4970717c54718eb939c2bbdae2eed58b80ddc9e3e32dcc6c984cbe9b3ef9112261ba9cdbe58f2615a71c712e35630e94fa3a105816f878f6212484245ca799f7a0b7b2afee131ec94e57603d19562c798232fb2a6e8aa0b719a7df47e1c5d74c1d6847b832fe46902ab34d5e90ddfbcb7a6e6a8395ff37be80a8e55d547c5156f1e2bf5ab7c9c833933b82b86ff9044d5863c2ecade545c365aee30a76f3136f873c70a26edb9bf3672c2a332e6cf1f7047063bb10195080d5439a3437df4adfb9032deef7ecc1519edc0791f6fd4fc1294ee640ea487e9018a22aaa343e65fffd91abd337fe0dab1b326038903851f9b7cf72dc8a3a39fa1f600a016a7e94a80d6e590830a355220eb0f5304f2004df21fbf3797443fc552d932e7aa1e4777c2f96cc9d02dc3b96786cd748bf24e5d7f3c30567bca317eb31ed7e94a0049ccc8f7da578bf648e08af221a281a70b10f83e146752c928f03cf7afdde3c0114069cd9d92becd3476d4bdc23c7412401867f7020f655c28a22bb658a8d628086946a36c8bef90f7f1d4af2457155c9d1deba76c83b989147d873e4ac880df46d192eee53b82057fe9ccf5659d6fd162f794ffec506be455dff82d6c221bf9b6bd18c57a16541c9376816ffb885db60d73e93fca14ebdf5f4d36c2712921e90f5129a04f2e461fb4433b3e9288f4de1733ae70286fbd39959441a039aa108e6f4eaba0c96b04a3b33b0ec8f30a3bbac49c77267c8828329c1df198ab3d813648c8e93b9c0751e80322ec9b28ccec8f75e23f3afd7151a431d6b652d40330176a75cf1250bc05eb84da84fcda4046f79f4c21bec13f80311f8569c42fba05a64f671a2d9bdcc9b69b80ef178570a5e7b8465e11eb22683d558647c6c47f0f1f6d8b0585ae6d464b0b747df0fcdf86c4d91bed24031e7b77eb9526aa3bcf8306c3752a5c91d3186a69369c0acb33e66d969c80bd5e9878bc7f0a6c7b7b652c890b3e0118d8cf99ca15b3044a6c888ffc1f026dedd1f13cd40f019db81d0900d2e57cb1aa5645dc3a8262e76e7ede43730264be124bdf872f3e8d3e65b4446e9440e628d25349b25a8ad8854c618ec12d7948a40e66f09cc91c255c64db33db1de42a8929485f28b7f871fdad5f53433c074b270b6bd46de51423e906ec001bcecb71366ddf5978eab1100e63655d8fdd7dc3794f763b9ac9105f99c2eba157fac8820530e38c84cbdedf6b98cd9feb085d5e750dcd67a13bf9722cbca8e0ece15dd01b31858b85f700fb378c0787b154c420470162f2c82ddf703cf2317613ea6acc750b6ac379534761185cf46961b91ef8068efc8310c2ebde0c75cb12be823558257f35ab58fc1902f25f88983ca7bec93ca66a13cad320ca0f78a2e92be4cdfacfe0fb033d9dcc7bd38e839a81eaa37f109abe026e7c682324dd9c0ef710432a408ccc6d470a915a04c17059981f3e72dfd5836947c1b019b782cd601dad643f7ab1ad1278f583836256b81ac1c26245906493a0e56b5ce60b23afd66d14f503273110a7b4c9fd9e5010c9c46152f1e41a8580093513459b31d367ff7c014705485dd1d515c3781495918124a5efa937a328c2be377505af9e772d20b9a1bca9a1d5f84002d987e1e902ae24c4d65a9daec2d6cee0f1f483933b4c5641057d5227e1de1e05a8a5dabf7f725234318c680910150a44b3fdb6518966a8bf06ebcda5abbcdcca5a3318096f6cfd9bd8bc6c8354593d4cc3c4173e37c9e041424539ada387f29525e0396a82f662f73f5227135da2c434fdf8270d1916cf2a3c5b9c6672612a6a61c2c4c20c07af7247d6ca726695d29f2926d4203e580b75434c0c6a3270a5352377d8f31a32be29d73275afd472dcf68bec6e80f3fd7bb778ddff222d30866379a3c0f01395af7d0c8312d6dc3faeb4c82479816040aad7a2bd2a10b5090062ab41b0416e4a2db37977030a30592654572aa1c9531bc51ec25bfc5b57a24a915808c5bb97d8e4c4453a8535ea22050de7c21d6176376174bef89b52cb049d4699adcb6805db9796d1efabe56b7501653d7776ecb046f3314ac326dcb27126e7f4be6f6260d5927b8f8ded0062c6df94d3c7edeca47477e85a832f7ce1283b79b94f06b735279af808e35e5b257a86e044593a9e904240eb9c109d441ce1085670d724c524e9a4b8e2ad05f083850d0fe9ab22ee3b7c2d9c2f57fcbb301ab90ff22963419cb9fd34681a4b77e10de23c3c23bf4431e75d3ea5ac894307abb89aa8a74ff4e0fe3cf008d66f7e4a8da58209cfb74d9dc198a6f869b2e3bf983024d66718ed2e6c509d6f682d625642e8aa085b4c1b3fd15ec3ddfda435c8404eaadb452d6faaa947b4f2a500e103a3ce68b07451d815976f0b367d99f46748fb9e8a1fe704712a16e70a0b23c9d88ec29abc548e1df30a7392cebaeb4129afe61036ddd8f104544e55eda08d5f095aab528c7447b07cb67f784224752fe26af9dfab3ba545a641e2ae72dc014a856b7c69eee3b1e0f92778d111fdf82ce169ef04fa3a4c87a38b8dcde2725dfa1132149ce79c2c09dcfbc214a6e3f02196668ab8683fa6a9b43e34f9e76d26d753ed810a0ae37266d2cd812127441536a8393b1fb3ce37009ea4c62bdc39688eab8ca158513deef1bdd5c5a7101d0cef0e8e4379201b5207dcef203d08a749623ba11cc55309a16083f62ffc2c95ca2b6084a7c6b8c0b79ce0428e9aeeb0856f5fdb375ce10a249a7f3d22b777b146b8fef4dc8d8dc2efaab094c9b38945c8a569f13e0a657b7a52e89010c5598db33919b96cdce86e4d1b12a204fdd9aa0f91dfe1bf3f0ba01336414c82ee9a5ee944be93f6363b0dfb9364db1e95095f2744855534ce81f6596b229c30ecf660ecf0edd9ee6df0b73c4af30423f284c5ecd543a2837198af382ec62390e179b218b5fe6b1b1ff5717defb0cabf1a56d14c183f6b42f3343e0cd65368e2f374a4a0c6d900f9b5bd2244d99cccc3fafb5fccc70e256f921defc76936d39dfe216c664a90d65cded298d4b6451cac853d3de1c13c964740c674a9a76826d37b17951109844dcdbaa91c846df737134d798e82b39f4b2cdbe348f381b6c00fce78213efb5463ef15e9f71dec50f55e892fa76b2883045521be8f50f882e85d301755497449c66b6a147b85cf95f84c0389f2939f64d8e4015bb213361f00aa00030484b5af40017e3be30eea655a9ce2a1df184a427c67db89d5dd37ae75271f5bfe14fdafb833a46ed918e451b9aa80f0da99e7effc929e71c86b523877fee6d8f948440adc8df41907e5db782b5bd486527ce0a9759080d7777603e23a9be7c94ad8730daf8259790d9e9542911c818772abda2a381996af9058012235402348444ff5483d79fce2c76416bdf8a6e68e86a411dae60f215c9d58fab935d1d1f61a9298eff90b252ccabca5c324fe2630daa0502e946f1a023fcdef0d43b350452d0a40e428f33a54aa1b9cf4256f2386b87fe9a47906b3cd9f9058e730682382e96e768d891485fda2525ae0874335795cc7820307448d58de0f77b2213f002c6c05ec05670bfd5a8cdf42f8bdd14ed53b236ae3aa0157b83833e263e100f3ede97bd00e7e2d4c8d99a1a50ef0902260fd75bb71a8ab7d176a59bf02ccc13fa8ee5faeff1869f05ecfd2948d7d5922aaa3589166b6bcacafa53d56d522abf11e5a8694ecdfb1b0a43d9db7de47efda35cdacd9967fcc006b4ff5222939ecd84afe5e161dc4cb0aa61d03a4a7f88c68e541bfc49b75f3a75610d99978a98e2630618bf64aa9417be4a4049eb10eb86d58ec69b914fcbaea3addfb81e15137c79b2e7dd6a5e937aafce3f9869fbf109c5a909a392d6862cc40e90d7b37c745dcf72965ef2edb07029d7fc62953d30abbf8cf3cc5c2075fabec945ea811e47e2268983e1393c5b1a73fa43837595af1c9f47d639e6e4fe1732596d1fa3f12c0cf7234c0931988cf6dab1c8028f34ceec7adb59cee99771c064b9c6e4862690671e2927b9c393b7b744e77ef8b6d88e8a2a49425cfa76c2655e0e2de99ae9db1c2ccb2
+  </script>
+  <div class="hbe hbe-content">
+    <form id="hbeForm" class="hbe hbe-form">
+      <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">您好，查看本文需要密码。</span>
+      </label>
+    </div>
+      <button class="hbe hbe-button" type="submit">解密</button>
+      <div class="hbe hbe-error" role="alert" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.a3b9f59caa.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
       
 
       
@@ -292,6 +265,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -394,7 +378,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E4%BD%9C%E4%B8%8D%E6%98%93%EF%BC%8C%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%94%AF%E6%8C%81%E4%B8%80%E4%B8%8B%E5%90%A7%EF%BC%81"><span class="toc-number"></span> <span class="toc-text">创作不易，小小的支持一下吧！</span></a>
+                    目录，不存在的…
                     </div>
                 </span>
             </div>
@@ -446,7 +430,7 @@ var _hmt = _hmt || [];
             <div id="toc-article" class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
                 <strong class="toc-title">文章目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E4%BD%9C%E4%B8%8D%E6%98%93%EF%BC%8C%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%94%AF%E6%8C%81%E4%B8%80%E4%B8%8B%E5%90%A7%EF%BC%81"><span class="toc-number"></span> <span class="toc-text">创作不易，小小的支持一下吧！</span></a>
+                
            </div>
            <script type="text/javascript">
             function showToc(){
@@ -656,11 +640,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -720,6 +704,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -740,10 +728,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -752,11 +736,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -769,10 +757,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

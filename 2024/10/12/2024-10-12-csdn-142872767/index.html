@@ -9,17 +9,17 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>C++文档数据保存与解析 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;142872767  用例123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960">
+  <meta name="description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;142872767  用例12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++文档数据保存与解析">
 <meta property="og:url" content="https://liupeng.icu/2024/10/12/2024-10-12-csdn-142872767/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;142872767  用例123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960">
+<meta property="og:description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;142872767  用例12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535">
 <meta property="og:locale">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/156773083/05f11fd31dd8466e.png">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/156773083/e349bc39c2d46b88.jpg">
 <meta property="article:published_time" content="2024-10-12T03:03:43.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:37:57.470Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:03.168Z">
 <meta property="article:author" content="liupeng">
 <meta property="article:tag" content="hello">
 <meta name="twitter:card" content="summary">
@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142872767">https://blog.csdn.net/qq_30220519/article/details/142872767</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142872767">https://blog.csdn.net/qq_30220519/article/details/142872767</a></p>
 </blockquote>
 <h5 id="用例"><a href="#用例" class="headerlink" title="用例"></a>用例</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> SINGLE_HEADER</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;cista.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;cista/reflection/member_index.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;cista/serialization.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 成员属性反射</span></span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">test</span> &#123;</span><br><span class="line">    <span class="type">int</span> a, b, c;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="built_in">assert</span>(<span class="number">0</span> == cista::<span class="built_in">member_index</span>(&amp;test::a));</span><br><span class="line">  <span class="built_in">assert</span>(<span class="number">1</span> == cista::<span class="built_in">member_index</span>(&amp;test::b));</span><br><span class="line">  <span class="built_in">assert</span>(<span class="number">2</span> == cista::<span class="built_in">member_index</span>(&amp;test::c));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 文档数据定义</span></span><br><span class="line">  <span class="keyword">namespace</span> data = cista::raw;</span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">DocDataV1</span> &#123;</span><br><span class="line">    <span class="type">int</span> version_&#123;<span class="number">1</span>&#125;;  <span class="comment">// 版本号</span></span><br><span class="line"></span><br><span class="line">    <span class="type">float</span> x;    <span class="comment">// 基础类型</span></span><br><span class="line">    <span class="type">float</span> y;</span><br><span class="line">    data::string name;</span><br><span class="line">    data::vector&lt;<span class="type">int</span>&gt; v;  <span class="comment">// stl 容器</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">struct</span> &#123;  <span class="comment">// 嵌套</span></span><br><span class="line">      data::hash_map&lt;data::string, data::string&gt; m; <span class="comment">// stl 容器</span></span><br><span class="line">    &#125; j;</span><br><span class="line"></span><br><span class="line">    data::unique_ptr&lt;test&gt; testPtr; <span class="comment">// 指针</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 版本检测</span></span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">version_detection</span> &#123;</span><br><span class="line">    <span class="type">int</span> version_&#123;<span class="number">0</span>&#125;;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  DocDataV1 saveData;</span><br><span class="line">  saveData.x = <span class="number">0.1232312f</span>;</span><br><span class="line">  saveData.y = <span class="number">100002.232323f</span>;</span><br><span class="line">  saveData.name = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">  saveData.v = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">  saveData.j.m = &#123;% raw %&#125;&#123;&#123;<span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span>&#125;&#125;;&#123;% endraw %&#125;</span><br><span class="line">  saveData.testPtr = data::<span class="built_in">make_unique</span>&lt;test&gt;(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">auto</span> buf = cista::<span class="built_in">serialize</span>(saveData);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 保存到文件</span></span><br><span class="line">  <span class="function">std::ofstream <span class="title">ofs</span><span class="params">(<span class="string">&quot;test.bin&quot;</span>, std::ios::binary | std::ios::out)</span></span>;</span><br><span class="line">  ofs.<span class="built_in">write</span>((<span class="type">char</span> *)buf.<span class="built_in">data</span>(), buf.<span class="built_in">size</span>());</span><br><span class="line">  ofs.<span class="built_in">flush</span>();</span><br><span class="line">  ofs.<span class="built_in">close</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从文件加载</span></span><br><span class="line">  <span class="function">std::ifstream <span class="title">ifs</span><span class="params">(<span class="string">&quot;test.bin&quot;</span>, std::ios::binary | std::ios::in)</span></span>;</span><br><span class="line">  <span class="comment">//指针定位到文件末尾</span></span><br><span class="line">  ifs.<span class="built_in">seekg</span>(<span class="number">0</span>, std::ios::end);</span><br><span class="line">  <span class="keyword">auto</span> fileLength = ifs.<span class="built_in">tellg</span>();</span><br><span class="line">  <span class="comment">//指定定位到文件开始</span></span><br><span class="line">  ifs.<span class="built_in">seekg</span>(<span class="number">0</span>, std::ios::beg);</span><br><span class="line"></span><br><span class="line">  <span class="function">cista::buf <span class="title">ibuf</span><span class="params">(std::vector&lt;<span class="type">uint8_t</span>&gt;(fileLength, <span class="number">0</span>))</span></span>;</span><br><span class="line">  ifs.<span class="built_in">read</span>((<span class="type">char</span> *)ibuf.<span class="built_in">addr</span>(<span class="number">0</span>), fileLength);</span><br><span class="line">  ifs.<span class="built_in">close</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 版本检测，数据兼容</span></span><br><span class="line">  <span class="keyword">auto</span> versionData = cista::<span class="built_in">unchecked_deserialize</span>&lt;version_detection&gt;(ibuf);</span><br><span class="line">  <span class="built_in">assert</span>(versionData-&gt;version_ == <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 文档数据反序列化</span></span><br><span class="line">  <span class="keyword">auto</span> loadData = cista::<span class="built_in">deserialize</span>&lt;DocDataV1&gt;(buf);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 正确性测试</span></span><br><span class="line">  <span class="built_in">assert</span>(saveData.version_ == loadData-&gt;version_);</span><br><span class="line">  <span class="built_in">assert</span>(saveData.x == loadData-&gt;x);</span><br><span class="line">  <span class="built_in">assert</span>(saveData.y == loadData-&gt;y);</span><br><span class="line">  <span class="built_in">assert</span>(saveData.name == loadData-&gt;name);</span><br><span class="line">  <span class="built_in">assert</span>(saveData.v == loadData-&gt;v);</span><br><span class="line">  <span class="built_in">assert</span>(saveData.j.m == loadData-&gt;j.m);</span><br><span class="line">  <span class="built_in">assert</span>(saveData.testPtr-&gt;a == loadData-&gt;testPtr-&gt;a);</span><br><span class="line">  <span class="built_in">assert</span>(saveData.testPtr-&gt;b == loadData-&gt;testPtr-&gt;b);</span><br><span class="line">  <span class="built_in">assert</span>(saveData.testPtr-&gt;c == loadData-&gt;testPtr-&gt;c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -619,11 +619,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -683,6 +683,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -703,10 +707,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -715,11 +715,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -732,10 +736,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

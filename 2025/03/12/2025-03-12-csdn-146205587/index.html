@@ -9,21 +9,18 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>国内AI Agent使用 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;146205587  搭建环境从  https:&#x2F;&#x2F;cloud.siliconflow.cn&#x2F;models 创建免费模型 https:&#x2F;&#x2F;docs.siliconflow.cn&#x2F;cn&#x2F;api-reference&#x2F;chat-completions&#x2F;c">
+  <meta name="description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="国内AI Agent使用">
 <meta property="og:url" content="https://liupeng.icu/2025/03/12/2025-03-12-csdn-146205587/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;146205587  搭建环境从  https:&#x2F;&#x2F;cloud.siliconflow.cn&#x2F;models 创建免费模型 https:&#x2F;&#x2F;docs.siliconflow.cn&#x2F;cn&#x2F;api-reference&#x2F;chat-completions&#x2F;c">
+<meta property="og:description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:locale">
-<meta property="og:image" content="https://liupeng.icu/images/csdn/156773083/05f11fd31dd8466e.png">
-<meta property="og:image" content="https://liupeng.icu/images/csdn/156773083/e349bc39c2d46b88.jpg">
 <meta property="article:published_time" content="2025-03-12T07:06:09.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:37:57.048Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:02.847Z">
 <meta property="article:author" content="liupeng">
-<meta property="article:tag" content="hello">
+<meta property="article:tag" content="私密">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://liupeng.icu/images/csdn/156773083/05f11fd31dd8466e.png">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
   
@@ -210,31 +207,31 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/146205587">https://blog.csdn.net/qq_30220519/article/details/146205587</a></p>
-</blockquote>
-<h6 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h6><p>从  <a target="_blank" rel="noopener" href="https://cloud.siliconflow.cn/models">https://cloud.siliconflow.cn/models</a> 创建免费模型 <a target="_blank" rel="noopener" href="https://docs.siliconflow.cn/cn/api-reference/chat-completions/chat-completions">https://docs.siliconflow.cn/cn/api-reference/chat-completions/chat-completions</a> 密钥sk-xxxxxxx</p>
-<h6 id="安装python3-11"><a href="#安装python3-11" class="headerlink" title="安装python3.11"></a>安装python3.11</h6><blockquote>
-<p>pip install browser-use<br>playwright install<br>git clone <a target="_blank" rel="noopener" href="https://github.com/browser-use/web-ui.git">https://github.com/browser-use/web-ui.git</a><br>cd web-ui<br>pip install -r requirement<br>copy .env.example .env</p>
-</blockquote>
-<h6 id="修改-env文件"><a href="#修改-env文件" class="headerlink" title="修改.env文件"></a>修改.env文件</h6><blockquote>
-<p>OPENAI_ENDPOINT&#x3D;<a target="_blank" rel="noopener" href="https://api.siliconflow.cn/v1">https://api.siliconflow.cn/v1</a><br>OPENAI_API_KEY&#x3D;sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-</blockquote>
-<h6 id="修改src-utils-utils-py，需使用VLM模型"><a href="#修改src-utils-utils-py，需使用VLM模型" class="headerlink" title="修改src&#x2F;utils&#x2F;utils.py，需使用VLM模型"></a>修改src&#x2F;utils&#x2F;utils.py，需使用VLM模型</h6><blockquote>
-<p>elif provider &#x3D;&#x3D; “openai”:<br>    if not kwargs.get(“base_url”, “”):<br>        base_url &#x3D; os.getenv(“OPENAI_ENDPOINT”, “<a target="_blank" rel="noopener" href="https://api.siliconflow.cn/v1">https://api.siliconflow.cn/v1</a>“)<br>    else:<br>        base_url &#x3D; kwargs.get(“base_url”)</p>
-<p>    return ChatOpenAI(<br>        model&#x3D;kwargs.get(“model_name”, “deepseek-ai&#x2F;deepseek-vl2”),<br>        temperature&#x3D;kwargs.get(“temperature”, 0.0),<br>        base_url&#x3D;base_url,<br>        api_key&#x3D;api_key,<br>    )<br>model_names &#x3D; {<br>…<br>    “openai”: [“gpt-4o”, “gpt-4”, “gpt-3.5-turbo”, “o3-mini”, “Qwen&#x2F;QVQ-72B-Preview”, “deepseek-ai&#x2F;deepseek-vl2”, “Qwen&#x2F;Qwen2-VL-72B-Instruct”, “OpenGVLab&#x2F;InternVL2-26B”, “Pro&#x2F;Qwen&#x2F;Qwen2-VL-7B-Instruct”, “Pro&#x2F;OpenGVLab&#x2F;InternVL2-8B”, “TeleAI&#x2F;TeleMM”],<br>…<br> }</p>
-</blockquote>
-<h6 id="启动webui"><a href="#启动webui" class="headerlink" title="启动webui"></a>启动webui</h6><blockquote>
-<p>python webui.py –ip 127.0.0.1 –port 7788</p>
-</blockquote>
-<p>使用非chorme浏览器访问 <a target="_blank" rel="noopener" href="http://127.0.0.1:7788/">http://127.0.0.1:7788/</a><br>webui下LLM配置选用Qwen&#x2F;Qwen2-VL-72B-Instruct模型，点击Run Agent使用</p>
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/browser-use/browser-use" title="GitHub - browser-use&#x2F;browser-use: Make websites accessible for AI agents">GitHub - browser-use&#x2F;browser-use: Make websites accessible for AI agents</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/browser-use/web-ui" title="GitHub - browser-use&#x2F;web-ui: Run AI Agent in your browser.">GitHub - browser-use&#x2F;web-ui: Run AI Agent in your browser.</a></p>
-<p><a target="_blank" rel="noopener" href="https://docs.siliconflow.cn/cn/api-reference/chat-completions/chat-completions" title="创建文本对话请求 - SiliconFlow">创建文本对话请求 - SiliconFlow</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
+        <div class="hbe hbe-container" id="hexo-blog-encrypt"
+     data-hbe-format="4"
+     data-wpm="密码不正确，请重新输入。"
+     data-whm="密码不正确，请重新输入。"
+     data-salt="bd885f21615c1ea48f44497079d31f638f5457d15a05fdc42988354700c5a0e0"
+     data-nonce="fddf7c64d17dd323dfd6119b"
+     data-kdf-iterations="600000"
+     data-auto-save="false">
+  <script id="hbeData" type="hbeData">
+    305721b81a42efc8d27258f98db7c4c01889c65cef2cadcfcf7e883b19ecc2cc3fecc4eef5a3a342ae356ce1e290e9ce7ae0a26679a73f8811417ee6f4ac1036a63f31035deeb4455a5e82e804c3512d535383066cf3e9575dc350a6e5a2677621e513acf3c2c0fcb8026a47f5c72591da83b7a623b4d87ce43ca91a3e5599b1f0e4c01717e11db61c0ec7134a8a9ff3f7d0c8f81421d25a0678ad2c0064d2dde51d379e3ab2f9589c637f24d1d0172edf254952570c9c9f976b3ca7bede34cf59b5d47e2e883ce3cf5336a700fc31e0d341662c954e153712bea66229f68eb60069a696ac8b6d3ae7bcc1252ce698f82717c6784c36daac9e31ca1c84cadd96ae2040d3e9482c34a0d50744e292f4b69ef030c940c2f46e14f07d0f086737bc74ca5587ec6b0b261524aae969c9de2a1ef057354434eaacc371f1d86ae34c34a341482ef103af8b903ddc8c9d3857be5d2118ec7596cec417d5f4917fea228d3bb654ca6992bb1ef14a39cb7d19632b5acd1d4990dc6b7d422b0574d4c1d6751910505645a9703577f3ff507e19ef566e2da3958e7c0fb85269363a1bd1710ca1a8b8a9e8bde343169df5da76ed6c61fa5fd3a4945a27698138a0dac8660cd56d77e8d206e4b9e2993cda43686c6806b9af6053f010c213137b3442d29d6fdf7a63fbefbf3c99701d773133c068589fa6cdc950e9c1b7b9e16c406be3b3654dca60e8ad24d8121c16943d1d8ffb9bb5178766e55a73213a1a7f05a8401503b164753c7c0f338c1c63927bc3e3df521e2281d5dca80565c72e814de3fdab5a88db5837007f360fa422c95a46c2dd6f92f1761eddf1dffc1dffbb832f0a8727646bc4548924c50308f7c99d7357635d4d8278689033781115516426d809cf7a7f3c6881bed1babe015dc97bebabf17a478940a049606a0e079db73574b54952a9acb26d1b97c1559b0c47dce5f8fdf1cfbdd3b9d2d78f9fb73d6d671a3332d38664694589958ea5715abc837e12a87c040df62c23e879e3ec1c45b16aed57154067a41a9fee6b9f1ff22f682219ccedf0ea10dc06559454827c5d4903fe452776b77d6b634781abd40d75bff48287e44128c165513507db2c565efb73c0ad94331bbb98782093b4cd2e16632a3334dbb0abb0070003e35e1745c62dd9af3d8a8058fce4c92f0f5e403610accdf2845555bf01e5b1a0327d4047524d2ea1e1f667f6e1847045972ce4b05c0f4a146d383d80d754b334637a7056e5fb2cfe44f88f7f403f1ff90365dd9ddca63e2ef309db786c5094d304890731d8f0dfa83ca71fbd9ffed4b197f58bf2967abc95ae2986c14b5f66d0b0456bae14b8b9cfdacdea26e4f78ff133236162c6b13ae4356453af9c9df74c0bbc72a707d63f4de334dbb691b6290ce0ef319d57d54d439cc4e4ce9235d25c188229f3e5db9bb65ec63d059ca7a65513a5e904c054d78c0e51166c0487c48479e86ccb4a7507d2921329563dc696e5daef24f817c926debcf2fda41ed7b750a1d83683afa58a927729e08efeda0e52e9e496c3f7c0aba8973968c1b0811280247d0d4b8ed67f146ac66f01d97f596844c9f5b4ed2a319aed5eb30c6dcb8d285eb460ef575c045e5f192e9c06839fc59b0cb703f319e5ecba02dbd7061c6df54340e2a543f7e6ad3504da2d09e5150b3e3c0c727d378d38b8735c86d04159cce400369ed99e1b5202682a7ce73299e311764c897cba57b1c1ef73732b2322260a92e0a7a82e8dbfd9f5a87defc802d141f4880eacc1ca0d48f67266bc2cf64ed2a75229d88a48b897610a960b78d00de3ee29b4a5099aa4d4680092bac1bd5262c1e75cfe11405cf105c4a393f38269303b4ed708e0b05c8f8f559571bb55fae66e23a035ca78f140f507db6fe1012f32c33af5fe1f1f6a2a01ad5f7d261b226eb9f47853435bf3c3d05c0d9e17a5f202a41e556084c48eb7c607bbf747496596353c93ff079cd72b75216b7d262e3cc4815703ac7af2d787e256fb3725794c9e001a6a2b2b5fc3b04c5aefbe51e787a1c71b4624ee223d542a33e3b998a939bf205f69b11a4ae1f22e04ed45d4d918c5e1292614b186a22d1eefa656658e59d3f13fc740db6e94edd7f8e6fc87bcb52543e3707d011b63457fa02102ab1377b36fe5072370f4489016957d73a68304935834658cbe1ee27bc6c368fed57aa718975726e034c6aaedd2f2caf38a53fe0a8d440404a8c2689b536e7d3ec92751ff951735470d89553c6ddeb450245f8859d34903be6944bf5efcbb2b101426646327401e21f55fc4a1f00091565ef703a6809a2fbe5a340ee6eed85bb219832cf0e263d1bc28cf532dcb0c31d0a145499860f8041a24ddf7457108a4c22dae57d4112d8fc4990444c9d056f35cde9e7dd65ce59137148f5d4db18f286be3e11d012e14e71a0bee844113faf3a495ea08722e09463d24476be56795db45f93c6a1586a1a0e44a495c89ddb6f9672f3a2e8fa5bedc72278a6acb74dcf0255c697e4ffabb78f38c88bef116e09bb2edd69ae3e422f918ad31f200a6a059ba9f97fdf9eadfe900aa218a4e5830ad71ba4b949f826e710dcc0bad5c812469a072bb2103108c71c9def9dbdbdc380666caa2adbc42d0c2af4f993ccfe6dc5fed9866a55168171af0a74ef975a6a212e2b4fabe6944fc18fd690799c04892f3e92cb8d807fc955eb664f75de87af14bb0de912a2dbbf9f54e2f22d671d982e9ef442bbd633ff77efda8d13ade18317b8bf98ec27921a5e3674856874ac0a662e76ba2761c5e407eecc1e85b18258a8e80e941420352144c430d0ee9e80aee8366f1e79a4a2f765e77fa34c6e28543e5ffeafc08fb68cad11f449f5081e86df159a15b6030e40296876864fec219ddaa7531a461bb52891a186f9f3a2432c12b58292401d4c2ebef6376b50e98f853f6c67600123443a91ce61aae17e8da3f6a9614ad4bec3a4103b4e7001d8a3526533e109f14270e32f3015e41f0eaf376a0576a2d4c19fa4149fa3de485874c6848566a71a2ae477d4fc64aac00668dbf901a8f4ad4a859bcbc4763a99c12301516c0474f55a297372d1fc6e2890f091bba5960de0c7b1ed334c5b21d8cce0ddd23613ce3844a67c3e3f9b6ed778037fdaf5c6be92b5cc24e54af8c734ca0d96bbd94f151726a08989b058cbf5263405fe8266f92ee7c1be387cf786f132d4382073b97e9d4916a3c28bd761abd4925c7a0a3a16f2914e60516b82adf98f00c8cf69b489b62a8dbb473306789565f73e48c99d3414aefb42f061c18f0596ae8be50e0699917776b6b11beacfa6e787a2cc06850538728689324cba8403b44fd916a9289567bff324691d0eff843997b81c11e5d2af4eb772e1b3f5b6ee05f98ef96c19edb7a79070bc1a1dc0d5eeef2f155019eaf0243d1e7eb6fa1ce52771c71724cb74aea6cfe455f951b41b7e3c6e18fb823e7f85159e16903089ab2c2131a905f367e1b4cb337df2422f62310743f5b710bdc9e1eb58968411a031a85c396fd565c02503aa707f7b8b0aaabad1c0d4488cbbaba654c41cc07281eee0b4d60948f7615a595a0d1c31d1da082ba3f25e1fc9c5db86772dd34f5e5e4eb0f7e4e2fb51a96f00f6c14791538be9c65739b99a2c597e9d01de2db3f745e05a71396ce3932b98a95a194d345532d4d28ec48f689b1dc54ecf6537e4d863aa4e5c27cb12414c06263f4e0a391cbd4545340b0e746dbe4570697b9bd32123c3fb8a47e26debe51ba83403c8b09389f11f3bd007e9c8352ae7731997f3f4cc379a3807684b6d6c1021afacd5d82288483d4f0611b5d0fdec91cda60445f7ad64880d6bb9f1918104cfe2e7e9fdd9bd1306b438e61a13a0cdff37503ae94f98069164eab1aec7ca2461b2fc922156d4f63be8a6b7801a3c2be220a7e8b3c1762ff33a2ed3096c978a3396ca63182987b4991adab3ea08b3053e719639c586eaf07ad2049008cd79e192803dfa3f8ad1b6ed2f691aee570d46b974d9f9016fe2ef6bc76ce645dde179610bb94bc5e72f89d1c95646e1a1a846d243e9439acc9e3264c41a75576b47cdc5ff4d1eaa5aa949ba6546a49036cdd8892e6f8d9a366dd17bb22f2517c24855d3cb6b298ce2d2c51c18c7ac33610f08e88fd998c8223703895bf5f6288c37dff553b1623a44f4e0085914c66fe87da8d510f652f2143fc7228b64a78e90b4f8523878a33b116103c1945d6848c81aa90064168d848cd1d73af86ec006fc4577f5667c32d4c294e0a224b6ea3f3b8d28b6e9edc873d9488045d3ed3e28b62e53da0e072a640604e7e6db09ab00b7851f290aaaaa18d7303419882dafbf01c9fb9f9b402c760bbe4cdb4749990e99088cc3e6968d7c77ba7a544eb532c1a8b1299bea392d2e2e9fe0bfc503b297c06bf0c6a9ddeb50151cf8a77cf7431198945f7fe62ebe1d1baf87d5b7b9d07802ee384ca737858a29af28649b4ac2b17aea354683225b6eaad004671569d4547faaa27c9c50b804198e47f12688b455c3751daf7d68deebfefec5dd54dda4be54ac1a78f97df80214a00e0b66a138352f2131e676e23fdb94534f86d588ee455e76f1876ad3de1e825ec6d49568787b856bc42f7df028eddc9410672bf19952333c3d2113d4fd466a8a63caa8c9bde0974c63549bbfab52da7bbd9924b1b05fd113e0866ffa17dd400b5cf19a4cd19e2cf28e43888622e2fad6a7677a6f629ed602e410082970ddfd6a5a2753e977ebc189f287a0b60d8730e40fac7734e23632afb0f71d28015b0919aa0eda1ccef25fc1823a0efc797de92841a095128553a4a626d35ca2d4dd7c819ff0161d60ed62745fa853063b11aeb1a8543015ac0af45ea6303b6e47a32ff39f8a6316fcd9ba8320f5dc5fe824b59ed8bb636a2a57174bbe52116c0b3ece49de76ab5941f0d8b422d68c7ad969c3622c14e7b95a6db15975a1cbe4c20de1659a8e85bbd45f1b7212d83e52cca9da4cf2bf0a9da50dcf8a7d7a93c38161f59af28ce0d4fe2caa2502ce6400515737288ef900a4c19727d9340baf32705a85beec56735cf001c0a3015e690e3946380b2bd64e877b3e605cf5853a41bd5d91003255b970affa3d720eec61c068835ab432e37a261d40509724cfea37b2e9c7926d519eef253564cbfe2129459145da294c0f563eab1f7694196f118d87a325f1a02c4a2aa87fd592af507bb87121c745ddeab63dbb39353a679eca1320a835856512c2e36578775f5bfb21b91019d4ebaba038cf1099bbc78517bb828cb5ccd8a452384fb75dfe4e4df53c61e653bd87f472a8a8cb68d93977afe39172832795b7df48523596286505e5070f2ae44726458ba2aa84acd2e3ac5d6f4c2341304f6085ae9f534ed2a8efb071bf300eac2b4ed968ab7cc9aa749d5d4ddf0f60a92f1ac85b6716b96ac8df753c0aaa7089ec7aa7a6d503cd3ec20c89d6ff65725d295d77df541372bb907f0ac5c82099641b6ecb5de77f5a6a1d169cb06c3ce8bfc92d07a2bfe2bf8dca9135adde0a0584504eb0335bea50da72d75ccdd2f9d9f65805242f91493d51cbba8b774cdb7eb791c09084838b35b60d0e4da801b9b337a9cea6e39e1198494d4acebcfc0a545963fce29dc4591d6cf049e4b574d35788c3fc6390d4c5579602331de3e83da95df
+  </script>
+  <div class="hbe hbe-content">
+    <form id="hbeForm" class="hbe hbe-form">
+      <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">您好，查看本文需要密码。</span>
+      </label>
+    </div>
+      <button class="hbe hbe-button" type="submit">解密</button>
+      <div class="hbe hbe-error" role="alert" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.a3b9f59caa.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
       
 
       
@@ -268,6 +265,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -370,7 +378,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AE%89%E8%A3%85python3-11"><span class="toc-number">2.</span> <span class="toc-text">安装python3.11</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-env%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">修改.env文件</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9src-utils-utils-py%EF%BC%8C%E9%9C%80%E4%BD%BF%E7%94%A8VLM%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">修改src&#x2F;utils&#x2F;utils.py，需使用VLM模型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8webui"><span class="toc-number">5.</span> <span class="toc-text">启动webui</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E4%BD%9C%E4%B8%8D%E6%98%93%EF%BC%8C%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%94%AF%E6%8C%81%E4%B8%80%E4%B8%8B%E5%90%A7%EF%BC%81"><span class="toc-number"></span> <span class="toc-text">创作不易，小小的支持一下吧！</span></a>
+                    目录，不存在的…
                     </div>
                 </span>
             </div>
@@ -422,7 +430,7 @@ var _hmt = _hmt || [];
             <div id="toc-article" class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
                 <strong class="toc-title">文章目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">搭建环境</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AE%89%E8%A3%85python3-11"><span class="toc-number">2.</span> <span class="toc-text">安装python3.11</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-env%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">修改.env文件</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9src-utils-utils-py%EF%BC%8C%E9%9C%80%E4%BD%BF%E7%94%A8VLM%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">修改src&#x2F;utils&#x2F;utils.py，需使用VLM模型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8webui"><span class="toc-number">5.</span> <span class="toc-text">启动webui</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E4%BD%9C%E4%B8%8D%E6%98%93%EF%BC%8C%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%94%AF%E6%8C%81%E4%B8%80%E4%B8%8B%E5%90%A7%EF%BC%81"><span class="toc-number"></span> <span class="toc-text">创作不易，小小的支持一下吧！</span></a>
+                
            </div>
            <script type="text/javascript">
             function showToc(){
@@ -632,11 +640,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -696,6 +704,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -716,10 +728,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -728,11 +736,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -745,10 +757,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

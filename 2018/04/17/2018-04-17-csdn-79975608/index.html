@@ -9,17 +9,17 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>lua线程使用问题 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;79975608  只要创建一个Lua状态，Lua就会自动在这个状态中创建一个新线程，这个线程称为“主线程”。主线程永远不会被回收。当调用lua_close关闭状态时，它会随着状态一起释放。调用lua_newthread便可以在一个状态中创建其他的">
+  <meta name="description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lua线程使用问题">
 <meta property="og:url" content="https://liupeng.icu/2018/04/17/2018-04-17-csdn-79975608/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;79975608  只要创建一个Lua状态，Lua就会自动在这个状态中创建一个新线程，这个线程称为“主线程”。主线程永远不会被回收。当调用lua_close关闭状态时，它会随着状态一起释放。调用lua_newthread便可以在一个状态中创建其他的">
+<meta property="og:description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2018-04-17T07:45:23.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:38:00.359Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:05.755Z">
 <meta property="article:author" content="liupeng">
-<meta property="article:tag" content="hello">
+<meta property="article:tag" content="私密">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
@@ -207,44 +207,31 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/79975608">https://blog.csdn.net/qq_30220519/article/details/79975608</a></p>
-</blockquote>
-<p>只要创建一个Lua状态，Lua就会自动在这个状态中创建一个新线程，这个线程称为“主线程”。主线程永远不会被回收。当调用lua_close关闭状态时，它会随着状态一起释放。调用lua_newthread便可以在一个状态中创建其他的线程。</p>
-<p>lua_State *lua_newthread(lua_State *L);  </p>
-<p>这个函数返回一个lua_State指针，表示新建的线程。它会将新线程作为一个类型为“thread”的值压入栈中。如果我们执行了：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">L1 = lua_newthread(L);</span><br></pre></td></tr></table></figure>
-
-<p>现在，我们拥有了两个线程L和L1，它们内部都引用了相同的Lua状态。每个线程都有其自己的栈。新线程L1以一个空栈开始运行，老线程L的栈顶就是这个新线程。</p>
-<p>除了主线程以外，其它线程和其它Lua对象一样都是垃圾回收的对象。当新建一个线程时，线程会压入栈，这样能确保新线程不会成为垃圾，而有的时候，你在处理栈中数据时，不经意间就把线程弹出栈了，而当你再次使用该线程时，可能导致找不到对应的线程而程序崩溃。为了避免这种情况的发生，可以保持一个对线程的引用，比如在注册表中保存一个对线程的引用。</p>
-<p>当拥有了一个线程以后，我们就可以像主线程那样来使用它，以前博文中提到的对栈的操作，对这个新的线程都适用。然而，使用多线程的目的不是为了实现这些简单的功能，而是为了实现协同程序。</p>
-<p>为了挂起某些协同程序的执行，并在稍后恢复执行，我们可以使用lua_resume函数来实现。</p>
-<p>int lua_resume(lua_State *L, int narg);  </p>
-<ol>
-<li>lua_resume没有参数用于指出期望的结果数量，它总是返回被调用函数的所有结果；</li>
-<li>它没有用于指定错误处理函数的参数，发生错误时不会展开栈，这就可以在发生错误后检查栈中的情况；</li>
-<li>如果正在运行的函数交出（yield）了控制权，lua_resume就会返回一个特殊的代码LUA_YIELD，并将线程置于一个可以被再次恢复执行的状态。</li>
-</ol>
-<p>当lua_resume返回LUA_YIELD时，线程的栈中只能看到交出控制权时所传递的那些值。调用lua_gettop则会返回这些值的数量。若要将这些值移到另一个线程，可以使用lua_xmove。</p>
-<p>为了恢复一个挂起线程的执行，可以再次调用lua_resume。  </p>
-<p>在这种调用中，Lua假设栈中所有的值都是由yield调用返回的，当然了，你也可以任意修改栈中的值。作为一个特例，如果在一个lua_resume返回后与再次调用lua_resume之间没有改变过线程栈中的内容，那么yield恰好返回它交出的值。如果能很好的理解这个特例是什么意思，那就说明你已经非常理解Lua中的协同程序了，如果你还是不知道我说的这个特例是什么意思，请再去读一遍《<a target="_blank" rel="noopener" href="http://www.jellythink.com/archives/508" title="Lua中的协同程序">Lua中的协同程序</a>》，如果你还不懂，那你就在下放留言吧（提醒：这个特例主要利用的是resume-yield之间的传参规则）。</p>
-<p>现在，我就通过一个简单的程序来做个试验，以便更好的理解Lua的线程。使用C代码来调用Lua脚本，Lua函数作为一个协同程序来启动，这个Lua函数可以调用其它Lua函数，任意的一个Lua函数都可以交出控制权，从而使lua_resume调用返回。</p>
-<p>coroutine .yield        Suspends the execution of the calling coroutin</p>
-<p>function Func1(param1)</p>
-<p>Func2(param1 + 10)</p>
-<p>print(“Func1 ended.”)</p>
-<p>return 30</p>
-<p>end</p>
-<p>function Func2(value)</p>
-<p>coroutine.yield(10, value)</p>
-<p>print(“Func2 ended.”)</p>
-<p>end</p>
-<p>下面是C++代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">lua_State *L1 = lua_newthread(L);</span><br><span class="line">if (!L1)</span><br><span class="line">&#123;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">lua_getglobal(L1, &quot;Func1&quot;);</span><br><span class="line">lua_pushinteger(L1, 10);</span><br><span class="line"></span><br><span class="line">// 运行这个协同程序</span><br><span class="line">// 这里返回LUA_YIELD</span><br><span class="line">bRet = lua_resume(L1, 1);</span><br><span class="line">cout &lt;&lt; &quot;bRet:&quot; &lt;&lt; bRet &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">// 打印L1栈中元素的个数</span><br><span class="line">cout &lt;&lt; &quot;Element Num:&quot; &lt;&lt; lua_gettop(L1) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">// 打印yield返回的两个值</span><br><span class="line">cout &lt;&lt; &quot;Value 1:&quot; &lt;&lt; lua_tointeger(L1, -2) &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;Value 2:&quot; &lt;&lt; lua_tointeger(L1, -1) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">// 再次启动协同程序</span><br><span class="line">// 这里返回0</span><br><span class="line">bRet = lua_resume(L1, 0);</span><br><span class="line">cout &lt;&lt; &quot;bRet:&quot; &lt;&lt; bRet &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;Element Num:&quot; &lt;&lt; lua_gettop(L1) &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;Value 1:&quot; &lt;&lt; lua_tointeger(L1, -1) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
-
-<h5 id="Lua状态"><a href="#Lua状态" class="headerlink" title="Lua状态"></a>Lua状态</h5><p>每次调用luaL_newstate（或者lua_newstate）都会创建一个新的Lua状态。不同的Lua状态是各自完全独立的，它们之间不共享任何数据。这个概念是不是很熟悉，是不是特别像Windows中的进程的概念。也就是说，在一个Lua状态中发生的错误也不会影响其它的的Lua状态，windows的进程也是这样的。并且，Lua状态之间不能直接沟通，必须写一些辅助代码来完成这点。</p>
-<p>由于所有交换的数据必须经由C代码中转，所以只能在Lua状态间交换那些可以在C语言中表示的类型，例如字符串和数字。由于Lua状态我目前没有使用过，也就没有足够的信心和资格去总结这个东西，还是怕会误导大家，如果以后在实际项目中使用了Lua状态，我还会回过头来总结Lua状态的。相信我，我还会回来的。</p>
-
+        <div class="hbe hbe-container" id="hexo-blog-encrypt"
+     data-hbe-format="4"
+     data-wpm="密码不正确，请重新输入。"
+     data-whm="密码不正确，请重新输入。"
+     data-salt="ccc473dc186e5d5a71313058035f911df248807b9ded560285c673188f13778f"
+     data-nonce="e3bf04954f75eb0c5c8ea666"
+     data-kdf-iterations="600000"
+     data-auto-save="false">
+  <script id="hbeData" type="hbeData">
+    502dd6bc8d30d2553f67c3a85de190a532ccd6b9890434dc76bdfb5f840e3a76acf525e5e84582e70c063ba91707590a78947a8dc0ab6dd65e6d8fe0868d9f48f72a2cf9c9a8581a46023a4fda41b46498bad185ca44905f177d0f0e310b1fcc4a868b09bd7e1fcf01b6e00c5a7ddc63bb72a660877c3ca507ecdedc8abfce2b160f72eb2349dfeb25833948c18d26cc74d9821cfe007a6463a5d704d112efdb7a4f0085f2bb599d65aed1ca798dbd9805d614b9fad2d2576fe2f1edb478f63fe3246e53bc93d8c081fad90e1eda994e7b80db41eac109b16f28372d6039aa9523ee5dbae34a87f3291f101b0398bf682fc044166df45602fb80ce8afa1c1cf4d125f7dd1897ae9a767f24be6e22cc527c62493804fb5138f77863b4ae6e96961e803446baa47eceb985e1e0f9d143c2098d8786c918b8529f0f384db1f76a83a93f8843f21778766bacaac3d5049c7acd0c57e90066b7acc70ae8285088f6115f80ce367818f5d5e28adb19f875861397444afe5f337870395160800d8514862e01758d1a196fb31cd2e9f7b268cb85fe810b44893d42966dfff10be1feb55812973dc88706ec9fec8bb84bc1086a29f5b8f3a29a17f09712fd64fff943a671ce0422b9559d7e9da0c788912d3c90ce6eee333b535a94bbd52459ee401e1042334911c29bc4d122a47636541d6dbfb04c1820fa5b7fe6dc76a6c5cdb5c71f48b041481a5c37007df564a99a9674c7552566ad394320995f5aa619d3905b099112ab3c5cfe965eb6d15fd8fe0b1d683b2328897d037ff5c1d2e65a3c516226da9128ff6bfce3f75987a01e7ca2cca3a7ec0815a756e790eb1282aba8e7fb0aceb0e311d236b87736e1a14a1e913a0e0a4d37a254173fc59f4541c6b1a6e8dfc02516ecc75b34496017f3d3738c52d19bfee7e6aeda502d90fa7198e970f09feb7cb1ce36a09b2d9ac4788951d43fa9c7b1cc5b56d2c58db8278a34e4a185eb2d0ce5ed6975a80f70b8724d77d9ee9bb501a50438c590349867609a1d435a6e9a110659a943aed76b0296d367d2279b7f3bea4d222755aa5270fa5339618ace2fc1840ec86009803ad485dd07ea03bf225397849f137c6d53d1b75cfac62a26ce97962b73ac97794af7b4e52bec6262e24a604ce8ee1db2f6ac6b413fcaf3bbff59849407c14aa61d657fa2b29e13ccfef4bfe51cdb0d741843d952d7db47ec9956e0675f7a2657489ff47d162b144d709279173e545ceaafaa979aa95c930c5663f4495ed8e09832713954558a14938a3f6fc47c052e25702ac2dbab4437262ea6495a25a279f38b6d7f118c25b1bed08484f8b8b3e7783641e53a91d671b1d99fb5bea05443333c77a1037dd637804a540df12d4fc7f3e51322a9e324b4f7cfebe785cb42e87a4f1cb152252ebb594e2b3749d6ac074693937fbea6720dd6c72d51420b56492a25759b303b54a69efb828861820e0342dbe4cac35f29efcc79f96710ef0fd4ed62c1c485164fe4bf41f371880f31b8587c668c98f0ec5ec59a5ab9cc6070d471f539f74589c41b1b9e1610a28298dcb1e33d90b390e3afdd5317a5e7eec32d86ffd2224a6ada3278d35e8af6855ff6ee6e28c9fe8670052dd8ccc572c7524ce6c8dbfe24cda0281e9f2cc27ea082d913f3cc40b7e66524f85f7f2b8ac0e2a39d399ddd09f27f570560e6b9c1c9f25a648f71778de377d9a7c8ee547747aa0ff173439058c3ec8955473880f18498f0cc6c17c5aaa63ddf9f95f577a97541a509fe716d76920282a3a14fd613cc218e6efea7f6b2295767fce5c6916c35cb5263da7483109fcd7d301f2bbf7e033119d5902cd0677966d9ea873493c3ca53e942734216d526ecdcf9771d9fa98afb3b3a397e03a94d8aba161ef31de6e14b7bfba08051dae53cfb038f84e82a833ecb08d20233fe926ca2d74d3ab41489b1435b52ce29e9864b896bd6fb1a6657773da032c30f8027445b94e4f40d5d5b3f3ca0ce4f833f315528732f7edf6b1d5e0b73e9ea2c98f9ebaa0bf60b06ef72d5ca8f660045a20c9584c62d20f1f7f111ce235e3ec1df55be9743b77837de830871325011400f43af376a4c1cb8f87df65f47bbec141ffc4d8a17c831dea77aafc17a13d0778a51075409bee15960a3cf4189b2fb7cdc33c27e5d02f4a0741c87aa96d7cec717f96bdc7e39cbc254be32d46a119359d998cc2d2795e7b9ca7e0b7d97db06baf06c68f50251f94646bb7c3c1ad1bcdf897ba8b1e27e29777fe0fc000ecefd221774dc289a63e3ad1d9a9ecfd88168a3a17f1a68b195ca8e66dcb1c7f5636e59cbd4b0d2fd28a28ce7a42f11269d78fbe4bbb5515c4ff834414ae7f2b8769f812396be97a6e16024bb47ce284f8f888ce8eed3cda8df1b2ca75f02d24b9edb2a27cfd1b76fa0f71d5122ebcc4d1106cb45262dde6bbd070340a766f2c3d440c597cdacb860619caec164ca5f79cdad7d239437e57a676514bc4797f2115ad2649551744a3f2dd52dcce501d2e965dce4e48ff0af00c5f31122c2c86cd0b50795ea569d325ccfdd1e08baac09888ba3792608d12a994cbc90a5c501244868361ab0fd171610dad8f32187e7994562834f955b4846114b5dbcc2e181b4140cf629b644de14a357c43caf078db5cf83aa73017a4b8f916f4f39f6c8bd779ee3414b25175138ef7e35aa40db24285cac1e05f80c1820a71788d91aaaa242459fbb24f3b8b57c23e6a48cb79f72a208b962c0e57fab5c7c5562e84c975cd0b81b4bbd5769c02349eb9be9b7fd417c822b27bbbdffdedb3a39a0a8131d05bc237ae47d238b967dda6e652075b82bbdc74d0543043571afdc738d3ffeba6655eb5b7b37fdf9278fa5e14a3bddd6748d61eeb25bd322fb188550e14642c47df4cb03cc7203fb9abefecc361c28ffa7f42e4e9ad063f3e555c094bbe9149efcbf80c80bcf91e026e0bc440c9ce1d2d250c0862d68256ef03c4f0713531f4df21633e193c0aaea48730c88571806dab1ed8ec080ce4c818d3f7aff4ab661923f90b444170a873895c0d292fd467f23ede6921132cba2f063a061be3302aee3cf69b2001dc35b1b1abc272785f2ba4595bf28841b223cd4a7ee8e50451bbf2abe3c4546c04b115fb48923f22bded6868ceee894eec581747d11aa8791211bdbac31184205f71d6df9abe92edf6a2674d1ecfc4e7060763e6b293ecdfd34076f87d0139ea1e9f7bbf95e22766a6c38e5105a913bda0aa1ea28625b3234acc2acf7b6f7b1380191ee373115766365e621d93b3df17d65725dabd3a217e10b5547b99e1d6b298882656e773fb44e0c595b4563689470097e6f68309842d9d3ad723859af397706be23fccc4629c04fc048c7740cddcd1cd65d2a5ed2c40f2b241e9cf9f6054c8c2380c33c3990dfbef6ffd773683081867cf463d69ca325b794e10a578b8f8f2409851b9e33c654da9308f90f9acb00cd2c6d94d0dd7550efaf791115c139844c60fafd2217a8ecaf5d2499cfc31be2d2d8c71c7ab5a20a45d298c9a918301cbf7e7fa77ed2b6bce8446f4513023c6d4da3db6fda03585c9073adcaf5bf5cb2d774faad288266d7cc6d2b0a2845fd5d87300101d696c0719f80dce2b50078e80ea2ee15bafbcf26eb54ca8fa845bf6c52b0d728d67a48dc23e99e3f3e8a04ea34c0afa94fe34997a980957b8d27d4337d39f51a2fb12356664ca35b5d5194d04e5b8b9810a32b59471736e35a13fe41f8c18d28d5fae276f85d7948eae735b15fbc959b4b85df5cc13db4f5c97d47d88ba1ec04e550f2d2ea62b5c4ec674e82db301d80994c686b237c539af5332078f7f5377d06310a10efba0d052d9452d4b1132931b009f8878b131d537e101e8bc1826a36d6ec2e1bb3e0a44e38318e4a49af33eae38effbcefb59451a146d37b636169f015ac2fc5e892f723e809c2b061c43b12cf7d43b45c25b1b65a39981a78e4337473091c4542b1e8599b46eee4eb230b2ba1f4c7611fd699e9dbb7a3c2c891fab73b9501c75a4b50c2089f4a41bbdea7e1f812df6ee7f4090d92918b3b5bdd1d3cf85a512c571f9ab8d965c23d0c582c9b77b869ff503b9f59168b00369285617c5e2dc6a44d9c9b07b8d6807b1167f350c2e72e677ce3b6b6d5c9758911d401fea5439948b6c83fab8369f21895d12817abe8c9d5dfe68e67b71da30d37507771e4bb063a4fa5d0481ce56ee5d733c228151a86afb4a03537776d45855b2a192f8ee3ac1ddd9c1b66fa58ef57db8b4ea2cfc7c68b18f3fa4ee7966a33cfd3f14b9dab0250badcdf27337fb634a8a4f6cede1b06a612b10e2331099e17da20849de3e842da5cb9184046960dfb5cec3f597999cd2c319c88d78f4249f8b96d15362bc683a9b14f93fb04054221257bb7412a16a5ffd3b2f78a22f2cccda14e597b048c39985486a3966b837278b611b8a37d00b873e6eeb93a2232039844a9999bed59246d544ffd16a7b857ae6731908746529f1d67ccb663ca79cca3a1dfc5031f3b9ceea1a3427f4032f31ca083ce2eef62b084e750ef9a4a87886ae20350cacfda4c48627c23a01dcaaf361b9a6dfd5f07f643d32fa72d7e149a4419e36f766ef12a6b33a96f11bdb374c9ca5683aeab1c6d2df7f3a114fa7287a0db034ddcafef778d84d961a522ed444d004ba2a64007a287fb2c3bbcdd4b960488e5ad796489a02273d703a132df502e2103972df6ef57b7e828ed5edbd62d43a0740e1a3b6770c8bafbce861d07068f7236f18c462a69c406a012ae9005dad43b8a0594a7bd75f3c434dac3af011e926073c185f1bb52b1191ea966c6474c51370b2edcc26d52c859f344c91fede86a4b78a3557f861b8f50ed8e5cbc8580e61978bfa0bf436bffa8c9c4d19f31a8a6969702945ff0c874ce1e866e2da625bd8aa0b020223d999a904644325ce17b3919ec6b141e636a6b42e230ec6a38c2e20eafcdc0d179f7ddfac28c184f0e8626308cca3b801b7de7b3c226b3345596d68d1794be74fd092237dcde64b3676a024be971e287450482b973ac479935a20e73b9982d33d652006e64f287ab03fec481bad15446d5d7191c3fb94a65e06943581a0290480fbb052ef3135d6eaef92f4b83d2ffb683f70346872966e9ed705bc8ad661adbce877da83354e3bad6fd3e086854cf903a023cb0c905eb32ea8b0f62915314295fd90f516fcd2df2e00779d8e8f5e5fe411ebfcdd3aae57596f256aa081fd298a146d5a30abe64c1ed0964bb5ec9aa2271f34b6d8892c56374974093ec9e584636d2a89f89fdea060ba149d1f519364cd4b81e65586a46e5fc74b2c2c2c53d6caa2a21fd922bf475d983315ea20710c198f121fc9bb44811078c34d6386647455cc8830e587327d6f0b72c975ab8d4c436b781136ddab909d84000bece1801986b4070d12f474aa1e146d09e1adbb4d95726bffd677f8bb96029963eec5302a2d788e38631229f360f0ceb049d432954e9b3a0a943649cfb1dbd5f5cc066c60d082d58eb28a05def84727f92c63199ece7d46314f397b30cf16cfa3c0d32530b88fa421d90be944694f3722cba10eb24057a08a956e1df2d012bd82cdb4f0613d6f0d59342fdabcaa7d90d2534cac160285169452fb38c85f8038ac62e03bb5432873177b65ac317b79bb7063f77ef04c2889c46e9ccc4e07e6686b0c3ef8fc3f8c9ff764416863b9e0c426f58ef28e36e5f5176cddc538e469f063041f4c5d00bab1ae0659009d960a4699ec622e044286860ac65d338529a2941849ac0ed9441fdf680cfbb0becb26d1833fbbae63dd53ebbecd92afb9881c28727b71b71af0714e0c0709a5121f0d1641731d303abbb767dbfea8114863eee003152d5a826964bdf4e813f18d8e3bdfad74e7a06ad84dd6e254b8cf5172673b133a72541602d9e7138cd66379bc6c3917628c08010533bd504cd469b984bdf6d6cf6c7403e6ca1fc72003e1a44089ee8d3972825d1873c88fb0c7e8e763a5214cc85b16e36e86ed0eb87a92b838343aad9fb3d2868f2f744efcc33e1eca126ba8ae1c96a4f658b865682a5fb1ea02d4b79a810cfda7cbd9a9c55ce3dac62a8c4a196d9719f0887186d0546df6efba4addd74c7bafa1a9561dc1aed3247fcd144ea52f82ca71b058764a984913e75f7855cd5493cbb45c8fd84871c5fda6bfb70851ed703b016b66f561235516ddd315e6473c1a3815ef325b3898559a94211a610bfa2a45019b191fcef53f32fc82bdf618fad761b909bf89bed891b03b085e2d423afe9dff00c3dce9c2135ef802925dd650862122f4b3e326342dcba29533f1ad8f3022c27613db14d0fd085b721cab35ced72aa63fb786a1e0dcf9d56b70922f2b6a81455d074e1faf24796b0cfaa223355c8b46400edffaa0ab64ee6e0c473bfccbdf3d41179d6778504255f19dd3c8516c59d80f74dd029f0e9f05c7c8ce46fd55bcbb3d8addcfe1a2691de7bf59992cf56d6ef7eae90cacea95b8b9ee08a6c9ba1fb04da4d562627fa0849c406ffea586be4bd2ff931de31fd1b16af1a829f8308b9044b5bf802dce9e678c434aacdeac2a8f4d27f5eeac1a42e2f55bb1a3eeaacee64da934c476c61a57dc6bc7e20c5f3fc7cf8faa5cb56c1f5049640e6f5850317a2354ee3a16a6218e835820372d8773b06ba0b5064e0dbf4500b9c7e718096070ec048ee389fa6829f21cacf720211e2517a2b727c4118a8537f71165c71c8ebc74eec53edc27ebb7631c3771b0beeaa8b3b1b66b65a86f7a6e1e2d1b3fcc970d201c1c2b4048f12f661ded8301aefafec0081d06dbf2c19f4c338cff03531cd56aab2638d26fba0690f5c3be90bcd3754c877118c8d3772ce3cfeb3a2cd034febad52378914d51c9aa2e2bfd2ad039aca5e5e2aa7a6b572420439f749916b52bfcdd2895014a56346427c99ab374d7ca9ac3df9acd43757a9e9421d96b3c103ead9505872a3c5efe0d5ac743ace36ba37ac6f215c3fc4b89562984c6de47e697d1bfc0d7c94921758e8e1c71f68e6cd35225c98a7dd60c1fd86b5e9dec631a312f7d76fa8b37af4d9605669c420827fdc0f6c58776eb1f84910a3ea741d0093a3c8fd3d68337cc93ac4235f7fa461babd2046a42b97c51e7674dabf909e5246311f6f934472494f9d8ed91d485b16daac1a770c5ada9cf26479afbb1b091c5bdfcdf1e7ab2501662314ed75fc0d0ca8fd35d5b379d9de16928efcec118b741d6c1d60397339a4744b1aaab1ef4c17e382d2fcf9cb0b6db46b10fb1d45c90164991a5c791090d8215b7120b7bb6b22f1e4ed37027608c041bf9ce5c2e551c90ddeae5388f49184880ffe316f7a7c28b6c015bb23acbca5d14824395f915aabe7cb49210f7caa18a0d7819bd913d8941598168f86f1e7180033b34205905ddd105c63e01e36317bfc687fb72528265e3e32a0696ff6f3efe52655468fa185b92281dab397a9c1dae40e56b2018b35a6aa13794326bd2e44dbb7719e9c212aa0932fbf6fd4c84f5e85df2cf3276c3aea847ad5e18672b561800deaa34b547cb8b1d6d61d79d5a048c29d5bbd14e81a99cf4228f2f10fed91e125262f96ab4644738ea3e019cd9d7f3c5d9bdac8476b37eb7cd917b7499a2f6324811982519dd11c6d2b56c1fb37124e73bb0229fc1b2ede93e7b1c8cb9fabe190f4d11815463b2be943556ba1c9a5514688224c737e5d9ab2f5b59e440fe238d443e6f2a1ea9b9b31ece7cab222fff08207376c24863fd41bbf072576b8be4c71aafd58c4b5d9d59f3b905bfb4dc13f8bc477f08c255dce6b26741b18aa91a19ec7e059f8b86b5c722e78c02fb3061d9970c567745181d007fd1d71bec131f6f8eae2382cab6eefc2e4adef99f10100ebf56ee8ce9097e76973820a5ad2152d4473fe97ffdd35468bfc9230030719f47b279dfb9d663b7ceec433ac6065a5b63f3ef5ddd596b194a6479308ae9d673ae71767dce755653e5b13e2b427f745636538a10350f8931b71a18d32983d1ce27dc806974457d76672b5f55f9a421b2b0af260587c87c88addb3efe24c6765d68ddcf23eeecad5598cb07606d9692e2bc47c70b3ef1f480f7b4670b7c9611c6d893e09c443551a281412249fa84ba19255f4f9d58910fcc6fbe28a2104b9f0d8553e6a1a9ba5e240c7d141cc8f09fef8c3e8e4beea7272f0d4771d2c20ddf3299ab63d1f8f278e3f6ec97174a4faf0ea26ece0ba6c2a5558e316ec30c65e80d0370f741919957a0e56fa1af5787f9a4d4e32d723a23b28fe4a0113c8d1193abfaf04b23ac83d17e1c4a1970f67b65ba37c0f67aff205c782a7517b97a00138697b59049ee94942f7d63c85e0a59f27099ea870440a239046f2ffba4c4cb3fc198cd944d3e18dcf92fd255e3532acf1c5e0fc2df165e2d32e99bf4fc9a4a8da8140c09ce99f20b8defc7e939131b33cdfc69f062248bcdb5d5e5516c68c57929ef0f794f48fd4066491dc25ccecb767219788176d958064626bdc2da14f35cff46353ed89d46452f950c27ac664d7b353139d29fcdd62aa966290289b381333d03479d80dcd045ba648495a7ac59aa572e216c9c0ead69dd73c4ae3c2ebd171cd76ae753ec3ec89f6bb1754f9a01057c2d61701af15d8db06a29c4c03d2c162e261a67afa60d9c2f883784b49e28c90d365ddcc2c74763332e0d4720c4c88088f1da3fe6079bcc86637e9e4e400dc2f87f3fb0ce637afda0bc0d79a811ed05526b009b9571c981ba5cb239a0805cf9c19a380bfac2f206a6fd195ea9d24f0ec310b660257e10b4f464f8f7fa2ddd3f65395beaf3eb098ba9dc7cf304121dfc220c1d4e087d41f3781f45bc81bb53eb72d233fd3adfd062c31c1437b588106fd50b80c2b7a037aae988c629cbe308a65929ec78a688267f49a1cc8a328b1f095e6ccf1636045febf6c80e350e8ac29fec38ca4858db9cde3ed3d752ea68ec2a3741b140700d33e39a48e213f2ecaef728250408f4234e019cec98ece1b5066a8c39f514643f96e09e896f2e6583da507adedf93b04c68e7662b87b33a83db5e95a829916c4312332d8abe197881cf0e290879fcd0c52b2855825935c88a8199af6541ae8e5f207f1780a91c84c95b86b10a6490684e2c42f21db6edc0ad323be701b12f4f638cf7250ece1982cab42467d2bdb02e07233448cfa5e96336f44356c2c6d6c267be115abf54cd482c3f7427186157926e1c16bddcaa0ee7f2c2fb4c06253bda8cc3c959e6105b15f536251f6a3b96bcdb3572db1e303a9bdeb17741f2c134c36c5e38b6fa7fa4aa3405293cb025a79abd4de3b1cec5d89d6a1d82a09690f2cb5fa2e0f845935b6b3f5ed19c8efa80a97b3fa94675b4ffcae2a89169c25cca0956700110eb6e0fcf83437215cdc0b9fc642cff337bd81531a29667553dea326bb140df78da151ff61e25ebb898e8e42de1fa251580715ed8b42918c596ce83c902e8af974775b3611ab51d02f3e2e1e840b79daa1740e728182e80efc65161dd5e6ec150891eb638c57a6b96abffa5148e033bfc746d182cc4a2cca8731ad3755907622e172f7c85d71d56b8e69b02f8eec6612d4d95bef4f7a0f11271362d7c086497153c9450bcbfffdf70fc76a8a0a3e1dcea0cd260ecc2cc1f4e49ab564565c8ee30e635348206e5efa57062316d5fe78a27a77519fabf7af955920d16c0c3ea7864e80a0433e1afc4fbc75d3582c77cb924c2be4ab5f1b72492d2d01366fe367a118bbfeb7e02405371cfc3c41f421e6e08adbe8d59f67cbf292cb1680fd1a9438b597fab86ea253b243b35d901c6305d40ebb4ffe2490be47ebed4f047f0532e47bc5d2826474ffd9a67c28d96d7c71461c879b106f02e8e940aa3466161c6bd8a706b4c6df43a9eeebf32b5a180580d202b714c707e67daf697bd16f7c6b25d82f322f747435d9ed7ed4cf386f4d31d06e728a0a12a7b1fca142eff0a2e4500d9032989e28e1c50c5e36532cf93575343b9eb0c63723439a7b5024c631bf059069dd7c63bb026c7aa48d668e23de9781fd54a83531cb016755afe0696e598eaf54ad4674f1c4ef1d4751d4f6b669d911df8832aafa89f50af9cfceee59f78192e7ac08fc6ad7c8efd5d70466f179bb1be3fa0d770923dc80170eadae2fbdd77001a8ad9e9608a7a7b60e5196b786b8df67a1acd6f7c24f40d894f50e9b7f6314b5959d3d3ab74908758674b49c8997a45cc057a5ce9525adfe337f7422e320841fa92125c21db2a2c49ab94c640ee04731c6e9e1dd9b9e9841b2dc119a4dae69faf8dafaf1a2135aad3c52688838801752d1da61d2656bf661208f3a7811007e4536679c664a924f11fb9fbd1af11bb94a6daadf2732c0bd769b96e1c885e8d66a2bb40fac8d66a5d3689d86746b7a2bb9d819cf9e10ca055f9d1998ac0e6bca1a916d5ac3af78bd467e2a421fae7872f3bc12240e0cab7465f31613781eaaef3bec8cceb45c573a8ad045f5d5698908e73a87de133969a9d3900be1aebddf05c9285fbcc8b8224f70fa64cd2ab7c63631db60ee729c553b5ac919e0141ac13fdd315ae380b128e49c9a7f341510bf1edb4e03277a9fab17d64b3ebb6cc954390180f2f3416e37d08180b1503d9c254c59743911a83c7ddc2316688e64acaff1430b37254aca078a9fe69e5672951210f7689cedd93bacea1c190845e9bf8a9b65764755a38ceddb40076efb70944eea770440c1c59e0293dcb5bcd449e9187958b6456fa0f34fa0cdc4148d9a956e440aad9b42b6f306dd2956e525966ee89c5b362c226b9687d1526932ae914211512cfbd38ed7abbe8e6a1591002710bbf07e3d2115905953dc7eb93ff8db062cd52765800eb2b690e2cbb4ecfbf155273794c7b54faecd66665ba98b210d08a8ae55350276234a64dfee8baecb0ba64e05c46cdeea1d58a6182342d3cdd2b88ee70416aeb5cc8f8362b8ecc1bc72e7dce5f6b331e0db127cd72fcc8b5f3de7a2b84d0438b7e245f77e29b2292207785afaf49bf24fd38aa5e9365fe72a702ac3fde7b2dae409093c79b31a0bd9c4b852d35c06faed31d897cba0bb18b370138d3f6b84c659e5ceefc567ec34f0a760359e92fcbcd109b48e119e817c7cd887806d
+  </script>
+  <div class="hbe hbe-content">
+    <form id="hbeForm" class="hbe hbe-form">
+      <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">您好，查看本文需要密码。</span>
+      </label>
+    </div>
+      <button class="hbe hbe-button" type="submit">解密</button>
+      <div class="hbe hbe-error" role="alert" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.a3b9f59caa.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
       
 
       
@@ -278,6 +265,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -380,7 +378,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Lua%E7%8A%B6%E6%80%81"><span class="toc-number">1.</span> <span class="toc-text">Lua状态</span></a></li></ol>
+                    目录，不存在的…
                     </div>
                 </span>
             </div>
@@ -432,7 +430,7 @@ var _hmt = _hmt || [];
             <div id="toc-article" class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
                 <strong class="toc-title">文章目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Lua%E7%8A%B6%E6%80%81"><span class="toc-number">1.</span> <span class="toc-text">Lua状态</span></a></li></ol>
+                
            </div>
            <script type="text/javascript">
             function showToc(){
@@ -642,11 +640,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -706,6 +704,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -726,10 +728,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -738,11 +736,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -755,10 +757,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

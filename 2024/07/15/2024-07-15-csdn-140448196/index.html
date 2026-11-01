@@ -9,18 +9,18 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>C++ 导出CSV文件 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140448196  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061">
+  <meta name="description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140448196  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 导出CSV文件">
 <meta property="og:url" content="https://liupeng.icu/2024/07/15/2024-07-15-csdn-140448196/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140448196  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061">
+<meta property="og:description" content="本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;140448196  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
 <meta property="og:locale">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/140448196/04a24979c00165c3.png">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/b8fb4f87d7b82913.png">
 <meta property="og:image" content="https://liupeng.icu/images/csdn/141143565/1378625ad1415cc8.jpg">
 <meta property="article:published_time" content="2024-07-15T12:29:24.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:37:58.604Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:04.195Z">
 <meta property="article:author" content="liupeng">
 <meta property="article:tag" content="hello">
 <meta name="twitter:card" content="summary">
@@ -212,7 +212,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140448196">https://blog.csdn.net/qq_30220519/article/details/140448196</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140448196">https://blog.csdn.net/qq_30220519/article/details/140448196</a></p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CsvStream</span></span><br><span class="line">&#123;</span><br><span class="line">    std::ofstream fs_;</span><br><span class="line">    <span class="type">bool</span> is_first_;</span><br><span class="line">    <span class="type">const</span> std::string separator_;</span><br><span class="line">    <span class="type">const</span> std::string escape_seq_;</span><br><span class="line">    <span class="type">const</span> std::string special_chars_;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">CsvStream</span>(<span class="type">const</span> std::string filename, <span class="type">const</span> std::string separator = <span class="string">&quot;,&quot;</span>)</span><br><span class="line">        : <span class="built_in">fs_</span>()</span><br><span class="line">        , <span class="built_in">is_first_</span>(<span class="literal">true</span>)</span><br><span class="line">        , <span class="built_in">separator_</span>(separator)</span><br><span class="line">        , <span class="built_in">escape_seq_</span>(<span class="string">&quot;\&quot;&quot;</span>)</span><br><span class="line">        , <span class="built_in">special_chars_</span>(<span class="string">&quot;\&quot;&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        fs_.<span class="built_in">exceptions</span>(std::ios::failbit | std::ios::badbit);</span><br><span class="line">        fs_.<span class="built_in">open</span>(filename.<span class="built_in">c_str</span>());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">CsvStream</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">flush</span>();</span><br><span class="line">        fs_.<span class="built_in">close</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">flush</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        fs_.<span class="built_in">flush</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="type">static</span> CsvStream&amp; <span class="title">endl</span><span class="params">(CsvStream&amp; file)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        file.<span class="built_in">endrow</span>();</span><br><span class="line">        <span class="keyword">return</span> file;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">endrow</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        fs_ &lt;&lt; std::endl;</span><br><span class="line">        is_first_ = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CsvStream&amp; <span class="keyword">operator</span>&lt;&lt;(CsvStream&amp; (*val)(CsvStream&amp;))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">val</span>(*<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CsvStream&amp; <span class="keyword">operator</span>&lt;&lt;(<span class="type">const</span> <span class="type">char</span>* val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">write</span>(<span class="built_in">escape</span>(val));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CsvStream&amp; <span class="keyword">operator</span>&lt;&lt;(<span class="type">const</span> std::string&amp; val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">write</span>(<span class="built_in">escape</span>(val));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">    CsvStream&amp; <span class="keyword">operator</span>&lt;&lt;(<span class="type">const</span> T&amp; val)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">write</span>(val);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function">    CsvStream&amp; <span class="title">write</span><span class="params">(<span class="type">const</span> T&amp; val)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!is_first_)</span><br><span class="line">        &#123;</span><br><span class="line">            fs_ &lt;&lt; separator_;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            is_first_ = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        fs_ &lt;&lt; val;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">std::string <span class="title">escape</span><span class="params">(<span class="type">const</span> std::string&amp; val)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        std::ostringstream result;</span><br><span class="line">        result &lt;&lt; <span class="string">&#x27;&quot;&#x27;</span>;</span><br><span class="line">        std::string::size_type to, from = <span class="number">0u</span>, len = val.<span class="built_in">length</span>();</span><br><span class="line">        <span class="keyword">while</span> (from &lt; len &amp;&amp; std::string::npos != (to = val.<span class="built_in">find_first_of</span>(special_chars_, from)))</span><br><span class="line">        &#123;</span><br><span class="line">            result &lt;&lt; val.<span class="built_in">substr</span>(from, to - from) &lt;&lt; escape_seq_ &lt;&lt; val[to];</span><br><span class="line">            from = to + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        result &lt;&lt; val.<span class="built_in">substr</span>(from) &lt;&lt; <span class="string">&#x27;&quot;&#x27;</span>;</span><br><span class="line">        <span class="keyword">return</span> result.<span class="built_in">str</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">CsvStream <span class="title">file</span><span class="params">(<span class="string">&quot;test.csv&quot;</span>)</span></span>;</span><br><span class="line">    file &lt;&lt; <span class="string">&quot;col1&quot;</span> &lt;&lt; <span class="string">&quot;col2&quot;</span> &lt;&lt; <span class="string">&quot;col3&quot;</span> &lt;&lt; CsvStream::endl;</span><br><span class="line">    file &lt;&lt; <span class="string">&quot;val1&quot;</span> &lt;&lt; <span class="string">&quot;val2&quot;</span> &lt;&lt; <span class="string">&quot;val3&quot;</span> &lt;&lt; CsvStream::endl;</span><br><span class="line">    file &lt;&lt; <span class="string">&quot;val1&quot;</span> &lt;&lt; <span class="string">&quot;val2&quot;</span> &lt;&lt; <span class="string">&quot;val3&quot;</span> &lt;&lt; CsvStream::endl;</span><br><span class="line">    file.<span class="built_in">flush</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -619,11 +619,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -683,6 +683,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -703,10 +707,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -715,11 +715,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -732,10 +736,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

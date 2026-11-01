@@ -208,7 +208,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139424962">https://blog.csdn.net/qq_30220519/article/details/139424962</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139424962">https://blog.csdn.net/qq_30220519/article/details/139424962</a></p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> TRACY_FIBERS</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;tracy/Tracy.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;tracy/TracyC.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* fiber = <span class="string">&quot;job1&quot;</span>;</span><br><span class="line">TracyCZoneCtx zone;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">std::thread <span class="title">t1</span><span class="params">([] &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">        TracyFiberEnter(fiber);</span></span></span><br><span class="line"><span class="params"><span class="function">        TracyCZone(ctx, <span class="number">1</span>);</span></span></span><br><span class="line"><span class="params"><span class="function">        zone = ctx;</span></span></span><br><span class="line"><span class="params"><span class="function">        _sleep(<span class="number">1</span>);</span></span></span><br><span class="line"><span class="params"><span class="function">        TracyFiberLeave;</span></span></span><br><span class="line"><span class="params"><span class="function">        &#125;)</span></span>;</span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">    <span class="function">std::thread <span class="title">t2</span><span class="params">([] &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">        TracyFiberEnter(fiber);</span></span></span><br><span class="line"><span class="params"><span class="function">        _sleep(<span class="number">1</span>);</span></span></span><br><span class="line"><span class="params"><span class="function">        TracyCZoneEnd(zone);</span></span></span><br><span class="line"><span class="params"><span class="function">        TracyFiberLeave;</span></span></span><br><span class="line"><span class="params"><span class="function">        &#125;)</span></span>;</span><br><span class="line">    t2.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -286,7 +286,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139392565">https://blog.csdn.net/qq_30220519/article/details/139392565</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139392565">https://blog.csdn.net/qq_30220519/article/details/139392565</a></p>
 </blockquote>
 <h6 id="linux用法"><a href="#linux用法" class="headerlink" title="linux用法"></a>linux用法</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Container（容器）集合成  Services（服务） 交互集合成 Stack（堆栈）</span><br><span class="line"></span><br><span class="line">卸载可能存在的旧版本</span><br><span class="line"><span class="built_in">sudo</span> apt-get update</span><br><span class="line"></span><br><span class="line">使apt可以通过HTTPS使用存储库（repository）</span><br><span class="line"><span class="built_in">sudo</span> apt-get install -y apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line"></span><br><span class="line">添加Docker官方的GPG密钥：</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | <span class="built_in">sudo</span> apt-key add -</span><br><span class="line"></span><br><span class="line">设置stable存储库</span><br><span class="line"><span class="built_in">sudo</span> add-apt-repository <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu <span class="subst">$(lsb_release -cs)</span> stable&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> apt-get update</span><br><span class="line"></span><br><span class="line">安装最新版本的Docker CE：</span><br><span class="line"><span class="built_in">sudo</span> apt-get install -y docker-ce</span><br><span class="line"></span><br><span class="line">列出可用的版本：</span><br><span class="line">apt-cache madison docker-ce</span><br><span class="line">//sudo apt-get install docker-ce=&lt;VERSION&gt;</span><br><span class="line"></span><br><span class="line">查看docker服务是否启动：</span><br><span class="line">systemctl status docker</span><br><span class="line"></span><br><span class="line">启动docker服务</span><br><span class="line"><span class="built_in">sudo</span> systemctl start docker</span><br><span class="line"></span><br><span class="line">经典的hello world：</span><br><span class="line"><span class="built_in">sudo</span> docker run hello-world</span><br></pre></td></tr></table></figure>
 
@@ -367,7 +367,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139392421">https://blog.csdn.net/qq_30220519/article/details/139392421</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139392421">https://blog.csdn.net/qq_30220519/article/details/139392421</a></p>
 </blockquote>
 <h6 id="app-py"><a href="#app-py" class="headerlink" title="app.py"></a>app.py</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> Redis, RedisError</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment"># Connect to Redis</span></span><br><span class="line">redis = Redis(host=<span class="string">&quot;redis&quot;</span>, db=<span class="number">0</span>, socket_connect_timeout=<span class="number">2</span>, socket_timeout=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        visits = redis.incr(<span class="string">&quot;counter&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> RedisError:</span><br><span class="line">        visits = <span class="string">&quot;&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;&quot;</span></span><br><span class="line"></span><br><span class="line">    html = <span class="string">&quot;&lt;h3&gt;Hello &#123;name&#125;!&lt;/h3&gt;&quot;</span> \</span><br><span class="line">           <span class="string">&quot;&lt;b&gt;Hostname:&lt;/b&gt; &#123;hostname&#125;&lt;br/&gt;&quot;</span> \</span><br><span class="line">           <span class="string">&quot;&lt;b&gt;Visits:&lt;/b&gt; &#123;visits&#125;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> html.<span class="built_in">format</span>(name=os.getenv(<span class="string">&quot;NAME&quot;</span>, <span class="string">&quot;world&quot;</span>), hostname=socket.gethostname(), visits=visits)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">80</span>)</span><br></pre></td></tr></table></figure>
 
@@ -453,7 +453,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139375561">https://blog.csdn.net/qq_30220519/article/details/139375561</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139375561">https://blog.csdn.net/qq_30220519/article/details/139375561</a></p>
 </blockquote>
 <p>docker tag  99e874752e6a predixy:9.0.0<br>docker image ls -a<br>docker images<br>docker ps<br>docker inspect  99e874752e6a        #镜像详情查看<br>docker inspect -f ‘{{.ID}}' 99e874752e6a     #99e874752e6a575e3f8ac34a619bd912a99975d27a4fbbe8c91a90149a3a2636<br>docker stop 99e874752e6a<br>docker rm 99e874752e6a<br>docker rmi image.com&#x2F;mgw&#x2F;predixy:9.0.1        #移除镜像标签<br>docker cp  99e874752e6a575e3f8ac34a619bd912a99975d27a4fbbe8c91a90149a3a2636:&#x2F;opt&#x2F;predixy  E:&#x2F;&#x2F;<br>docker exec -it 99e874752e6a575e3f8ac34a619bd912a99975d27a4fbbe8c91a90149a3a2636  &#x2F;bin&#x2F;bash<br>docker save 99e874752e6a &gt; predixy.tar<br>docker tag predixy:9.0.0  image.com&#x2F;mgw&#x2F;predixy:9.0.1<br>docker push  image.com&#x2F;mgw&#x2F;predixy:9.0.1</p>
 <p>docker tag ea3c1aff10e4  image.com&#x2F;mgw&#x2F;predixy:9.0.2<br>docker push  image.com&#x2F;mgw&#x2F;predixy:9.0.2</p>
@@ -622,7 +622,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139360587">https://blog.csdn.net/qq_30220519/article/details/139360587</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139360587">https://blog.csdn.net/qq_30220519/article/details/139360587</a></p>
 </blockquote>
 <p>1.影响path基础属性数据做key缓存，缓存的path应去除坐标变换，归一化。基础属性应满足C&#x3D;A+B, B&#x3D;C-A<br>2.高频path操作以（key+key+操作）做新key缓存。<br>3.高频修改高级属性，以新key+属性变更做新key缓存。<br>4.key与id做中转映射，支持业务扩展。<br>5.内存限制下，统计归一化基础属性key频次，对高频key进行LRU缓存</p>
 <hr>
@@ -696,7 +696,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139346743">https://blog.csdn.net/qq_30220519/article/details/139346743</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139346743">https://blog.csdn.net/qq_30220519/article/details/139346743</a></p>
 </blockquote>
 <h3 id="一般性原则"><a href="#一般性原则" class="headerlink" title="一般性原则"></a>一般性原则</h3><h4 id="遵守尽可能减少意外性的原则"><a href="#遵守尽可能减少意外性的原则" class="headerlink" title="遵守尽可能减少意外性的原则"></a>遵守尽可能减少意外性的原则</h4><blockquote>
 <p>编码流程化，认真仔细地考虑各种情况，并提供应对</p>
@@ -1720,7 +1720,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139334605">https://blog.csdn.net/qq_30220519/article/details/139334605</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139334605">https://blog.csdn.net/qq_30220519/article/details/139334605</a></p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>  requests</span><br><span class="line"><span class="keyword">import</span> urllib3</span><br><span class="line">urllib3.disable_warnings()</span><br><span class="line"><span class="keyword">from</span> jira <span class="keyword">import</span>  JIRA</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_jira</span>(<span class="params">username,password</span>):</span><br><span class="line">    jira = JIRA(<span class="string">&quot;https://jira.cn/&quot;</span>,basic_auth=(username,password))</span><br><span class="line">    <span class="comment">#projects=jira.project(id=13)</span></span><br><span class="line">    <span class="comment"># jql=&#x27;project=&quot;云链-供应链中台-材料域&quot; AND created &gt;= 2020-07-1 AND created &lt;=now() &#x27;</span></span><br><span class="line">    testIssue = jira.issue(<span class="string">&quot;jira-13244&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(testIssue)</span><br><span class="line">    <span class="comment">#issues=jira.search_issues(&#x27;project=&quot;PS&quot; AND creator=currentUser() order by created DESC&#x27;, maxResults=1000)</span></span><br><span class="line">    issues=jira.search_issues(<span class="string">&#x27;project=&quot;PS&quot; AND assignee=currentUser()  AND updated &gt; &quot;-1d&quot;  AND assignee=currentUser() AND (status=&quot;待处理&quot; OR status=&quot;开发中&quot; OR status=&quot;待开发&quot; OR status = &quot;重新打开&quot; OR status = &quot;修复中&quot;) order by priority DESC&#x27;</span>, maxResults=<span class="number">1000</span>)</span><br><span class="line">    a=[<span class="string">&quot;key&quot;</span>,<span class="string">&quot;标题&quot;</span>,<span class="string">&quot;状态&quot;</span>,<span class="string">&quot;子任务&quot;</span>,<span class="string">&quot;createtime&quot;</span>,<span class="string">&quot;项目名&quot;</span>,<span class="string">&quot;link&quot;</span>,<span class="string">&quot;优先级&quot;</span>,<span class="string">&#x27;解决时间&#x27;</span>,<span class="string">&quot;对应开发&quot;</span>,<span class="string">&quot;问题类型&quot;</span>,<span class="string">&quot;问题报告人&quot;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    datas=[]</span><br><span class="line">    <span class="keyword">for</span> index,issue <span class="keyword">in</span> <span class="built_in">enumerate</span>(issues):</span><br><span class="line">        <span class="comment"># b = [issue.key, issue.fields.summary, issue.fields.status, issue.fields.subtasks, issue.fields.created,</span></span><br><span class="line">        <span class="comment">#      issue.fields.project.name,</span></span><br><span class="line">        <span class="comment">#      issue.self, issue.fields.priority, issue.fields.description, issue.fields.versions[0].name if len(issue.fields.versions)&gt;0 else None,</span></span><br><span class="line">        <span class="comment">#      issue.fields.resolutiondate, issue.fields.assignee, issue.fields.issuetype,&quot;陈权&quot;]</span></span><br><span class="line">        b = [issue.key, issue.fields.summary, issue.fields.status, issue.fields.subtasks, issue.fields.created,</span><br><span class="line">             issue.fields.project.name,</span><br><span class="line">             issue.<span class="variable language_">self</span>, issue.fields.priority,</span><br><span class="line">             issue.fields.resolutiondate, issue.fields.assignee, issue.fields.issuetype,<span class="string">&quot;测试&quot;</span>]</span><br><span class="line"></span><br><span class="line">        datas.append(b)</span><br><span class="line">    <span class="built_in">print</span>(datas)</span><br><span class="line"></span><br><span class="line">    df=pd.DataFrame(datas,columns=a)</span><br><span class="line">    <span class="comment"># pd.DataFrame.from_dict(datas,orient=&#x27;index&#x27;,columns=[a])</span></span><br><span class="line">    <span class="built_in">print</span>(df)</span><br><span class="line">    df_tmp=df.query(<span class="string">&quot;状态!=&#x27;完成&#x27;&quot;</span>)</span><br><span class="line">    df_tmp.to_csv(<span class="string">&quot;./static_excel_ptt.csv&quot;</span>, encoding=<span class="string">&#x27;utf_8_sig&#x27;</span>,header=[<span class="string">&quot;key&quot;</span>,<span class="string">&quot;标题&quot;</span>,<span class="string">&quot;状态&quot;</span>,<span class="string">&quot;子任务&quot;</span>,<span class="string">&quot;createtime&quot;</span>,<span class="string">&quot;项目名&quot;</span>,<span class="string">&quot;link&quot;</span>,<span class="string">&quot;优先级&quot;</span>,<span class="string">&#x27;解决时间&#x27;</span>,<span class="string">&quot;对应开发&quot;</span>,<span class="string">&quot;问题类型&quot;</span>,<span class="string">&quot;问题报告人&quot;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> jira</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_comments_content</span>(<span class="params">issue</span>):</span><br><span class="line">    <span class="keyword">return</span> [comment.body <span class="keyword">for</span> comment <span class="keyword">in</span> issue.fields.comment.comments]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    login_jira(<span class="string">&quot;user&quot;</span>,<span class="string">&quot;pswd&quot;</span>)</span><br></pre></td></tr></table></figure>
 
@@ -1797,7 +1797,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139334303">https://blog.csdn.net/qq_30220519/article/details/139334303</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139334303">https://blog.csdn.net/qq_30220519/article/details/139334303</a></p>
 </blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/qiaotaizi/dailyreport" title="GitHub - qiaotaizi&#x2F;dailyreport: 日报生成器">GitHub - qiaotaizi&#x2F;dailyreport: 日报生成器</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/yurencloud/daily" title="GitHub - yurencloud&#x2F;daily: 程序员专用的日报、周报、月报、季报自动生成器！">GitHub - yurencloud&#x2F;daily: 程序员专用的日报、周报、月报、季报自动生成器！</a></p>
@@ -1876,7 +1876,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139306471">https://blog.csdn.net/qq_30220519/article/details/139306471</a></p>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139306471">https://blog.csdn.net/qq_30220519/article/details/139306471</a></p>
 </blockquote>
 <p>1.定义事件类型，mouse，wheel，drag，view。已处理的事件，accept需设置为true，防止重叠热区继续穿透。记录事件生成时间，全局位置和当前帧窗口下位置。</p>
 <p>2.定义事件响应系统interactionSystem，preUpdate，onUpdate，postUpdate，mousePress，mouseMove，mouseRelease，mouseWheel</p>
@@ -2134,11 +2134,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2198,6 +2198,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -2218,10 +2222,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -2230,11 +2230,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2247,10 +2251,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

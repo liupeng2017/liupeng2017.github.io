@@ -9,17 +9,17 @@
   <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>lua表与栈交互解析 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;79963950  lua_gettable和lua_settable都可以操作table。 1void lua_gettable (lua_State *L, int index);  把 t[k] 值压入堆栈， 这里的 t 是指有效索引 ind">
+  <meta name="description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lua表与栈交互解析">
 <meta property="og:url" content="https://liupeng.icu/2018/04/16/2018-04-16-csdn-79963950/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="本文由作者在 CSDN 的同名原创博文迁移，原文：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_30220519&#x2F;article&#x2F;details&#x2F;79963950  lua_gettable和lua_settable都可以操作table。 1void lua_gettable (lua_State *L, int index);  把 t[k] 值压入堆栈， 这里的 t 是指有效索引 ind">
+<meta property="og:description" content="本文已加密，请输入密码后继续阅读。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2018-04-16T09:50:20.000Z">
-<meta property="article:modified_time" content="2026-11-01T11:38:00.368Z">
+<meta property="article:modified_time" content="2026-11-01T13:50:05.769Z">
 <meta property="article:author" content="liupeng">
-<meta property="article:tag" content="hello">
+<meta property="article:tag" content="私密">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
@@ -207,40 +207,31 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/79963950">https://blog.csdn.net/qq_30220519/article/details/79963950</a></p>
-</blockquote>
-<p>lua_gettable和lua_settable都可以操作table。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_gettable (lua_State *L, int index);</span><br></pre></td></tr></table></figure>
-
-<p>把 <code>t[k]</code> 值压入堆栈， 这里的 <code>t</code> 是指有效索引 <code>index</code> 指向的值， 而 <code>k</code> 则是栈顶放的值。</p>
-<p>这个函数会弹出堆栈上的 key （把结果放在栈上相同位置）。 在 Lua 中，这个函数可能触发对应 “index” 事件的元方法 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_settable (lua_State *L, int index);</span><br></pre></td></tr></table></figure>
-
-<p>作一个等价于 <code>t[k] = v</code> 的操作， 这里 <code>t</code> 是一个给定有效索引 <code>index</code> 处的值， <code>v</code> 指栈顶的值， 而 <code>k</code> 是栈顶之下的那个值。</p>
-<p>这个函数会把键和值都从堆栈中弹出。 和在 Lua 中一样，这个函数可能触发 “newindex” 事件的元方法 </p>
-<p>而lua_rawget和lua_rawset分别类似于lua_gettable和lua_settable</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_rawset (lua_State *L, int index);</span><br></pre></td></tr></table></figure>
-
-<p>类似于 <a target="_blank" rel="noopener" href="http://www.codingnow.com/2000/download/lua_manual.html#lua_settable"><code>lua_settable</code></a>， 但是是作一个直接赋值（不触发元方法）。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_rawget (lua_State *L, int index);</span><br></pre></td></tr></table></figure>
-
-<p>类似于 <a target="_blank" rel="noopener" href="http://www.codingnow.com/2000/download/lua_manual.html#lua_gettable"><code>lua_gettable</code></a>， 但是作一次直接访问（不触发元方法）。</p>
-<p>lua_rawgeti(L,t,key)等价于</p>
-<p>lua_pushnumber(L,key)</p>
-<p>lua_rawget(L,t)</p>
-<p>lua_rawseti(L,t,key)等价于</p>
-<p>lua_pushnumber(L,key)</p>
-<p>lua_insert(L,-2)</p>
-<p>lua_rawset(L,t)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_rawgeti (lua_State *L, int index, int n);</span><br></pre></td></tr></table></figure>
-
-<p>把 <code>t[n]</code> 的值压栈， 这里的 <code>t</code> 是指给定索引 <code>index</code> 处的一个值。 这是一个直接访问；就是说，它不会触发元方法。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_rawseti (lua_State *L, int index, int n);</span><br></pre></td></tr></table></figure>
-
-<p>等价于 <code>t[n] = v</code>， 这里的 <code>t</code> 是指给定索引 <code>index</code> 处的一个值， 而 <code>v</code> 是栈顶的值。</p>
-<p>函数将把这个值弹出栈。 赋值操作是直接的；就是说，不会触发元方法</p>
-
+        <div class="hbe hbe-container" id="hexo-blog-encrypt"
+     data-hbe-format="4"
+     data-wpm="密码不正确，请重新输入。"
+     data-whm="密码不正确，请重新输入。"
+     data-salt="11f55a6ed2bfbe3914a4a83df2cfe66b187c7bbf6a38f15989abb19e3600846e"
+     data-nonce="4edfd8d9bfe77bc279fed365"
+     data-kdf-iterations="600000"
+     data-auto-save="false">
+  <script id="hbeData" type="hbeData">
+    05249fa59daec5a8217ed7ef1fe29c2b7d6bfcaf3041fb3e8b9161715f605c36005d889aedb651516e1921829541b15e4bb69ffc8977cb6dcb551101c7b8211555c1696c1f2cfe8dd0bd346917ceb86f4617f8e7fcfd0a4759cb44ccc524bf3cc62bd3f6d2d7a9c1c11a6ace7cf7d63d9a0c831d31bc743ba763cd39a0f3465ce2c92276d3356487fdfd4fb7950b8a5c3e077dc69bced1a64670f02ae2aa01c448f56df5da059d027523b29ef9170f904d6220e72864f353820713932bb2efa5cee9f0b5af1a240b6de28d73779a7d429a444df5551e9328798e29e0969f98c4fd8eed3a5c03ce81ebb288abc503b559dceca29e3f48952e6ed572e3a1b538c5e6dc55843232d9790c1da170656553e1d221aeef02952fa1f0bf9b3e1e52eef454584a57c8dd7e23c1c36b17dffba590d5410bc225087a421be2cbe73eeeb98100d0a8119de9437f613aa0c70ea77c1cf42c287a54d9a7d5074b6db00702d4c70080290f1bdf45bde3a86c1451ed508ee3933020e7252d4b26f0afb3e811c3c497c52301bb66cd4a2e257724feeb26fbc4ea588e6eb56f9a6becf1f440d46fabebd5a2e2c8a38b8b179cfa1781f92e418450ae9265c1351104b982197169cfbf1be90f298179e2be07072d600c2e36370b2a3c8b3d9c5ea6828a0727660580acb4f6f93365d28aa2ab1f118aaecec3957988da05f8861a0d67b309f8ffa34ad51834ef302d9209ddf330a81c774ed981ec55b3cd9b3f6492b24214d90889a29fbe90ce21858ffa02e7cf1e8a1cc027581c6c7ecf03fa8960fdc8bcdc27f87ecafedf463979a896ccb6a8e231f85fa29a0a8c55a339fd7330ef9811c07da50c3b5890982b3bcec88284bd2bef996424722ffd28c93d08342e95c8e0607419d511d7cc990ca27191059fb74f83b0e3acfa343ad6ef33934725bcf604919bf1db58440e01a353799e8b2737bd96faff0b5a1419aebe800943c0e73dc01cc55544641b7a2444d588e6e09c6e7c0be06581ce532e6fe335bd5c1d3fc532da4eb8a7a7d90fc8b3cac99598dd2d60e1d659ea6640c6d2637d54bd0f21e148fd7d8721f0c93c29648c315c43002288c62a30a7914d9a6581770705c98e0937d40f4ab87e3ad00c19baf8aa8f1e00db085cad932cc9a43a4b88970030a458a04956ef4005570b231ca07ecb75cce7a9e2a8232051ecfe52cc98356b585ad085872bc84b22b6c110202c0161af857ecaecb6937a3e9a6dc6698fe1c9b7eb9cc5713488ddb13f3b3b68a1795c6e7c1497ed762a8aca9b6a1e829f465e6ae7e2dbef3d4847ac9e15d77d6cfe1d76edaf54cbf75379cc5242d971a1f21fc123342c1bc10c1d74e1c2e7572df141859b9098a003fa6f1f04d5317ecab4ad5ab5ff3d00dac6a72a09ea05fbd65e1adf793bc043ab3262915f8c266281140d3825443c5f0c5e8b835333b20f92fff4ddd4e1d7b78ea41b29b915daa51e3fe89db457ec909bcb277b5cb4b5f28e430599439bcaceef6cab722850c0fa5c0a6976bf30585da210dc3de237cd66ad33c1f01518e006a83836f77432b336837408a4a4bdf2eb1e66c08a135fdaf069917cdcfc6820800c25bf7c8e1f587afac4ffc53db26103570f1a4c7a1ee7c75986bc6f1a10677d51665fe6ad8e2761265df2bc7b78c5fa738410b8c45a8df5ac5b7f826ed4c7637214b907cbfdda005aa37e6b2addc7a1f0fdc315f0fe10e7365da0b48ddf479e12b22c43bee59132e43865c462d83d58edc877e2b68536fb0cfa7b6ca65ab17265f5b05b4df2a534397795e8ee7cdcb6542dfb0d296af2191ed9ce44a2b976c17376a2b3625bc78589e1f9cc61a9ef739c22f73425696322497ddd16022028c23de47dc84b1458228da818beb32a6b34cd153fa241d52cde700c1f145b2a164ca2ea9995f9f0d02c364bf28748327711e948ebd16d23567d30915fad66dcf2977556d3ca46c32ff86f988edbed4d144b4b9ea64235228c17fe79e28d80d39e6fc4a7ae690451a0e1a2f81087794d18a6ea3458f6a834a4072f655ce603855eb454ffe889e70a2d06dc97e8bae8f4d6c8a09dfbe2f6e2221fc7cdf319f9ae30c3eb99683ee7f7670862f85f32316ca2052b10fa50d404eb981ba12060f734788e0938aead71b2f1ee93313541ec7bf8acd85e5b250613af994b813ba7144922c7bb941566678d0abc53da95a2e3bb3db887d510e6661ad0ce27ed086b65d8e9d26ff399c37cb280fc902abed8bc45f72685072f8ac3fdbe517397bc4b2a90ab8d3eca166d40ad803fd044bcd1b3292ff19fea089320e71b3dc2d7c78676198454a4ddecb2a6d1c89b0c9de69fb405daf0cdfdff204d7c0effe23243e7b74a013a6d425e9c3904bc8d7592c19825b158424c51db77c177433070f4a6994d5192bb2d6111c9f184c7b1af7b02bf726a2c137028cfd360d6ae728c7ddabbb605e3a0d3157fefc2cbefb25113a26900b8ebfd8e00adf61377dcda2f4f7ae076a262c05e9ee06daff673ece507e5c7fbb3ec2bc47e3e32e6bd8503e8355da4b6b76c4c7f2ec1b76d4bfdc0d8c58b8780c35517a4697aacf87cb9050e6e39c7bb79b62199690f9457c720a50bc65dce6bb56d157054ca0ca24b967846d78477a356f2516507e787a5da8272ed3bc0ddf2a2dc546c72db49cb2027c32eee9333ccf3182fac6f3c489b0cb4bf82087d26fb891a9f77e79f80613d8845a3cb0a92605057d60814b1e4f3cff0b64e503b163d84403e255d3e12685ef0f0b4e0b6ea92914ad6109a062a90ebe631f3fd0ae2df0b1b1e3fed7acdeaa412c55f992c76c304fde2de9416fa452e4fa258ec3c5d6f1135f2b11e9785cd5e37eb0b5975c2408bc91b9d7248e3172e039990526bce0e8b1362d7044b388e074e9f064ea5136cd10c8c6e62775ac0ea6ff174dd6874363cabd9e04e53368490dea6daf547efbb07dc94fa8660782d91e3f8b9659e25624ba0a64d55a5ad46b00b0d3b96133b8b55c8bda54e02a18ec838be825cac4504366f88f22c3aa37893312450413ec71c975c726f834d07bba63b3553e3f2896bacdcfc80df28dea31230e5a56b9536ca0db9a1a7093d228b63f9f5d449698e3e24e5d3ea74a8a2005967cf0dbaeb94d238df05bdbb7bb3c86e2af32041d162b2b6b0b3e84a760a474f5f5c37c3f24f39f1e2e8659241d49c527fc03fe737ec5d4e07fda88807db81dbd8e62106c117d14344e511e2eced630b3529c609a5bda0c8d1c65860fd77fe538cfeef605753894d071d9d1cbb26b77bd8ffd29f5451647677f4c59a5ffe43c40a98b37630f333972b16c207386ceb9f142e82121a0973af234a83bceac512a9dbb3265dce0802ead4bc4feb7225714fb629feb0e446baf104b20b6f444903d26276597c3d4026178a875ffaa6e32b8c41529d89157eca3c99d44bc6ad32ef149ba674fed858d4a5d9a2e544264e5cbaa570395608e6e9f5d2244727b7ee24f03a88324fda5f78b2d03954bfbdb1f93b0e4704d06077d91277830a75474fd0fbcb102fe32de3e38fd2d1c0b7e579a4573a4b64f8364b70b41893510d2d47fccd3dc2695f2d43dd6986c5c45251d7900f88fdebb2248b67984a0c078319192fc19e4fc9a8227306bb28ba97eb8881d6453f78851edb025973451888ec32fcf00c91254d399ba75276a456bfc4a4e4de5b7e88a663780a01abd821e61dd1286d70e07b6a0324ce72f4742ca8428c50d9c34e4b53c0ff20629d5157ae7a747772e03fe300bba2a1cb435b9b61aa74eb1162803f7356e876a04fd11b83065e3cc7c3a383d3f2e216c732dcd775191fae3664c15b97bd32332571819a85854a80a724854a6000a5f485ba40b550f61993f2d3b8e4f16a2051200a2fbe9bcf3377cbf18967c86f3d0d957ed42ccd63537aa8ee85d162ec9a9ad88e52687790118156120c0e1f5d9e68e3628652f522fb14d4ce38de810ee112dfada53591e4c22b64b3019c7ad994457b2c2303d0a447c05de1aae1bd7c9ab2b79f2ad479ff66ae8f3d4b3636681c3eeb650e891b1c44f2de4d4b13d84ecb14c101663015565e89012242635e8a9f8e8eacbd5a719a234988804196d41dc835534d54d044d5f5140753b0d62692f7729ab1b568f6c4da5950937b41309820cbd8f7a14db0bdbe97eaff484aff86343dc3aa912875de6fca04b85b652889e2db7a51917aff07b1b0f093bf55e83ea190cc475e6ad9bf122e5acdec47cf4f460cf3e0634083f6276016ec9f66189baf8933b2c09c3ed425e9f7dc097e92d0f747c54d0e76baaf7e606396114d7e9fb9eef011d4a4521b98054c4dd8bf1752e397c14fe4ccfb5e3b55084d3bb24c8df596ce25c874f4aece7689ee314890cc3fd52d64225cd84f736b8550082474105b4d888cac23b9e9fa3f97e8148a8b31597ada87e2ac0d511258564b305a9b9e307d965de7e75ca7a10cd81bc8d8ea30f1b1a4147ae4d1fd6b2a771958bdee3bd52d3939e49f7b8f0c6465c21c009d3ad8c46a67896373ac22cb834358cbb885cb04bc8cdc4228b9ccf16b89edc486c7c5f6e2a615a927e7e86f10f377198191f41af70637070328affcb785f29fc8fea7e912d558b7a4f163685e6d8fc1587b3b59f7bd766fcfce5f0945d4dca1e0f33336accd157672eef64ee88500ea0f4268b0d223cd550e1257ed98f1f1c8f5c728285cf1514fc4cd1985bcc2010fd055172dd2420f9d8b0c49ded75694eab9f5f38d92f499391f73f610bbae9fe946a473a87299076e73340f75a5747220077992404df8e47f6a15107e8d0c6632f160cfbd9c8e2335cd28ee1562089b168b3e6043eae096cf0132b9db973e1dec13df386b41db887f4ce56eb9f54a83fdaaac016cd7abde9bf6dda44846ee089b31e52c69420cffafecc00592758126eda3d275f30b126708344cd43b0a0e9c7f51838f43a0e6cae5a31ff484ffa3a6d4409c4582787441026879c3ead770fb714b90ca475f12548e63a0398e7e
+  </script>
+  <div class="hbe hbe-content">
+    <form id="hbeForm" class="hbe hbe-form">
+      <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">您好，查看本文需要密码。</span>
+      </label>
+    </div>
+      <button class="hbe hbe-button" type="submit">解密</button>
+      <div class="hbe hbe-error" role="alert" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.a3b9f59caa.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
       
 
       
@@ -274,6 +265,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -638,11 +640,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -702,6 +704,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -722,10 +728,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -734,11 +736,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -751,10 +757,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

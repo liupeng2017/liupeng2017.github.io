@@ -926,17 +926,10 @@ tags:
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/79976413">https://blog.csdn.net/qq_30220519/article/details/79976413</a></p>
-</blockquote>
-<p>int delay_us(int us)&#x2F;&#x2F;微秒延时函数实现<br>{<br>    LARGE_INTEGER fre;<br>    if (QueryPerformanceFrequency(&amp;fre))<br>    {<br>        LARGE_INTEGER run,priv,curr,res;<br>        run.QuadPart &#x3D; fre.QuadPart * us &#x2F; 1000000;<br>        QueryPerformanceCounter(&amp;priv);<br>        do<br>        {<br>            QueryPerformanceCounter(&amp;curr);<br>        } while (curr.QuadPart - priv.QuadPart &lt; run.QuadPart);<br>        curr.QuadPart -&#x3D; priv.QuadPart;<br>        int nres &#x3D; (curr.QuadPart * 1000000 &#x2F; fre.QuadPart);<br>        return nres;<br>    }<br>    return -1;<br>}<br>double GetTickCountA()<br>{<br> LARGE_INTEGER litmp;<br> LONGLONG qt;<br> double dff;<br> QueryPerformanceFrequency(&amp;litmp);&#x2F;&#x2F;获得时钟频率   dff&#x3D;(double)litmp.QuadPart; <br> &#x2F;&#x2F;获得初始值 <br> QueryPerformanceCounter(&amp;litmp); <br> qt&#x3D;litmp.QuadPart; </p>
-<p> return (qt*1000000&#x2F;dff); }</p>
-<p>多线程：</p>
-<p>clock()函数的功能: 这个函数返回从“开启这个程序进程”到“程序中调用C++ clock()函数”时之间的CPU时钟计时单元（clock tick）数当程序单线程或者单核心机器运行时，这种时间的统计方法是正确的。但是如果要执行的代码多个线程并发执行时就会出问题，因为最终end-begin将会是多个核心总共执行的时钟嘀嗒数，因此造成时间偏大。  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用多媒体定时器timeSetEvent()函数，该函数定时精度为ms级。利用该函数可以实现周期性的函数调用。如示例工程中的Timer6和Timer6_1。函数的原型如下：MMRESULT timeSetEvent（UINT uDelay, UINT uResolution, LPTIMECALLBACK lpTimeProc, WORD dwUser, UINT fuEvent）该函数设置一个定时回调事件，此事件可以是一个一次性事件或周期性事件。事件一旦被激活，便调用指定的回调函数， 成功后返回事件的标识符代码，否则返回NULL。函数的参数说明如下：uDelay：以毫秒指定事件的周期。Uresolution：以毫秒指定延时的精度，数值越小定时器事件分辨率越高。缺省值为1ms。LpTimeProc：指向一个回调函数。DwUser：存放用户提供的回调数据。FuEvent：指定定时器事件类型：   TIME_ONESHOT：uDelay毫秒后只产生一次事件   TIME_PERIODIC ：每隔uDelay毫秒周期性地产生事件。具体应用时，可以通过调用timeSetEvent()函数，将需要周期性执行的任务定义在LpTimeProc回调函数 中(如：定时采样、控制等)，从而完成所需处理的事件。需要注意的是，任务处理的时间不能大于周期间隔时间。另外，在定时器使用完毕后， 应及时调用timeKillEvent()将之释放。</span><br></pre></td></tr></table></figure>
-
-<p>用API函数SetThreadAffinityMask，设定一个线程居留在一个处理器上</p>
-
+        本文已加密，请输入密码后继续阅读。
+        
+          <a class="article-more-a" href="/2018/04/17/2018-04-17-csdn-79976413/#more">more >></a>
+        
       
 
       
@@ -944,6 +937,17 @@ tags:
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -1003,44 +1007,10 @@ tags:
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/79975608">https://blog.csdn.net/qq_30220519/article/details/79975608</a></p>
-</blockquote>
-<p>只要创建一个Lua状态，Lua就会自动在这个状态中创建一个新线程，这个线程称为“主线程”。主线程永远不会被回收。当调用lua_close关闭状态时，它会随着状态一起释放。调用lua_newthread便可以在一个状态中创建其他的线程。</p>
-<p>lua_State *lua_newthread(lua_State *L);  </p>
-<p>这个函数返回一个lua_State指针，表示新建的线程。它会将新线程作为一个类型为“thread”的值压入栈中。如果我们执行了：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">L1 = lua_newthread(L);</span><br></pre></td></tr></table></figure>
-
-<p>现在，我们拥有了两个线程L和L1，它们内部都引用了相同的Lua状态。每个线程都有其自己的栈。新线程L1以一个空栈开始运行，老线程L的栈顶就是这个新线程。</p>
-<p>除了主线程以外，其它线程和其它Lua对象一样都是垃圾回收的对象。当新建一个线程时，线程会压入栈，这样能确保新线程不会成为垃圾，而有的时候，你在处理栈中数据时，不经意间就把线程弹出栈了，而当你再次使用该线程时，可能导致找不到对应的线程而程序崩溃。为了避免这种情况的发生，可以保持一个对线程的引用，比如在注册表中保存一个对线程的引用。</p>
-<p>当拥有了一个线程以后，我们就可以像主线程那样来使用它，以前博文中提到的对栈的操作，对这个新的线程都适用。然而，使用多线程的目的不是为了实现这些简单的功能，而是为了实现协同程序。</p>
-<p>为了挂起某些协同程序的执行，并在稍后恢复执行，我们可以使用lua_resume函数来实现。</p>
-<p>int lua_resume(lua_State *L, int narg);  </p>
-<ol>
-<li>lua_resume没有参数用于指出期望的结果数量，它总是返回被调用函数的所有结果；</li>
-<li>它没有用于指定错误处理函数的参数，发生错误时不会展开栈，这就可以在发生错误后检查栈中的情况；</li>
-<li>如果正在运行的函数交出（yield）了控制权，lua_resume就会返回一个特殊的代码LUA_YIELD，并将线程置于一个可以被再次恢复执行的状态。</li>
-</ol>
-<p>当lua_resume返回LUA_YIELD时，线程的栈中只能看到交出控制权时所传递的那些值。调用lua_gettop则会返回这些值的数量。若要将这些值移到另一个线程，可以使用lua_xmove。</p>
-<p>为了恢复一个挂起线程的执行，可以再次调用lua_resume。  </p>
-<p>在这种调用中，Lua假设栈中所有的值都是由yield调用返回的，当然了，你也可以任意修改栈中的值。作为一个特例，如果在一个lua_resume返回后与再次调用lua_resume之间没有改变过线程栈中的内容，那么yield恰好返回它交出的值。如果能很好的理解这个特例是什么意思，那就说明你已经非常理解Lua中的协同程序了，如果你还是不知道我说的这个特例是什么意思，请再去读一遍《<a target="_blank" rel="noopener" href="http://www.jellythink.com/archives/508" title="Lua中的协同程序">Lua中的协同程序</a>》，如果你还不懂，那你就在下放留言吧（提醒：这个特例主要利用的是resume-yield之间的传参规则）。</p>
-<p>现在，我就通过一个简单的程序来做个试验，以便更好的理解Lua的线程。使用C代码来调用Lua脚本，Lua函数作为一个协同程序来启动，这个Lua函数可以调用其它Lua函数，任意的一个Lua函数都可以交出控制权，从而使lua_resume调用返回。</p>
-<p>coroutine .yield        Suspends the execution of the calling coroutin</p>
-<p>function Func1(param1)</p>
-<p>Func2(param1 + 10)</p>
-<p>print(“Func1 ended.”)</p>
-<p>return 30</p>
-<p>end</p>
-<p>function Func2(value)</p>
-<p>coroutine.yield(10, value)</p>
-<p>print(“Func2 ended.”)</p>
-<p>end</p>
-<p>下面是C++代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">lua_State *L1 = lua_newthread(L);</span><br><span class="line">if (!L1)</span><br><span class="line">&#123;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">lua_getglobal(L1, &quot;Func1&quot;);</span><br><span class="line">lua_pushinteger(L1, 10);</span><br><span class="line"></span><br><span class="line">// 运行这个协同程序</span><br><span class="line">// 这里返回LUA_YIELD</span><br><span class="line">bRet = lua_resume(L1, 1);</span><br><span class="line">cout &lt;&lt; &quot;bRet:&quot; &lt;&lt; bRet &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">// 打印L1栈中元素的个数</span><br><span class="line">cout &lt;&lt; &quot;Element Num:&quot; &lt;&lt; lua_gettop(L1) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">// 打印yield返回的两个值</span><br><span class="line">cout &lt;&lt; &quot;Value 1:&quot; &lt;&lt; lua_tointeger(L1, -2) &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;Value 2:&quot; &lt;&lt; lua_tointeger(L1, -1) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">// 再次启动协同程序</span><br><span class="line">// 这里返回0</span><br><span class="line">bRet = lua_resume(L1, 0);</span><br><span class="line">cout &lt;&lt; &quot;bRet:&quot; &lt;&lt; bRet &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;Element Num:&quot; &lt;&lt; lua_gettop(L1) &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; &quot;Value 1:&quot; &lt;&lt; lua_tointeger(L1, -1) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
-
-<h5 id="Lua状态"><a href="#Lua状态" class="headerlink" title="Lua状态"></a>Lua状态</h5><p>每次调用luaL_newstate（或者lua_newstate）都会创建一个新的Lua状态。不同的Lua状态是各自完全独立的，它们之间不共享任何数据。这个概念是不是很熟悉，是不是特别像Windows中的进程的概念。也就是说，在一个Lua状态中发生的错误也不会影响其它的的Lua状态，windows的进程也是这样的。并且，Lua状态之间不能直接沟通，必须写一些辅助代码来完成这点。</p>
-<p>由于所有交换的数据必须经由C代码中转，所以只能在Lua状态间交换那些可以在C语言中表示的类型，例如字符串和数字。由于Lua状态我目前没有使用过，也就没有足够的信心和资格去总结这个东西，还是怕会误导大家，如果以后在实际项目中使用了Lua状态，我还会回过头来总结Lua状态的。相信我，我还会回来的。</p>
-
+        本文已加密，请输入密码后继续阅读。
+        
+          <a class="article-more-a" href="/2018/04/17/2018-04-17-csdn-79975608/#more">more >></a>
+        
       
 
       
@@ -1048,6 +1018,17 @@ tags:
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -1107,40 +1088,10 @@ tags:
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>本文由作者在 CSDN 的同名原创博文迁移，原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/79963950">https://blog.csdn.net/qq_30220519/article/details/79963950</a></p>
-</blockquote>
-<p>lua_gettable和lua_settable都可以操作table。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_gettable (lua_State *L, int index);</span><br></pre></td></tr></table></figure>
-
-<p>把 <code>t[k]</code> 值压入堆栈， 这里的 <code>t</code> 是指有效索引 <code>index</code> 指向的值， 而 <code>k</code> 则是栈顶放的值。</p>
-<p>这个函数会弹出堆栈上的 key （把结果放在栈上相同位置）。 在 Lua 中，这个函数可能触发对应 “index” 事件的元方法 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_settable (lua_State *L, int index);</span><br></pre></td></tr></table></figure>
-
-<p>作一个等价于 <code>t[k] = v</code> 的操作， 这里 <code>t</code> 是一个给定有效索引 <code>index</code> 处的值， <code>v</code> 指栈顶的值， 而 <code>k</code> 是栈顶之下的那个值。</p>
-<p>这个函数会把键和值都从堆栈中弹出。 和在 Lua 中一样，这个函数可能触发 “newindex” 事件的元方法 </p>
-<p>而lua_rawget和lua_rawset分别类似于lua_gettable和lua_settable</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_rawset (lua_State *L, int index);</span><br></pre></td></tr></table></figure>
-
-<p>类似于 <a target="_blank" rel="noopener" href="http://www.codingnow.com/2000/download/lua_manual.html#lua_settable"><code>lua_settable</code></a>， 但是是作一个直接赋值（不触发元方法）。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_rawget (lua_State *L, int index);</span><br></pre></td></tr></table></figure>
-
-<p>类似于 <a target="_blank" rel="noopener" href="http://www.codingnow.com/2000/download/lua_manual.html#lua_gettable"><code>lua_gettable</code></a>， 但是作一次直接访问（不触发元方法）。</p>
-<p>lua_rawgeti(L,t,key)等价于</p>
-<p>lua_pushnumber(L,key)</p>
-<p>lua_rawget(L,t)</p>
-<p>lua_rawseti(L,t,key)等价于</p>
-<p>lua_pushnumber(L,key)</p>
-<p>lua_insert(L,-2)</p>
-<p>lua_rawset(L,t)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_rawgeti (lua_State *L, int index, int n);</span><br></pre></td></tr></table></figure>
-
-<p>把 <code>t[n]</code> 的值压栈， 这里的 <code>t</code> 是指给定索引 <code>index</code> 处的一个值。 这是一个直接访问；就是说，它不会触发元方法。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void lua_rawseti (lua_State *L, int index, int n);</span><br></pre></td></tr></table></figure>
-
-<p>等价于 <code>t[n] = v</code>， 这里的 <code>t</code> 是指给定索引 <code>index</code> 处的一个值， 而 <code>v</code> 是栈顶的值。</p>
-<p>函数将把这个值弹出栈。 赋值操作是直接的；就是说，不会触发元方法</p>
-
+        本文已加密，请输入密码后继续阅读。
+        
+          <a class="article-more-a" href="/2018/04/16/2018-04-16-csdn-79963950/#more">more >></a>
+        
       
 
       
@@ -1148,6 +1099,17 @@ tags:
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -1385,11 +1347,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
+                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+                <a href="javascript:void(0)" class="js-tag color3">继承 对象 原型 Array 正则</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1449,6 +1411,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
               </li>
              
@@ -1469,10 +1435,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">私密</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">u8</a>
               </li>
              
@@ -1481,11 +1443,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1498,10 +1464,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
