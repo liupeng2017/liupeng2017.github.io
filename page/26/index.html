@@ -186,6 +186,87 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-05-16-csdn-138974964" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/05/16/2024-05-16-csdn-138974964/">charles抓包代理</a>
+    </h1>
+  
+
+        
+        <a href="/2024/05/16/2024-05-16-csdn-138974964/" class="archive-article-date">
+  	<time datetime="2024-05-16T13:01:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        本文已加密，请输入密码后继续阅读。
+        
+          <a class="article-more-a" href="/2024/05/16/2024-05-16-csdn-138974964/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/05/16/2024-05-16-csdn-138974964/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-05-16-csdn-138974883" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -942,134 +1023,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/05/14/2024-05-14-csdn-138859732/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-05-13-csdn-138815353" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/05/13/2024-05-13-csdn-138815353/">随机梯度算法应用动画场景</a>
-    </h1>
-  
-
-        
-        <a href="/2024/05/13/2024-05-13-csdn-138815353/" class="archive-article-date">
-  	<time datetime="2024-05-13T11:01:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/138815353">https://blog.csdn.net/qq_30220519/article/details/138815353</a></p>
-</blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/lilipads/gradient_descent_viz" title="https:&#x2F;&#x2F;github.com&#x2F;lilipads&#x2F;gradient_descent_viz">https://github.com/lilipads/gradient_descent_viz</a></p>
-<p>#include &lt;math.h&gt;<br>#include <iostream></p>
-<p>namespace Function {<br>    enum FunctionName {<br>        local_minimum,  &#x2F;&#x2F; 许多小坑<br>        global_minimum,    &#x2F;&#x2F; 大坑<br>        saddle_point,   &#x2F;&#x2F; 起伏山路<br>        ecliptic_bowl, &#x2F;&#x2F; 起伏大坑<br>        hills,  &#x2F;&#x2F; 大坑 + 小坑 + 山谷<br>        plateau &#x2F;&#x2F; 大坑 + 波纹<br>    };<br>}</p>
-<p>class Point { <br>public:<br>    Point() : x(0.), z(0.) {}<br>    Point(double x1, double z1) : x(x1), z(z1) {}<br>    double x; <br>    double z;<br>};</p>
-<p>const float kBallRadiusPerGraph &#x3D; 24.63;</p>
-<p>class GradientDescent {<br>public:<br>    GradientDescent();<br>    virtual ~GradientDescent() {}</p>
-<p>    double learning_rate &#x3D; 0.001;<br>    static Function::FunctionName function_name;</p>
-<p>    &#x2F;&#x2F; simple getters and setters<br>    Point position() { return p; }<br>    void setStartingPosition(double x, double z) { starting_p.x &#x3D; x; starting_p.z &#x3D; z; }<br>    bool isConverged() { return is_converged; };<br>    double gradX() { return grad.x; };<br>    double gradZ() { return grad.z; };<br>    Point gradPosition() { return grad; };<br>    Point delta() { return m_delta; }</p>
-<p>    &#x2F;&#x2F; core methods<br>    static double f(double x, double z);<br>    Point takeGradientStep();<br>    void resetPositionAndComputeGradient();</p>
-<p>protected:<br>    Point p; &#x2F;&#x2F; current position<br>    Point starting_p; &#x2F;&#x2F; starting position<br>    Point m_delta; &#x2F;&#x2F; movement in each direction after a gradient step<br>    Point grad; &#x2F;&#x2F; gradient at the current position<br>    bool is_converged &#x3D; false;</p>
-<p>    void setPositionAndComputeGradient(double x, double z);<br>    void computeGradient();<br>    virtual void updateGradientDelta() &#x3D; 0;<br>    virtual void resetState() {}<br>};</p>
-<p>class VanillaGradientDescent : public GradientDescent {<br>public:<br>    VanillaGradientDescent() {}</p>
-<p>protected:<br>    void updateGradientDelta();<br>};</p>
-<p>class Momentum : public GradientDescent {<br>public:<br>    Momentum() {}</p>
-<p>    double decay_rate &#x3D; 0.8;</p>
-<p>protected:<br>    void updateGradientDelta();<br>};</p>
-<p>class AdaGrad : public GradientDescent {<br>public:<br>    AdaGrad() {}<br>    Point gradSumOfSquared() { return grad_sum_of_squared; }</p>
-<p>protected:<br>    void updateGradientDelta();<br>    void resetState();</p>
-<p>private:<br>    Point grad_sum_of_squared;<br>};</p>
-<p>class RMSProp : public GradientDescent {<br>public:<br>    RMSProp() {}</p>
-<p>    double decay_rate &#x3D; 0.99;<br>    Point decayedGradSumOfSquared() { return decayed_grad_sum_of_squared; }</p>
-<p>protected:<br>    void updateGradientDelta();<br>    void resetState();</p>
-<p>private:<br>    Point decayed_grad_sum_of_squared;<br>};</p>
-<p>class Adam : public GradientDescent {<br>public:<br>    Adam() {}</p>
-<p>    double beta1 &#x3D; 0.9;<br>    double beta2 &#x3D; 0.999;<br>    Point decayedGradSum() { return decayed_grad_sum; }<br>    Point decayedGradSumOfSquared() { return decayed_grad_sum_of_squared; }</p>
-<p>protected:<br>    void updateGradientDelta();<br>    void resetState();</p>
-<p>private:<br>    Point decayed_grad_sum;<br>    Point decayed_grad_sum_of_squared;<br>};</p>
-<p>const double kDivisionEpsilon &#x3D; 1e-12;<br>const double kFiniteDiffEpsilon &#x3D; 1e-12;<br>const double kConvergenceEpsilon &#x3D; 1e-2;</p>
-<p>Function::FunctionName GradientDescent::function_name &#x3D; Function::local_minimum;</p>
-<p>GradientDescent::GradientDescent()<br>{<br>    resetPositionAndComputeGradient();<br>}</p>
-<p>double GradientDescent::f(double x, double z) {<br>    switch (function_name) {<br>    case Function::local_minimum: {<br>        z *&#x3D; 1.4;<br>        return -2 * exp(-((x - 1) * (x - 1) + z * z) &#x2F; .2) -<br>            6. * exp(-((x + 1) * (x + 1) + z * z) &#x2F; .2) +<br>            x * x + z * z;<br>    }<br>    case Function::global_minimum: {<br>        return x * x + z * z;<br>    }<br>    case Function::saddle_point: {<br>        return sin(x) + z * z;<br>    }<br>    case Function::ecliptic_bowl: {<br>        x &#x2F;&#x3D; 2.;<br>        z &#x2F;&#x3D; 2.;<br>        return -exp(-(x * x + 5 * z * z)) + x * x + 0.5 * z * z;<br>    }<br>    case Function::hills: {<br>        z *&#x3D; 1.4;<br>        return  2 * exp(-((x - 1) * (x - 1) + z * z) &#x2F; .2) +<br>            6. * exp(-((x + 1) * (x + 1) + z * z) &#x2F; .2) -<br>            2 * exp(-((x - 1) * (x - 1) + (z + 1) * (z + 1)) &#x2F; .2) +<br>            x * x + z * z;<br>    }<br>    case Function::plateau: {<br>        x *&#x3D; 10;<br>        z *&#x3D; 10;<br>        double r &#x3D; sqrt(z * z + x * x) + 0.01;<br>        return -sin(r) &#x2F; r + 0.01 * r * r;<br>    }<br>    }<br>    return 0.;<br>}</p>
-<p>void GradientDescent::computeGradient() {<br>    &#x2F;&#x2F; use finite difference method<br>    grad.x &#x3D; (f(p.x + kFiniteDiffEpsilon, p.z) -<br>        f(p.x - kFiniteDiffEpsilon, p.z)) &#x2F; (2 * kFiniteDiffEpsilon);</p>
-<p>    grad.z &#x3D; (f(p.x, p.z + kFiniteDiffEpsilon) -<br>        f(p.x, p.z - kFiniteDiffEpsilon)) &#x2F; (2 * kFiniteDiffEpsilon);<br>}</p>
-<p>void GradientDescent::resetPositionAndComputeGradient() {<br>    is_converged &#x3D; false;<br>    m_delta &#x3D; Point(0, 0);<br>    resetState();<br>    setPositionAndComputeGradient(starting_p.x, starting_p.z);<br>}</p>
-<p>void GradientDescent::setPositionAndComputeGradient(double x, double z) {<br>    &#x2F;* set position and dirty gradient *&#x2F;</p>
-<p>    p.x &#x3D; x;<br>    p.z &#x3D; z;<br>    computeGradient();<br>}</p>
-<p>Point GradientDescent::takeGradientStep() {<br>    &#x2F;* take a gradient step. return the new position<br>     * side effects:<br>     * - update delta to the step just taken<br>     * - update position to new position.<br>     * - update grad to gradient of the new position<br>     *&#x2F;</p>
-<p>    if (abs(gradX()) &lt; kConvergenceEpsilon &amp;&amp;<br>        abs(gradZ()) &lt; kConvergenceEpsilon) {<br>        is_converged &#x3D; true;<br>    }<br>    if (is_converged) return p;</p>
-<p>    updateGradientDelta();<br>    setPositionAndComputeGradient(p.x + m_delta.x, p.z + m_delta.z);<br>    return p;<br>}</p>
-<p>void VanillaGradientDescent::updateGradientDelta() {<br>    m_delta.x &#x3D; -learning_rate * grad.x;<br>    m_delta.z &#x3D; -learning_rate * grad.z;<br>}</p>
-<p>void Momentum::updateGradientDelta() {<br>    &#x2F;* <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stochastic/_gradient/_descent#Momentum">https://en.wikipedia.org/wiki/Stochastic\_gradient\_descent#Momentum</a> *&#x2F;</p>
-<p>    m_delta.x &#x3D; decay_rate * m_delta.x - learning_rate * grad.x;<br>    m_delta.z &#x3D; decay_rate * m_delta.z - learning_rate * grad.z;<br>}</p>
-<p>void AdaGrad::updateGradientDelta() {<br>    &#x2F;* <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stochastic/_gradient/_descent#AdaGrad">https://en.wikipedia.org/wiki/Stochastic\_gradient\_descent#AdaGrad</a> *&#x2F;</p>
-<p>    grad_sum_of_squared.x +&#x3D; pow(grad.x, 2);<br>    grad_sum_of_squared.z +&#x3D; pow(grad.z, 2);<br>    m_delta.x &#x3D; -learning_rate * grad.x &#x2F; (sqrt(grad_sum_of_squared.x) + kDivisionEpsilon);<br>    m_delta.z &#x3D; -learning_rate * grad.z &#x2F; (sqrt(grad_sum_of_squared.z) + kDivisionEpsilon);<br>}</p>
-<p>void AdaGrad::resetState() {<br>    grad_sum_of_squared &#x3D; Point(0, 0);<br>}</p>
-<p>void RMSProp::updateGradientDelta() {<br>    &#x2F;* <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stochastic/_gradient/_descent#RMSProp">https://en.wikipedia.org/wiki/Stochastic\_gradient\_descent#RMSProp</a> *&#x2F;</p>
-<p>    decayed_grad_sum_of_squared.x *&#x3D; decay_rate;<br>    decayed_grad_sum_of_squared.x +&#x3D; (1 - decay_rate) * pow(grad.x, 2);<br>    decayed_grad_sum_of_squared.z *&#x3D; decay_rate;<br>    decayed_grad_sum_of_squared.z +&#x3D; (1 - decay_rate) * pow(grad.z, 2);<br>    m_delta.x &#x3D; -learning_rate * grad.x &#x2F; (sqrt(decayed_grad_sum_of_squared.x) + kDivisionEpsilon);<br>    m_delta.z &#x3D; -learning_rate * grad.z &#x2F; (sqrt(decayed_grad_sum_of_squared.z) + kDivisionEpsilon);<br>}</p>
-<p>void RMSProp::resetState() {<br>    decayed_grad_sum_of_squared &#x3D; Point(0, 0);<br>}</p>
-<p>void Adam::updateGradientDelta() {<br>    &#x2F;* <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stochastic/_gradient/_descent#Adam">https://en.wikipedia.org/wiki/Stochastic\_gradient\_descent#Adam</a> *&#x2F;</p>
-<p>    &#x2F;&#x2F; first moment (momentum)<br>    decayed_grad_sum.x *&#x3D; beta1;<br>    decayed_grad_sum.x +&#x3D; (1 - beta1) * grad.x;<br>    decayed_grad_sum.z *&#x3D; beta1;<br>    decayed_grad_sum.z +&#x3D; (1 - beta1) * grad.z;<br>    &#x2F;&#x2F; second moment (rmsprop)<br>    decayed_grad_sum_of_squared.x *&#x3D; beta2;<br>    decayed_grad_sum_of_squared.x +&#x3D; (1 - beta2) * pow(grad.x, 2);<br>    decayed_grad_sum_of_squared.z *&#x3D; beta2;<br>    decayed_grad_sum_of_squared.z +&#x3D; (1 - beta2) * pow(grad.z, 2);</p>
-<p>    m_delta.x &#x3D; -learning_rate * decayed_grad_sum.x &#x2F;<br>        (sqrt(decayed_grad_sum_of_squared.x) + kDivisionEpsilon);<br>    m_delta.z &#x3D; -learning_rate * decayed_grad_sum.z &#x2F;<br>        (sqrt(decayed_grad_sum_of_squared.z) + kDivisionEpsilon);<br>}</p>
-<p>void Adam::resetState() {<br>    decayed_grad_sum_of_squared &#x3D; Point(0, 0);<br>    decayed_grad_sum &#x3D; Point(0, 0);<br>}</p>
-<p>void print(std::string title, const Point&amp; pt) {<br>    double scrollOffset &#x3D; 2000;<br>    double yOffset &#x3D; scrollOffset &#x2F; kBallRadiusPerGraph;<br>    yOffset &#x3D; 0;<br>    std::cout &lt;&lt; title &lt;&lt; “(“ &lt;&lt; pt.x &lt;&lt; “, “ &lt;&lt; GradientDescent::f(pt.x, pt.z) + yOffset &lt;&lt; “, “ &lt;&lt; pt.z &lt;&lt; “)” &lt;&lt; std::endl;<br>    <br>}</p>
-<p>void test() {<br>    &#x2F;&#x2F; 可用于滑动后缓动慢停止<br>    VanillaGradientDescent  vanillaGradientDescent;<br>    vanillaGradientDescent.learning_rate &#x3D; 0.01; &#x2F;&#x2F;速度<br>    vanillaGradientDescent.function_name &#x3D; Function::global_minimum; &#x2F;&#x2F; 场景<br>    vanillaGradientDescent.setStartingPosition(100, 100);  &#x2F;&#x2F; 顶部起始位置<br>    vanillaGradientDescent.resetPositionAndComputeGradient();   &#x2F;&#x2F; 更新梯度和当前位置<br>    print(“pt”, vanillaGradientDescent.position());<br>    print(“gradient”, vanillaGradientDescent.gradPosition());<br>    print(“delta”, vanillaGradientDescent.delta());<br>    for (size_t i &#x3D; 0; i &lt; 60; i++)<br>    {   &#x2F;&#x2F; 60次<br>        vanillaGradientDescent.takeGradientStep();<br>        print(“pt”, vanillaGradientDescent.position());<br>        print(“gradient”, vanillaGradientDescent.gradPosition());<br>        print(“delta”, vanillaGradientDescent.delta());<br>    }</p>
-<p>    &#x2F;&#x2F; 可用于滑动后反弹多次逐渐停止<br>    Momentum  momentum;<br>    momentum.learning_rate &#x3D; 0.01; &#x2F;&#x2F;速度<br>    momentum.decay_rate &#x3D; 0.9;  &#x2F;&#x2F; 摩擦系数, 1表示理想情况，无摩擦<br>    momentum.setStartingPosition(100, 100);  &#x2F;&#x2F; 顶部起始位置<br>    momentum.resetPositionAndComputeGradient();   &#x2F;&#x2F; 更新梯度和当前位置<br>    print(“pt”, momentum.position());<br>    print(“gradient”, momentum.gradPosition());<br>    print(“delta”, momentum.delta());<br>    for (size_t i &#x3D; 0; i &lt; 60; i++)<br>    {   &#x2F;&#x2F; 200次<br>        momentum.takeGradientStep();<br>        print(“pt”, momentum.position());<br>        print(“gradient”, momentum.gradPosition());<br>        print(“delta”, momentum.delta());<br>    }<br>}</p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/05/13/2024-05-13-csdn-138815353/">展开全文 >></a>
         </p>
       
 

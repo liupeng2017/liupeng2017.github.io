@@ -186,6 +186,92 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-07-13-csdn-140405530" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/13/2024-07-13-csdn-140405530/">C双指针滑动窗口算法</a>
+    </h1>
+  
+
+        
+        <a href="/2024/07/13/2024-07-13-csdn-140405530/" class="archive-article-date">
+  	<time datetime="2024-07-13T12:17:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140405530">https://blog.csdn.net/qq_30220519/article/details/140405530</a></p>
+</blockquote>
+<p>这也许是双指针技巧的最⾼境界了，如果掌握了此算法，可以解决⼀⼤类⼦字符串匹配的问题</p>
+<h6 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h6><p>1、我们在字符串 S 中使⽤双指针中的左右指针技巧，初始化 left &#x3D; right &#x3D; 0，把索引闭区间 [left, right] 称为⼀个「窗⼝」。</p>
+<p>2、我们先不断地增加 right 指针扩⼤窗⼝ [left, right]，直到窗⼝中的字符串 符合要求（包含了 T 中的所有字符）。</p>
+<p>3、此时，我们停⽌增加 right，转⽽不断增加 left 指针缩⼩窗⼝ [left, right]，直到窗⼝中的字符串不再符合要求（不包含 T 中的所有字符了）。 同时，每次增加 left，我们都要更新⼀轮结果。</p>
+<p>4、重复第 2 和第 3 步，直到 right 到达字符串 S 的尽头。</p>
+<p><img src="/images/csdn/140405530/5098766bbc9ab100.png"></p>
+<p><img src="/images/csdn/140405530/aff53dee80c6a757.png"></p>
+<h6 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">matchString</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* content, <span class="type">const</span> <span class="type">char</span>* sub)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 数据初始化</span></span><br><span class="line">	<span class="type">size_t</span> size = <span class="built_in">strlen</span>(content);</span><br><span class="line">	<span class="type">size_t</span> sub_size = <span class="built_in">strlen</span>(sub);</span><br><span class="line">	<span class="type">int</span> flag[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;		<span class="comment">// 字符数统计</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 搜索区间</span></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* begin = content;</span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* end = content + size;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 双指针动态滑动窗口</span></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* _left = begin;</span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* right = begin;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 滑动匹配</span></span><br><span class="line">	<span class="keyword">for</span>(;right &lt; end; ++right) &#123;</span><br><span class="line">		++flag[*right];	<span class="comment">// 窗口内字符数统计</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 缩小窗口，寻找可行解</span></span><br><span class="line">		<span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(; i &lt; sub_size;) &#123;</span><br><span class="line">			<span class="keyword">if</span>(right - _left &lt; sub_size)</span><br><span class="line">				<span class="keyword">break</span>;	<span class="comment">// 窗口失效</span></span><br><span class="line">			<span class="keyword">if</span>(!flag[*(sub + i)])</span><br><span class="line">				<span class="keyword">break</span>; <span class="comment">// 窗口失效</span></span><br><span class="line">			<span class="keyword">if</span>(*(_left + i) != *(sub + i)) &#123;</span><br><span class="line">				--flag[*(_left + i)]; <span class="comment">// 窗口内字符数更新</span></span><br><span class="line">				++_left;</span><br><span class="line">				i= <span class="number">0</span>;</span><br><span class="line">				<span class="keyword">continue</span>;	<span class="comment">// 缩小窗口，重新匹配</span></span><br><span class="line">			&#125;</span><br><span class="line">			++i;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(i == sub_size)</span><br><span class="line">			<span class="keyword">return</span> _left;  <span class="comment">// 查找成功</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> end;	<span class="comment">// 查找失败</span></span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, <span class="built_in">matchString</span>(<span class="string">&quot;abccbaaabcbaabcacbacb&quot;</span>, <span class="string">&quot;acb&quot;</span>));</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acbacb</span><br></pre></td></tr></table></figure>
+
+<h6 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h6><p>找到字符串中所有字⺟异位词？</p>
+<p>⽆重复字符的最⻓⼦串？ </p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/13/2024-07-13-csdn-140405530/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-07-12-csdn-140388319" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -879,84 +965,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/07/08/2024-07-08-csdn-140275837/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-07-08-csdn-140275747" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/08/2024-07-08-csdn-140275747/">表情包原理</a>
-    </h1>
-  
-
-        
-        <a href="/2024/07/08/2024-07-08-csdn-140275747/" class="archive-article-date">
-  	<time datetime="2024-07-08T10:09:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140275747">https://blog.csdn.net/qq_30220519/article/details/140275747</a></p>
-</blockquote>
-<p><img src="/images/csdn/140275747/2800b9eccbee86d4.png"></p>
-<p><a target="_blank" rel="noopener" href="https://unicode.org/Public/emoji/12.1/emoji-zwj-sequences.txt" title="https:&#x2F;&#x2F;unicode.org&#x2F;Public&#x2F;emoji&#x2F;12.1&#x2F;emoji-zwj-sequences.txt"></a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chriscross/article/details/104746788" title="emoji 编码规则介绍_emoji编码-CSDN博客">emoji 编码规则介绍_emoji编码-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.unicode.org/reports/tr51/proposed.html#Emoji_Sequences" title="UTS #51: Unicode Emoji">UTS #51: Unicode Emoji</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140217117" title="C++ UTF-8编解码-CSDN博客">C++ UTF-8编解码-CSDN博客</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/08/2024-07-08-csdn-140275747/">展开全文 >></a>
         </p>
       
 

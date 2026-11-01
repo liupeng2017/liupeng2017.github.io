@@ -186,6 +186,87 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018-04-16-csdn-79963950" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/16/2018-04-16-csdn-79963950/">lua表与栈交互解析</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/16/2018-04-16-csdn-79963950/" class="archive-article-date">
+  	<time datetime="2018-04-16T09:50:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        本文已加密，请输入密码后继续阅读。
+        
+          <a class="article-more-a" href="/2018/04/16/2018-04-16-csdn-79963950/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/16/2018-04-16-csdn-79963950/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2018-04-16-csdn-79963285" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -2098,220 +2179,6 @@ moduleA = function() &#123;
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2015/06/15/2015-06-15-JavaScript-Object-Oriented/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2015-06-14-JavaScript-closure" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/06/14/2015-06-14-JavaScript-closure/">JavaScript 中的闭包</a>
-    </h1>
-  
-
-        
-        <a href="/2015/06/14/2015-06-14-JavaScript-closure/" class="archive-article-date">
-  	<time datetime="2015-06-14T06:06:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-06-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文为慕课网 <a target="_blank" rel="noopener" href="http://www.imooc.com/learn/277">JavaScript深入浅出</a> JavaScript 中的闭包笔记。</p>
-<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
-    var localVal = 30;
-    return localVal;
-&#125;
-
-console.log(outer()); //30
-
-function outer2() &#123;
-    var localVal = 30;
-    return function() &#123;
-        return localVal;
-    &#125;;
-&#125;
-
-var func = outer2();
-console.log(func()); //30
-</code></pre>
-<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
-<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
-<hr>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
-<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
-<pre><code>  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      document.addEventListener(&#39;click&#39;,
-          function() &#123;
-              console.log(localData); //这里访问外部数据
-          &#125;);
-  &#125;();
-
-  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      var url = &quot;http://www.baidu.com/&quot;;
-      $.ajax(&#123;
-          url: url,
-          success: function() &#123;
-              // do sth...
-              console.log(localData); //这里访问外部数据
-          &#125;
-      &#125;);
-  &#125;()
-</code></pre>
-</li>
-</ul>
-<hr>
-<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    document.getElementById(&#39;div&#39; + i).
-    addEventListener(&#39;click&#39;, function() &#123;
-        alert(i); // all are 4!
-    &#125;);
-&#125;
-</code></pre>
-<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
-<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    ! function(i) &#123;
-        document.getElementById(&#39;div&#39; + i).
-        addEventListener(&#39;click&#39;, function() &#123;
-            alert(i); // 1, 2, 3
-        &#125;);
-    &#125;(i);
-&#125;
-</code></pre>
-<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
-<hr>
-<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
-    var _userId = 9527;
-    var _typeId = &quot;item&quot;;
-    var exp = &#123;&#125;;
-
-    function converter(userId) &#123;
-        return +userId;
-    &#125;
-
-    exp.getUserId = function() &#123;
-        return converter(_userId);
-    &#125;;
-
-    exp.getTypeId = function() &#123;
-        return _typeId;
-    &#125;;
-
-    window.a = exp;
-&#125;)();
-
-console.log(a.getUserId()); //9527
-console.log(a.getTypeId()); //item
-
-console.log(a._userId); //undefined
-console.log(a._typeId); //undefined
-console.log(converter); //Uncaught ReferenceError: converter is not defined
-</code></pre>
-<p>上面的代码通过闭包实现了一个封装。</p>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<ul>
-<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
-</li>
-<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
-</li>
-</ul>
-<p>from 维基百科</p>
-</blockquote>
-<ul>
-<li><p>闭包的优点</p>
-<ul>
-<li>灵活和方便</li>
-<li>封装</li>
-</ul>
-</li>
-<li><p>缺点</p>
-<ul>
-<li>空间浪费</li>
-<li>内存泄露</li>
-<li>性能消耗</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JavaScript 闭包 慕课网 ife</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JavaScript//" class="article-tag-list-link color1">JavaScript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/06/14/2015-06-14-JavaScript-closure/">展开全文 >></a>
         </p>
       
 

@@ -186,6 +186,220 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2015-06-14-JavaScript-closure" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/14/2015-06-14-JavaScript-closure/">JavaScript 中的闭包</a>
+    </h1>
+  
+
+        
+        <a href="/2015/06/14/2015-06-14-JavaScript-closure/" class="archive-article-date">
+  	<time datetime="2015-06-14T06:06:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-06-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>本文为慕课网 <a target="_blank" rel="noopener" href="http://www.imooc.com/learn/277">JavaScript深入浅出</a> JavaScript 中的闭包笔记。</p>
+<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
+    var localVal = 30;
+    return localVal;
+&#125;
+
+console.log(outer()); //30
+
+function outer2() &#123;
+    var localVal = 30;
+    return function() &#123;
+        return localVal;
+    &#125;;
+&#125;
+
+var func = outer2();
+console.log(func()); //30
+</code></pre>
+<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
+<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
+<hr>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
+<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
+<pre><code>  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      document.addEventListener(&#39;click&#39;,
+          function() &#123;
+              console.log(localData); //这里访问外部数据
+          &#125;);
+  &#125;();
+
+  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      var url = &quot;http://www.baidu.com/&quot;;
+      $.ajax(&#123;
+          url: url,
+          success: function() &#123;
+              // do sth...
+              console.log(localData); //这里访问外部数据
+          &#125;
+      &#125;);
+  &#125;()
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    document.getElementById(&#39;div&#39; + i).
+    addEventListener(&#39;click&#39;, function() &#123;
+        alert(i); // all are 4!
+    &#125;);
+&#125;
+</code></pre>
+<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
+<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    ! function(i) &#123;
+        document.getElementById(&#39;div&#39; + i).
+        addEventListener(&#39;click&#39;, function() &#123;
+            alert(i); // 1, 2, 3
+        &#125;);
+    &#125;(i);
+&#125;
+</code></pre>
+<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
+<hr>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
+    var _userId = 9527;
+    var _typeId = &quot;item&quot;;
+    var exp = &#123;&#125;;
+
+    function converter(userId) &#123;
+        return +userId;
+    &#125;
+
+    exp.getUserId = function() &#123;
+        return converter(_userId);
+    &#125;;
+
+    exp.getTypeId = function() &#123;
+        return _typeId;
+    &#125;;
+
+    window.a = exp;
+&#125;)();
+
+console.log(a.getUserId()); //9527
+console.log(a.getTypeId()); //item
+
+console.log(a._userId); //undefined
+console.log(a._typeId); //undefined
+console.log(converter); //Uncaught ReferenceError: converter is not defined
+</code></pre>
+<p>上面的代码通过闭包实现了一个封装。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<ul>
+<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
+</li>
+<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
+</li>
+</ul>
+<p>from 维基百科</p>
+</blockquote>
+<ul>
+<li><p>闭包的优点</p>
+<ul>
+<li>灵活和方便</li>
+<li>封装</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>空间浪费</li>
+<li>内存泄露</li>
+<li>性能消耗</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">JavaScript 闭包 慕课网 ife</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JavaScript//" class="article-tag-list-link color1">JavaScript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/06/14/2015-06-14-JavaScript-closure/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2015-06-12-JavaScript-this" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -2234,173 +2448,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2015/04/06/2015-04-06-arrays-similar/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2015-03-26-sublimeLinter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/26/2015-03-26-sublimeLinter/">代码校验工具 SublimeLinter 的安装与使用</a>
-    </h1>
-  
-
-        
-        <a href="/2015/03/26/2015-03-26-sublimeLinter/" class="archive-article-date">
-  	<time datetime="2015-03-26T07:14:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-03-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文我将讲述一下 SublimeLinter 的安装过程。其组件 jshint 的安装与使用。其组件 csslint 的安装与使用。我将基于 <a target="_blank" rel="noopener" href="http://sublimetext.com/3">Sublime Text 3</a> 来安装。使用 Sublime Text 2 的用户阅读本文是没有帮助的。</p>
-<p>SublimeLinter 是 Sublime 的插件，它的作用是检查代码语法是否有错误，并提示。习惯了 IDE 下写代码的人一定需要一款在 Sublime 上类似的语法检查工具。下面我们开始。   </p>
-<h2 id="安装-SublimeLinter"><a href="#安装-SublimeLinter" class="headerlink" title="安装 SublimeLinter"></a>安装 SublimeLinter</h2><p>如同其他插件一样使用 Package Control 来安装。   </p>
-<ol>
-<li>按下 <code>Ctrl+Shift+p</code> 进入 Command Palette   </li>
-<li>输入<code>install</code>进入 Package Control: Install Package   </li>
-<li>输入<code>SublimeLinter</code>。进行安装.</li>
-</ol>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/SublimeLinter-sublimeLinter.jpg" alt="SublimeLinter">   </p>
-<p>安装完成后可以看到这样一段话：   </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Welcome to SublimeLinter, a linter framework for Sublime Text 3.</span><br><span class="line"></span><br><span class="line">                  * * * IMPORTANT! * * *</span><br><span class="line"></span><br><span class="line">         SublimeLinter 3 is NOT a drop-in replacement for</span><br><span class="line">        earlier versions.</span><br><span class="line"></span><br><span class="line">         Linters *NOT* included with SublimeLinter 3,</span><br><span class="line">         they must be installed separately.</span><br><span class="line"></span><br><span class="line">         The settings are different.</span><br><span class="line"></span><br><span class="line">                 * * * READ THE DOCS! * * *</span><br><span class="line"></span><br><span class="line"> Otherwise you will never know how to install linters, nor will</span><br><span class="line"> you know about all of the great new features in SublimeLinter 3.</span><br><span class="line"></span><br><span class="line"> For complete documentation on how to install and use SublimeLinter,</span><br><span class="line"> please see:</span><br><span class="line"></span><br><span class="line"> http://www.sublimelinter.com</span><br></pre></td></tr></table></figure>
-
-<p>可以看到具体的 Linters 组件<strong>不</strong>被包含在 SublimeLinter 3 中，所以我们要额外独立安装组件。<br>可以针对不同的语言安装不同的组件。   </p>
-<h2 id="JavaScript-语法检查"><a href="#JavaScript-语法检查" class="headerlink" title="JavaScript 语法检查"></a>JavaScript 语法检查</h2><p>SublimeLinter-jshint 是基于 nodeJS 下的 jshint 的插件，实际上 SublimeLinter-jshint 调用了 nodeJS 中 jshint 的接口来进行语法检查的。   </p>
-<hr>
-<h3 id="安装-SublimeLinter-jshint"><a href="#安装-SublimeLinter-jshint" class="headerlink" title="安装 SublimeLinter-jshint"></a>安装 SublimeLinter-jshint</h3><p>为了让 JavaScript 代码有语法检查，我们安装 SublimeLinter-jshint<br>同样的方法，我们安装 SublimeLinter-jshint    </p>
-<ol>
-<li>按下 <code>Ctrl+Shift+p</code> 进入 Command Palette   </li>
-<li>输入<code>install</code>进入 Package Control: Install Package   </li>
-<li>输入<code>SublimeLinter-jshint</code>。进行安装.</li>
-</ol>
-<p>如下图   </p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/SublimeLinter-jshint.jpg" alt="SublimeLinter-jshint">   </p>
-<p>安装完成后我们可以看到下面的一段话   </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SublimeLinter-jshint</span><br><span class="line">  -------------------------------</span><br><span class="line">  This linter plugin for SublimeLinter provides an interface to jshint.</span><br><span class="line"></span><br><span class="line">  ** IMPORTANT! **</span><br><span class="line"></span><br><span class="line">  Before this plugin will activate, you *must*</span><br><span class="line">  follow the installation instructions here:</span><br><span class="line"></span><br><span class="line">  https://github.com/SublimeLinter/SublimeLinter-jshint</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-nodeJS-和-jshint"><a href="#安装-nodeJS-和-jshint" class="headerlink" title="安装 nodeJS 和 jshint"></a>安装 nodeJS 和 jshint</h3><p>在插件开始工作之前，我们必须再看一下上述插件的<a target="_blank" rel="noopener" href="https://github.com/SublimeLinter/SublimeLinter-jshint">安装说明</a><br>通过 <a target="_blank" rel="noopener" href="https://github.com/SublimeLinter/SublimeLinter-jshint">SublimeLinter-jshint 的说明</a> 我们可以看到，这个组件依赖于 nodeJS 下的 jshint，所以我们安装 nodeJS 环境和 nodeJS 下的 jshint。   </p>
-<ol>
-<li>安装 <a target="_blank" rel="noopener" href="https://nodejs.org/">Node.js</a>   </li>
-<li>通过 npm 安装<code>jshint</code></li>
-</ol>
-<p>在命令行下输入如下代码，完成安装   </p>
-<pre><code>npm install -g jshint
-</code></pre>
-<p>安装完成后命令行中出现如下的信息   </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\AppData\Roaming\npm\jshint -&gt; C:\Users\Administrator\AppData\Roaming\npm\node_modules\jshint\bin\jshint</span><br><span class="line">jshint@2.6.3 C:\Users\Administrator\AppData\Roaming\npm\node_modules\jshint</span><br><span class="line">├── strip-json-comments@1.0.2</span><br><span class="line">├── underscore@1.6.0</span><br><span class="line">├── exit@0.1.2</span><br><span class="line">├── shelljs@0.3.0</span><br><span class="line">├── console-browserify@1.1.0 (date-now@0.1.4)</span><br><span class="line">├── htmlparser2@3.8.2 (domelementtype@1.3.0, entities@1.0.0, domhandler@2.3.0, readable-stream@1.1.13, domutils@1.5.1)</span><br><span class="line">├── minimatch@1.0.0 (sigmund@1.0.0, lru-cache@2.5.0)</span><br><span class="line">└── cli@0.6.6 (glob@3.2.11)</span><br></pre></td></tr></table></figure>
-
-<p>可以查看 jshint 版本，已确认安装完成。  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;jshint -v</span><br><span class="line">jshint v2.6.3</span><br></pre></td></tr></table></figure>
-
-<p>现在，恭喜你，我们使用 Sublime 编辑 JavaScript 文件，就会有语法检查了！   </p>
-<p>在编辑过程中，会有如下提示   </p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/SublimeLinter-jshint-test.jpg" alt="SublimeLinter-jshint-test"></p>
-<p>点击提示点后，Sublime 状态栏也会有相应的说明   </p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/SublimeLinter-jshint-test2.jpg" alt="SublimeLinter-jshint-test2"></p>
-<h2 id="css-语法检查"><a href="#css-语法检查" class="headerlink" title="css 语法检查"></a>css 语法检查</h2><p>与 jshint 同理，SublimeLinter-csslint 也是基于 nodeJS 下的 csslint 的插件，实际上 SublimeLinter-csslint 调用了 nodeJS 中 csslint 的接口来进行语法检查的。   </p>
-<hr>
-<h3 id="安装-SublimeLinter-csslint"><a href="#安装-SublimeLinter-csslint" class="headerlink" title="安装 SublimeLinter-csslint"></a>安装 SublimeLinter-csslint</h3><p>同样的方法。   </p>
-<ol>
-<li>按下 <code>Ctrl+Shift+p</code> 进入 Command Palette   </li>
-<li>输入<code>install</code>进入 Package Control: Install Package   </li>
-<li>输入<code>SublimeLinter-csslint</code>。进行安装.</li>
-</ol>
-<p>如下图   </p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/SublimeLinter-csslint.jpg" alt="SublimeLinter-csslint">   </p>
-<p>安装完成后我们可以看到下面的一段话   </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SublimeLinter-csslint</span><br><span class="line">-------------------------------</span><br><span class="line">This linter plugin for SublimeLinter provides an interface to csslint.</span><br><span class="line"></span><br><span class="line">** IMPORTANT! **</span><br><span class="line"></span><br><span class="line">Before this plugin will activate, you *must*</span><br><span class="line">follow the installation instructions here:</span><br><span class="line"></span><br><span class="line">https://github.com/SublimeLinter/SublimeLinter-csslint</span><br></pre></td></tr></table></figure>
-
-<p>在使用插件之前，必须遵循上述网址中的<a target="_blank" rel="noopener" href="https://github.com/SublimeLinter/SublimeLinter-csslint">安装说明</a>   </p>
-<h3 id="在-nodeJS-下安装-csslint"><a href="#在-nodeJS-下安装-csslint" class="headerlink" title="在 nodeJS 下安装 csslint"></a>在 nodeJS 下安装 csslint</h3><p>进入上述的 GitHub 地址，csslint 的说明页。我们知道了和 jshint 一样，csslint 也是基于 nodeJS 下的 csslint 来使用的。   </p>
-<p>这里安装 nodeJS 过程省略。<br>只需用 npm 安装 csslint 即可。   </p>
-<p>在命令行中输入     </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g csslint   </span><br></pre></td></tr></table></figure>
-
-<p>安装完成后命令行中出现如下的信息     </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\AppData\Roaming\npm\csslint -&gt; C:\Users\Administrator\AppData\Roaming\npm\node_modules\csslint\cli.js</span><br><span class="line">csslint@0.10.0 C:\Users\Administrator\AppData\Roaming\npm\node_modules\csslint</span><br><span class="line">└── parserlib@0.2.5</span><br></pre></td></tr></table></figure>
-
-<p>可以查看 csslint 版本，已确认安装完成。   </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;csslint --version</span><br><span class="line">v0.10.0</span><br></pre></td></tr></table></figure>
-
-<p>现在，恭喜你，我们使用 Sublime 编辑 css 文件，就会有语法检查了！     </p>
-<p>在编辑过程中，会有如下提示   </p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/SublimeLinter-csslint-test.jpg" alt="SublimeLinter-csslint-test"></p>
-<p>点击提示点后，Sublime 状态栏也会有相应的说明   </p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/SublimeLinter-csslint-test2.jpg" alt="SublimeLinter-csslint-test2"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Sublime jshint csslint</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Sublime//" class="article-tag-list-link color3">Sublime</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/03/26/2015-03-26-sublimeLinter/">展开全文 >></a>
         </p>
       
 

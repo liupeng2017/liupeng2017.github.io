@@ -186,6 +186,110 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-08-15-csdn-140908599" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/15/2024-08-15-csdn-140908599/">C++跨平台编译总结之clang二</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/15/2024-08-15-csdn-140908599/" class="archive-article-date">
+  	<time datetime="2024-08-15T13:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140908599">https://blog.csdn.net/qq_30220519/article/details/140908599</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/releases" title="llvm-clang下载">llvm-clang下载</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-windows-x86_64.msi" title="cmake下载">cmake下载</a></p>
+<h6 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h6><p>clang 是一个以 LLVM 为后端的编译前端。编译前端主要负责 parse 源码、检查错误，并生成抽象语法树 Abstract Syntax Tree (AST)。相较于其他编译器生成的 AST，clang 生成的 AST 更加接近 C++ 源码，所以我们可以更加准确地在源码中进行查找和定位。并且，clang 还提供了丰富的库和 API，让我们能在 AST 上很方便地做遍历，搜索和修改等操作。</p>
+<p>我们在 vscode 上用的代码自动补全工具 clangd（或 vim 的 YouCompleteMe）就是用 clang 来实现的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看编译的步骤</span></span><br><span class="line">$ clang -ccc-print-phases main.m</span><br><span class="line"></span><br><span class="line">0: input, “main.m”, objective-c</span><br><span class="line">1: preprocessor, &#123;0&#125;, objective-c-cpp-output</span><br><span class="line">2: compiler, &#123;1&#125;, ir</span><br><span class="line">3: backend, &#123;2&#125;, assembler</span><br><span class="line">4: assembler, &#123;3&#125;, object</span><br><span class="line">5: linker, &#123;4&#125;, image</span><br><span class="line">6: bind-arch, “x86_64”, &#123;5&#125;, image</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看编译结果</span></span><br><span class="line">$ clang -rewrite-objc main.m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看操作内部命令，可以使用 -### 命令</span></span><br><span class="line">$ clang -### main.m -o main</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>预处理完成后就会进行词法分析，这里会把代码切成一个个 Token，比如大小括号，等于号还有字符串等。<code>clang -fmodules -fsyntax-only -Xclang -dump-tokens main.m</code>。</p>
+</li>
+<li><p>然后是语法分析，验证语法是否正确，然后将所有节点组成抽象语法树 AST。<code>clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</code></p>
+</li>
+<li><p>完成这些步骤后就可以开始 IR(intermediate representation)中间代码的生成了，CodeGen 会负责将语法树自顶向下遍历逐步翻译成 LLVM IR，IR 是编译过程的前端的输出后端的输入。<code>clang -S -fobjc-arc -emit-llvm main.m -o main.ll</code></p>
+</li>
+<li><p>这里 LLVM 会去做些优化工作，在 Xcode 的编译设置里也可以设置优化级别-01，-03，-0s，还可以写些自己的 Pass，官方有比较完整的 Pass 教程：Writing an LLVM Pass — LLVM 5 documentation 。<code>clang -O3 -S -fobjc-arc -emit-llvm main.m -o main.ll</code></p>
+</li>
+<li><p>Pass 是 LLVM 优化工作的一个节点，一个节点做些事，一起加起来就构成了 LLVM 完整的优化和转化。如果开启了 bitcode 苹果会做进一步的优化，有新的后端架构还是可以用这份优化过的 bitcode 去生成。<code>clang -emit-llvm -c main.m -o main.bc</code></p>
+</li>
+<li><p>生成汇编。<code>clang -S -fobjc-arc main.m -o main.s</code></p>
+</li>
+<li><p>生成目标文件。<code>clang -fmodules -c main.m -o main.o</code></p>
+</li>
+</ul>
+<p><img src="/images/csdn/140908599/994b43d213ac24e5.png"></p>
+<p>一般什么时候会用到 Clang：</p>
+<ul>
+<li>需要基于编译器的 AST 对源码做精确的编辑：自动纠正不符合 coding style 的源码</li>
+<li>需要引入自定义的编译错误和警告：禁止用裸指针创建共享指针，声明了变量但是没有使用</li>
+<li>基于 C&#x2F;C++ 源码的代码生成(code generation)：自动生成数据结构的序列化方法，反射方法</li>
+</ul>
+<h6 id="Clang-AST"><a href="#Clang-AST" class="headerlink" title="Clang AST"></a>Clang AST</h6><p>Clang AST 的节点是由几种没有共同基类的类来组成（建模）的，其中比较常用的四种 class 是 Type, Decl, DeclContext, Stmt</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140723766" title="C++ 跨平台编译总结-CSDN博客">C++ 跨平台编译总结-CSDN博客</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/15/2024-08-15-csdn-140908599/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-08-15-csdn-141232175" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -894,102 +998,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/08/09/2024-08-09-csdn-141071432/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-08-09-csdn-141070650" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/09/2024-08-09-csdn-141070650/">C++ PCL kdtree</a>
-    </h1>
-  
-
-        
-        <a href="/2024/08/09/2024-08-09-csdn-141070650/" class="archive-article-date">
-  	<time datetime="2024-08-09T12:54:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141070650">https://blog.csdn.net/qq_30220519/article/details/141070650</a></p>
-</blockquote>
-<h6 id="kdtree测试"><a href="#kdtree测试" class="headerlink" title="kdtree测试"></a>kdtree测试</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pcl/point_cloud.h&gt;</span>        <span class="comment">//点类型定义头文件</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pcl/kdtree/kdtree_flann.h&gt;</span> <span class="comment">//kdtree类定义头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctime&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span></span></span><br><span class="line"><span class="function"><span class="title">main</span> <span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">srand</span> (<span class="built_in">time</span> (<span class="literal">NULL</span>));   <span class="comment">//用系统时间初始化随机种子</span></span><br><span class="line">  <span class="comment">//创建一个PointCloud&lt;pcl::PointXYZ&gt;</span></span><br><span class="line">  pcl::PointCloud&lt;pcl::PointXYZ&gt;::<span class="function">Ptr <span class="title">cloud</span> <span class="params">(<span class="keyword">new</span> pcl::PointCloud&lt;pcl::PointXYZ&gt;)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 随机点云生成</span></span><br><span class="line">  cloud-&gt;width = <span class="number">1000</span>;             <span class="comment">//此处点云数量</span></span><br><span class="line">  cloud-&gt;height = <span class="number">1</span>;                <span class="comment">//表示点云为无序点云</span></span><br><span class="line">  cloud-&gt;points.<span class="built_in">resize</span> (cloud-&gt;width * cloud-&gt;height);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; cloud-&gt;points.<span class="built_in">size</span> (); ++i)   <span class="comment">//循环填充点云数据</span></span><br><span class="line">  &#123;</span><br><span class="line">    cloud-&gt;points[i].x = <span class="number">1024.0f</span> * <span class="built_in">rand</span>() / (RAND_MAX + <span class="number">1.0f</span>); <span class="comment">// // 产生数值为0-1024的浮点数</span></span><br><span class="line">    cloud-&gt;points[i].y = <span class="number">1024.0f</span> * <span class="built_in">rand</span> () / (RAND_MAX + <span class="number">1.0f</span>);</span><br><span class="line">    cloud-&gt;points[i].z = <span class="number">1024.0f</span> * <span class="built_in">rand</span> () / (RAND_MAX + <span class="number">1.0f</span>);</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="comment">//创建KdTreeFLANN对象，并把创建的点云设置为输入,创建一个searchPoint变量作为查询点</span></span><br><span class="line">  pcl::KdTreeFLANN&lt;pcl::PointXYZ&gt; kdtree; <span class="comment">// pcl::KdTreeFLANN&lt;PointT, Dist&gt;::setInputCloud (const PointCloudConstPtr &amp;cloud, const IndicesConstPtr &amp;indices)</span></span><br><span class="line">  <span class="comment">//设置搜索空间</span></span><br><span class="line">  kdtree.<span class="built_in">setInputCloud</span> (cloud);</span><br><span class="line">  <span class="comment">//设置查询点并赋随机值</span></span><br><span class="line">  pcl::PointXYZ searchPoint;</span><br><span class="line">  searchPoint.x = <span class="number">1024.0f</span> * <span class="built_in">rand</span> () / (RAND_MAX + <span class="number">1.0f</span>);</span><br><span class="line">  searchPoint.y = <span class="number">1024.0f</span> * <span class="built_in">rand</span> () / (RAND_MAX + <span class="number">1.0f</span>);</span><br><span class="line">  searchPoint.z = <span class="number">1024.0f</span> * <span class="built_in">rand</span> () / (RAND_MAX + <span class="number">1.0f</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// K 临近搜索</span></span><br><span class="line">  <span class="comment">//创建一个整数（设置为10）和两个向量来存储搜索到的K近邻，两个向量中，一个存储搜索到查询点近邻的索引，另一个存储对应近邻的距离平方</span></span><br><span class="line">  <span class="type">int</span> K = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">pointIdxNKNSearch</span><span class="params">(K)</span></span>;      <span class="comment">//存储查询点近邻索引</span></span><br><span class="line">  <span class="function">std::vector&lt;<span class="type">float</span>&gt; <span class="title">pointNKNSquaredDistance</span><span class="params">(K)</span></span>; <span class="comment">//存储近邻点对应距离平方</span></span><br><span class="line">  <span class="comment">//打印相关信息</span></span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;K nearest neighbor search at (&quot;</span> &lt;&lt; searchPoint.x </span><br><span class="line">            &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; searchPoint.y </span><br><span class="line">            &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; searchPoint.z</span><br><span class="line">            &lt;&lt; <span class="string">&quot;) with K=&quot;</span> &lt;&lt; K &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( kdtree.<span class="built_in">nearestKSearch</span> (searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance) &gt; <span class="number">0</span> )  <span class="comment">//执行K近邻搜索</span></span><br><span class="line">  &#123;</span><br><span class="line">     <span class="comment">//打印所有近邻坐标</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; pointIdxNKNSearch.<span class="built_in">size</span> (); ++i)</span><br><span class="line">      std::cout &lt;&lt; <span class="string">&quot;    &quot;</span>  &lt;&lt;   cloud-&gt;points[ pointIdxNKNSearch[i] ].x </span><br><span class="line">                &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; cloud-&gt;points[ pointIdxNKNSearch[i] ].y </span><br><span class="line">                &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; cloud-&gt;points[ pointIdxNKNSearch[i] ].z </span><br><span class="line">                &lt;&lt; <span class="string">&quot; (squared distance: &quot;</span> &lt;&lt; pointNKNSquaredDistance[i] &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/**********************************************************************************</span></span><br><span class="line"><span class="comment">   下面的代码展示查找到给定的searchPoint的某一半径（随机产生）内所有近邻，重新定义两个向量</span></span><br><span class="line"><span class="comment">   pointIdxRadiusSearch  pointRadiusSquaredDistance来存储关于近邻的信息</span></span><br><span class="line"><span class="comment">   ********************************************************************************/</span></span><br><span class="line">  <span class="comment">// 半径 R内近邻搜索方法</span></span><br><span class="line"></span><br><span class="line">  std::vector&lt;<span class="type">int</span>&gt; pointIdxRadiusSearch;           <span class="comment">//存储近邻索引</span></span><br><span class="line">  std::vector&lt;<span class="type">float</span>&gt; pointRadiusSquaredDistance;   <span class="comment">//存储近邻对应距离的平方</span></span><br><span class="line"></span><br><span class="line">  <span class="type">float</span> radius = <span class="number">256.0f</span> * <span class="built_in">rand</span> () / (RAND_MAX + <span class="number">1.0f</span>);   <span class="comment">//随机的生成某一半径</span></span><br><span class="line">  <span class="comment">//打印输出</span></span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;Neighbors within radius search at (&quot;</span> &lt;&lt; searchPoint.x </span><br><span class="line">            &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; searchPoint.y </span><br><span class="line">            &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; searchPoint.z</span><br><span class="line">            &lt;&lt; <span class="string">&quot;) with radius=&quot;</span> &lt;&lt; radius &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 假设我们的kdtree返回了大于0个近邻。那么它将打印出在我们&quot;searchPoint&quot;附近的10个最近的邻居并把它们存到先前创立的向量中。</span></span><br><span class="line">  <span class="keyword">if</span> ( kdtree.<span class="built_in">radiusSearch</span> (searchPoint, radius, pointIdxRadiusSearch, pointRadiusSquaredDistance) &gt; <span class="number">0</span> )  <span class="comment">//执行半径R内近邻搜索方法</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; pointIdxRadiusSearch.<span class="built_in">size</span> (); ++i)</span><br><span class="line">      std::cout &lt;&lt; <span class="string">&quot;    &quot;</span>  &lt;&lt;   cloud-&gt;points[ pointIdxRadiusSearch[i] ].x </span><br><span class="line">                &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; cloud-&gt;points[ pointIdxRadiusSearch[i] ].y </span><br><span class="line">                &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; cloud-&gt;points[ pointIdxRadiusSearch[i] ].z </span><br><span class="line">                &lt;&lt; <span class="string">&quot; (squared distance: &quot;</span> &lt;&lt; pointRadiusSquaredDistance[i] &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">K nearest neighbor search at (384.369 386.372 300.143) with K=10</span><br><span class="line">    451.114 363.553 229.213 (squared distance: 10006.7)</span><br><span class="line">    452.721 398.977 207.076 (squared distance: 13492.4)</span><br><span class="line">    276.971 343.368 327.111 (squared distance: 14111)</span><br><span class="line">    447.772 491.576 334 (squared distance: 16234.2)</span><br><span class="line">    410.276 386.502 175.288 (squared distance: 16259.9)</span><br><span class="line">    445.201 488.637 253.626 (squared distance: 16322.6)</span><br><span class="line">    257.128 435.577 321.633 (squared distance: 19073.3)</span><br><span class="line">    312.382 389.858 178.369 (squared distance: 20023)</span><br><span class="line">    439.166 412.965 167.177 (squared distance: 21390)</span><br><span class="line">    482.03 493.711 266.617 (squared distance: 22183.4)</span><br><span class="line">Neighbors within radius search at (384.369 386.372 300.143) with radius=193.159</span><br><span class="line">    451.114 363.553 229.213 (squared distance: 10006.7)</span><br><span class="line">    452.721 398.977 207.076 (squared distance: 13492.4)</span><br><span class="line">    276.971 343.368 327.111 (squared distance: 14111)</span><br><span class="line">    447.772 491.576 334 (squared distance: 16234.2)</span><br><span class="line">    410.276 386.502 175.288 (squared distance: 16259.9)</span><br><span class="line">    445.201 488.637 253.626 (squared distance: 16322.6)</span><br><span class="line">    257.128 435.577 321.633 (squared distance: 19073.3)</span><br><span class="line">    312.382 389.858 178.369 (squared distance: 20023)</span><br><span class="line">    439.166 412.965 167.177 (squared distance: 21390)</span><br><span class="line">    482.03 493.711 266.617 (squared distance: 22183.4)</span><br><span class="line">    521.246 429.693 256.285 (squared distance: 22535.5)</span><br><span class="line">    512.669 307.615 320.109 (squared distance: 23062.3)</span><br><span class="line">    529.352 399.11 354.953 (squared distance: 24186.5)</span><br><span class="line">    292.235 430.095 178.472 (squared distance: 25204.2)</span><br><span class="line">    468.447 428.21 169.938 (squared distance: 25772.9)</span><br><span class="line">    486.896 429.648 184.04 (squared distance: 25864.7)</span><br><span class="line">    484.24 305.494 397.702 (squared distance: 26033.2)</span><br><span class="line">    285.843 501.384 233.359 (squared distance: 27395.3)</span><br><span class="line">    314.749 252.534 227.244 (squared distance: 28073.7)</span><br><span class="line">    370.492 316.152 146.118 (squared distance: 28846.8)</span><br><span class="line">    272.179 257.047 296.281 (squared distance: 29326.1)</span><br><span class="line">    424.155 426.806 135.94 (squared distance: 30180.5)</span><br><span class="line">    535.554 370.488 215.772 (squared distance: 30227.8)</span><br><span class="line">    237.352 309.898 353.828 (squared distance: 30344.3)</span><br><span class="line">    222.959 424.764 356.473 (squared distance: 30700.3)</span><br><span class="line">    505.552 501.396 241.199 (squared distance: 31390.5)</span><br><span class="line">    519.049 502.714 303.867 (squared distance: 31688.1)</span><br><span class="line">    374.487 562.587 337.03 (squared distance: 32510.2)</span><br><span class="line">    471.023 434.838 140.425 (squared distance: 35367.6)</span><br><span class="line">    204.779 353.992 361.033 (squared distance: 37008.4)</span><br><span class="line">    219.731 482.102 272.668 (squared distance: 37024.6)</span><br></pre></td></tr></table></figure>
-
-<h5 id="kdtree扩展"><a href="#kdtree扩展" class="headerlink" title="kdtree扩展"></a>kdtree扩展</h5><p>支持百万级别的图层快速搜索和光线追踪</p>
-<ol>
-<li>内存管理：确保高效地利用内存。</li>
-<li>数据结构优化：使用合适的数据结构来存储节点和图层信息。</li>
-<li>算法优化：确保搜索算法能够快速找到最近的图层。</li>
-<li>并行处理：利用多线程或多进程来加速搜索过程。</li>
-</ol>
-<h6 id="扩展到图层搜索"><a href="#扩展到图层搜索" class="headerlink" title="扩展到图层搜索"></a>扩展到图层搜索</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Layer</span> &#123;</span><br><span class="line">  Vec3 position; <span class="comment">// 图层的位置</span></span><br><span class="line">  <span class="type">float</span> radius;  <span class="comment">// 图层的半径</span></span><br><span class="line">  <span class="comment">// ... 其他图层属性</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">KDTreeNode</span> &#123;</span><br><span class="line">  <span class="type">int</span> axis;        <span class="comment">// 当前节点分割轴</span></span><br><span class="line">  <span class="type">float</span> split;     <span class="comment">// 分割值</span></span><br><span class="line">  std::vector&lt;Layer&gt; layers; <span class="comment">// 存储在此节点内的图层</span></span><br><span class="line">  KDTreeNode* left; <span class="comment">// 左子树</span></span><br><span class="line">  KDTreeNode* right; <span class="comment">// 右子树</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">KDTreeNode* <span class="title">buildKDTree</span><span class="params">(std::vector&lt;Layer&gt;&amp; layers, <span class="type">int</span> depth = <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (layers.<span class="built_in">empty</span>()) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> axis = depth % <span class="number">3</span>; <span class="comment">// 选择 x, y, z 轴</span></span><br><span class="line">  std::<span class="built_in">sort</span>(layers.<span class="built_in">begin</span>(), layers.<span class="built_in">end</span>(), [axis](<span class="type">const</span> Layer&amp; a, <span class="type">const</span> Layer&amp; b) &#123;</span><br><span class="line">    <span class="keyword">return</span> a.position[axis] &lt; b.position[axis];</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> mid = layers.<span class="built_in">size</span>() / <span class="number">2</span>;</span><br><span class="line">  KDTreeNode* node = <span class="keyword">new</span> <span class="built_in">KDTreeNode</span>();</span><br><span class="line">  node-&gt;axis = axis;</span><br><span class="line">  node-&gt;split = layers[mid].position[axis];</span><br><span class="line">  node-&gt;left = <span class="built_in">buildKDTree</span>(std::<span class="built_in">vector</span>&lt;Layer&gt;(layers.<span class="built_in">begin</span>(), layers.<span class="built_in">begin</span>() + mid), depth + <span class="number">1</span>);</span><br><span class="line">  node-&gt;right = <span class="built_in">buildKDTree</span>(std::<span class="built_in">vector</span>&lt;Layer&gt;(layers.<span class="built_in">begin</span>() + mid + <span class="number">1</span>, layers.<span class="built_in">end</span>()), depth + <span class="number">1</span>);</span><br><span class="line">  node-&gt;layers = std::<span class="built_in">vector</span>&lt;Layer&gt;(layers.<span class="built_in">begin</span>() + mid, layers.<span class="built_in">begin</span>() + mid + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="加入光线追踪"><a href="#加入光线追踪" class="headerlink" title="加入光线追踪"></a>加入光线追踪</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Ray</span> &#123;</span><br><span class="line">  Vec3 origin; <span class="comment">// 光线起点</span></span><br><span class="line">  Vec3 direction; <span class="comment">// 光线方向</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">intersectRayLayer</span><span class="params">(<span class="type">const</span> Ray&amp; ray, <span class="type">const</span> Layer&amp; layer, <span class="type">float</span>&amp; t)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 实现光线与图层相交的计算</span></span><br><span class="line">  <span class="comment">// 返回是否相交，t 为交点距离</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">std::vector&lt;Layer&gt; <span class="title">searchKDTree</span><span class="params">(KDTreeNode* node, <span class="type">const</span> Ray&amp; ray, <span class="type">float</span> t_min, <span class="type">float</span> t_max)</span> </span>&#123;</span><br><span class="line">  std::vector&lt;Layer&gt; result;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!node) <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查光线是否与当前节点的图层相交</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; layer : node-&gt;layers) &#123;</span><br><span class="line">    <span class="type">float</span> t;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">intersectRayLayer</span>(ray, layer, t) &amp;&amp; t &gt;= t_min &amp;&amp; t &lt;= t_max) &#123;</span><br><span class="line">      result.<span class="built_in">push_back</span>(layer);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 根据光线与分割平面的关系决定搜索哪一侧</span></span><br><span class="line">  <span class="keyword">if</span> (ray.origin[node-&gt;axis] &lt; node-&gt;split) &#123;</span><br><span class="line">    result.<span class="built_in">insert</span>(result.<span class="built_in">end</span>(), <span class="built_in">searchKDTree</span>(node-&gt;left, ray, t_min, t_max).<span class="built_in">begin</span>(), <span class="built_in">searchKDTree</span>(node-&gt;left, ray, t_min, t_max).<span class="built_in">end</span>());</span><br><span class="line">    result.<span class="built_in">insert</span>(result.<span class="built_in">end</span>(), <span class="built_in">searchKDTree</span>(node-&gt;right, ray, t_min, t_max).<span class="built_in">begin</span>(), <span class="built_in">searchKDTree</span>(node-&gt;right, ray, t_min, t_max).<span class="built_in">end</span>());</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    result.<span class="built_in">insert</span>(result.<span class="built_in">end</span>(), <span class="built_in">searchKDTree</span>(node-&gt;right, ray, t_min, t_max).<span class="built_in">begin</span>(), <span class="built_in">searchKDTree</span>(node-&gt;right, ray, t_min, t_max).<span class="built_in">end</span>());</span><br><span class="line">    result.<span class="built_in">insert</span>(result.<span class="built_in">end</span>(), <span class="built_in">searchKDTree</span>(node-&gt;left, ray, t_min, t_max).<span class="built_in">begin</span>(), <span class="built_in">searchKDTree</span>(node-&gt;left, ray, t_min, t_max).<span class="built_in">end</span>());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="扩展测试"><a href="#扩展测试" class="headerlink" title="扩展测试"></a>扩展测试</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 准备图层数据</span></span><br><span class="line">  std::vector&lt;Layer&gt; layers;</span><br><span class="line">  <span class="comment">// 填充 layers...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 构建 KDTree</span></span><br><span class="line">  KDTreeNode* root = <span class="built_in">buildKDTree</span>(layers);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义光线</span></span><br><span class="line">  Ray ray;</span><br><span class="line">  ray.origin = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">  ray.direction = &#123;<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 搜索 KDTree</span></span><br><span class="line">  std::vector&lt;Layer&gt; intersections = <span class="built_in">searchKDTree</span>(root, ray, <span class="number">0.01</span>, <span class="number">1000.0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 打印结果</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; layer : intersections) &#123;</span><br><span class="line">    <span class="comment">// 打印相交的图层信息</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 清理内存</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141036995" title="C++ Rect And Point Search Algorithm-CSDN博客">C++ Rect And Point Search Algorithm-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/268524083" title="https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;268524083">https://zhuanlan.zhihu.com/p/268524083</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.yuque.com/huangzhongqing/pcl" title="PCL(Point Cloud Library)学习记录（2024） · 语雀">PCL(Point Cloud Library)学习记录（2024） · 语雀</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/HuangCongQing/3D-LIDAR-Multi-Object-Tracking" title="GitHub - HuangCongQing&#x2F;3D-LIDAR-Multi-Object-Tracking: 🔥3D-MOT(点云多目标检测和追踪C++)  （2020 · 秋） 代码有详细注解">GitHub - HuangCongQing&#x2F;3D-LIDAR-Multi-Object-Tracking: 🔥3D-MOT(点云多目标检测和追踪C++) （2020 · 秋） 代码有详细注解</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/HuangCongQing/pcl-learning" title="GitHub - HuangCongQing&#x2F;pcl-learning: 🔥PCL（Point Cloud Library）点云库学习记录">GitHub - HuangCongQing&#x2F;pcl-learning: 🔥PCL（Point Cloud Library）点云库学习记录</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/li-yao7758258/p/6437440.html" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;li-yao7758258&#x2F;p&#x2F;6437440.html">https://www.cnblogs.com/li-yao7758258/p/6437440.html</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/08/09/2024-08-09-csdn-141070650/">展开全文 >></a>
         </p>
       
 

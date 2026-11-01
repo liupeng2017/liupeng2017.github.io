@@ -186,6 +186,87 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-10-15-csdn-142964548" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/10/15/2024-10-15-csdn-142964548/">极简3D模型预览器</a>
+    </h1>
+  
+
+        
+        <a href="/2024/10/15/2024-10-15-csdn-142964548/" class="archive-article-date">
+  	<time datetime="2024-10-15T15:36:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-10-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142964548">https://blog.csdn.net/qq_30220519/article/details/142964548</a></p>
+</blockquote>
+<h5 id="下载"><a href="#下载" class="headerlink" title="下载"></a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_30220519/89891153" title="下载">下载</a></h5><h5 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">loadGeometryFromObj</span><span class="params">(<span class="type">const</span> fs::path&amp; path, std::vector&lt;VertexAttributes&gt;&amp; vertexData)</span> </span>&#123;</span><br><span class="line">	tinyobj::<span class="type">attrib_t</span> attrib;</span><br><span class="line">	std::vector&lt;tinyobj::<span class="type">shape_t</span>&gt; shapes;</span><br><span class="line">	std::vector&lt;tinyobj::<span class="type">material_t</span>&gt; materials;</span><br><span class="line"></span><br><span class="line">	std::string warn;</span><br><span class="line">	std::string err;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Call the core loading procedure of TinyOBJLoader</span></span><br><span class="line">	<span class="type">bool</span> ret = tinyobj::<span class="built_in">LoadObj</span>(&amp;attrib, &amp;shapes, &amp;materials, &amp;warn, &amp;err, path.<span class="built_in">string</span>().<span class="built_in">c_str</span>());</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Check errors</span></span><br><span class="line">	<span class="keyword">if</span> (!warn.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">		std::cout &lt;&lt; warn &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!err.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">		std::cerr &lt;&lt; err &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!ret) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Filling in vertexData:</span></span><br><span class="line">	vertexData.<span class="built_in">clear</span>();</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; shape : shapes) &#123;</span><br><span class="line">		<span class="type">size_t</span> offset = vertexData.<span class="built_in">size</span>();</span><br><span class="line">		vertexData.<span class="built_in">resize</span>(offset + shape.mesh.indices.<span class="built_in">size</span>());</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; shape.mesh.indices.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">			<span class="type">const</span> tinyobj::<span class="type">index_t</span>&amp; idx = shape.mesh.indices[i];</span><br><span class="line"></span><br><span class="line">			vertexData[offset + i].position = &#123;</span><br><span class="line">				attrib.vertices[<span class="number">3</span> * idx.vertex_index + <span class="number">0</span>],</span><br><span class="line">				-attrib.vertices[<span class="number">3</span> * idx.vertex_index + <span class="number">2</span>],</span><br><span class="line">				attrib.vertices[<span class="number">3</span> * idx.vertex_index + <span class="number">1</span>]</span><br><span class="line">			&#125;;</span><br><span class="line"></span><br><span class="line">			vertexData[offset + i].normal = &#123;</span><br><span class="line">				attrib.normals[<span class="number">3</span> * idx.normal_index + <span class="number">0</span>],</span><br><span class="line">				-attrib.normals[<span class="number">3</span> * idx.normal_index + <span class="number">2</span>],</span><br><span class="line">				attrib.normals[<span class="number">3</span> * idx.normal_index + <span class="number">1</span>]</span><br><span class="line">			&#125;;</span><br><span class="line"></span><br><span class="line">			vertexData[offset + i].color = &#123;</span><br><span class="line">				attrib.colors[<span class="number">3</span> * idx.vertex_index + <span class="number">0</span>],</span><br><span class="line">				attrib.colors[<span class="number">3</span> * idx.vertex_index + <span class="number">1</span>],</span><br><span class="line">				attrib.colors[<span class="number">3</span> * idx.vertex_index + <span class="number">2</span>]</span><br><span class="line">			&#125;;</span><br><span class="line"></span><br><span class="line">			vertexData[offset + i].uv = &#123;</span><br><span class="line">				attrib.texcoords[<span class="number">2</span> * idx.texcoord_index + <span class="number">0</span>],</span><br><span class="line">				<span class="number">1</span> - attrib.texcoords[<span class="number">2</span> * idx.texcoord_index + <span class="number">1</span>]</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><p><img src="/images/csdn/142964548/80e7b9a51a45664e.png"></p>
+<p><img src="/images/csdn/142964548/3f1ce8b4f8cdf9aa.png"></p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://www.blender-3d.cn/mx/" title="blender3d模型素材资源免费下载-Blender3D模型库">blender3d模型素材资源免费下载-Blender3D模型库</a></p>
+<p><a target="_blank" rel="noopener" href="https://3dmetahub.com/" title="MetaHub - 千万级开源免费3D模型平台">MetaHub - 千万级开源免费3D模型平台</a></p>
+<p><a target="_blank" rel="noopener" href="https://d1-cdn.znzmo.com/202410152323/2446c3c6c9ce4e8dfff010adfab65ae2/aa8b2bd1aea7eb947e3991b23af17c8c0d333f2f.rar" title="水箱下载">水箱下载</a>​​​​​​​</p>
+<p><a target="_blank" rel="noopener" href="https://eliemichel.github.io/LearnWebGPU" title="Learn WebGPU for C++ documentation">Learn WebGPU for C++ documentation</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
+<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/10/15/2024-10-15-csdn-142964548/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-10-12-csdn-142874087" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -899,83 +980,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/09/26/2024-09-26-csdn-142549913/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-09-25-csdn-142526930" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/09/25/2024-09-25-csdn-142526930/">C++密码安全检测</a>
-    </h1>
-  
-
-        
-        <a href="/2024/09/25/2024-09-25-csdn-142526930/" class="archive-article-date">
-  	<time datetime="2024-09-25T08:26:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142526930">https://blog.csdn.net/qq_30220519/article/details/142526930</a></p>
-</blockquote>
-<h5 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h5><p><img src="/images/csdn/142526930/0550143615f67882.png"></p>
-<h5 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getScore</span><span class="params">(string s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> score = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; s.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">		<span class="type">char</span> currentLetter = s[i];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">isdigit</span>(currentLetter))</span><br><span class="line">			score += scoreOfNumber;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">isalpha</span>(currentLetter)) &#123;</span><br><span class="line">			<span class="type">int</span> ascii = currentLetter;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (ascii &lt;= <span class="number">0x5A</span>)  <span class="comment">// Upper-case</span></span><br><span class="line">				score += scoreOfUCaseLetter;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				score += scoreOfLetter;</span><br><span class="line">		&#125; <span class="keyword">else</span></span><br><span class="line">			score += scoreOfSpecialChar;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> score;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><h5 id="This-password-is-safe-Score-122-of-100"><a href="#This-password-is-safe-Score-122-of-100" class="headerlink" title="This password is safe. Score: 122 of 100"></a>This password is safe. Score: 122 of 100</h5><h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://github.com/GordonZhang2024/Password-security-checker" title="GitHub - GordonZhang2024&#x2F;Password-security-checker: A simple-but-useful password security checker written in C++">GitHub - GordonZhang2024&#x2F;Password-security-checker: A simple-but-useful password security checker written in C++</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/09/25/2024-09-25-csdn-142526930/">展开全文 >></a>
         </p>
       
 

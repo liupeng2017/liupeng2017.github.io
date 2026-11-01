@@ -186,6 +186,87 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-05-29-csdn-139306471" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/05/29/2024-05-29-csdn-139306471/">自定义窗口事件循环系统</a>
+    </h1>
+  
+
+        
+        <a href="/2024/05/29/2024-05-29-csdn-139306471/" class="archive-article-date">
+  	<time datetime="2024-05-29T14:01:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139306471">https://blog.csdn.net/qq_30220519/article/details/139306471</a></p>
+</blockquote>
+<p>1.定义事件类型，mouse，wheel，drag，view。已处理的事件，accept需设置为true，防止重叠热区继续穿透。记录事件生成时间，全局位置和当前帧窗口下位置。</p>
+<p>2.定义事件响应系统interactionSystem，preUpdate，onUpdate，postUpdate，mousePress，mouseMove，mouseRelease，mouseWheel</p>
+<p>3.定义事件循环，eventLoops，preUpdate，onUpdate，postUpdate。处理dragItem，dragWindow，dragView。多窗口历史缓存管理。</p>
+<p>4.定义弹窗管理，模态窗口阻断事件，非模态窗口不阻断，但优先响应。</p>
+<p>5.单窗口交互管理，按照层级和zorder对事件响应顺序排优先级。鼠标命中多个热区，先执行鼠标移出，更新热区命中缓存，按照优先级响应事件，响应成功中断返回。预计子图层显示或隐藏需及时更新优先级列表。</p>
+<p>6.事件状态管理，连续悬浮触发，按下+弹起&#x3D;单击等进行缓存，连续单击转多击，按下+移动一段距离&#x3D;拖拽，决定不同情况下事件触发定义。</p>
+<p>7.事件执行器，根据1事件类型，创建action任务，执行。</p>
+<h4 id="流程图："><a href="#流程图：" class="headerlink" title="流程图："></a>流程图：</h4><p><img src="/images/csdn/139306471/fe05aa4c341f1ca0.png"></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/05/29/2024-05-29-csdn-139306471/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-05-29-csdn-139297473" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -993,87 +1074,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/05/25/2024-05-25-csdn-139200870/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-05-25-csdn-139200798" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/05/25/2024-05-25-csdn-139200798/">Windows XP 源码下载</a>
-    </h1>
-  
-
-        
-        <a href="/2024/05/25/2024-05-25-csdn-139200798/" class="archive-article-date">
-  	<time datetime="2024-05-25T09:38:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        本文已加密，请输入密码后继续阅读。
-        
-          <a class="article-more-a" href="/2024/05/25/2024-05-25-csdn-139200798/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/05/25/2024-05-25-csdn-139200798/">展开全文 >></a>
         </p>
       
 

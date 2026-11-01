@@ -186,6 +186,85 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-08-22-csdn-141429984" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/22/2024-08-22-csdn-141429984/">C++ 连续数值转区间计算</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/22/2024-08-22-csdn-141429984/" class="archive-article-date">
+  	<time datetime="2024-08-22T07:44:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141429984">https://blog.csdn.net/qq_30220519/article/details/141429984</a></p>
+</blockquote>
+<h6 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnicodeRange</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">uint32_t</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="type">uint32_t</span> end = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">using</span> UnicodeRanges = std::vector&lt;UnicodeRange&gt;;</span><br><span class="line"></span><br><span class="line"><span class="function">UnicodeRanges <span class="title">getRanges</span><span class="params">(<span class="type">const</span> std::set&lt;<span class="type">uint32_t</span>&gt;&amp; unicodes)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (unicodes.<span class="built_in">empty</span>())</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">    UnicodeRanges ranges;</span><br><span class="line">    <span class="keyword">if</span> (*unicodes.<span class="built_in">begin</span>() + unicodes.<span class="built_in">size</span>() == *unicodes.<span class="built_in">rbegin</span>()) &#123; <span class="comment">// 全部连续</span></span><br><span class="line">        ranges.<span class="built_in">emplace_back</span>(</span><br><span class="line">            UnicodeRange &#123; *unicodes.<span class="built_in">begin</span>(), (<span class="type">uint32_t</span>)(*unicodes.<span class="built_in">begin</span>() + unicodes.<span class="built_in">size</span>()) &#125;);</span><br><span class="line">        <span class="keyword">return</span> ranges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    UnicodeRange curRange;</span><br><span class="line">    curRange.start = *unicodes.<span class="built_in">begin</span>();</span><br><span class="line">    curRange.end = *unicodes.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; code : unicodes) &#123;</span><br><span class="line">        <span class="keyword">if</span> (code == curRange.end) &#123;</span><br><span class="line">            curRange.end = code + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ranges.<span class="built_in">emplace_back</span>(curRange);</span><br><span class="line">            curRange.start = code;</span><br><span class="line">            curRange.end = code + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (ranges.<span class="built_in">empty</span>() || ranges.<span class="built_in">back</span>().start != curRange.start)</span><br><span class="line">        ranges.<span class="built_in">emplace_back</span>(curRange); <span class="comment">// 尾部连续</span></span><br><span class="line">    <span class="keyword">return</span> ranges;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">std::set&lt;<span class="type">uint32_t</span>&gt; ranges &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">90</span>, <span class="number">91</span>, <span class="number">100</span> &#125;;</span><br><span class="line"><span class="keyword">auto</span> blockRanges = <span class="built_in">getRanges</span>(ranges);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; block : blockRanges) &#123;</span><br><span class="line">    LOG_INFO_STREAM &lt;&lt; <span class="string">&quot;block: &quot;</span> &lt;&lt; block.start &lt;&lt; <span class="string">&quot; - &quot;</span> &lt;&lt; block.end &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">block: 1 - 5</span><br><span class="line">block: 9 - 10</span><br><span class="line">block: 22 - 25</span><br><span class="line">block: 90 - 92</span><br><span class="line">block: 100 - 101</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/22/2024-08-22-csdn-141429984/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-08-21-csdn-141401752" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -875,110 +954,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/08/16/2024-08-16-csdn-141270505/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-08-15-csdn-140908599" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/15/2024-08-15-csdn-140908599/">C++跨平台编译总结之clang二</a>
-    </h1>
-  
-
-        
-        <a href="/2024/08/15/2024-08-15-csdn-140908599/" class="archive-article-date">
-  	<time datetime="2024-08-15T13:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140908599">https://blog.csdn.net/qq_30220519/article/details/140908599</a></p>
-</blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/releases" title="llvm-clang下载">llvm-clang下载</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-windows-x86_64.msi" title="cmake下载">cmake下载</a></p>
-<h6 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h6><p>clang 是一个以 LLVM 为后端的编译前端。编译前端主要负责 parse 源码、检查错误，并生成抽象语法树 Abstract Syntax Tree (AST)。相较于其他编译器生成的 AST，clang 生成的 AST 更加接近 C++ 源码，所以我们可以更加准确地在源码中进行查找和定位。并且，clang 还提供了丰富的库和 API，让我们能在 AST 上很方便地做遍历，搜索和修改等操作。</p>
-<p>我们在 vscode 上用的代码自动补全工具 clangd（或 vim 的 YouCompleteMe）就是用 clang 来实现的。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看编译的步骤</span></span><br><span class="line">$ clang -ccc-print-phases main.m</span><br><span class="line"></span><br><span class="line">0: input, “main.m”, objective-c</span><br><span class="line">1: preprocessor, &#123;0&#125;, objective-c-cpp-output</span><br><span class="line">2: compiler, &#123;1&#125;, ir</span><br><span class="line">3: backend, &#123;2&#125;, assembler</span><br><span class="line">4: assembler, &#123;3&#125;, object</span><br><span class="line">5: linker, &#123;4&#125;, image</span><br><span class="line">6: bind-arch, “x86_64”, &#123;5&#125;, image</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看编译结果</span></span><br><span class="line">$ clang -rewrite-objc main.m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看操作内部命令，可以使用 -### 命令</span></span><br><span class="line">$ clang -### main.m -o main</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>预处理完成后就会进行词法分析，这里会把代码切成一个个 Token，比如大小括号，等于号还有字符串等。<code>clang -fmodules -fsyntax-only -Xclang -dump-tokens main.m</code>。</p>
-</li>
-<li><p>然后是语法分析，验证语法是否正确，然后将所有节点组成抽象语法树 AST。<code>clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</code></p>
-</li>
-<li><p>完成这些步骤后就可以开始 IR(intermediate representation)中间代码的生成了，CodeGen 会负责将语法树自顶向下遍历逐步翻译成 LLVM IR，IR 是编译过程的前端的输出后端的输入。<code>clang -S -fobjc-arc -emit-llvm main.m -o main.ll</code></p>
-</li>
-<li><p>这里 LLVM 会去做些优化工作，在 Xcode 的编译设置里也可以设置优化级别-01，-03，-0s，还可以写些自己的 Pass，官方有比较完整的 Pass 教程：Writing an LLVM Pass — LLVM 5 documentation 。<code>clang -O3 -S -fobjc-arc -emit-llvm main.m -o main.ll</code></p>
-</li>
-<li><p>Pass 是 LLVM 优化工作的一个节点，一个节点做些事，一起加起来就构成了 LLVM 完整的优化和转化。如果开启了 bitcode 苹果会做进一步的优化，有新的后端架构还是可以用这份优化过的 bitcode 去生成。<code>clang -emit-llvm -c main.m -o main.bc</code></p>
-</li>
-<li><p>生成汇编。<code>clang -S -fobjc-arc main.m -o main.s</code></p>
-</li>
-<li><p>生成目标文件。<code>clang -fmodules -c main.m -o main.o</code></p>
-</li>
-</ul>
-<p><img src="/images/csdn/140908599/994b43d213ac24e5.png"></p>
-<p>一般什么时候会用到 Clang：</p>
-<ul>
-<li>需要基于编译器的 AST 对源码做精确的编辑：自动纠正不符合 coding style 的源码</li>
-<li>需要引入自定义的编译错误和警告：禁止用裸指针创建共享指针，声明了变量但是没有使用</li>
-<li>基于 C&#x2F;C++ 源码的代码生成(code generation)：自动生成数据结构的序列化方法，反射方法</li>
-</ul>
-<h6 id="Clang-AST"><a href="#Clang-AST" class="headerlink" title="Clang AST"></a>Clang AST</h6><p>Clang AST 的节点是由几种没有共同基类的类来组成（建模）的，其中比较常用的四种 class 是 Type, Decl, DeclContext, Stmt</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140723766" title="C++ 跨平台编译总结-CSDN博客">C++ 跨平台编译总结-CSDN博客</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/08/15/2024-08-15-csdn-140908599/">展开全文 >></a>
         </p>
       
 

@@ -186,6 +186,88 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-08-29-csdn-141674991" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/29/2024-08-29-csdn-141674991/">BT磁力下载器</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/29/2024-08-29-csdn-141674991/" class="archive-article-date">
+  	<time datetime="2024-08-29T06:31:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141674991">https://blog.csdn.net/qq_30220519/article/details/141674991</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_30220519/89690927" title="下载">下载</a></p>
+<h6 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">usage: BTDown [OPTIONS] [TORRENT|MAGNETURL]</span><br><span class="line">OPTIONS:</span><br><span class="line"></span><br><span class="line">CLIENT OPTIONS</span><br><span class="line">  -h                    <span class="built_in">print</span> this message</span><br><span class="line">  -f &lt;<span class="built_in">log</span> file&gt;         logs all events to the given file</span><br><span class="line">  -s &lt;path&gt;             sets the save path <span class="keyword">for</span> downloads. This also determines</span><br><span class="line">                        the resume data save directory. Torrents from the resume</span><br><span class="line">                        directory are automatically added to the session on</span><br><span class="line">                        startup.</span><br><span class="line">  -m &lt;path&gt;             sets the .torrent monitor directory. torrent files</span><br><span class="line">                        dropped <span class="keyword">in</span> the directory are added the session and the</span><br><span class="line">                        resume data directory, and removed from the monitor <span class="built_in">dir</span>.</span><br><span class="line">  -t &lt;seconds&gt;          sets the scan interval of the monitor <span class="built_in">dir</span></span><br><span class="line">  -F &lt;milliseconds&gt;     sets the UI refresh rate. This is the number of</span><br><span class="line">                        milliseconds between screen refreshes.</span><br><span class="line">  -k                    <span class="built_in">enable</span> high performance settings. This overwrites any other</span><br><span class="line">                        previous <span class="built_in">command</span> line options, so be sure to specify this first</span><br><span class="line">  -G                    Add torrents <span class="keyword">in</span> seed-mode (i.e. assume all pieces</span><br><span class="line">                        are present and check hashes on-demand)</span><br><span class="line">  -e &lt;loops&gt;            <span class="built_in">exit</span> client after the specified number of iterations</span><br><span class="line">                        through the main loop</span><br><span class="line">  -O                    <span class="built_in">print</span> session stats counters to the <span class="built_in">log</span></span><br><span class="line">  -1                    <span class="built_in">exit</span> on first torrent completing (useful <span class="keyword">for</span> benchmarks)</span><br><span class="line">LIBTORRENT SETTINGS</span><br><span class="line">  --&lt;name-of-setting&gt;=&lt;value&gt;</span><br><span class="line">                        <span class="built_in">set</span> the libtorrent setting &lt;name&gt; to &lt;value&gt;</span><br><span class="line">  --list-settings       <span class="built_in">print</span> all libtorrent settings and <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line">BITTORRENT OPTIONS</span><br><span class="line">  -T &lt;<span class="built_in">limit</span>&gt;            sets the max number of connections per torrent</span><br><span class="line">  -U &lt;rate&gt;             sets per-torrent upload rate</span><br><span class="line">  -D &lt;rate&gt;             sets per-torrent download rate</span><br><span class="line">  -Q                    enables share mode. Share mode attempts to maximize</span><br><span class="line">                        share ratio rather than downloading</span><br><span class="line">  -r &lt;IP:port&gt;          connect to specified peer</span><br><span class="line"></span><br><span class="line">NETWORK OPTIONS</span><br><span class="line">  -x &lt;file&gt;             loads an emule IP-filter file</span><br><span class="line">  -Y                    Rate <span class="built_in">limit</span> <span class="built_in">local</span> peers</span><br><span class="line">  -i &lt;i2p-host&gt;         the hostname to an I2P SAM bridge to use</span><br><span class="line"></span><br><span class="line">DISK OPTIONS</span><br><span class="line">  -a &lt;mode&gt;             sets the allocation mode. [sparse|allocate]</span><br><span class="line">  -0                    <span class="built_in">disable</span> disk I/O, <span class="built_in">read</span> garbage and don<span class="string">&#x27;t flush to disk</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">TORRENT is a path to a .torrent file</span></span><br><span class="line"><span class="string">MAGNETURL is a magnet link</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">alert mask flags:</span></span><br><span class="line"><span class="string">        error peer port_mapping storage tracker connect status ip_block</span></span><br><span class="line"><span class="string">        performance_warning dht session_log torrent_log peer_log incoming_request</span></span><br><span class="line"><span class="string">        dht_log dht_operation port_mapping_log picker_log file_progress piece_progress</span></span><br><span class="line"><span class="string">        upload block_progress all</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">examples:</span></span><br><span class="line"><span class="string">  --alert_mask=error,port_mapping,tracker,connect,session_log</span></span><br><span class="line"><span class="string">  --alert_mask=error,session_log,torrent_log,peer_log</span></span><br><span class="line"><span class="string">  --alert_mask=error,dht,dht_log,dht_operation</span></span><br><span class="line"><span class="string">  --alert_mask=all</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h6><blockquote>
+<p>BTDown.exe -s . magnet:?xt&#x3D;urn:btih:eebaec4c345224afd2e166b12006ca029b5cdf46</p>
+</blockquote>
+<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><p><img src="/images/csdn/141674991/bcaff8ec3c2ed957.png"></p>
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/arvidn/libtorrent" title="GitHub - arvidn&#x2F;libtorrent: an efficient feature complete C++ bittorrent implementation">GitHub - arvidn&#x2F;libtorrent: an efficient feature complete C++ bittorrent implementation</a></p>
+<p><a target="_blank" rel="noopener" href="https://libtorrent.org/" title="libtorrent">libtorrent</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/29/2024-08-29-csdn-141674991/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-08-28-csdn-141639011" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -914,85 +996,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/08/23/2024-08-23-csdn-141475406/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-08-22-csdn-141429984" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/22/2024-08-22-csdn-141429984/">C++ 连续数值转区间计算</a>
-    </h1>
-  
-
-        
-        <a href="/2024/08/22/2024-08-22-csdn-141429984/" class="archive-article-date">
-  	<time datetime="2024-08-22T07:44:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141429984">https://blog.csdn.net/qq_30220519/article/details/141429984</a></p>
-</blockquote>
-<h6 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UnicodeRange</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">uint32_t</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="type">uint32_t</span> end = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">using</span> UnicodeRanges = std::vector&lt;UnicodeRange&gt;;</span><br><span class="line"></span><br><span class="line"><span class="function">UnicodeRanges <span class="title">getRanges</span><span class="params">(<span class="type">const</span> std::set&lt;<span class="type">uint32_t</span>&gt;&amp; unicodes)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (unicodes.<span class="built_in">empty</span>())</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">    UnicodeRanges ranges;</span><br><span class="line">    <span class="keyword">if</span> (*unicodes.<span class="built_in">begin</span>() + unicodes.<span class="built_in">size</span>() == *unicodes.<span class="built_in">rbegin</span>()) &#123; <span class="comment">// 全部连续</span></span><br><span class="line">        ranges.<span class="built_in">emplace_back</span>(</span><br><span class="line">            UnicodeRange &#123; *unicodes.<span class="built_in">begin</span>(), (<span class="type">uint32_t</span>)(*unicodes.<span class="built_in">begin</span>() + unicodes.<span class="built_in">size</span>()) &#125;);</span><br><span class="line">        <span class="keyword">return</span> ranges;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    UnicodeRange curRange;</span><br><span class="line">    curRange.start = *unicodes.<span class="built_in">begin</span>();</span><br><span class="line">    curRange.end = *unicodes.<span class="built_in">begin</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; code : unicodes) &#123;</span><br><span class="line">        <span class="keyword">if</span> (code == curRange.end) &#123;</span><br><span class="line">            curRange.end = code + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ranges.<span class="built_in">emplace_back</span>(curRange);</span><br><span class="line">            curRange.start = code;</span><br><span class="line">            curRange.end = code + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (ranges.<span class="built_in">empty</span>() || ranges.<span class="built_in">back</span>().start != curRange.start)</span><br><span class="line">        ranges.<span class="built_in">emplace_back</span>(curRange); <span class="comment">// 尾部连续</span></span><br><span class="line">    <span class="keyword">return</span> ranges;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">std::set&lt;<span class="type">uint32_t</span>&gt; ranges &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">90</span>, <span class="number">91</span>, <span class="number">100</span> &#125;;</span><br><span class="line"><span class="keyword">auto</span> blockRanges = <span class="built_in">getRanges</span>(ranges);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; block : blockRanges) &#123;</span><br><span class="line">    LOG_INFO_STREAM &lt;&lt; <span class="string">&quot;block: &quot;</span> &lt;&lt; block.start &lt;&lt; <span class="string">&quot; - &quot;</span> &lt;&lt; block.end &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">block: 1 - 5</span><br><span class="line">block: 9 - 10</span><br><span class="line">block: 22 - 25</span><br><span class="line">block: 90 - 92</span><br><span class="line">block: 100 - 101</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/08/22/2024-08-22-csdn-141429984/">展开全文 >></a>
         </p>
       
 

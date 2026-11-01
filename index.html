@@ -517,6 +517,713 @@ var _hmt = _hmt || [];
              
         <!-- 目录内容结束 -->
   
+    <article id="post-2026-11-02-harmonyos-advanced-cert-notes" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/11/02/2026-11-02-harmonyos-advanced-cert-notes/">HarmonyOS 应用开发者高级认证备考笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2026/11/02/2026-11-02-harmonyos-advanced-cert-notes/" class="archive-article-date">
+  	<time datetime="2026-11-01T17:02:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-11-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>这篇是把 HarmonyOS 应用开发者高级认证（理论考试）的备考内容压缩成一页能过完的版本：十组必背对比、四条生命周期、35 条高频易错判断、自编自测 12 题。考试规则以华为开发者学堂官方页面为准。</p>
+</blockquote>
+<h6 id="考试信息"><a href="#考试信息" class="headerlink" title="考试信息"></a>考试信息</h6><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>时长</td>
+<td>60 分钟</td>
+</tr>
+<tr>
+<td>满分 &#x2F; 及格</td>
+<td>100 &#x2F; 80</td>
+</tr>
+<tr>
+<td>考试次数</td>
+<td>每月 3 次</td>
+</tr>
+<tr>
+<td>形式</td>
+<td>在线客观题（判断 &#x2F; 单选 &#x2F; 多选）</td>
+</tr>
+<tr>
+<td>前置</td>
+<td>实名认证</td>
+</tr>
+</tbody></table>
+<p>及格线是 80 分，多选题通常分值更高且少选错选都不给分，所以别空题，也别说”多选我只敢选一个”——那是策略，不是妥协。</p>
+<hr>
+<h6 id="一、ArkTS-与-TypeScript-的差异（禁用清单）"><a href="#一、ArkTS-与-TypeScript-的差异（禁用清单）" class="headerlink" title="一、ArkTS 与 TypeScript 的差异（禁用清单）"></a>一、ArkTS 与 TypeScript 的差异（禁用清单）</h6><p>ArkTS 为了编译期能确定对象布局、便于 AOT，砍掉了 TypeScript 里一大票动态特性。这一节几乎每年必考，判断题直接命中。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一禁类型：any、unknown</span><br><span class="line">二禁声明：var（只能 let / const）</span><br><span class="line">三禁动态：运行时增删属性、obj[&quot;key&quot;] 动态索引、delete、in（用 instanceof 替代）</span><br><span class="line">四禁反射与元编程：prototype、eval、with、Function.apply/call/bind、TS 实验性装饰器</span><br></pre></td></tr></table></figure>
+
+<p>替代方案记住四个词：<strong>明确类型、联合类型、泛型、<code>Map</code></strong>。类型兼容要用<strong>名义类型</strong>，即显式 <code>implements</code> &#x2F; <code>extends</code>，光长得一样不算。</p>
+<h6 id="二、-State-Prop-Link"><a href="#二、-State-Prop-Link" class="headerlink" title="二、@State &#x2F; @Prop &#x2F; @Link"></a>二、<code>@State</code> &#x2F; <code>@Prop</code> &#x2F; <code>@Link</code></h6><table>
+<thead>
+<tr>
+<th>装饰器</th>
+<th>数据源</th>
+<th>方向</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@State</code></td>
+<td>组件自身</td>
+<td>自身 ↔ UI</td>
+<td>私有状态，只观察第一层</td>
+</tr>
+<tr>
+<td><code>@Prop</code></td>
+<td>父组件</td>
+<td>父 → 子单向</td>
+<td>子组件改了不回传，对象是深拷贝</td>
+</tr>
+<tr>
+<td><code>@Link</code></td>
+<td>父组件</td>
+<td>父 ↔ 子双向</td>
+<td>父用 <code>$</code> 传引用，子不能本地初始化</td>
+</tr>
+</tbody></table>
+<p>延伸三个：跨层级用 <code>@Provide</code> + <code>@Consume</code>（双向）；观察嵌套对象用 <code>@Observed</code> + <code>@ObjectLink</code>；变化监听 V1 用 <code>@Watch</code>、V2 用 <code>@Monitor</code>。</p>
+<p>Storage 一族按作用域记：<strong>AppStorage 是应用级内存，PersistentStorage 是应用级持久化，LocalStorage 是页面级</strong>。带 <code>Link</code> 的双向，带 <code>Prop</code> 的单向。</p>
+<h6 id="三、状态管理-V1-→-V2-对照"><a href="#三、状态管理-V1-→-V2-对照" class="headerlink" title="三、状态管理 V1 → V2 对照"></a>三、状态管理 V1 → V2 对照</h6><table>
+<thead>
+<tr>
+<th>V1</th>
+<th>V2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@Component</code></td>
+<td><code>@ComponentV2</code></td>
+</tr>
+<tr>
+<td><code>@State</code></td>
+<td><code>@Local</code></td>
+</tr>
+<tr>
+<td><code>@Prop</code></td>
+<td><code>@Param</code>（配 <code>@Once</code>）</td>
+</tr>
+<tr>
+<td><code>@Link</code></td>
+<td><code>@Param</code> + <code>@Event</code></td>
+</tr>
+<tr>
+<td><code>@Provide</code> &#x2F; <code>@Consume</code></td>
+<td><code>@Provider</code> &#x2F; <code>@Consumer</code></td>
+</tr>
+<tr>
+<td><code>@Observed</code> + <code>@ObjectLink</code></td>
+<td><code>@ObservedV2</code> + <code>@Trace</code></td>
+</tr>
+<tr>
+<td><code>@Watch</code></td>
+<td><code>@Monitor</code></td>
+</tr>
+<tr>
+<td>—</td>
+<td><code>@Computed</code>（有缓存，依赖变了才重算）</td>
+</tr>
+</tbody></table>
+<p>硬规则：<strong>V1 和 V2 不混用</strong>。<code>@Param</code> 是只读的，想改就得通过 <code>@Event</code> 回调父组件，这是 V2 的单向数据流。</p>
+<h6 id="四、TaskPool-与-Worker"><a href="#四、TaskPool-与-Worker" class="headerlink" title="四、TaskPool 与 Worker"></a>四、TaskPool 与 Worker</h6><table>
+<thead>
+<tr>
+<th>对比</th>
+<th>TaskPool</th>
+<th>Worker</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>级别</td>
+<td>任务级</td>
+<td>线程级</td>
+</tr>
+<tr>
+<td>线程管理</td>
+<td>自动</td>
+<td>手动</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>短时、独立、CPU 密集</td>
+<td>长时、常驻、频繁通信</td>
+</tr>
+<tr>
+<td>装饰器</td>
+<td><code>@Concurrent</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>通信</td>
+<td>参数 &#x2F; 返回值</td>
+<td><code>postMessage</code> &#x2F; <code>onmessage</code></td>
+</tr>
+<tr>
+<td>数量</td>
+<td>由任务池调度，优先级 HIGH&#x2F;MEDIUM&#x2F;LOW</td>
+<td>API 12+ 最多 64 个，旧版 8 个</td>
+</tr>
+</tbody></table>
+<p>两者共同点：<strong>都是 Actor 模型，内存隔离，都不能更新 UI</strong>（UI 只在主线程改）。</p>
+<p><code>@Concurrent</code> 修饰的函数四条限制：<strong>不能用闭包变量、不能用 <code>this</code>、不能操作 UI、参数和返回值要可序列化</strong>。跨线程共享对象用 <code>@Sendable</code>，普通对象默认是序列化拷贝，不是共享引用。</p>
+<h6 id="五、HAR、HSP、HAP"><a href="#五、HAR、HSP、HAP" class="headerlink" title="五、HAR、HSP、HAP"></a>五、HAR、HSP、HAP</h6><table>
+<thead>
+<tr>
+<th>对比</th>
+<th>HAR</th>
+<th>HSP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型</td>
+<td>静态共享包</td>
+<td>动态共享包</td>
+</tr>
+<tr>
+<td>共享时机</td>
+<td>编译时打进 HAP</td>
+<td>运行时共享</td>
+</tr>
+<tr>
+<td>能否独立安装运行</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>典型用途</td>
+<td>公共组件、工具</td>
+<td>多 HAP 复用、压包体积</td>
+</tr>
+</tbody></table>
+<p>依赖关系一张图：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">App Pack(.app，上架)</span><br><span class="line">├─ entry.hap（主模块）</span><br><span class="line">└─ feature.hap（可选功能模块）</span><br><span class="line"></span><br><span class="line">HAP → HAR / HSP</span><br><span class="line">HAR → HAR / HSP</span><br><span class="line">HSP → HAR / HSP</span><br><span class="line">HAP ✗→ HAP          共享包：✗ 循环依赖，✗ 依赖传递</span><br></pre></td></tr></table></figure>
+
+<p><code>.app</code> 用于上架，<code>.hap</code> 用于安装运行；两种共享包都不能独立跑。</p>
+<h6 id="六、router-与-Navigation"><a href="#六、router-与-Navigation" class="headerlink" title="六、router 与 Navigation"></a>六、router 与 Navigation</h6><table>
+<thead>
+<tr>
+<th>对比</th>
+<th>router</th>
+<th>Navigation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>官方态度</td>
+<td>旧方案，新应用不推荐</td>
+<td>推荐</td>
+</tr>
+<tr>
+<td>页面栈</td>
+<td>系统管理</td>
+<td><code>NavPathStack</code></td>
+</tr>
+<tr>
+<td>页面载体</td>
+<td><code>@Entry</code></td>
+<td><code>NavDestination</code></td>
+</tr>
+<tr>
+<td>多端</td>
+<td>较弱</td>
+<td>支持 Stack &#x2F; Split &#x2F; Auto 分栏</td>
+</tr>
+<tr>
+<td>系统路由表</td>
+<td>不支持</td>
+<td>支持（<code>router_map.json</code>）</td>
+</tr>
+</tbody></table>
+<p>题干出现”推荐”就选 Navigation。</p>
+<h6 id="七、数据存储选型"><a href="#七、数据存储选型" class="headerlink" title="七、数据存储选型"></a>七、数据存储选型</h6><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>类型</th>
+<th>分布式</th>
+<th>场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Preferences</td>
+<td>轻量键值</td>
+<td>否</td>
+<td>少量配置、开关、token</td>
+</tr>
+<tr>
+<td>RDB</td>
+<td>关系型（SQLite）</td>
+<td>否</td>
+<td>复杂查询、事务、大量结构化数据</td>
+</tr>
+<tr>
+<td>KV Store</td>
+<td>键值数据库</td>
+<td>是</td>
+<td>跨设备键值数据</td>
+</tr>
+<tr>
+<td>分布式数据对象</td>
+<td>内存对象</td>
+<td>是</td>
+<td>多设备实时协同</td>
+</tr>
+</tbody></table>
+<p>两个细节：<code>Preferences.put()</code> 之后要 <code>flush()</code> 才落盘；RDB 的 <code>ResultSet</code> 用完要 <code>close()</code>。</p>
+<h6 id="八、Stage-模型与-FA-模型"><a href="#八、Stage-模型与-FA-模型" class="headerlink" title="八、Stage 模型与 FA 模型"></a>八、Stage 模型与 FA 模型</h6><table>
+<thead>
+<tr>
+<th>对比</th>
+<th>Stage</th>
+<th>FA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>核心单元</td>
+<td><code>UIAbility</code> &#x2F; <code>ExtensionAbility</code></td>
+<td><code>Ability</code> &#x2F; <code>AbilitySlice</code></td>
+</tr>
+<tr>
+<td>是否推荐</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>窗口</td>
+<td><code>WindowStage</code></td>
+<td>AbilitySlice 栈</td>
+</tr>
+</tbody></table>
+<p>启动模式默认是 <strong>singleton</strong>（重复拉起复用实例并触发 <code>onNewWant</code>），其余还有 multiton、specified。</p>
+<h6 id="九、自适应布局与响应式布局"><a href="#九、自适应布局与响应式布局" class="headerlink" title="九、自适应布局与响应式布局"></a>九、自适应布局与响应式布局</h6><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>手段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>自适应布局</td>
+<td>拉伸、均分、占比、缩放、隐藏</td>
+</tr>
+<tr>
+<td>响应式布局</td>
+<td>断点、栅格、媒体查询、资源限定词</td>
+</tr>
+</tbody></table>
+<p>断点必背：<strong>sm 320–599 &#x2F; md 600–839 &#x2F; lg 840–1439 &#x2F; xl ≥ 1440（vp）</strong>；栅格默认 <strong>12 列</strong>；长度用 vp、字体用 fp。</p>
+<p>一次开发多端部署是<strong>三层架构</strong>：UI 层 + 功能层 + 基础层，不是”一套布局到处拉伸”。</p>
+<h6 id="十、权限类型"><a href="#十、权限类型" class="headerlink" title="十、权限类型"></a>十、权限类型</h6><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>授予方式</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>system_grant</code></td>
+<td>安装时自动授予，只需声明</td>
+<td>INTERNET、KEEP_BACKGROUND_RUNNING</td>
+</tr>
+<tr>
+<td><code>user_grant</code></td>
+<td>运行时动态申请</td>
+<td>CAMERA、MICROPHONE、LOCATION、相册、DISTRIBUTED_DATASYNC</td>
+</tr>
+</tbody></table>
+<p><code>user_grant</code> 三步：<strong>声明 → 填 reason &#x2F; usedScene → <code>requestPermissionsFromUser</code></strong>。光声明不会自动授权。</p>
+<hr>
+<h6 id="四条生命周期"><a href="#四条生命周期" class="headerlink" title="四条生命周期"></a>四条生命周期</h6><p>自定义组件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aboutToAppear → build → onDidBuild →（销毁）aboutToDisappear</span><br><span class="line">复用场景：aboutToReuse / aboutToRecycle</span><br></pre></td></tr></table></figure>
+
+<p>页面（仅 <code>@Entry</code>）：<code>onPageShow</code> &#x2F; <code>onPageHide</code> &#x2F; <code>onBackPress</code>。注意 <code>onPageShow</code> 每次显示都会触发，不是只跑一次；一个页面也只能有一个 <code>@Entry</code>。</p>
+<p>UIAbility（顺序必背）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">onCreate</span><br><span class="line"> → onWindowStageCreate</span><br><span class="line"> → onForeground</span><br><span class="line"> → onBackground</span><br><span class="line"> → onWindowStageDestroy</span><br><span class="line"> → onDestroy</span><br></pre></td></tr></table></figure>
+
+<p><code>loadContent</code> 写在 <code>onWindowStageCreate</code>，不是 <code>onCreate</code>——先有 Ability，再有窗口。</p>
+<p>AVPlayer 状态机：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">idle → initialized（设源）→ prepared（prepare）</span><br><span class="line"> → playing ↔ paused → completed → stopped → released</span><br></pre></td></tr></table></figure>
+
+<p>用完必须 <code>release()</code>。</p>
+<hr>
+<h6 id="35-条高频易错判断"><a href="#35-条高频易错判断" class="headerlink" title="35 条高频易错判断"></a>35 条高频易错判断</h6><p>能一眼说出”为什么错”，判断题就稳了。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>说法</th>
+<th>判断</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>ArkTS 支持 <code>any</code> 和 <code>unknown</code></td>
+<td>✗</td>
+<td>明确禁用，用联合类型&#x2F;泛型&#x2F;明确类型</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ArkTS 可以用 <code>var</code> 声明变量</td>
+<td>✗</td>
+<td>只能 <code>let</code> &#x2F; <code>const</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>ArkTS 支持结构化类型</td>
+<td>✗</td>
+<td>名义类型，要显式 <code>implements</code>&#x2F;<code>extends</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>ArkTS 可以运行时给对象加属性</td>
+<td>✗</td>
+<td>对象布局编译期固定</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ArkTS 支持 <code>delete</code> 和 <code>in</code></td>
+<td>✗</td>
+<td>都不支持</td>
+</tr>
+<tr>
+<td>6</td>
+<td>ArkTS 支持 <code>Function.apply/call/bind</code></td>
+<td>✗</td>
+<td>均不支持</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>@State</code> 能观察对象的所有嵌套属性</td>
+<td>✗</td>
+<td>V1 只观察第一层，深层用 <code>@Observed</code>&#x2F;<code>@ObjectLink</code> 或 V2</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>@Prop</code> 是双向同步</td>
+<td>✗</td>
+<td>单向，父 → 子</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>@Link</code> 可以由子组件本地初始化</td>
+<td>✗</td>
+<td>必须由父组件用 <code>$</code> 传入</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>@Provide</code>&#x2F;<code>@Consume</code> 只能父子直传</td>
+<td>✗</td>
+<td>可跨层级</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>@ObjectLink</code> 必须由父组件传入</td>
+<td>✓</td>
+<td>不能在子组件本地初始化</td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>@StorageProp</code> 是双向同步</td>
+<td>✗</td>
+<td>单向，<code>@StorageLink</code> 才双向</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>@ComponentV2</code> 可以使用 <code>@State</code></td>
+<td>✗</td>
+<td>V1&#x2F;V2 不混用</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>@Param</code> 在子组件中可以随意修改</td>
+<td>✗</td>
+<td>只读，通过 <code>@Event</code> 回调</td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>@Computed</code> 每次访问都重新计算</td>
+<td>✗</td>
+<td>有缓存，依赖变化才重算</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>@Entry</code> 页面可以有多个</td>
+<td>✗</td>
+<td>一个页面只能有一个</td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>onPageShow</code> 只执行一次</td>
+<td>✗</td>
+<td>每次显示都可能触发</td>
+</tr>
+<tr>
+<td>18</td>
+<td>UIAbility 先 <code>onCreate</code> 后 <code>onWindowStageCreate</code></td>
+<td>✓</td>
+<td>先有 Ability，后有窗口</td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>loadContent</code> 应放在 <code>onCreate</code></td>
+<td>✗</td>
+<td>应放在 <code>onWindowStageCreate</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>默认启动模式是 singleton</td>
+<td>✓</td>
+<td>重复拉起复用实例，触发 <code>onNewWant</code></td>
+</tr>
+<tr>
+<td>21</td>
+<td>HAP 可以依赖另一个 HAP</td>
+<td>✗</td>
+<td>HAP 之间不能互相依赖</td>
+</tr>
+<tr>
+<td>22</td>
+<td>HAR 是运行时共享包</td>
+<td>✗</td>
+<td>HAR 是编译时静态共享包</td>
+</tr>
+<tr>
+<td>23</td>
+<td>HSP 可以独立安装运行</td>
+<td>✗</td>
+<td>跟随宿主应用发布</td>
+</tr>
+<tr>
+<td>24</td>
+<td>HAR&#x2F;HSP 支持依赖传递</td>
+<td>✗</td>
+<td>都不支持循环依赖和依赖传递</td>
+</tr>
+<tr>
+<td>25</td>
+<td>TaskPool 自动管理线程</td>
+<td>✓</td>
+<td>Worker 才需要手动管理</td>
+</tr>
+<tr>
+<td>26</td>
+<td><code>@Concurrent</code> 函数可以使用闭包变量</td>
+<td>✗</td>
+<td>只能用入参和 import 的常量&#x2F;模块</td>
+</tr>
+<tr>
+<td>27</td>
+<td>TaskPool 任务中可以直接更新 UI</td>
+<td>✗</td>
+<td>UI 只能在主线程更新</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Worker 最多创建 64 个（API 12+）</td>
+<td>✓</td>
+<td>旧版本是 8 个</td>
+</tr>
+<tr>
+<td>29</td>
+<td>普通对象跨线程是共享引用</td>
+<td>✗</td>
+<td>默认序列化拷贝，<code>@Sendable</code> 才共享</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Preferences 支持分布式同步</td>
+<td>✗</td>
+<td>跨设备用 KV Store &#x2F; 分布式数据对象</td>
+</tr>
+<tr>
+<td>31</td>
+<td>RDB 支持 SQL 和事务</td>
+<td>✓</td>
+<td>基于 SQLite</td>
+</tr>
+<tr>
+<td>32</td>
+<td>分布式软总线就是云同步</td>
+<td>✗</td>
+<td>主要是近场可信设备互联</td>
+</tr>
+<tr>
+<td>33</td>
+<td>一次开发多端部署就是一套布局到处拉伸</td>
+<td>✗</td>
+<td>三层架构 + 自适应 + 响应式 + 资源适配</td>
+</tr>
+<tr>
+<td>34</td>
+<td>卡片可以常驻后台执行长时任务</td>
+<td>✗</td>
+<td>卡片能力受限，不能常驻</td>
+</tr>
+<tr>
+<td>35</td>
+<td>长时任务不需要权限</td>
+<td>✗</td>
+<td>需要对应类型和 <code>KEEP_BACKGROUND_RUNNING</code> 等权限</td>
+</tr>
+</tbody></table>
+<hr>
+<h6 id="数字速记"><a href="#数字速记" class="headerlink" title="数字速记"></a>数字速记</h6><table>
+<thead>
+<tr>
+<th>数字</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>60 &#x2F; 100 &#x2F; 80 &#x2F; 3</td>
+<td>60 分钟、满分 100、80 及格、每月 3 次</td>
+</tr>
+<tr>
+<td>64 &#x2F; 8</td>
+<td>Worker 上限：API 12+ 是 64，旧版是 8</td>
+</tr>
+<tr>
+<td>320 &#x2F; 600 &#x2F; 840 &#x2F; 1440</td>
+<td>断点边界（vp）</td>
+</tr>
+<tr>
+<td>12</td>
+<td>栅格默认列数</td>
+</tr>
+<tr>
+<td>3</td>
+<td>TaskPool 优先级 HIGH&#x2F;MEDIUM&#x2F;LOW</td>
+</tr>
+<tr>
+<td>1×2、2×2、2×4、4×4</td>
+<td>常见卡片尺寸</td>
+</tr>
+</tbody></table>
+<hr>
+<h6 id="自测-12-题（自编模拟，非官方真题）"><a href="#自测-12-题（自编模拟，非官方真题）" class="headerlink" title="自测 12 题（自编模拟，非官方真题）"></a>自测 12 题（自编模拟，非官方真题）</h6><p>下面这些是我按官方文档自己出的练习，不是考试原题，也不要拿去找”题源”——认证考试题目本身有保密要求，真正能帮到你的是把每个选项的对错理由说清楚。</p>
+<p><strong>判断</strong></p>
+<ol>
+<li>ArkTS 里可以用 <code>obj[&quot;propName&quot;]</code> 在运行时动态读写普通对象的属性。</li>
+<li><code>@Link</code> 修饰的变量可以在子组件里写默认值。</li>
+<li>HAR 与 HSP 都不支持循环依赖。</li>
+<li>声明了 <code>user_grant</code> 权限后，安装时就会自动获得授权。</li>
+</ol>
+<p><strong>单选</strong></p>
+<ol start="5">
+<li>需要在不相关的跨层级组件间共享并可双向修改状态，应选：<br>A. <code>@Prop</code>　B. <code>@Provide</code> + <code>@Consume</code>　C. <code>@State</code>　D. <code>@Watch</code></li>
+<li>要把一段耗时的数组计算放到后台且不常驻，最合适的是：<br>A. Worker　B. TaskPool　C. 主线程 <code>setTimeout</code>　D. 卡片</li>
+<li><code>loadContent()</code> 应该写在：<br>A. <code>onCreate</code>　B. <code>onWindowStageCreate</code>　C. <code>onForeground</code>　D. <code>aboutToAppear</code></li>
+<li>上架应用市场提交的包格式是：<br>A. <code>.hap</code>　B. <code>.har</code>　C. <code>.app</code>　D. <code>.zip</code></li>
+</ol>
+<p><strong>多选</strong></p>
+<ol start="9">
+<li>关于 <code>@Concurrent</code> 修饰的函数，正确的有：<br>A. 不能使用闭包变量　B. 不能使用 <code>this</code>　C. 可以直接更新 UI　D. 参数与返回值需可序列化</li>
+<li>跨设备数据同步可以用下面哪些方案？<br>A. Preferences　B. KV Store　C. 分布式数据对象　D. RDB</li>
+<li>属于响应式布局手段的有：<br>A. 断点　B. 栅格　C. 拉伸　D. 媒体查询</li>
+<li>Stage 模型里 UIAbility 的启动模式包括：<br>A. singleton　B. multiton　C. specified　D. shared</li>
+</ol>
+<details>
+<summary>参考答案与理由</summary>
+
+<ol>
+<li>✗　ArkTS 禁止运行时动态索引普通对象，要映射就用 <code>Map</code>。</li>
+<li>✗　<code>@Link</code> 必须由父组件用 <code>$</code> 传引用，子组件不能本地初始化。</li>
+<li>✓　HAR、HSP 都不支持循环依赖，也不支持依赖传递。</li>
+<li>✗　<code>user_grant</code> 必须运行时 <code>requestPermissionsFromUser</code> 动态申请。</li>
+<li>B　<code>@Provide</code>&#x2F;<code>@Consume</code> 可跨层级且双向。</li>
+<li>B　短时独立任务用 TaskPool，常驻或频繁通信才 Worker。</li>
+<li>B　先有 Ability 再有窗口，<code>loadContent</code> 在 <code>onWindowStageCreate</code>。</li>
+<li>C　<code>.app</code> 上架，<code>.hap</code> 安装运行。</li>
+<li>ABD　并发任务里绝对不能碰 UI。</li>
+<li>BC　Preferences 与 RDB 不具备分布式同步能力。</li>
+<li>ABD　拉伸属于自适应布局，不是响应式布局。</li>
+<li>ABC　默认 singleton。</li>
+</ol>
+</details>
+
+<hr>
+<h6 id="考场策略"><a href="#考场策略" class="headerlink" title="考场策略"></a>考场策略</h6><ol>
+<li>60 分钟做 50–60 题，平均一分钟一题，给多选题留 20 分钟。</li>
+<li>先易后难，不会的先标记，交卷前一定回看。</li>
+<li>多选题宁缺毋滥，只选有把握的；错选整题没分。</li>
+<li>看到”所有、任意、无需、直接、完全、一定”这类绝对化表述，先怀疑。</li>
+<li>看到”推荐”：路由选 Navigation，应用模型选 Stage，短任务选 TaskPool、长任务选 Worker。</li>
+<li>看到”跨层级”想 Provide&#x2F;Consume，看到”嵌套对象”想 Observed&#x2F;ObjectLink。</li>
+<li>不要空题，判断题闭眼选也比留空强。</li>
+</ol>
+<hr>
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/training/exam-detail/101684221791158147" title="HarmonyOS 应用开发者高级认证-理论考试 - 华为开发者学堂">HarmonyOS 应用开发者高级认证-理论考试 - 华为开发者学堂</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/arkts-more-cases-V5" title="ArkTS 语言介绍 - 华为开发者">ArkTS 语言介绍 - 华为开发者</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/doccenter-capabilities/taskpool-vs-worker" title="TaskPool 与 Worker 的区别 - 华为开发者">TaskPool 与 Worker 的区别 - 华为开发者</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/multi-device-guidance" title="一次开发多端部署 - 华为开发者">一次开发多端部署 - 华为开发者</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2026/11/02/2026-11-02-harmonyos-advanced-cert-notes/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2026-01-09-csdn-156773083" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1065,93 +1772,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2025/11/21/2025-11-21-csdn-155111519/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2025-11-21-csdn-155111356" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/21/2025-11-21-csdn-155111356/">C++性能基准测试</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/21/2025-11-21-csdn-155111356/" class="archive-article-date">
-  	<time datetime="2025-11-21T14:03:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/155111356">https://blog.csdn.net/qq_30220519/article/details/155111356</a></p>
-</blockquote>
-<h6 id="改造benchmark，运行中获取ns耗时"><a href="#改造benchmark，运行中获取ns耗时" class="headerlink" title="改造benchmark，运行中获取ns耗时"></a>改造benchmark，运行中获取ns耗时</h6><p>benchmark.cc</p>
-<blockquote>
-<p>double State::real_time_used() const {<br>  return timer_-&gt;real_time_used();<br>}</p>
-</blockquote>
-<h6 id="定义测试套件"><a href="#定义测试套件" class="headerlink" title="定义测试套件"></a>定义测试套件</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">PerfTest</span> : <span class="keyword">public</span> benchmark::Fixture &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">SetUp</span><span class="params">(benchmark::State&amp; state)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">Unit</span>(benchmark::kSecond);</span><br><span class="line">        <span class="built_in">ThreadRange</span>(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">MinWarmUpTime</span>(<span class="number">1</span>);</span><br><span class="line">        <span class="built_in">Test</span>(); <span class="comment">// 预热一次，防止RAII首次波动过大</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">TearDown</span><span class="params">(benchmark::State&amp; state)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 初始化资源单例</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加预期时间设置和检查方法</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">SetExpectedTime</span><span class="params">(<span class="type">double</span> seconds)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        expected_time_ = seconds;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">report</span><span class="params">(benchmark::State&amp; state, <span class="type">size_t</span>&amp; fCount, <span class="type">size_t</span>&amp; sCount)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (expected_time_ &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">double</span> actual_time = state.<span class="built_in">real_time_used</span>() / state.<span class="built_in">iterations</span>();</span><br><span class="line">            <span class="keyword">auto</span> computeScale = refCpuCycles_per_second / benchmark::CPUInfo::<span class="built_in">Get</span>().</span><br><span class="line">                cycles_per_second; <span class="comment">// 根据cpu频率动态调整预期耗时，当前cpu频率越低，预估耗时越高</span></span><br><span class="line">            actual_time *= computeScale;</span><br><span class="line">            <span class="comment">// printf(&quot;cost time: %f s\n&quot;, actual_time);</span></span><br><span class="line">            actual_time &gt; expected_time_ ? ++fCount : ++sCount;</span><br><span class="line">            <span class="keyword">if</span> (fCount) &#123;</span><br><span class="line">                <span class="type">char</span> msg[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">                <span class="built_in">snprintf</span>(msg, <span class="number">1024</span>, <span class="string">&quot;fail actual %fs,%fHZ - expect %fs,%fHZ = %fs&quot;</span>, actual_time,</span><br><span class="line">                    benchmark::CPUInfo::<span class="built_in">Get</span>().cycles_per_second, expected_time_,</span><br><span class="line">                    refCpuCycles_per_second, actual_time - expected_time_);</span><br><span class="line">                state.<span class="built_in">SkipWithError</span>(msg);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">copyPaste3WTest</span><span class="params">(benchmark::State&amp; state)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        state.<span class="built_in">PauseTiming</span>();</span><br><span class="line">		<span class="comment">// prepare resource</span></span><br><span class="line">        state.<span class="built_in">ResumeTiming</span>(); <span class="comment">// 告诉反射框架需要准备的数据是什么</span></span><br><span class="line">		<span class="comment">// do some thing</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">double</span> expected_time_ = <span class="number">0.0</span>;	<span class="comment">// 预期耗时</span></span><br><span class="line">    <span class="type">double</span> refCpuCycles_per_second = <span class="number">4503077393</span>;  <span class="comment">// cpu参考HZ</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BENCHMARK_F</span>(PerfTest, sleepTest)(benchmark::State&amp; state)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">size_t</span> sCount = <span class="number">0</span>;</span><br><span class="line">    <span class="type">static</span> <span class="type">size_t</span> fCount = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 设置预期时间(单位:秒)，例如0.5秒</span></span><br><span class="line">    <span class="built_in">SetExpectedTime</span>(<span class="number">1.1</span>);</span><br><span class="line">    <span class="built_in">Complexity</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">        _sleep(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查结果是否达标</span></span><br><span class="line">    <span class="built_in">report</span>(state, fCount, sCount);</span><br><span class="line">    state.counters[<span class="string">&quot;F&quot;</span>] = fCount;</span><br><span class="line">    state.counters[<span class="string">&quot;S&quot;</span>] = sCount;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="输出基准报告"><a href="#输出基准报告" class="headerlink" title="输出基准报告"></a>输出基准报告</h6><blockquote>
-<p>-—————————————————————————————<br>Benchmark                              Time             CPU   Iterations UserCounters…<br>-—————————————————————————————<br>PerfTest&#x2F;sleepTest        1010025320 ns        0.000 ns           10 F&#x3D;0 S&#x3D;2<br>PerfTest&#x2F;sleepTest        ERROR OCCURRED: ‘fail actual 0.000699s,4559561393.000000HZ - expect 0.000500s,4503077393.000000HZ &#x3D; 0.000199s’</p>
-</blockquote>
-<h6 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;benchmark/benchmark.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;array&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> <span class="type">int</span> len = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// constexpr function具有inline属性，你应该把它放在头文件中</span></span><br><span class="line"><span class="function"><span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="title">my_pow</span><span class="params">(<span class="type">const</span> <span class="type">int</span> i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> i * i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用operator[]读取元素，依次存入1-6的平方</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">bench_array_operator</span><span class="params">(benchmark::State&amp; state)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::array&lt;<span class="type">int</span>, len&gt; arr;</span><br><span class="line">	<span class="keyword">constexpr</span> <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">		arr[<span class="number">0</span>] = <span class="built_in">my_pow</span>(i);</span><br><span class="line">		arr[<span class="number">1</span>] = <span class="built_in">my_pow</span>(i + <span class="number">1</span>);</span><br><span class="line">		arr[<span class="number">2</span>] = <span class="built_in">my_pow</span>(i + <span class="number">2</span>);</span><br><span class="line">		arr[<span class="number">3</span>] = <span class="built_in">my_pow</span>(i + <span class="number">3</span>);</span><br><span class="line">		arr[<span class="number">4</span>] = <span class="built_in">my_pow</span>(i + <span class="number">4</span>);</span><br><span class="line">		arr[<span class="number">5</span>] = <span class="built_in">my_pow</span>(i + <span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">BENCHMARK</span>(bench_array_operator)-&gt;<span class="built_in">Iterations</span>(<span class="number">10</span>)-&gt;<span class="built_in">Repetitions</span>(<span class="number">3</span>)-&gt;<span class="built_in">Unit</span>(benchmark::kMillisecond)</span><br><span class="line">-&gt;<span class="built_in">ComputeStatistics</span>(<span class="string">&quot;max&quot;</span>, [](<span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt;&amp; v)-&gt;<span class="type">double</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> *std::<span class="built_in">max_element</span>(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>());</span><br><span class="line">	&#125;, benchmark::kTime)</span><br><span class="line">	-&gt;<span class="built_in">ComputeStatistics</span>(<span class="string">&quot;min&quot;</span>, [](<span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt;&amp; v)-&gt;<span class="type">double</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> *std::<span class="built_in">min_element</span>(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>());</span><br><span class="line">		&#125;, benchmark::kTime);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 使用at()读取元素，依次存入1-6的平方</span></span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">bench_array_at</span><span class="params">(benchmark::State&amp; state)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		std::array&lt;<span class="type">int</span>, len&gt; arr;</span><br><span class="line">		<span class="keyword">constexpr</span> <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">			arr.<span class="built_in">at</span>(<span class="number">0</span>) = <span class="built_in">my_pow</span>(i);</span><br><span class="line">			arr.<span class="built_in">at</span>(<span class="number">1</span>) = <span class="built_in">my_pow</span>(i + <span class="number">1</span>);</span><br><span class="line">			arr.<span class="built_in">at</span>(<span class="number">2</span>) = <span class="built_in">my_pow</span>(i + <span class="number">2</span>);</span><br><span class="line">			arr.<span class="built_in">at</span>(<span class="number">3</span>) = <span class="built_in">my_pow</span>(i + <span class="number">3</span>);</span><br><span class="line">			arr.<span class="built_in">at</span>(<span class="number">4</span>) = <span class="built_in">my_pow</span>(i + <span class="number">4</span>);</span><br><span class="line">			arr.<span class="built_in">at</span>(<span class="number">5</span>) = <span class="built_in">my_pow</span>(i + <span class="number">5</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">BENCHMARK</span>(bench_array_at);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// std::get&lt;&gt;(array)是一个constexpr function，它会返回容器内元素的引用，并在编译期检查数组的索引是否正确</span></span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">bench_array_get</span><span class="params">(benchmark::State&amp; state)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		std::array&lt;<span class="type">int</span>, len&gt; arr;</span><br><span class="line">		<span class="keyword">constexpr</span> <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">			std::<span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(arr) = <span class="built_in">my_pow</span>(i);</span><br><span class="line">			std::<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(arr) = <span class="built_in">my_pow</span>(i + <span class="number">1</span>);</span><br><span class="line">			std::<span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(arr) = <span class="built_in">my_pow</span>(i + <span class="number">2</span>);</span><br><span class="line">			std::<span class="built_in">get</span>&lt;<span class="number">3</span>&gt;(arr) = <span class="built_in">my_pow</span>(i + <span class="number">3</span>);</span><br><span class="line">			std::<span class="built_in">get</span>&lt;<span class="number">4</span>&gt;(arr) = <span class="built_in">my_pow</span>(i + <span class="number">4</span>);</span><br><span class="line">			std::<span class="built_in">get</span>&lt;<span class="number">5</span>&gt;(arr) = <span class="built_in">my_pow</span>(i + <span class="number">5</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">BENCHMARK</span>(bench_array_get);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//BENCHMARK(bench_array_ring_insert_int)-&gt;Arg(10)-&gt;Arg(100)-&gt;Arg(1000);</span></span><br><span class="line">	<span class="comment">//BENCHMAEK(func)-&gt;Range(int64_t start, int64_t limit);</span></span><br><span class="line">	<span class="comment">// #RangeMultiplier 每次乘倍数，默认从start起每次累乘8，一直达到end</span></span><br><span class="line">	<span class="comment">//BENCHMARK(bench_array_ring_insert_int)-&gt;RangeMultiplier(10)-&gt;Range(10, 1000);</span></span><br><span class="line">	<span class="comment">//BENCHMARK(func)-&gt;RangeMultiplier(10)-&gt;Ranges(&#123; &#123;10, 1000&#125;, &#123;128， 256&#125; &#125;);</span></span><br><span class="line">	<span class="comment">//BENCHMARK(func)-&gt;Args(&#123; 10, 128 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; 100, 128 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; 1000, 128 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; 10, 256 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; 100, 256 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; 1000, 256 &#125;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 这次我们生成100，200，...，1000的测试用例，用range是无法生成这些参数的</span></span><br><span class="line">	<span class="comment">//static void custom_args(benchmark::internal::Benchmark* b)</span></span><br><span class="line">	<span class="comment">//&#123;</span></span><br><span class="line">	<span class="comment">//	for (int i = 100; i &lt;= 1000; i += 100) &#123;</span></span><br><span class="line">	<span class="comment">//		b-&gt;Arg(i);</span></span><br><span class="line">	<span class="comment">//	&#125;</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">	<span class="comment">//BENCHMARK(bench_array_ring_insert_int)-&gt;RangeMultiplier(10)-&gt;Apply(custom_args);</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, std::<span class="type">size_t</span> length, <span class="type">bool</span> is_reserve = <span class="literal">true</span>&gt;</span><br><span class="line">	<span class="type">void</span> <span class="built_in">bench_vector_reserve</span>(benchmark::State&amp; state)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">			std::vector&lt;T&gt; container;</span><br><span class="line">			<span class="function"><span class="keyword">if</span> <span class="title">constexpr</span> <span class="params">(is_reserve)</span> </span>&#123;</span><br><span class="line">				container.<span class="built_in">reserve</span>(length);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span> (std::<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; length; ++i) &#123;</span><br><span class="line">				container.<span class="built_in">push_back</span>(T&#123;&#125;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve, std::string, <span class="number">100</span>);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve, std::string, <span class="number">1000</span>);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve, std::string, <span class="number">10000</span>);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve, std::string, <span class="number">100000</span>);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve, std::string, <span class="number">100</span>, <span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve, std::string, <span class="number">1000</span>, <span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve, std::string, <span class="number">10000</span>, <span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve, std::string, <span class="number">100000</span>, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//BENCHMARK_TEMPLATE(bench_vector_reserve, std::string)-&gt;RangeMultiplier(10)-&gt;Range(10, 10000 * 10);</span></span><br><span class="line">	<span class="comment">//BENCHMARK_TEMPLATE(bench_vector_reserve, std::string, false)-&gt;RangeMultiplier(10)-&gt;Range(10, 10000 * 10);</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//累加，每次加1000</span></span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve, std::string, <span class="number">100</span>)-&gt;<span class="built_in">DenseRange</span>(<span class="number">1000</span>, <span class="number">100</span> * <span class="number">100</span>, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="type">bool</span> is_reserve = <span class="literal">true</span>&gt;</span><br><span class="line">	<span class="type">void</span> <span class="built_in">bench_vector_reserve2</span>(benchmark::State&amp; state)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">			std::vector&lt;T&gt; container;</span><br><span class="line">			<span class="function"><span class="keyword">if</span> <span class="title">constexpr</span> <span class="params">(is_reserve)</span> </span>&#123;</span><br><span class="line">				container.<span class="built_in">reserve</span>(state.<span class="built_in">range</span>(<span class="number">0</span>));</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span> (std::<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; state.<span class="built_in">range</span>(<span class="number">0</span>); ++i) &#123;</span><br><span class="line">				container.<span class="built_in">push_back</span>(T&#123;&#125;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//BENCHMARK(BM_test)-&gt;ArgsProduct(&#123; &#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;&#125;, &#123;1, 2, 3, 4&#125; &#125;);</span></span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">	<span class="comment">//// 等价于下面的</span></span><br><span class="line">	<span class="comment">//BENCHMARK(BM_test)-&gt;Args(&#123; &quot;a&quot;, 1 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; &quot;a&quot;, 2 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; &quot;a&quot;, 3 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; &quot;a&quot;, 4 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; &quot;b&quot;, 1 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; &quot;b&quot;, 2 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; &quot;b&quot;, 3 &#125;)</span></span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; &quot;d&quot;, 3 &#125;)</span></span><br><span class="line">	<span class="comment">//-&gt;Args(&#123; &quot;d&quot;, 4 &#125;)</span></span><br><span class="line">	<span class="comment">//ArgPair</span></span><br><span class="line">	<span class="comment">// </span></span><br><span class="line">	<span class="comment">//benchmark::CreateRange(8, 128, /*multi=*/2)   // 生成：[8, 16, 32, 64, 128]</span></span><br><span class="line">	<span class="comment">//benchmark::CreateDenseRange(1, 6, /*step=*/1) // 生成：[1, 2, 3, 4, 5, 6]</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="type">long</span> i = <span class="number">2L</span>;</span><br><span class="line">		<span class="built_in">MyClass</span>() &#123; i = <span class="number">2L</span>; &#125;</span><br><span class="line">		<span class="keyword">virtual</span> ~<span class="built_in">MyClass</span>() &#123;&#125;</span><br><span class="line">		<span class="function"><span class="keyword">virtual</span> <span class="type">long</span> <span class="title">get</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> i; &#125;</span><br><span class="line">		MyClass&amp; <span class="keyword">operator</span>=(MyClass&amp;&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">		<span class="built_in">MyClass</span>(<span class="type">const</span> MyClass&amp; obj) &#123;</span><br><span class="line">			i = obj.i;</span><br><span class="line">		&#125;</span><br><span class="line">		MyClass&amp; <span class="keyword">operator</span>=(<span class="type">const</span> MyClass&amp; obj) &#123;</span><br><span class="line">			i = obj.i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve2, std::string)-&gt;<span class="built_in">ArgsProduct</span>(&#123;</span><br><span class="line">		benchmark::<span class="built_in">CreateRange</span>(<span class="number">10</span>, <span class="number">10000</span> * <span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">		&#125;);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve2, std::string, <span class="literal">false</span>)-&gt;<span class="built_in">ArgsProduct</span>(&#123;</span><br><span class="line">		benchmark::<span class="built_in">CreateRange</span>(<span class="number">10</span>, <span class="number">10000</span> * <span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">		&#125;);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve2, std::<span class="type">size_t</span>)-&gt;<span class="built_in">ArgsProduct</span>(&#123;</span><br><span class="line">		benchmark::<span class="built_in">CreateRange</span>(<span class="number">10</span>, <span class="number">10000</span> * <span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">		&#125;);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve2, std::<span class="type">size_t</span>, <span class="literal">false</span>)-&gt;<span class="built_in">ArgsProduct</span>(&#123;</span><br><span class="line">		benchmark::<span class="built_in">CreateRange</span>(<span class="number">10</span>, <span class="number">10000</span> * <span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">		&#125;);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve2, MyClass)-&gt;<span class="built_in">ArgsProduct</span>(&#123;</span><br><span class="line">		benchmark::<span class="built_in">CreateRange</span>(<span class="number">10</span>, <span class="number">10000</span> * <span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">		&#125;);</span><br><span class="line">	<span class="built_in">BENCHMARK_TEMPLATE</span>(bench_vector_reserve2, MyClass, <span class="literal">false</span>)-&gt;<span class="built_in">ArgsProduct</span>(&#123;</span><br><span class="line">		benchmark::<span class="built_in">CreateRange</span>(<span class="number">10</span>, <span class="number">10000</span> * <span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//#define generate_test(type) \</span></span><br><span class="line"><span class="comment">	//	BENCHMARK_TEMPLATE(bench_vector_reserve, type)-&gt;ArgsProduct(&#123;benchmark::CreateRange(10, 100000, 10)&#125;); \</span></span><br><span class="line"><span class="comment">	//	BENCHMARK_TEMPLATE(bench_vector_reserve, type, false)-&gt;ArgsProduct(&#123;benchmark::CreateRange(10, 100000, 10)&#125;);</span></span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">	<span class="comment">//generate_test(std::string);</span></span><br><span class="line">	<span class="comment">//generate_test(std::size_t);</span></span><br><span class="line">	<span class="comment">//generate_test(MyClass);</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 这里都是为了演示而写成的代码，没有什么实际意义</span></span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">bench_N</span><span class="params">(benchmark::State&amp; state)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="type">int</span> n = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> ([[maybe_unused]] <span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; state.<span class="built_in">range</span>(<span class="number">0</span>); ++i) &#123;</span><br><span class="line">				benchmark::<span class="built_in">DoNotOptimize</span>(n += <span class="number">2</span>); <span class="comment">// 这个函数防止编译器将表达式优化，会略微降低一些性能</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		state.<span class="built_in">SetComplexityN</span>(state.<span class="built_in">range</span>(<span class="number">0</span>));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">BENCHMARK</span>(bench_N)-&gt;<span class="built_in">RangeMultiplier</span>(<span class="number">10</span>)-&gt;<span class="built_in">Range</span>(<span class="number">10</span>, <span class="number">1000000</span>)-&gt;<span class="built_in">Complexity</span>();</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">bench_LogN</span><span class="params">(benchmark::State&amp; state)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="type">int</span> n = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> ([[maybe_unused]] <span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; state.<span class="built_in">range</span>(<span class="number">0</span>); i *= <span class="number">2</span>) &#123;</span><br><span class="line">				benchmark::<span class="built_in">DoNotOptimize</span>(n += <span class="number">2</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		state.<span class="built_in">SetComplexityN</span>(state.<span class="built_in">range</span>(<span class="number">0</span>));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">BENCHMARK</span>(bench_LogN)-&gt;<span class="built_in">RangeMultiplier</span>(<span class="number">10</span>)-&gt;<span class="built_in">Range</span>(<span class="number">10</span>, <span class="number">1000000</span>)-&gt;<span class="built_in">Complexity</span>(benchmark::oLogN);</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">bench_Square</span><span class="params">(benchmark::State&amp; state)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="type">int</span> n = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">auto</span> len = state.<span class="built_in">range</span>(<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">for</span> ([[maybe_unused]] <span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int64_t</span> i = <span class="number">1</span>; i &lt; len * len; ++i) &#123;</span><br><span class="line">				benchmark::<span class="built_in">DoNotOptimize</span>(n += <span class="number">2</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		state.<span class="built_in">SetComplexityN</span>(len);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">BENCHMARK</span>(bench_Square)-&gt;<span class="built_in">RangeMultiplier</span>(<span class="number">10</span>)-&gt;<span class="built_in">Range</span>(<span class="number">10</span>, <span class="number">100000</span>)-&gt;<span class="built_in">Complexity</span>();</span><br><span class="line"></span><br><span class="line">	<span class="comment">//使用Fixture</span></span><br><span class="line">	<span class="keyword">class</span> <span class="title class_">BMDemo</span> : <span class="keyword">public</span> benchmark::Fixture &#123;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="type">void</span> <span class="title">SetUp</span><span class="params">(<span class="type">const</span> benchmark::State&amp; state)</span> </span>&#123;</span><br><span class="line">			<span class="built_in">Unit</span>(benchmark::kSecond);</span><br><span class="line">			id_ = <span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="type">void</span> <span class="title">TearDown</span><span class="params">(<span class="type">const</span> ::benchmark::State&amp; state)</span> </span>&#123;</span><br><span class="line">			id_ = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="type">int</span> <span class="title">GetId</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> id_; &#125;;</span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="type">int</span> id_&#123; <span class="number">0</span> &#125;;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">BENCHMARK_F</span>(BMDemo, Test0)(benchmark::State&amp; state) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;id:%d&quot;</span>, <span class="built_in">GetId</span>());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">BENCHMARK_F</span>(BMDemo, Test1)(benchmark::State&amp; state) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> _ : state) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;id:%d&quot;</span>, <span class="built_in">GetId</span>());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">BENCHMARK_MAIN</span>();</span><br></pre></td></tr></table></figure>
-
-<h6 id="静态库使用"><a href="#静态库使用" class="headerlink" title="静态库使用"></a>静态库使用</h6><blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add_definitions(-DBENCHMARK_STATIC_DEFINE)</span><br></pre></td></tr></table></figure></blockquote>
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/google/benchmark" title="https:&#x2F;&#x2F;github.com&#x2F;google&#x2F;benchmark">https://github.com/google/benchmark</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/11/21/2025-11-21-csdn-155111356/">展开全文 >></a>
         </p>
       
 
