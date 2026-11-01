@@ -1,26 +1,26 @@
 
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="http://liupeng2018.xyz">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>Ubuntu 16.04 下MySQL的安装 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="content{:toc}  1， 打开终端：   sudo apt-get install mysql-server  2 ，接下来会让你选择y/n, 这里你选择y, 3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步 4 ，接下来，会继续让我们输入一次密码 5， 密码输入完后，我们这里的mysql-server的用户">
-<meta name="keywords" content="linux ubuntu16.04 工具软件">
+  <meta name="description" content="content{:toc}  1， 打开终端：   sudo apt-get install mysql-server  2 ，接下来会让你选择y&#x2F;n, 这里你选择y, 3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步 4 ，接下来，会继续让我们输入一次密码 5， 密码输入完后，我们这里的mysql-serv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu 16.04 下MySQL的安装">
-<meta property="og:url" content="http://liupeng2018.xyz/2021/06/19/2018-01-13-setup-mysql-inubuntu/index.html">
+<meta property="og:url" content="https://liupeng.icu/2021/06/19/2018-01-13-setup-mysql-inubuntu/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="content{:toc}  1， 打开终端：   sudo apt-get install mysql-server  2 ，接下来会让你选择y/n, 这里你选择y, 3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步 4 ，接下来，会继续让我们输入一次密码 5， 密码输入完后，我们这里的mysql-server的用户">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-27T06:20:08.200Z">
+<meta property="og:description" content="content{:toc}  1， 打开终端：   sudo apt-get install mysql-server  2 ，接下来会让你选择y&#x2F;n, 这里你选择y, 3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步 4 ，接下来，会继续让我们输入一次密码 5， 密码输入完后，我们这里的mysql-serv">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-06-19T05:00:59.000Z">
+<meta property="article:modified_time" content="2026-11-01T12:29:19.400Z">
+<meta property="article:author" content="liupeng">
+<meta property="article:tag" content="linux ubuntu16.04 工具软件">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu 16.04 下MySQL的安装">
-<meta name="twitter:description" content="content{:toc}  1， 打开终端：   sudo apt-get install mysql-server  2 ，接下来会让你选择y/n, 这里你选择y, 3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步 4 ，接下来，会继续让我们输入一次密码 5， 密码输入完后，我们这里的mysql-server的用户">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
   
@@ -48,8 +48,8 @@ var _hmt = _hmt || [];
 </script>
 
 
-</head>
-</html>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -62,10 +62,8 @@ var _hmt = _hmt || [];
 			<img src="/img/liupeng.png" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">liupeng</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">Writing code is keep my heart beating only reason</p>
 		
 
 		<nav class="header-menu">
@@ -75,9 +73,11 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/archives">所有文章</a></li>
 	        
-				<li><a href="/随笔">随笔</a></li>
+				<li><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 	        
 				<li><a href="/photos">相册</a></li>
+	        
+				<li><a href="/attachments">附件</a></li>
 	        
 			</ul>
 		</nav>
@@ -111,8 +111,6 @@ var _hmt = _hmt || [];
 		</nav>
 	</header>	
 	
-	
-	<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
 		
 </div>
 
@@ -130,12 +128,12 @@ var _hmt = _hmt || [];
 				<img src="/img/liupeng.png" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">liupeng</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Writing code is keep my heart beating only reason<i class="icon icon-quo-right"></i></p>
 			
 			
+				
 			
 				
 			
@@ -165,13 +163,15 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 25%"><a href="/">主页</a></li>
+					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 25%"><a href="/archives">所有文章</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 25%"><a href="/随笔">随笔</a></li>
+					<li style="width: 20%"><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 		        
-					<li style="width: 25%"><a href="/photos">相册</a></li>
+					<li style="width: 20%"><a href="/photos">相册</a></li>
+		        
+					<li style="width: 20%"><a href="/attachments">附件</a></li>
 		        
 				</ul>
 			</nav>
@@ -200,7 +200,7 @@ var _hmt = _hmt || [];
 
         
         <a href="/2021/06/19/2018-01-13-setup-mysql-inubuntu/" class="archive-article-date">
-  	<time datetime="2021-06-19T05:00:59.933Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-19</time>
+  	<time datetime="2021-06-19T05:00:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-19</time>
 </a>
         
       </header>
@@ -214,7 +214,7 @@ var _hmt = _hmt || [];
 <blockquote>
 <p> sudo apt-get install mysql-server</p>
 </blockquote>
-<p>2 ，接下来会让你选择y/n, 这里你选择y,</p>
+<p>2 ，接下来会让你选择y&#x2F;n, 这里你选择y,</p>
 <p>3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步</p>
 <p>4 ，接下来，会继续让我们输入一次密码</p>
 <p>5， 密码输入完后，我们这里的mysql-server的用户名是：root ，密码是我们刚刚设置过的密码，</p>
@@ -222,7 +222,9 @@ var _hmt = _hmt || [];
 <blockquote>
 <p> mysql -u root -p</p>
 </blockquote>
-<p>按enter键后会让我们输入密码，当我们输入密码后，会出现：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">snakeson@snakeson-Inspiron<span class="number">-5421</span>:~$ mysql -u root -p</span><br><span class="line">Enter password: </span><br><span class="line">Welcome to the MySQL monitor.  Commands end <span class="keyword">with</span> ; or \g.</span><br><span class="line">Your MySQL connection id is <span class="number">5</span></span><br><span class="line">Server version: <span class="number">5.7</span><span class="number">.20</span><span class="number">-0</span>ubuntu0<span class="number">.16</span><span class="number">.04</span><span class="number">.1</span> (Ubuntu)</span><br><span class="line"></span><br><span class="line">Copyright (c) <span class="number">2000</span>, <span class="number">2017</span>, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark <span class="keyword">of</span> Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks <span class="keyword">of</span> their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type <span class="string">'help;'</span> or <span class="string">'\h'</span> <span class="keyword">for</span> help. Type <span class="string">'\c'</span> to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p>
+<p>按enter键后会让我们输入密码，当我们输入密码后，会出现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">snakeson@snakeson-<span class="title class_">Inspiron</span>-<span class="number">5421</span>:~$ mysql -u root -p</span><br><span class="line"><span class="title class_">Enter</span> <span class="attr">password</span>: </span><br><span class="line"><span class="title class_">Welcome</span> to the <span class="title class_">MySQL</span> monitor.  <span class="title class_">Commands</span> end <span class="keyword">with</span> ; or \g.</span><br><span class="line"><span class="title class_">Your</span> <span class="title class_">MySQL</span> connection id is <span class="number">5</span></span><br><span class="line"><span class="title class_">Server</span> <span class="attr">version</span>: <span class="number">5.7</span><span class="number">.20</span>-0ubuntu0<span class="number">.16</span><span class="number">.04</span><span class="number">.1</span> (<span class="title class_">Ubuntu</span>)</span><br><span class="line"></span><br><span class="line"><span class="title class_">Copyright</span> (c) <span class="number">2000</span>, <span class="number">2017</span>, <span class="title class_">Oracle</span> and/or its affiliates. <span class="title class_">All</span> rights reserved.</span><br><span class="line"></span><br><span class="line"><span class="title class_">Oracle</span> is a registered trademark <span class="keyword">of</span> <span class="title class_">Oracle</span> <span class="title class_">Corporation</span> and/or its</span><br><span class="line">affiliates. <span class="title class_">Other</span> names may be trademarks <span class="keyword">of</span> their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line"><span class="title class_">Type</span> <span class="string">&#x27;help;&#x27;</span> or <span class="string">&#x27;\h&#x27;</span> <span class="keyword">for</span> help. <span class="title class_">Type</span> <span class="string">&#x27;\c&#x27;</span> to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; </span><br></pre></td></tr></table></figure>
+
 <p>7 ， 这样我们就在Ubuntu下安装好了mysql-server。</p>
 
       
@@ -330,7 +332,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://liupeng2018.xyz/2021/06/19/2018-01-13-setup-mysql-inubuntu/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://liupeng.icu/2021/06/19/2018-01-13-setup-mysql-inubuntu/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -344,18 +346,18 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2021/06/19/2018-02-01-about-inner-outer-ip/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/06/19/2018-01-13-close-win10-update/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          工作填坑之内网与外网
+          win10 关闭更新
         
       </div>
     </a>
   
   
-    <a href="/2021/06/19/2018-01-13-close-win10-update/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">win10 关闭更新</div>
+    <a href="/2021/06/19/2018-02-01-about-inner-outer-ip/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">工作填坑之内网与外网</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -402,7 +404,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 liupeng
+    		&copy; 2026 liupeng
     	</div>
 		
       <!--统计start-->
@@ -503,7 +505,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
+                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,11 +513,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
+                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -523,15 +521,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,7 +537,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,7 +549,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -559,11 +561,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
+                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
+                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -575,19 +577,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">jekyll 端口 markdown Foxit RubyGems HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,11 +601,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
+                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -671,11 +673,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -695,7 +705,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+                <a href="javascript:void(0)" class="js-tag color3">u8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
             
             <div class="clearfix"></div>
@@ -855,5 +869,5 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 	<!-- 页面点击小红心 -->
 	<script type="text/javascript" src="../source-src/js/clicklove.js"></script>
   </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-shizuku"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

@@ -1,26 +1,26 @@
 
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="http://liupeng2018.xyz">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>QSharedMemory共享内存 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="QSharedMemory共享内存引用地址[https://blog.csdn.net/amnes1a/article/details/70045676]Qt进程间双向通信引用地址[https://blog.csdn.net/daizhiyan1/article/details/80455806]">
-<meta name="keywords" content="qt QSharedMemory 共享">
+  <meta name="description" content="QSharedMemory共享内存引用地址[https:&#x2F;&#x2F;blog.csdn.net&#x2F;amnes1a&#x2F;article&#x2F;details&#x2F;70045676]Qt进程间双向通信引用地址[https:&#x2F;&#x2F;blog.csdn.net&#x2F;daizhiyan1&#x2F;article&#x2F;details&#x2F;80455806]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="QSharedMemory共享内存">
-<meta property="og:url" content="http://liupeng2018.xyz/2021/06/19/2019-01-10-QSharedMemory共享内存/index.html">
+<meta property="og:url" content="https://liupeng.icu/2021/06/19/2019-01-10-QSharedMemory%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
-<meta property="og:description" content="QSharedMemory共享内存引用地址[https://blog.csdn.net/amnes1a/article/details/70045676]Qt进程间双向通信引用地址[https://blog.csdn.net/daizhiyan1/article/details/80455806]">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-10T15:10:06.806Z">
+<meta property="og:description" content="QSharedMemory共享内存引用地址[https:&#x2F;&#x2F;blog.csdn.net&#x2F;amnes1a&#x2F;article&#x2F;details&#x2F;70045676]Qt进程间双向通信引用地址[https:&#x2F;&#x2F;blog.csdn.net&#x2F;daizhiyan1&#x2F;article&#x2F;details&#x2F;80455806]">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-06-19T05:00:59.000Z">
+<meta property="article:modified_time" content="2026-11-01T12:24:31.461Z">
+<meta property="article:author" content="liupeng">
+<meta property="article:tag" content="qt QSharedMemory 共享">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="QSharedMemory共享内存">
-<meta name="twitter:description" content="QSharedMemory共享内存引用地址[https://blog.csdn.net/amnes1a/article/details/70045676]Qt进程间双向通信引用地址[https://blog.csdn.net/daizhiyan1/article/details/80455806]">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
   
@@ -48,8 +48,8 @@ var _hmt = _hmt || [];
 </script>
 
 
-</head>
-</html>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -62,10 +62,8 @@ var _hmt = _hmt || [];
 			<img src="/img/liupeng.png" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">liupeng</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">Writing code is keep my heart beating only reason</p>
 		
 
 		<nav class="header-menu">
@@ -75,9 +73,11 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/archives">所有文章</a></li>
 	        
-				<li><a href="/随笔">随笔</a></li>
+				<li><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 	        
 				<li><a href="/photos">相册</a></li>
+	        
+				<li><a href="/attachments">附件</a></li>
 	        
 			</ul>
 		</nav>
@@ -111,8 +111,6 @@ var _hmt = _hmt || [];
 		</nav>
 	</header>	
 	
-	
-	<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
 		
 </div>
 
@@ -130,12 +128,12 @@ var _hmt = _hmt || [];
 				<img src="/img/liupeng.png" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">liupeng</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Writing code is keep my heart beating only reason<i class="icon icon-quo-right"></i></p>
 			
 			
+				
 			
 				
 			
@@ -165,13 +163,15 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 25%"><a href="/">主页</a></li>
+					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 25%"><a href="/archives">所有文章</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 25%"><a href="/随笔">随笔</a></li>
+					<li style="width: 20%"><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 		        
-					<li style="width: 25%"><a href="/photos">相册</a></li>
+					<li style="width: 20%"><a href="/photos">相册</a></li>
+		        
+					<li style="width: 20%"><a href="/attachments">附件</a></li>
 		        
 				</ul>
 			</nav>
@@ -199,15 +199,15 @@ var _hmt = _hmt || [];
   
 
         
-        <a href="/2021/06/19/2019-01-10-QSharedMemory共享内存/" class="archive-article-date">
-  	<time datetime="2021-06-19T05:00:59.945Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-19</time>
+        <a href="/2021/06/19/2019-01-10-QSharedMemory%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" class="archive-article-date">
+  	<time datetime="2021-06-19T05:00:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="QSharedMemory共享内存"><a href="#QSharedMemory共享内存" class="headerlink" title="QSharedMemory共享内存"></a>QSharedMemory共享内存</h1><h2 id="引用地址-https-blog-csdn-net-amnes1a-article-details-70045676"><a href="#引用地址-https-blog-csdn-net-amnes1a-article-details-70045676" class="headerlink" title="引用地址[https://blog.csdn.net/amnes1a/article/details/70045676]"></a>引用地址[<a href="https://blog.csdn.net/amnes1a/article/details/70045676]" target="_blank" rel="noopener">https://blog.csdn.net/amnes1a/article/details/70045676]</a></h2><h1 id="Qt进程间双向通信"><a href="#Qt进程间双向通信" class="headerlink" title="Qt进程间双向通信"></a>Qt进程间双向通信</h1><h2 id="引用地址-https-blog-csdn-net-daizhiyan1-article-details-80455806"><a href="#引用地址-https-blog-csdn-net-daizhiyan1-article-details-80455806" class="headerlink" title="引用地址[https://blog.csdn.net/daizhiyan1/article/details/80455806]"></a>引用地址[<a href="https://blog.csdn.net/daizhiyan1/article/details/80455806]" target="_blank" rel="noopener">https://blog.csdn.net/daizhiyan1/article/details/80455806]</a></h2>
+        <h1 id="QSharedMemory共享内存"><a href="#QSharedMemory共享内存" class="headerlink" title="QSharedMemory共享内存"></a>QSharedMemory共享内存</h1><h2 id="引用地址-https-blog-csdn-net-amnes1a-article-details-70045676"><a href="#引用地址-https-blog-csdn-net-amnes1a-article-details-70045676" class="headerlink" title="引用地址[https://blog.csdn.net/amnes1a/article/details/70045676]"></a>引用地址[<a target="_blank" rel="noopener" href="https://blog.csdn.net/amnes1a/article/details/70045676]">https://blog.csdn.net/amnes1a/article/details/70045676]</a></h2><h1 id="Qt进程间双向通信"><a href="#Qt进程间双向通信" class="headerlink" title="Qt进程间双向通信"></a>Qt进程间双向通信</h1><h2 id="引用地址-https-blog-csdn-net-daizhiyan1-article-details-80455806"><a href="#引用地址-https-blog-csdn-net-daizhiyan1-article-details-80455806" class="headerlink" title="引用地址[https://blog.csdn.net/daizhiyan1/article/details/80455806]"></a>引用地址[<a target="_blank" rel="noopener" href="https://blog.csdn.net/daizhiyan1/article/details/80455806]">https://blog.csdn.net/daizhiyan1/article/details/80455806]</a></h2>
       
 
       
@@ -313,7 +313,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://liupeng2018.xyz/2021/06/19/2019-01-10-QSharedMemory共享内存/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://liupeng.icu/2021/06/19/2019-01-10-QSharedMemory%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -327,18 +327,18 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2021/06/19/2019-01-10-Qt技巧：QPattle类/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/06/19/2019-01-10-QLocalServer%E7%B1%BB/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          QPattle类
+          QLocalServer类
         
       </div>
     </a>
   
   
-    <a href="/2021/06/19/2019-01-10-QLocalServer类/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">QLocalServer类</div>
+    <a href="/2021/06/19/%E9%A1%B9%E7%9B%AE%E4%BA%A7%E5%93%81%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">项目展示</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -365,7 +365,7 @@ var _hmt = _hmt || [];
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#QSharedMemory共享内存"><span class="toc-number">1.</span> <span class="toc-text">QSharedMemory共享内存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用地址-https-blog-csdn-net-amnes1a-article-details-70045676"><span class="toc-number">1.1.</span> <span class="toc-text">引用地址[https://blog.csdn.net/amnes1a/article/details/70045676]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Qt进程间双向通信"><span class="toc-number">2.</span> <span class="toc-text">Qt进程间双向通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用地址-https-blog-csdn-net-daizhiyan1-article-details-80455806"><span class="toc-number">2.1.</span> <span class="toc-text">引用地址[https://blog.csdn.net/daizhiyan1/article/details/80455806]</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#QSharedMemory%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98"><span class="toc-number">1.</span> <span class="toc-text">QSharedMemory共享内存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%9C%B0%E5%9D%80-https-blog-csdn-net-amnes1a-article-details-70045676"><span class="toc-number">1.1.</span> <span class="toc-text">引用地址[https:&#x2F;&#x2F;blog.csdn.net&#x2F;amnes1a&#x2F;article&#x2F;details&#x2F;70045676]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Qt%E8%BF%9B%E7%A8%8B%E9%97%B4%E5%8F%8C%E5%90%91%E9%80%9A%E4%BF%A1"><span class="toc-number">2.</span> <span class="toc-text">Qt进程间双向通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%9C%B0%E5%9D%80-https-blog-csdn-net-daizhiyan1-article-details-80455806"><span class="toc-number">2.1.</span> <span class="toc-text">引用地址[https:&#x2F;&#x2F;blog.csdn.net&#x2F;daizhiyan1&#x2F;article&#x2F;details&#x2F;80455806]</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -417,7 +417,7 @@ var _hmt = _hmt || [];
             <div id="toc-article" class="toc-article">
                 <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
                 <strong class="toc-title">文章目录</strong>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#QSharedMemory共享内存"><span class="toc-number">1.</span> <span class="toc-text">QSharedMemory共享内存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用地址-https-blog-csdn-net-amnes1a-article-details-70045676"><span class="toc-number">1.1.</span> <span class="toc-text">引用地址[https://blog.csdn.net/amnes1a/article/details/70045676]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Qt进程间双向通信"><span class="toc-number">2.</span> <span class="toc-text">Qt进程间双向通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引用地址-https-blog-csdn-net-daizhiyan1-article-details-80455806"><span class="toc-number">2.1.</span> <span class="toc-text">引用地址[https://blog.csdn.net/daizhiyan1/article/details/80455806]</span></a></li></ol></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#QSharedMemory%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98"><span class="toc-number">1.</span> <span class="toc-text">QSharedMemory共享内存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%9C%B0%E5%9D%80-https-blog-csdn-net-amnes1a-article-details-70045676"><span class="toc-number">1.1.</span> <span class="toc-text">引用地址[https:&#x2F;&#x2F;blog.csdn.net&#x2F;amnes1a&#x2F;article&#x2F;details&#x2F;70045676]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Qt%E8%BF%9B%E7%A8%8B%E9%97%B4%E5%8F%8C%E5%90%91%E9%80%9A%E4%BF%A1"><span class="toc-number">2.</span> <span class="toc-text">Qt进程间双向通信</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%9C%B0%E5%9D%80-https-blog-csdn-net-daizhiyan1-article-details-80455806"><span class="toc-number">2.1.</span> <span class="toc-text">引用地址[https:&#x2F;&#x2F;blog.csdn.net&#x2F;daizhiyan1&#x2F;article&#x2F;details&#x2F;80455806]</span></a></li></ol></li></ol>
            </div>
            <script type="text/javascript">
             function showToc(){
@@ -442,7 +442,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 liupeng
+    		&copy; 2026 liupeng
     	</div>
 		
       <!--统计start-->
@@ -543,7 +543,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
+                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -551,11 +551,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
+                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,15 +559,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -579,7 +575,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,7 +587,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,11 +599,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
+                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
+                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -615,19 +615,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">jekyll 端口 markdown Foxit RubyGems HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -639,11 +639,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
+                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -711,11 +711,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -735,7 +743,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+                <a href="javascript:void(0)" class="js-tag color3">u8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
             
             <div class="clearfix"></div>
@@ -895,5 +907,5 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 	<!-- 页面点击小红心 -->
 	<script type="text/javascript" src="../source-src/js/clicklove.js"></script>
   </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-shizuku"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

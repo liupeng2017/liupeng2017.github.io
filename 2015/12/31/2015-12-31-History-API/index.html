@@ -1,27 +1,27 @@
 
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="http://liupeng2018.xyz">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>前端处理动态 url 和 pushStatus 的使用 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="content{:toc}  起因起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：  webpack 自动构建 AMD 模块化 js Sass 预处理 CSS 使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题  但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使">
-<meta name="keywords" content="JavaScript Ajax URL HistoryApi pushState pjax">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端处理动态 url 和 pushStatus 的使用">
-<meta property="og:url" content="http://liupeng2018.xyz/2015/12/31/2015-12-31-History-API/index.html">
+<meta property="og:url" content="https://liupeng.icu/2015/12/31/2015-12-31-History-API/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
 <meta property="og:description" content="content{:toc}  起因起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：  webpack 自动构建 AMD 模块化 js Sass 预处理 CSS 使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题  但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使">
-<meta property="og:locale" content="default">
+<meta property="og:locale">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg">
-<meta property="og:updated_time" content="2018-12-24T04:03:40.963Z">
+<meta property="article:published_time" content="2015-12-31T15:06:05.000Z">
+<meta property="article:modified_time" content="2018-12-24T04:03:40.963Z">
+<meta property="article:author" content="liupeng">
+<meta property="article:tag" content="JavaScript Ajax URL HistoryApi pushState pjax">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前端处理动态 url 和 pushStatus 的使用">
-<meta name="twitter:description" content="content{:toc}  起因起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：  webpack 自动构建 AMD 模块化 js Sass 预处理 CSS 使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题  但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使">
 <meta name="twitter:image" content="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
@@ -50,8 +50,8 @@ var _hmt = _hmt || [];
 </script>
 
 
-</head>
-</html>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -64,10 +64,8 @@ var _hmt = _hmt || [];
 			<img src="/img/liupeng.png" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">liupeng</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">Writing code is keep my heart beating only reason</p>
 		
 
 		<nav class="header-menu">
@@ -77,9 +75,11 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/archives">所有文章</a></li>
 	        
-				<li><a href="/随笔">随笔</a></li>
+				<li><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 	        
 				<li><a href="/photos">相册</a></li>
+	        
+				<li><a href="/attachments">附件</a></li>
 	        
 			</ul>
 		</nav>
@@ -113,8 +113,6 @@ var _hmt = _hmt || [];
 		</nav>
 	</header>	
 	
-	
-	<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
 		
 </div>
 
@@ -132,12 +130,12 @@ var _hmt = _hmt || [];
 				<img src="/img/liupeng.png" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">liupeng</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Writing code is keep my heart beating only reason<i class="icon icon-quo-right"></i></p>
 			
 			
+				
 			
 				
 			
@@ -167,13 +165,15 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 25%"><a href="/">主页</a></li>
+					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 25%"><a href="/archives">所有文章</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 25%"><a href="/随笔">随笔</a></li>
+					<li style="width: 20%"><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 		        
-					<li style="width: 25%"><a href="/photos">相册</a></li>
+					<li style="width: 20%"><a href="/photos">相册</a></li>
+		        
+					<li style="width: 20%"><a href="/attachments">附件</a></li>
 		        
 				</ul>
 			</nav>
@@ -219,11 +219,11 @@ var _hmt = _hmt || [];
 <li>Sass 预处理 CSS</li>
 <li>使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题</li>
 </ul>
-<p>但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使用的是 hash 的方式处理动态 url 的，为此我专门在知乎上提了一个问题：<a href="https://www.zhihu.com/question/38802932" target="_blank" rel="noopener">前端如何处理动态url？</a></p>
+<p>但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使用的是 hash 的方式处理动态 url 的，为此我专门在知乎上提了一个问题：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38802932">前端如何处理动态url？</a></p>
 <p>这里我将问题描述如下：</p>
 <blockquote>
-<p>前后端彻底分离的情况下，页面跳转页全部由前端控制。那么如何更好的处理动态url地址？<br>例如本问题的url为<br><a href="https://www.zhihu.com/question/38802932" target="_blank" rel="noopener">https://www.zhihu.com/question/38802932</a><br>这肯定是用后台路由处理的url</p>
-<p>纯前端怎么处理？用hash吗，如下:<br><a href="https://www.zhihu.com/question#38802932" target="_blank" rel="noopener">https://www.zhihu.com/question#38802932</a><br>那如果本页跳转，只改变hash的话，页面不会刷新。<br>使用<code>location.reload()</code>倒是可以解决。</p>
+<p>前后端彻底分离的情况下，页面跳转页全部由前端控制。那么如何更好的处理动态url地址？<br>例如本问题的url为<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38802932">https://www.zhihu.com/question/38802932</a><br>这肯定是用后台路由处理的url</p>
+<p>纯前端怎么处理？用hash吗，如下:<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question#38802932">https://www.zhihu.com/question#38802932</a><br>那如果本页跳转，只改变hash的话，页面不会刷新。<br>使用<code>location.reload()</code>倒是可以解决。</p>
 <p><strong>但总觉得这样处理不够优雅。大家在工作中是如何处理此类场景的？还是用传统的后台路由来提供动态url？</strong></p>
 </blockquote>
 <p>感谢郑海波和剧中人的热心回答。都提到了<code>history</code>对象中的<code>pushState</code>，这是我第一次接触到这方面的内容（顿时觉得自己真是才疏学浅）。</p>
@@ -237,23 +237,26 @@ var _hmt = _hmt || [];
 <ul>
 <li><p><code>back()</code></p>
 <p>  在历史记录中后退</p>
-<pre><code>history.back();
-</code></pre></li>
+<pre><code>  history.back();
+</code></pre>
+</li>
 <li><p><code>forward()</code></p>
 <p>  在历史记录中前进</p>
-<pre><code>history.forward();
-</code></pre></li>
+<pre><code>  history.forward();
+</code></pre>
+</li>
 <li><p><code>go()</code></p>
 <p>  移动到指定的历史记录点</p>
-<pre><code>history.go(-1);
-</code></pre><p>  通过指定一个相对于当前页面位置的数值，你可以使用go()方法从当前会话的历史记录中加载页面（当前页面位置索引值为0，上一页就是-1，下一页为1）。</p>
+<pre><code>  history.go(-1);
+</code></pre>
+<p>  通过指定一个相对于当前页面位置的数值，你可以使用go()方法从当前会话的历史记录中加载页面（当前页面位置索引值为0，上一页就是-1，下一页为1）。</p>
 <p>  <strong>go()不填参数或参数为go(0)时，页面会刷新，即<code>history.go()</code>或<code>history.go(0)</code>相当于<code>location.reload()</code></strong></p>
 </li>
 <li><p><code>length</code></p>
 <p>  <code>length</code>为history的属性，显示history长度。</p>
 </li>
 </ul>
-<p>本节在线demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/" target="_blank" rel="noopener">History &amp; pjax demo</a> 源代码：<a href></a></p>
+<p>本节在线demo见：<a target="_blank" rel="noopener" href="http://gaohaoyang.github.io/history-pjax-demo/">History &amp; pjax demo</a> 源代码：<a href=""></a></p>
 <p><strong>经过亲自测试，<code>history</code>对象只记录同一个 tab 页内的历史。如果是在新窗口打开的，则无效。如：在a标签中添加<code>target=&quot;_blank&quot;</code>，或按住<code>ctrl</code>点击，这类场景下，在新的tab页中，<code>history</code>对象也是新的。</strong></p>
 <p><strong>且<code>history</code>对象记录的信息与是否同源也无关，所以唯一要满足的就是同一个标签页。</strong></p>
 <h3 id="pushState-replaceState"><a href="#pushState-replaceState" class="headerlink" title="pushState(), replaceState()"></a><code>pushState()</code>, <code>replaceState()</code></h3><p>HTML5 引进了<code>history.pushState()</code>方法和<code>history.replaceState()</code>方法，它们允许你逐条地添加和修改历史记录条目，能够在不加载新页面的情况下没改变浏览器的URL。这些方法可以协同<code>window.onpopstate</code>事件一起工作。</p>
@@ -263,22 +266,21 @@ var _hmt = _hmt || [];
 <p>  第一个参数为<code>history</code>对象的<code>state</code>属性值，可以放任意数据，记录历史状态。第二个参数是新状态的标题，目前浏览器基本不支持。第三个参数为可选的相对url。</p>
 <p>  执行<code>pushState</code>后，可以在不加载新页面的情况下，更改url。同时<code>history</code>栈中新增一条数据。</p>
 <p>  例如，我们有这样一段代码：</p>
-<pre><code>&lt;button id=&quot;push1&quot;&gt;pushState()&lt;/button&gt;
+<pre><code>  &lt;button id=&quot;push1&quot;&gt;pushState()&lt;/button&gt;
 
-document.querySelector(&apos;#push1&apos;).addEventListener(&apos;click&apos;, function() {
-    history.pushState(&apos;abc&apos;,&apos;pushStatePageTitle&apos;,&apos;pushState.html&apos;);
-    document.querySelector(&apos;#length&apos;).innerHTML = history.length;//重新读取历史长度
-});
-</code></pre><p>  当点击按钮的时候，页面不会刷新，但<code>url</code>地址的最后已经变为<code>pushState.html</code>。这一点非常像<code>hash</code>的作用，但比<code>hash</code>更优雅。</p>
+  document.querySelector(&#39;#push1&#39;).addEventListener(&#39;click&#39;, function() &#123;
+      history.pushState(&#39;abc&#39;,&#39;pushStatePageTitle&#39;,&#39;pushState.html&#39;);
+      document.querySelector(&#39;#length&#39;).innerHTML = history.length;//重新读取历史长度
+  &#125;);
+</code></pre>
+<p>  当点击按钮的时候，页面不会刷新，但<code>url</code>地址的最后已经变为<code>pushState.html</code>。这一点非常像<code>hash</code>的作用，但比<code>hash</code>更优雅。</p>
 </li>
-</ul>
-<ul>
 <li><p><code>replaceState(any data, string title, [string url])</code></p>
 <p>  与<code>pushState()</code>类似，只是在<code>history</code>栈中不是新增记录，而是替换一条记录。</p>
 </li>
 </ul>
 <p><strong>需要注意的是：</strong><code>pushState()</code>和<code>replaceState()</code>方法存在安全方面的限制，本地测试是无效的，会报错，可以简单放到任何服务端测试，或者使用<code>http-server</code>开启简单服务器，通过访问<code>localhost</code>来查看效果。</p>
-<p>本节demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/index.html" target="_blank" rel="noopener">History &amp; pjax demo - pushState</a></p>
+<p>本节demo见：<a target="_blank" rel="noopener" href="http://gaohaoyang.github.io/history-pjax-demo/index.html">History &amp; pjax demo - pushState</a></p>
 <h2 id="pjax"><a href="#pjax" class="headerlink" title="pjax"></a>pjax</h2><p>现在再看本文一开始提出的问题，如何让前端优雅的控制 url，这里就可以考虑 pjax 技术了。我们把 pushState + ajax 进行封装，合起来简称为 pjax。虽然不是什么新的技术，但概念已然不同。</p>
 <p>如果不使用 pjax。我们依然可以使用<code>hash</code>来实现文本开始的需求。但会不利于 SEO，看着也不够优雅。</p>
 <p>Pjax的原理十分简单。</p>
@@ -290,27 +292,28 @@ document.querySelector(&apos;#push1&apos;).addEventListener(&apos;click&apos;, f
 </ol>
 <p>个人理解3中也可以仅仅请求数据，再由浏览器渲染。</p>
 <p>每当同一个文档的浏览历史（即history对象）出现变化时，会触发<code>window.onpopstate</code>事件。</p>
-<pre><code>window.onpopstate = function(event) {
+<pre><code>window.onpopstate = function(event) &#123;
     console.log(event.state);
     console.log(location);
-};
-</code></pre><p>这样在用户点击前进后退时也可以很好的监听url，来做相应的页面渲染。</p>
-<p>若用户刷新了页面，但没有相应的页面资源，这时页面就会显示不存在。所以我认为较好的方法是在写<code>pushState()</code>第三个参数的时候，写为<code>?a=1</code>这样的参数形式。<a href="https://github.com/browserstate/history.js" target="_blank" rel="noopener">History.js</a> 也是这么写的。但是这样应该会多一次请求。也许使用 nodeJS 作为中间层会好一些吧。</p>
+&#125;;
+</code></pre>
+<p>这样在用户点击前进后退时也可以很好的监听url，来做相应的页面渲染。</p>
+<p>若用户刷新了页面，但没有相应的页面资源，这时页面就会显示不存在。所以我认为较好的方法是在写<code>pushState()</code>第三个参数的时候，写为<code>?a=1</code>这样的参数形式。<a target="_blank" rel="noopener" href="https://github.com/browserstate/history.js">History.js</a> 也是这么写的。但是这样应该会多一次请求。也许使用 nodeJS 作为中间层会好一些吧。</p>
 <p>对于上述的探索，不知道是不是我还不够深入，总觉得还是不够完美。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/History" target="_blank" rel="noopener">MDN History</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/DOM/Manipulating_the_browser_history" target="_blank" rel="noopener">MDN 操纵浏览器的历史记录</a></li>
-<li><a href="https://www.zhihu.com/question/20289254" target="_blank" rel="noopener">pjax 是如何工作的？ 知乎</a></li>
-<li><a href="http://www.cnblogs.com/hustskyking/p/history-api-in-html5.html" target="_blank" rel="noopener">PJAX的实现与应用 小胡子哥</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html" target="_blank" rel="noopener">URL的井号-阮一峰</a></li>
-<li><a href="http://javascript.ruanyifeng.com/bom/history.html" target="_blank" rel="noopener">history对象 JavaScript 标准参考教程（alpha） 阮一峰</a></li>
-<li><a href="http://www.ayqy.net/blog/pjaxpushstate-and-ajax/" target="_blank" rel="noopener">Pjax(pushState and Ajax) 黯羽轻扬</a></li>
-<li><a href="http://www.clanfei.com/2012/09/1646.html" target="_blank" rel="noopener">操纵历史，利用HTML5 History API实现无刷新跳转 蓝飞</a></li>
-<li><a href="http://segmentfault.com/a/1190000002920768" target="_blank" rel="noopener">前端：将网站打造成单页面应用SPA（一） Coffce</a></li>
-<li><a href="https://github.com/Coffcer/coffce-pjax" target="_blank" rel="noopener">coffce-pjax</a></li>
-<li><a href="https://github.com/browserstate/history.js" target="_blank" rel="noopener">History.js</a></li>
-<li><a href="https://github.com/defunkt/jquery-pjax" target="_blank" rel="noopener">defunkt/jquery-pjax GitHub</a></li>
-<li><a href="https://github.com/welefen/pjax" target="_blank" rel="noopener">welefen/pjax</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/History">MDN History</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/DOM/Manipulating_the_browser_history">MDN 操纵浏览器的历史记录</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20289254">pjax 是如何工作的？ 知乎</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/hustskyking/p/history-api-in-html5.html">PJAX的实现与应用 小胡子哥</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html">URL的井号-阮一峰</a></li>
+<li><a target="_blank" rel="noopener" href="http://javascript.ruanyifeng.com/bom/history.html">history对象 JavaScript 标准参考教程（alpha） 阮一峰</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ayqy.net/blog/pjaxpushstate-and-ajax/">Pjax(pushState and Ajax) 黯羽轻扬</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.clanfei.com/2012/09/1646.html">操纵历史，利用HTML5 History API实现无刷新跳转 蓝飞</a></li>
+<li><a target="_blank" rel="noopener" href="http://segmentfault.com/a/1190000002920768">前端：将网站打造成单页面应用SPA（一） Coffce</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Coffcer/coffce-pjax">coffce-pjax</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/browserstate/history.js">History.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/defunkt/jquery-pjax">defunkt&#x2F;jquery-pjax GitHub</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/welefen/pjax">welefen&#x2F;pjax</a></li>
 </ul>
 
       
@@ -418,7 +421,7 @@ document.querySelector(&apos;#push1&apos;).addEventListener(&apos;click&apos;, f
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://liupeng2018.xyz/2015/12/31/2015-12-31-History-API/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://liupeng.icu/2015/12/31/2015-12-31-History-API/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -490,7 +493,7 @@ document.querySelector(&apos;#push1&apos;).addEventListener(&apos;click&apos;, f
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 liupeng
+    		&copy; 2026 liupeng
     	</div>
 		
       <!--统计start-->
@@ -591,7 +594,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
+                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,11 +602,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
+                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -611,15 +610,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -627,7 +626,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -635,7 +638,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,11 +650,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
+                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
+                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -663,19 +666,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">jekyll 端口 markdown Foxit RubyGems HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -687,11 +690,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
+                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -759,11 +762,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -783,7 +794,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+                <a href="javascript:void(0)" class="js-tag color3">u8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
             
             <div class="clearfix"></div>
@@ -943,5 +958,5 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 	<!-- 页面点击小红心 -->
 	<script type="text/javascript" src="../source-src/js/clicklove.js"></script>
   </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-shizuku"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

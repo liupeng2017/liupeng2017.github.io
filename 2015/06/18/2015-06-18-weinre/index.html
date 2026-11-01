@@ -1,31 +1,31 @@
 
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="http://liupeng2018.xyz">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>Weinre --WebApp 调试工具 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="content{:toc}  什么是 weinre？weinre官网 上有两句有意思的介绍：  weinre is WEb INspector REmote. Pronounced like the word “winery”. Or maybe like the word “weiner”. Who knows, really. weinre is a debugger for web pag">
-<meta name="keywords" content="Weinre WebApp 调试工具 JavaScript HTML CSS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Weinre --WebApp 调试工具">
-<meta property="og:url" content="http://liupeng2018.xyz/2015/06/18/2015-06-18-weinre/index.html">
+<meta property="og:url" content="https://liupeng.icu/2015/06/18/2015-06-18-weinre/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
 <meta property="og:description" content="content{:toc}  什么是 weinre？weinre官网 上有两句有意思的介绍：  weinre is WEb INspector REmote. Pronounced like the word “winery”. Or maybe like the word “weiner”. Who knows, really. weinre is a debugger for web pag">
-<meta property="og:locale" content="default">
+<meta property="og:locale">
 <meta property="og:image" content="http://muellerware.org/papers/weinre/images/http-flow.png">
 <meta property="og:image" content="http://7q5cdt.com1.z0.glb.clouddn.com/blog-weinre.png">
 <meta property="og:image" content="http://7q5cdt.com1.z0.glb.clouddn.com/blog-target-none.png">
 <meta property="og:image" content="http://7q5cdt.com1.z0.glb.clouddn.com/blog-target.png">
 <meta property="og:image" content="http://7q5cdt.com1.z0.glb.clouddn.com/blog-1954958440_meitu_2.jpg">
-<meta property="og:updated_time" content="2018-12-24T04:03:40.595Z">
+<meta property="article:published_time" content="2015-06-17T16:06:05.000Z">
+<meta property="article:modified_time" content="2018-12-24T04:03:40.595Z">
+<meta property="article:author" content="liupeng">
+<meta property="article:tag" content="Weinre WebApp 调试工具 JavaScript HTML CSS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Weinre --WebApp 调试工具">
-<meta name="twitter:description" content="content{:toc}  什么是 weinre？weinre官网 上有两句有意思的介绍：  weinre is WEb INspector REmote. Pronounced like the word “winery”. Or maybe like the word “weiner”. Who knows, really. weinre is a debugger for web pag">
 <meta name="twitter:image" content="http://muellerware.org/papers/weinre/images/http-flow.png">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
@@ -54,8 +54,8 @@ var _hmt = _hmt || [];
 </script>
 
 
-</head>
-</html>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -68,10 +68,8 @@ var _hmt = _hmt || [];
 			<img src="/img/liupeng.png" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">liupeng</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">Writing code is keep my heart beating only reason</p>
 		
 
 		<nav class="header-menu">
@@ -81,9 +79,11 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/archives">所有文章</a></li>
 	        
-				<li><a href="/随笔">随笔</a></li>
+				<li><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 	        
 				<li><a href="/photos">相册</a></li>
+	        
+				<li><a href="/attachments">附件</a></li>
 	        
 			</ul>
 		</nav>
@@ -117,8 +117,6 @@ var _hmt = _hmt || [];
 		</nav>
 	</header>	
 	
-	
-	<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
 		
 </div>
 
@@ -136,12 +134,12 @@ var _hmt = _hmt || [];
 				<img src="/img/liupeng.png" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">liupeng</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Writing code is keep my heart beating only reason<i class="icon icon-quo-right"></i></p>
 			
 			
+				
 			
 				
 			
@@ -171,13 +169,15 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 25%"><a href="/">主页</a></li>
+					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 25%"><a href="/archives">所有文章</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 25%"><a href="/随笔">随笔</a></li>
+					<li style="width: 20%"><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 		        
-					<li style="width: 25%"><a href="/photos">相册</a></li>
+					<li style="width: 20%"><a href="/photos">相册</a></li>
+		        
+					<li style="width: 20%"><a href="/attachments">附件</a></li>
 		        
 				</ul>
 			</nav>
@@ -216,7 +216,7 @@ var _hmt = _hmt || [];
         <ul>
 <li>content<br>{:toc}</li>
 </ul>
-<h2 id="什么是-weinre？"><a href="#什么是-weinre？" class="headerlink" title="什么是 weinre？"></a>什么是 weinre？</h2><p><a href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html" target="_blank" rel="noopener">weinre官网</a> 上有两句有意思的介绍：</p>
+<h2 id="什么是-weinre？"><a href="#什么是-weinre？" class="headerlink" title="什么是 weinre？"></a>什么是 weinre？</h2><p><a target="_blank" rel="noopener" href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">weinre官网</a> 上有两句有意思的介绍：</p>
 <blockquote>
 <p><strong>weinre</strong> is <strong>WE</strong>b <strong>IN</strong>spector <strong>RE</strong>mote. Pronounced like the word “winery”. Or maybe like the word “weiner”. Who knows, really.</p>
 <p><strong>weinre</strong> is a debugger for web pages, like FireBug (for FireFox) and Web Inspector (for WebKit-based browsers), except it’s designed to work remotely, and in particular, to allow you debug web pages on a mobile device such as a phone.</p>
@@ -236,7 +236,7 @@ var _hmt = _hmt || [];
 <p>三层结构如下图所示：</p>
 <p><img src="http://muellerware.org/papers/weinre/images/http-flow.png" alt="http-flow"></p>
 <p>weinre 的 debug 客户端是基于 Web Inspector 开发，而 Web Inspector 只与以 WebKit 为核心的浏览器兼容，所以 Weinre 的客户端只能用 Chrome 或者 Safari 打开。</p>
-<p><a href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html" target="_blank" rel="noopener">官网</a>上也有相应的平台支持说明：</p>
+<p><a target="_blank" rel="noopener" href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">官网</a>上也有相应的平台支持说明：</p>
 <ul>
 <li><p>Platforms supported - debug server 服务端</p>
 <p>  任何支持 node.js 的平台。</p>
@@ -252,37 +252,41 @@ var _hmt = _hmt || [];
 <ul>
 <li>Android Browser application</li>
 <li>iOS Mobile Safari application</li>
-<li>PhoneGap/Cordova</li>
+<li>PhoneGap&#x2F;Cordova</li>
 <li>other</li>
 </ul>
 </li>
 </ul>
 <hr>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
-<li>weinre 是 nodeJS 的一个应用，首先要 <a href="https://nodejs.org/" target="_blank" rel="noopener">安装 nodeJS 运行环境</a></li>
+<li><p>weinre 是 nodeJS 的一个应用，首先要 <a target="_blank" rel="noopener" href="https://nodejs.org/">安装 nodeJS 运行环境</a></p>
+</li>
 <li><p>使用 npm 命令，安装 weinre</p>
-<pre><code>npm -g install weinre
-</code></pre><p> 安装成功后会有类似的信息：</p>
-<pre><code>C:\Users\haoyang\AppData\Roaming\npm\weinre -&gt; C:\Users\haoyang\AppData\Roaming\npm\node_modules\weinre\weinre
-weinre@2.0.0-pre-I0Z7U9OV C:\Users\haoyang\AppData\Roaming\npm\node_modules\weinre
-├── underscore@1.7.0
-├── nopt@3.0.2 (abbrev@1.0.7)
-└── express@2.5.11 (mime@1.2.4, qs@0.4.2, mkdirp@0.3.0, connect@1.9.2)
-</code></pre></li>
+<pre><code> npm -g install weinre
+</code></pre>
+<p> 安装成功后会有类似的信息：</p>
+<pre><code> C:\Users\haoyang\AppData\Roaming\npm\weinre -&gt; C:\Users\haoyang\AppData\Roaming\npm\node_modules\weinre\weinre
+ weinre@2.0.0-pre-I0Z7U9OV C:\Users\haoyang\AppData\Roaming\npm\node_modules\weinre
+ ├── underscore@1.7.0
+ ├── nopt@3.0.2 (abbrev@1.0.7)
+ └── express@2.5.11 (mime@1.2.4, qs@0.4.2, mkdirp@0.3.0, connect@1.9.2)
+</code></pre>
+</li>
 </ol>
 <hr>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
 <li><p>启动服务</p>
-<pre><code>weinre --boundHost -all- --httpPort 8081
-</code></pre><ul>
+<pre><code> weinre --boundHost -all- --httpPort 8081
+</code></pre>
+<ul>
 <li><p>–boundHost [hostname | ip address | -all-]</p>
 <p>  The ip address to bind the server to.</p>
 </li>
 <li><p>–httpPort [portNumber]</p>
 <p>  The port to run the HTTP server on.</p>
-<p>更多配置项参考 <a href="http://people.apache.org/~pmuellr/weinre/docs/latest/Running.html" target="_blank" rel="noopener">官网的说明</a>。</p>
 </li>
 </ul>
+<p> 更多配置项参考 <a target="_blank" rel="noopener" href="http://people.apache.org/~pmuellr/weinre/docs/latest/Running.html">官网的说明</a>。</p>
 </li>
 <li><p>启动成功后看到如下界面：</p>
 <p> <img src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-weinre.png" alt="weinre"></p>
@@ -291,26 +295,30 @@ weinre@2.0.0-pre-I0Z7U9OV C:\Users\haoyang\AppData\Roaming\npm\node_modules\wein
 <p> 可以看到 2.中的 Target Script 说要添加一行脚本到要调试的 web 页面中。</p>
 <p> Target Script</p>
 <p> You can use this script to inject the weinre target code into your web page.</p>
-<p> <a href="http://localhost:8081/target/target-script-min.js#anonymous" target="_blank" rel="noopener">http://localhost:8081/target/target-script-min.js#anonymous</a></p>
+<p> <a target="_blank" rel="noopener" href="http://localhost:8081/target/target-script-min.js#anonymous">http://localhost:8081/target/target-script-min.js#anonymous</a></p>
 <p> Example:</p>
-<pre><code>&lt;script src=&quot;http://localhost:8081/target/target-script-min.js#anonymous&quot;&gt;&lt;/script&gt;
-</code></pre><p> 这里要说明一下，要把上面的 localhost 换为本机的 ip 地址。</p>
+<pre><code> &lt;script src=&quot;http://localhost:8081/target/target-script-min.js#anonymous&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p> 这里要说明一下，要把上面的 localhost 换为本机的 ip 地址。</p>
 <p> 我们可以在命令行中 使用 <code>ipconfig</code> 得到 ip 地址，如下（当然你的可能和我的不一样）：</p>
-<pre><code>IPv4 地址 . . . . . . . . . . . . : 192.168.1.107
-</code></pre><p> 即插入如下代码：</p>
-<pre><code>&lt;script src=&quot;http://192.168.1.107:8081/target/target-script-min.js#anonymous&quot;&gt;&lt;/script&gt;
-</code></pre></li>
+<pre><code> IPv4 地址 . . . . . . . . . . . . : 192.168.1.107
+</code></pre>
+<p> 即插入如下代码：</p>
+<pre><code> &lt;script src=&quot;http://192.168.1.107:8081/target/target-script-min.js#anonymous&quot;&gt;&lt;/script&gt;
+</code></pre>
+</li>
 <li><p>进入调试页面</p>
 <p> PC 端访问这个地址：</p>
-<p> debug client user interface:    <a href="http://localhost:8081/client/#anonymous" target="_blank" rel="noopener">http://localhost:8081/client/#anonymous</a></p>
+<p> debug client user interface:    <a target="_blank" rel="noopener" href="http://localhost:8081/client/#anonymous">http://localhost:8081/client/#anonymous</a></p>
 <p> 此时 target 为 none，如下图：</p>
 <p> <img src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-target-none.png" alt="target-none"></p>
 <p> 现在我们要用手机访问同一个局域网下的这个目标页面。我们可以把要调试的页面放到这个路径下：</p>
-<pre><code>C:\Users\haoyang\AppData\Roaming\npm\node_modules\weinre\web
-</code></pre><p> 通过 <a href="http://192.168.1.107:8081/FILE_NAME" target="_blank" rel="noopener">http://192.168.1.107:8081/FILE_NAME</a> 在手机上访问，就可以看到了。当然前提是同一个局域网。</p>
+<pre><code> C:\Users\haoyang\AppData\Roaming\npm\node_modules\weinre\web
+</code></pre>
+<p> 通过 <a target="_blank" rel="noopener" href="http://192.168.1.107:8081/FILE_NAME">http://192.168.1.107:8081/FILE_NAME</a> 在手机上访问，就可以看到了。当然前提是同一个局域网。</p>
 <p> 但是这样可能不太灵活，每次都要把目标页面放到指定的目录下。所以我们可以另外开一个服务器。</p>
 <p> 我使用了基于 node.js 的 http-server 工具。将要调试的页面发布。这样我就能通过 ip 地址加端口号在手机上访问到了。</p>
-<p> 我在手机上访问 <a href="http://192.168.1.107:8080" target="_blank" rel="noopener">http://192.168.1.107:8080</a> 打开要调试的页面，此时 debug client user interface 中自动检测到 target。就可以进行调试了！</p>
+<p> 我在手机上访问 <a target="_blank" rel="noopener" href="http://192.168.1.107:8080/">http://192.168.1.107:8080</a> 打开要调试的页面，此时 debug client user interface 中自动检测到 target。就可以进行调试了！</p>
 <p> 如下图：</p>
 <p> <img src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-target.png" alt="target"></p>
 <p> <img src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-1954958440_meitu_2.jpg" alt="phone"></p>
@@ -318,9 +326,9 @@ weinre@2.0.0-pre-I0Z7U9OV C:\Users\haoyang\AppData\Roaming\npm\node_modules\wein
 </ol>
 <hr>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="http://blog.csdn.net/dojotoolkit/article/details/6280924" target="_blank" rel="noopener">Web移动应用调试工具——Weinre</a></li>
-<li><a href="http://muellerware.org/papers/weinre/manual.html" target="_blank" rel="noopener">weinre - WEb INspector REmote</a></li>
-<li><a href="http://blog.csdn.net/smy_yu/article/details/38922315" target="_blank" rel="noopener">webapp开发调试环境–weinre配置</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/dojotoolkit/article/details/6280924">Web移动应用调试工具——Weinre</a></li>
+<li><a target="_blank" rel="noopener" href="http://muellerware.org/papers/weinre/manual.html">weinre - WEb INspector REmote</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/smy_yu/article/details/38922315">webapp开发调试环境–weinre配置</a></li>
 </ul>
 
       
@@ -428,7 +436,7 @@ weinre@2.0.0-pre-I0Z7U9OV C:\Users\haoyang\AppData\Roaming\npm\node_modules\wein
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://liupeng2018.xyz/2015/06/18/2015-06-18-weinre/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://liupeng.icu/2015/06/18/2015-06-18-weinre/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -500,7 +508,7 @@ weinre@2.0.0-pre-I0Z7U9OV C:\Users\haoyang\AppData\Roaming\npm\node_modules\wein
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 liupeng
+    		&copy; 2026 liupeng
     	</div>
 		
       <!--统计start-->
@@ -601,7 +609,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
+                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -609,11 +617,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
+                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -621,15 +625,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -637,7 +641,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -645,7 +653,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -657,11 +665,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
+                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
+                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -673,19 +681,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">jekyll 端口 markdown Foxit RubyGems HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -697,11 +705,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
+                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -769,11 +777,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -793,7 +809,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+                <a href="javascript:void(0)" class="js-tag color3">u8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
             
             <div class="clearfix"></div>
@@ -953,5 +973,5 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 	<!-- 页面点击小红心 -->
 	<script type="text/javascript" src="../source-src/js/clicklove.js"></script>
   </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-shizuku"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

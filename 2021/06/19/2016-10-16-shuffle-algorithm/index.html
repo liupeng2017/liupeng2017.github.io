@@ -1,28 +1,28 @@
 
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="http://liupeng2018.xyz">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>Fisher–Yates shuffle 洗牌算法 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="content{:toc}  简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。 本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。  Fisher and Yates 的原始版 Fishe">
-<meta name="keywords" content="算法 shuffle 乱序 洗牌">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Fisher–Yates shuffle 洗牌算法">
-<meta property="og:url" content="http://liupeng2018.xyz/2021/06/19/2016-10-16-shuffle-algorithm/index.html">
+<meta property="og:url" content="https://liupeng.icu/2021/06/19/2016-10-16-shuffle-algorithm/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
 <meta property="og:description" content="content{:toc}  简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。 本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。  Fisher and Yates 的原始版 Fishe">
-<meta property="og:locale" content="default">
+<meta property="og:locale">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Biologist_and_statistician_Ronald_Fisher.jpg/189px-Biologist_and_statistician_Ronald_Fisher.jpg">
-<meta property="og:updated_time" content="2018-12-24T04:03:40.975Z">
+<meta property="article:published_time" content="2021-06-19T05:00:59.000Z">
+<meta property="article:modified_time" content="2026-11-01T12:29:18.532Z">
+<meta property="article:author" content="liupeng">
+<meta property="article:tag" content="算法 shuffle 乱序 洗牌">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fisher–Yates shuffle 洗牌算法">
-<meta name="twitter:description" content="content{:toc}  简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。 本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。  Fisher and Yates 的原始版 Fishe">
 <meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
@@ -51,8 +51,8 @@ var _hmt = _hmt || [];
 </script>
 
 
-</head>
-</html>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -65,10 +65,8 @@ var _hmt = _hmt || [];
 			<img src="/img/liupeng.png" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">liupeng</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">Writing code is keep my heart beating only reason</p>
 		
 
 		<nav class="header-menu">
@@ -78,9 +76,11 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/archives">所有文章</a></li>
 	        
-				<li><a href="/随笔">随笔</a></li>
+				<li><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 	        
 				<li><a href="/photos">相册</a></li>
+	        
+				<li><a href="/attachments">附件</a></li>
 	        
 			</ul>
 		</nav>
@@ -114,8 +114,6 @@ var _hmt = _hmt || [];
 		</nav>
 	</header>	
 	
-	
-	<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
 		
 </div>
 
@@ -133,12 +131,12 @@ var _hmt = _hmt || [];
 				<img src="/img/liupeng.png" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">liupeng</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Writing code is keep my heart beating only reason<i class="icon icon-quo-right"></i></p>
 			
 			
+				
 			
 				
 			
@@ -168,13 +166,15 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 25%"><a href="/">主页</a></li>
+					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 25%"><a href="/archives">所有文章</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 25%"><a href="/随笔">随笔</a></li>
+					<li style="width: 20%"><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 		        
-					<li style="width: 25%"><a href="/photos">相册</a></li>
+					<li style="width: 20%"><a href="/photos">相册</a></li>
+		        
+					<li style="width: 20%"><a href="/attachments">附件</a></li>
 		        
 				</ul>
 			</nav>
@@ -203,7 +203,7 @@ var _hmt = _hmt || [];
 
         
         <a href="/2021/06/19/2016-10-16-shuffle-algorithm/" class="archive-article-date">
-  	<time datetime="2021-06-19T05:00:59.909Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-19</time>
+  	<time datetime="2021-06-19T05:00:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-19</time>
 </a>
         
       </header>
@@ -215,8 +215,8 @@ var _hmt = _hmt || [];
 </ul>
 <p>简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。</p>
 <p>本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg" alt></p>
-<h2 id="Fisher-and-Yates-的原始版"><a href="#Fisher-and-Yates-的原始版" class="headerlink" title="Fisher and Yates 的原始版"></a>Fisher and Yates 的原始版</h2><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Biologist_and_statistician_Ronald_Fisher.jpg/189px-Biologist_and_statistician_Ronald_Fisher.jpg" alt></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg"></p>
+<h2 id="Fisher-and-Yates-的原始版"><a href="#Fisher-and-Yates-的原始版" class="headerlink" title="Fisher and Yates 的原始版"></a>Fisher and Yates 的原始版</h2><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Biologist_and_statistician_Ronald_Fisher.jpg/189px-Biologist_and_statistician_Ronald_Fisher.jpg"></p>
 <p>Fisher–Yates shuffle 的原始版本，最初描述在 1938 年的 Ronald Fisher（上图） 和 Frank Yates 写的书中，书名为《Statistical tables for biological, agricultural and medical research》。他们使用纸和笔去描述了这个算法，并使用了一个随机数表来提供随机数。它给出了 1 到 N 的数字的的随机排列，具体步骤如下：</p>
 <ol>
 <li>写下从 1 到 N 的数字</li>
@@ -228,77 +228,79 @@ var _hmt = _hmt || [];
 <p>已经证明如果第 2 步取出的数字是真随机的，那么最后得到的排序一定也是。</p>
 <h2 id="现代方法"><a href="#现代方法" class="headerlink" title="现代方法"></a>现代方法</h2><p>Fisher–Yates shuffle 算法的现代版本是为计算机设计的。由 Richard Durstenfeld 在1964年 描述。并且是被 Donald E. Knuth 在 《The Art of Computer Programming》 中推广。但是不管是 Durstenfeld 还是 Knuth，都没有在书的第一版中承认这个算法是 Fisher 和 Yates 的研究成果。也许他们并不知道。不过后来出版的 《The Art of Computer Programming》提到了 Fisher 和 Yates 贡献。</p>
 <p>现代版本的描述与原始略有不同，因为如果按照原始方法，愚蠢的计算机会花很多无用的时间去计算上述第 3 步的剩余数字。<strong>这里的方法是在每次迭代时交换这个被取出的数字到原始列表的最后</strong>。这样就将时间复杂度从 O(n^2) 减小到了 <strong>O(n)</strong>。算法的伪代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- To shuffle an array a of n elements (indices 0..n-1):</span><br><span class="line">for i from n−1 downto 1 do</span><br><span class="line">     j ← random integer such that 0 ≤ j ≤ i</span><br><span class="line">     exchange a[j] and a[i]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- To shuffle an array a of n elements (indices 0..n-1):</span><br><span class="line">for i from n−1 downto 1 do</span><br><span class="line">     j ← random integer such that 0 ≤ j ≤ i</span><br><span class="line">     exchange a[j] and a[i]</span><br></pre></td></tr></table></figure>
+
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="迭代步骤演示"><a href="#迭代步骤演示" class="headerlink" title="迭代步骤演示"></a>迭代步骤演示</h3><p>根据每次迭代次数可以用下面的表格，描述这个算法的执行过程</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">随机数取值范围</th>
-<th style="text-align:left">随机数</th>
-<th style="text-align:right">原始数据</th>
-<th style="text-align:left">结果</th>
+<th align="left">随机数取值范围</th>
+<th align="left">随机数</th>
+<th align="right">原始数据</th>
+<th align="left">结果</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-<td style="text-align:right">1 2 3 4 5 6 7 8</td>
-<td style="text-align:left"></td>
+<tbody><tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">1 2 3 4 5 6 7 8</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td style="text-align:left">1-8</td>
-<td style="text-align:left">6</td>
-<td style="text-align:right">1 2 3 4 5 7 8</td>
-<td style="text-align:left">6</td>
+<td align="left">1-8</td>
+<td align="left">6</td>
+<td align="right">1 2 3 4 5 7 8</td>
+<td align="left">6</td>
 </tr>
 <tr>
-<td style="text-align:left">1-7</td>
-<td style="text-align:left">2</td>
-<td style="text-align:right">1 7 3 4 5 8</td>
-<td style="text-align:left">2 6</td>
+<td align="left">1-7</td>
+<td align="left">2</td>
+<td align="right">1 7 3 4 5 8</td>
+<td align="left">2 6</td>
 </tr>
 <tr>
-<td style="text-align:left">1–6</td>
-<td style="text-align:left">6</td>
-<td style="text-align:right">1 7 3 4 5</td>
-<td style="text-align:left">8 2 6</td>
+<td align="left">1–6</td>
+<td align="left">6</td>
+<td align="right">1 7 3 4 5</td>
+<td align="left">8 2 6</td>
 </tr>
 <tr>
-<td style="text-align:left">1–5</td>
-<td style="text-align:left">1</td>
-<td style="text-align:right">5 7 3 4</td>
-<td style="text-align:left">1 8 2 6</td>
+<td align="left">1–5</td>
+<td align="left">1</td>
+<td align="right">5 7 3 4</td>
+<td align="left">1 8 2 6</td>
 </tr>
 <tr>
-<td style="text-align:left">1–4</td>
-<td style="text-align:left">3</td>
-<td style="text-align:right">5 7 4</td>
-<td style="text-align:left">3 1 8 2 6</td>
+<td align="left">1–4</td>
+<td align="left">3</td>
+<td align="right">5 7 4</td>
+<td align="left">3 1 8 2 6</td>
 </tr>
 <tr>
-<td style="text-align:left">1–3</td>
-<td style="text-align:left">3</td>
-<td style="text-align:right">5 7</td>
-<td style="text-align:left">4 3 1 8 2 6</td>
+<td align="left">1–3</td>
+<td align="left">3</td>
+<td align="right">5 7</td>
+<td align="left">4 3 1 8 2 6</td>
 </tr>
 <tr>
-<td style="text-align:left">1–2</td>
-<td style="text-align:left">1</td>
-<td style="text-align:right">7</td>
-<td style="text-align:left">5 4 3 1 8 2 6</td>
+<td align="left">1–2</td>
+<td align="left">1</td>
+<td align="right">7</td>
+<td align="left">5 4 3 1 8 2 6</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h3 id="动画演示"><a href="#动画演示" class="headerlink" title="动画演示"></a>动画演示</h3><p>下面这个动画就是整个数组 0-19 的随机排序过程</p>
-<iframe height="317" scrolling="no" src="//codepen.io/haoyang/embed/jrvrQq/?height=317&theme-id=dark&default-tab=result&embed-version=2" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/haoyang/pen/jrvrQq/" target="_blank" rel="noopener">Fisher–Yates shuffle</a> by Chuan shi (<a href="http://codepen.io/haoyang" target="_blank" rel="noopener">@haoyang</a>) on <a href="http://codepen.io" target="_blank" rel="noopener">CodePen</a>.<br></iframe>
+<iframe height='317' scrolling='no' src='//codepen.io/haoyang/embed/jrvrQq/?height=317&theme-id=dark&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a target="_blank" rel="noopener" href='https://codepen.io/haoyang/pen/jrvrQq/'>Fisher–Yates shuffle</a> by Chuan shi (<a target="_blank" rel="noopener" href='http://codepen.io/haoyang'>@haoyang</a>) on <a target="_blank" rel="noopener" href='http://codepen.io'>CodePen</a>.
+</iframe>
 
-<h2 id="JavaScript-代码实现"><a href="#JavaScript-代码实现" class="headerlink" title="JavaScript 代码实现"></a>JavaScript 代码实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Fisher–Yates shuffle</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.shuffle = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> input = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = input.length<span class="number">-1</span>; i &gt;=<span class="number">0</span>; i--) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> randomIndex = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*(i+<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">var</span> itemAtIndex = input[randomIndex];</span><br><span class="line"></span><br><span class="line">        input[randomIndex] = input[i];</span><br><span class="line">        input[i] = itemAtIndex;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="JavaScript-代码实现"><a href="#JavaScript-代码实现" class="headerlink" title="JavaScript 代码实现"></a>JavaScript 代码实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Fisher–Yates shuffle</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">shuffle</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> input = <span class="variable language_">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = input.<span class="property">length</span>-<span class="number">1</span>; i &gt;=<span class="number">0</span>; i--) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> randomIndex = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>()*(i+<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">var</span> itemAtIndex = input[randomIndex];</span><br><span class="line"></span><br><span class="line">        input[randomIndex] = input[i];</span><br><span class="line">        input[i] = itemAtIndex;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>使用方式也很简单，直接用数组调用这个方法即可</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>].shuffle()</span><br><span class="line"></span><br><span class="line"><span class="comment">//[4, 6, 3, 2, 5, 1, 7, 8] // 每次结果都是随机的</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>].<span class="title function_">shuffle</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//[4, 6, 3, 2, 5, 1, 7, 8] // 每次结果都是随机的</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总之，Fisher–Yates shuffle 算法是一个非常高效又公平的随机排序算法，如果有随机排序数组的需求，用这个就对了！</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle" target="_blank" rel="noopener">Fisher–Yates shuffle From Wikipedia</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher–Yates shuffle From Wikipedia</a></li>
 </ul>
 
       
@@ -406,7 +408,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://liupeng2018.xyz/2021/06/19/2016-10-16-shuffle-algorithm/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://liupeng.icu/2021/06/19/2016-10-16-shuffle-algorithm/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -420,18 +422,18 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2021/06/19/2016-11-22-js-create-file-and-download/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/06/19/2016-06-14-how-to-use-babel/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          使用 JavaScript 创建并下载文件
+          如何使用 babel
         
       </div>
     </a>
   
   
-    <a href="/2021/06/19/2016-07-07-git-clone-not-master-branch/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Git 如何 clone 非 master 分支的代码</div>
+    <a href="/2021/06/19/2016-11-22-js-create-file-and-download/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用 JavaScript 创建并下载文件</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -478,7 +480,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 liupeng
+    		&copy; 2026 liupeng
     	</div>
 		
       <!--统计start-->
@@ -579,7 +581,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
+                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,11 +589,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
+                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,15 +597,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -615,7 +613,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -623,7 +625,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -635,11 +637,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
+                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
+                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -651,19 +653,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">jekyll 端口 markdown Foxit RubyGems HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -675,11 +677,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
+                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -747,11 +749,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -771,7 +781,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+                <a href="javascript:void(0)" class="js-tag color3">u8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
             
             <div class="clearfix"></div>
@@ -931,5 +945,5 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 	<!-- 页面点击小红心 -->
 	<script type="text/javascript" src="../source-src/js/clicklove.js"></script>
   </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-shizuku"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

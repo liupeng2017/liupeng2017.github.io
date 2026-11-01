@@ -1,27 +1,27 @@
 
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="http://liupeng2018.xyz">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="https://liupeng.icu">
   <title>对这个 jekyll 博客主题的改版和重构 | liupeng&#39;s blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="content{:toc}  本文主要说明对这个博客主题的改版和代码重构的过程。这个简洁高雅的博客主题受到了很多朋友的喜欢。在写第一版界面时，我对前端并不是很熟悉，对Jekyll也不熟悉。现在距离当时也一年了，对自己当时写的代码也不太满意了，同时Jekyll如今也已经升级了，目前最新版为3.1.2。因此我在临近毕业尚未入职前做一下博客主题的代码重构和改版吧。 主要想做这些事情有：添加归档，添加标">
-<meta name="keywords" content="jekyll 端口 markdown Foxit RubyGems HTML CSS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对这个 jekyll 博客主题的改版和重构">
-<meta property="og:url" content="http://liupeng2018.xyz/2016/03/12/2016-03-12-jekyll-theme-version-2.0/index.html">
+<meta property="og:url" content="https://liupeng.icu/2016/03/12/2016-03-12-jekyll-theme-version-2.0/index.html">
 <meta property="og:site_name" content="liupeng&#39;s blogs">
 <meta property="og:description" content="content{:toc}  本文主要说明对这个博客主题的改版和代码重构的过程。这个简洁高雅的博客主题受到了很多朋友的喜欢。在写第一版界面时，我对前端并不是很熟悉，对Jekyll也不熟悉。现在距离当时也一年了，对自己当时写的代码也不太满意了，同时Jekyll如今也已经升级了，目前最新版为3.1.2。因此我在临近毕业尚未入职前做一下博客主题的代码重构和改版吧。 主要想做这些事情有：添加归档，添加标">
-<meta property="og:locale" content="default">
+<meta property="og:locale">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/7011d6cfjw1f1ty28wwj4j20g00aiju7.jpg">
-<meta property="og:updated_time" content="2018-12-24T04:03:40.965Z">
+<meta property="article:published_time" content="2016-03-12T03:40:18.000Z">
+<meta property="article:modified_time" content="2018-12-24T04:03:40.965Z">
+<meta property="article:author" content="liupeng">
+<meta property="article:tag" content="jekyll 端口 markdown Foxit RubyGems HTML CSS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="对这个 jekyll 博客主题的改版和重构">
-<meta name="twitter:description" content="content{:toc}  本文主要说明对这个博客主题的改版和代码重构的过程。这个简洁高雅的博客主题受到了很多朋友的喜欢。在写第一版界面时，我对前端并不是很熟悉，对Jekyll也不熟悉。现在距离当时也一年了，对自己当时写的代码也不太满意了，同时Jekyll如今也已经升级了，目前最新版为3.1.2。因此我在临近毕业尚未入职前做一下博客主题的代码重构和改版吧。 主要想做这些事情有：添加归档，添加标">
 <meta name="twitter:image" content="http://ww4.sinaimg.cn/large/7011d6cfjw1f1ty28wwj4j20g00aiju7.jpg">
   
     <link rel="alternative" href="/atom.xml" title="liupeng&#39;s blogs" type="application/atom+xml">
@@ -50,8 +50,8 @@ var _hmt = _hmt || [];
 </script>
 
 
-</head>
-</html>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -64,10 +64,8 @@ var _hmt = _hmt || [];
 			<img src="/img/liupeng.png" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">liupeng</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">Writing code is keep my heart beating only reason</p>
 		
 
 		<nav class="header-menu">
@@ -77,9 +75,11 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/archives">所有文章</a></li>
 	        
-				<li><a href="/随笔">随笔</a></li>
+				<li><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 	        
 				<li><a href="/photos">相册</a></li>
+	        
+				<li><a href="/attachments">附件</a></li>
 	        
 			</ul>
 		</nav>
@@ -113,8 +113,6 @@ var _hmt = _hmt || [];
 		</nav>
 	</header>	
 	
-	
-	<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
 		
 </div>
 
@@ -132,12 +130,12 @@ var _hmt = _hmt || [];
 				<img src="/img/liupeng.png" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">liupeng</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>Writing code is keep my heart beating only reason<i class="icon icon-quo-right"></i></p>
 			
 			
+				
 			
 				
 			
@@ -167,13 +165,15 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 25%"><a href="/">主页</a></li>
+					<li style="width: 20%"><a href="/">主页</a></li>
 		        
-					<li style="width: 25%"><a href="/archives">所有文章</a></li>
+					<li style="width: 20%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 25%"><a href="/随笔">随笔</a></li>
+					<li style="width: 20%"><a href="/%E9%9A%8F%E7%AC%94">随笔</a></li>
 		        
-					<li style="width: 25%"><a href="/photos">相册</a></li>
+					<li style="width: 20%"><a href="/photos">相册</a></li>
+		        
+					<li style="width: 20%"><a href="/attachments">附件</a></li>
 		        
 				</ul>
 			</nav>
@@ -217,7 +217,7 @@ var _hmt = _hmt || [];
 <h2 id="改版重构说明"><a href="#改版重构说明" class="headerlink" title="改版重构说明"></a>改版重构说明</h2><ul>
 <li><p><strong>使用 GitHub 风格的代码块 Markdown 写法 (Fenced code blocks)。</strong></p>
 <p>  即 GFM(github flavored markdown) 的方式。</p>
-<p>  Jekyll 已经升级至 3.1.2（2016-03），其中有一些新的要注意的地方，比如官网上说使用了 <code>Rouge</code> 去做代码高亮而不是默认的 <code>Pygments</code>，因为 <code>Jekyll</code> 本身是基于 Ruby 的，因此我看到官方说希望不再使用基于 Python 的 <code>Pygments</code> 了，而是都使用基于 Ruby 的代码。详情见官网升级说明 <a href="https://jekyllrb.com/docs/upgrading/2-to-3/#syntax-highlighter-changed" target="_blank" rel="noopener">syntax-highlighter-changed</a>。</p>
+<p>  Jekyll 已经升级至 3.1.2（2016-03），其中有一些新的要注意的地方，比如官网上说使用了 <code>Rouge</code> 去做代码高亮而不是默认的 <code>Pygments</code>，因为 <code>Jekyll</code> 本身是基于 Ruby 的，因此我看到官方说希望不再使用基于 Python 的 <code>Pygments</code> 了，而是都使用基于 Ruby 的代码。详情见官网升级说明 <a target="_blank" rel="noopener" href="https://jekyllrb.com/docs/upgrading/2-to-3/#syntax-highlighter-changed">syntax-highlighter-changed</a>。</p>
 </li>
 <li><p><strong>首页中添加摘要</strong></p>
 <p>  摘要可以在每一篇 md 文件头中使用 excerpt 属性写出来。也可以在正文中，4个换行符来分割，这个设置见配置文件<code>_config.yml</code>。</p>
@@ -235,55 +235,67 @@ var _hmt = _hmt || [];
 <p>  我觉得太重了，没必要使用这两个库，使用原生 JavaScript 和 CSS就可以做到一样的效果，代码量大大减轻，载入速度略有提高。</p>
 </li>
 <li><p><strong>重写了demo页的瀑布流布局</strong></p>
-<p>  改变数据写死的方式，将数据用 json 格式录入，由 JavaScript 拼接为 HTML 代码。同时，使用 <a href="http://masonry.desandro.com/" target="_blank" rel="noopener">Masonry</a>，重写了瀑布流布局。</p>
+<p>  改变数据写死的方式，将数据用 json 格式录入，由 JavaScript 拼接为 HTML 代码。同时，使用 <a target="_blank" rel="noopener" href="http://masonry.desandro.com/">Masonry</a>，重写了瀑布流布局。</p>
 </li>
 <li><p><strong>简化评论配置，支持 多说 和 disqus</strong></p>
 <p>  在<code>_config.yml</code>中评论配置直接添加自己的<code>short_name</code>，评论就能正常使用了。</p>
 </li>
 </ul>
 <p>下面列举一些可能遇到的问题，至少我是遇到了：</p>
-<h2 id="RubyGems-无法访问，SSL-证书问题"><a href="#RubyGems-无法访问，SSL-证书问题" class="headerlink" title="RubyGems 无法访问，SSL 证书问题"></a>RubyGems 无法访问，SSL 证书问题</h2><p>以前我使用的是 RubyGems 的淘宝镜像<a href="https://ruby.taobao.org/" target="_blank" rel="noopener">https://ruby.taobao.org/</a>。现在这个镜像已经不再维护了，作者 <a href="https://ruby-china.org/huacnlee" target="_blank" rel="noopener">huacnlee (李华顺)</a> 转到 <a href="https://ruby-china.org/" target="_blank" rel="noopener">Ruby China</a> 中继续维护了，详情见 <a href="https://gems.ruby-china.org/" target="_blank" rel="noopener">RubyGems 镜像- Ruby China</a>。</p>
+<h2 id="RubyGems-无法访问，SSL-证书问题"><a href="#RubyGems-无法访问，SSL-证书问题" class="headerlink" title="RubyGems 无法访问，SSL 证书问题"></a>RubyGems 无法访问，SSL 证书问题</h2><p>以前我使用的是 RubyGems 的淘宝镜像<a target="_blank" rel="noopener" href="https://ruby.taobao.org/">https://ruby.taobao.org/</a>。现在这个镜像已经不再维护了，作者 <a target="_blank" rel="noopener" href="https://ruby-china.org/huacnlee">huacnlee (李华顺)</a> 转到 <a target="_blank" rel="noopener" href="https://ruby-china.org/">Ruby China</a> 中继续维护了，详情见 <a target="_blank" rel="noopener" href="https://gems.ruby-china.org/">RubyGems 镜像- Ruby China</a>。</p>
 <h3 id="错误呈现"><a href="#错误呈现" class="headerlink" title="错误呈现"></a>错误呈现</h3><p>在执行任何<code>gem</code>命令的时候出现以下错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:  While executing gem ... (Gem::RemoteFetcher::FetchError)</span><br><span class="line">    SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (https://gems.ruby-china.org/specs.4.8.gz)</span><br></pre></td></tr></table></figure>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>根据 <a href="https://gems.ruby-china.org/" target="_blank" rel="noopener">https://gems.ruby-china.org/</a> 页面最下方提供的 GitHub Issue 地址。</p>
-<p>可以进入这个 issue：<a href="https://github.com/ruby-china/rubygems-mirror/issues/3" target="_blank" rel="noopener">https://github.com/ruby-china/rubygems-mirror/issues/3</a></p>
-<p>其中 sanlengjingvv 给出了一个链接地址 <a href="https://gist.github.com/fnichol/867550" target="_blank" rel="noopener">https://gist.github.com/fnichol/867550</a> 里面提供了方法。我就是采用这里面的方法解决的。</p>
-<p>我使用的是 <a href="https://gist.github.com/fnichol/867550#the-manual-way-boring" target="_blank" rel="noopener">The Manual Way</a>，因为 <a href="https://gist.github.com/fnichol/867550#the-ruby-way-fun" target="_blank" rel="noopener">The Ruby Way</a> 我没有成功，不知道什么原因，有兴趣的朋友可以试试。下面说说我的具体操作吧。</p>
-<p>首先从 <a href="https://curl.haxx.se/ca/cacert.pem" target="_blank" rel="noopener">https://curl.haxx.se/ca/cacert.pem</a> 将文件<code>cacert.pem</code>下载至 <code>C:\RailsInstaller\cacert.pem</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR:  While executing gem ... (Gem::RemoteFetcher::FetchError)</span><br><span class="line">    SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (https://gems.ruby-china.org/specs.4.8.gz)</span><br></pre></td></tr></table></figure>
+
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>根据 <a target="_blank" rel="noopener" href="https://gems.ruby-china.org/">https://gems.ruby-china.org/</a> 页面最下方提供的 GitHub Issue 地址。</p>
+<p>可以进入这个 issue：<a target="_blank" rel="noopener" href="https://github.com/ruby-china/rubygems-mirror/issues/3">https://github.com/ruby-china/rubygems-mirror/issues/3</a></p>
+<p>其中 sanlengjingvv 给出了一个链接地址 <a target="_blank" rel="noopener" href="https://gist.github.com/fnichol/867550">https://gist.github.com/fnichol/867550</a> 里面提供了方法。我就是采用这里面的方法解决的。</p>
+<p>我使用的是 <a target="_blank" rel="noopener" href="https://gist.github.com/fnichol/867550#the-manual-way-boring">The Manual Way</a>，因为 <a target="_blank" rel="noopener" href="https://gist.github.com/fnichol/867550#the-ruby-way-fun">The Ruby Way</a> 我没有成功，不知道什么原因，有兴趣的朋友可以试试。下面说说我的具体操作吧。</p>
+<p>首先从 <a target="_blank" rel="noopener" href="https://curl.haxx.se/ca/cacert.pem">https://curl.haxx.se/ca/cacert.pem</a> 将文件<code>cacert.pem</code>下载至 <code>C:\RailsInstaller\cacert.pem</code></p>
 <p>然后执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set SSL_CERT_FILE=C:\RailsInstaller\cacert.pem</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set SSL_CERT_FILE=C:\RailsInstaller\cacert.pem</span><br></pre></td></tr></table></figure>
+
 <p>就成功了，不会再出现 SSL 错误了。</p>
 <p>最后原文中说，为了长久设置，将这个目录存入控制面板中。我没理解是什么意思，是指环境变量吗？有朋友知道的话，欢迎留言告知我。</p>
 <p>我存入环境变量后，还是会出现 SSL 错误，这时再次执行上面那条命令即可。</p>
-<h2 id="jekyll-paginate-依赖缺失"><a href="#jekyll-paginate-依赖缺失" class="headerlink" title="jekyll-paginate 依赖缺失"></a>jekyll-paginate 依赖缺失</h2><p>因为 jekyll 3 中默认安装已经没有这个分页组件了，官方把这个分页组件插件化了，因此要独立安装。详情见 <a href="https://jekyllrb.com/docs/pagination/" target="_blank" rel="noopener">https://jekyllrb.com/docs/pagination/</a>。</p>
+<h2 id="jekyll-paginate-依赖缺失"><a href="#jekyll-paginate-依赖缺失" class="headerlink" title="jekyll-paginate 依赖缺失"></a>jekyll-paginate 依赖缺失</h2><p>因为 jekyll 3 中默认安装已经没有这个分页组件了，官方把这个分页组件插件化了，因此要独立安装。详情见 <a target="_blank" rel="noopener" href="https://jekyllrb.com/docs/pagination/">https://jekyllrb.com/docs/pagination/</a>。</p>
 <h3 id="错误呈现-1"><a href="#错误呈现-1" class="headerlink" title="错误呈现"></a>错误呈现</h3><p>在启动 jekyll 服务的时候出现以下错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jekyll serve</span><br><span class="line">Configuration file: c:/gitWorkSpace/blog-based-on-jekyll-3/_config.yml</span><br><span class="line">  Dependency Error: Yikes! It looks like you don&apos;t have jekyll-paginate or one of its dependencies installed. In order to use Jekyll as currently configured, you&apos;ll need to install this gem. The full error message from Ruby is: &apos;cannot load such file -- jekyll-paginate&apos; If you run into trouble, you can find helpful resources at http://jekyllrb.com/help/!</span><br><span class="line">jekyll 3.1.2 | Error:  jekyll-paginate</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jekyll serve</span><br><span class="line">Configuration file: c:/gitWorkSpace/blog-based-on-jekyll-3/_config.yml</span><br><span class="line">  Dependency Error: Yikes! It looks like you don&#x27;t have jekyll-paginate or one of its dependencies installed. In order to use Jekyll as currently configured, you&#x27;ll need to install this gem. The full error message from Ruby is: &#x27;cannot load such file -- jekyll-paginate&#x27; If you run into trouble, you can find helpful resources at http://jekyllrb.com/help/!</span><br><span class="line">jekyll 3.1.2 | Error:  jekyll-paginate</span><br></pre></td></tr></table></figure>
+
 <h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><p>我们安装这个插件到本地即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gem install jekyll-paginate</span><br><span class="line">Fetching: jekyll-paginate-1.1.0.gem (100%)</span><br><span class="line">Successfully installed jekyll-paginate-1.1.0</span><br><span class="line">Parsing documentation for jekyll-paginate-1.1.0</span><br><span class="line">Installing ri documentation for jekyll-paginate-1.1.0</span><br><span class="line">Done installing documentation for jekyll-paginate after 3 seconds</span><br><span class="line">1 gem installed</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gem install jekyll-paginate</span><br><span class="line">Fetching: jekyll-paginate-1.1.0.gem (100%)</span><br><span class="line">Successfully installed jekyll-paginate-1.1.0</span><br><span class="line">Parsing documentation for jekyll-paginate-1.1.0</span><br><span class="line">Installing ri documentation for jekyll-paginate-1.1.0</span><br><span class="line">Done installing documentation for jekyll-paginate after 3 seconds</span><br><span class="line">1 gem installed</span><br></pre></td></tr></table></figure>
+
 <h2 id="被-Foxit-pdf-reader-占用4000端口"><a href="#被-Foxit-pdf-reader-占用4000端口" class="headerlink" title="被 Foxit pdf reader 占用4000端口"></a>被 Foxit pdf reader 占用4000端口</h2><h3 id="错误呈现-2"><a href="#错误呈现-2" class="headerlink" title="错误呈现"></a>错误呈现</h3><p>在本地使用命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jekyll serve</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jekyll serve</span><br></pre></td></tr></table></figure>
+
 <p>出现错误，如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">jekyll serve</span><br><span class="line">Configuration file: E:/GitWorkSpace/blog/_config.yml</span><br><span class="line">           Source: E:/GitWorkSpace/blog</span><br><span class="line">      Destination: E:/GitWorkSpace/blog/_site</span><br><span class="line">Incremental build: disabled. Enable with --incremental</span><br><span class="line">     Generating...</span><br><span class="line">                   done in 0.547 seconds.</span><br><span class="line"> Please add the following to your Gemfile to avoid polling for changes:</span><br><span class="line">   gem &apos;wdm&apos;, &apos;&gt;= 0.1.0&apos; if Gem.win_platform?</span><br><span class="line">Auto-regeneration: enabled for &apos;E:/GitWorkSpace/blog&apos;</span><br><span class="line">Configuration file: E:/GitWorkSpace/blog/_config.yml</span><br><span class="line">jekyll 3.1.1 | Error:  Permission denied - bind(2) for 127.0.0.1:4000</span><br></pre></td></tr></table></figure>
-<p>网上查阅后，这篇博文解决了我的问题。<a href="http://lxconan.github.io/2016/01/07/who-is-using-my-port/" target="_blank" rel="noopener">谁占了我的端口 for Windows –By Liu Xia, ThoughtWorks Senior Consultant. .NET Expert</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">jekyll serve</span><br><span class="line">Configuration file: E:/GitWorkSpace/blog/_config.yml</span><br><span class="line">           Source: E:/GitWorkSpace/blog</span><br><span class="line">      Destination: E:/GitWorkSpace/blog/_site</span><br><span class="line">Incremental build: disabled. Enable with --incremental</span><br><span class="line">     Generating...</span><br><span class="line">                   done in 0.547 seconds.</span><br><span class="line"> Please add the following to your Gemfile to avoid polling for changes:</span><br><span class="line">   gem &#x27;wdm&#x27;, &#x27;&gt;= 0.1.0&#x27; if Gem.win_platform?</span><br><span class="line">Auto-regeneration: enabled for &#x27;E:/GitWorkSpace/blog&#x27;</span><br><span class="line">Configuration file: E:/GitWorkSpace/blog/_config.yml</span><br><span class="line">jekyll 3.1.1 | Error:  Permission denied - bind(2) for 127.0.0.1:4000</span><br></pre></td></tr></table></figure>
+
+<p>网上查阅后，这篇博文解决了我的问题。<a target="_blank" rel="noopener" href="http://lxconan.github.io/2016/01/07/who-is-using-my-port/">谁占了我的端口 for Windows –By Liu Xia, ThoughtWorks Senior Consultant. .NET Expert</a></p>
 <p>上述报错主要原因是，jekyll 启动使用的4000端口被福昕pdf阅读器的自动更新进程占用了，关掉这个进程，jekyll在本地调试启动服务时就没有问题了。</p>
 <h3 id="解决方法-2"><a href="#解决方法-2" class="headerlink" title="解决方法"></a>解决方法</h3><p>简单的解决方法是：</p>
 <p>输入命令，查看各端口被占用情况</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
+
 <p>找到4000端口被占用的<code>PID</code></p>
 <p>我的结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">协议  本地地址          外部地址          状态           PID</span><br><span class="line">TCP  0.0.0.0:80        0.0.0.0:0         LISTENING     4</span><br><span class="line">TCP  0.0.0.0:135       0.0.0.0:0         LISTENING     836</span><br><span class="line">TCP  0.0.0.0:445       0.0.0.0:0         LISTENING     4</span><br><span class="line">TCP  0.0.0.0:1801      0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:2103      0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:2105      0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:2107      0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:3306      0.0.0.0:0         LISTENING     2404</span><br><span class="line">TCP  0.0.0.0:3389      0.0.0.0:0         LISTENING     1172</span><br><span class="line">TCP  0.0.0.0:49664     0.0.0.0:0         LISTENING     584</span><br><span class="line">TCP  0.0.0.0:49665     0.0.0.0:0         LISTENING     1072</span><br><span class="line">TCP  0.0.0.0:49666     0.0.0.0:0         LISTENING     460</span><br><span class="line">TCP  0.0.0.0:49667     0.0.0.0:0         LISTENING     1000</span><br><span class="line">TCP  0.0.0.0:49670     0.0.0.0:0         LISTENING     696</span><br><span class="line">TCP  0.0.0.0:49678     0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:49692     0.0.0.0:0         LISTENING     688</span><br><span class="line">TCP  127.0.0.1:4000    0.0.0.0:0         LISTENING     2476</span><br><span class="line">TCP  127.0.0.1:4000    127.0.0.1:55160   ESTABLISHED   2476</span><br><span class="line">TCP  127.0.0.1:4012    0.0.0.0:0         LISTENING     12724</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">协议  本地地址          外部地址          状态           PID</span><br><span class="line">TCP  0.0.0.0:80        0.0.0.0:0         LISTENING     4</span><br><span class="line">TCP  0.0.0.0:135       0.0.0.0:0         LISTENING     836</span><br><span class="line">TCP  0.0.0.0:445       0.0.0.0:0         LISTENING     4</span><br><span class="line">TCP  0.0.0.0:1801      0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:2103      0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:2105      0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:2107      0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:3306      0.0.0.0:0         LISTENING     2404</span><br><span class="line">TCP  0.0.0.0:3389      0.0.0.0:0         LISTENING     1172</span><br><span class="line">TCP  0.0.0.0:49664     0.0.0.0:0         LISTENING     584</span><br><span class="line">TCP  0.0.0.0:49665     0.0.0.0:0         LISTENING     1072</span><br><span class="line">TCP  0.0.0.0:49666     0.0.0.0:0         LISTENING     460</span><br><span class="line">TCP  0.0.0.0:49667     0.0.0.0:0         LISTENING     1000</span><br><span class="line">TCP  0.0.0.0:49670     0.0.0.0:0         LISTENING     696</span><br><span class="line">TCP  0.0.0.0:49678     0.0.0.0:0         LISTENING     2312</span><br><span class="line">TCP  0.0.0.0:49692     0.0.0.0:0         LISTENING     688</span><br><span class="line">TCP  127.0.0.1:4000    0.0.0.0:0         LISTENING     2476</span><br><span class="line">TCP  127.0.0.1:4000    127.0.0.1:55160   ESTABLISHED   2476</span><br><span class="line">TCP  127.0.0.1:4012    0.0.0.0:0         LISTENING     12724</span><br></pre></td></tr></table></figure>
+
 <p>可以看到4000端口的PID是2476。下面查看是什么进程，命令行中输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tasklist /svc /FI &quot;PID eq 2476&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tasklist /svc /FI &quot;PID eq 2476&quot;</span><br></pre></td></tr></table></figure>
+
 <p>得到结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">映像名称                       PID 服务</span><br><span class="line">========================= ======== ============================================</span><br><span class="line">FoxitProtect.exe              2476 FxService</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">映像名称                       PID 服务</span><br><span class="line">========================= ======== ============================================</span><br><span class="line">FoxitProtect.exe              2476 FxService</span><br></pre></td></tr></table></figure>
+
 <p>可以看到正是福昕阅读器。下面关掉这个服务就好了。在 win10 中进入任务管理器，选择服务选项卡，关闭这个服务就好了，如下图：</p>
-<p><img src="http://ww4.sinaimg.cn/large/7011d6cfjw1f1ty28wwj4j20g00aiju7.jpg" alt></p>
+<p><img src="http://ww4.sinaimg.cn/large/7011d6cfjw1f1ty28wwj4j20g00aiju7.jpg"></p>
 <p>当然也可以在启动jekyll服务的时候指定端口号，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jekyll serve --port 3000</span><br></pre></td></tr></table></figure>
-<p>这样在浏览器中输入 <a href="http://localhost:3000/" target="_blank" rel="noopener">http://localhost:3000/</a> 就可以访问了。</p>
-<p>还可以在配置文件<code>_config.yml</code>中添加端口号设置（参考<a href="https://jekyllrb.com/docs/configuration/#serve-command-options" target="_blank" rel="noopener">官网文档-Serve Command OptionsPermalink</a>），如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># port</span><br><span class="line">port: 1234</span><br></pre></td></tr></table></figure>
-<p>此时，启动jekyll服务后，访问 <a href="http://localhost:1234/" target="_blank" rel="noopener">http://localhost:1234/</a> 即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jekyll serve --port 3000</span><br></pre></td></tr></table></figure>
+
+<p>这样在浏览器中输入 <a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000/</a> 就可以访问了。</p>
+<p>还可以在配置文件<code>_config.yml</code>中添加端口号设置（参考<a target="_blank" rel="noopener" href="https://jekyllrb.com/docs/configuration/#serve-command-options">官网文档-Serve Command OptionsPermalink</a>），如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># port</span><br><span class="line">port: 1234</span><br></pre></td></tr></table></figure>
+
+<p>此时，启动jekyll服务后，访问 <a target="_blank" rel="noopener" href="http://localhost:1234/">http://localhost:1234/</a> 即可</p>
 
       
 
@@ -390,7 +402,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://liupeng2018.xyz/2016/03/12/2016-03-12-jekyll-theme-version-2.0/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://liupeng.icu/2016/03/12/2016-03-12-jekyll-theme-version-2.0/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -462,7 +474,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 liupeng
+    		&copy; 2026 liupeng
     	</div>
 		
       <!--统计start-->
@@ -563,7 +575,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
+                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -571,11 +583,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Sublime jshint csslint</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
+                <a href="javascript:void(0)" class="js-tag color1">jekyll RubyGems</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -583,15 +591,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color4">Baidu ife HTML CSS task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript Array 算法 慕课网</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,7 +607,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
+                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -607,7 +619,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JavaScript 慕课网 this ife</a>
+                <a href="javascript:void(0)" class="js-tag color4">面试 Lenovo 实习 JavaScript</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -619,11 +631,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
+                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScript HTML CSS Sass 移动端 XSS AMD requireJS CommonJS 性能优化 WebApp</a>
+                <a href="javascript:void(0)" class="js-tag color4">Weinre WebApp 调试工具 JavaScript HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -635,19 +647,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">jekyll 端口 markdown Foxit RubyGems HTML CSS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">对象 函数 this 闭包 面向对象 作用域</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">正则 分组 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -659,11 +671,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git GitHub 分支</a>
+                <a href="javascript:void(0)" class="js-tag color1">ES2015 ES6 ES5 babel</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -731,11 +743,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">私密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -755,7 +775,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+                <a href="javascript:void(0)" class="js-tag color3">u8</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">R</a>
               </li>
             
             <div class="clearfix"></div>
@@ -915,5 +939,5 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 	<!-- 页面点击小红心 -->
 	<script type="text/javascript" src="../source-src/js/clicklove.js"></script>
   </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"live2d-widget-model-shizuku"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
