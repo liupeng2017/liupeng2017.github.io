@@ -198,6 +198,164 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2016-06-14-how-to-use-babel" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/06/19/2016-06-14-how-to-use-babel/">如何使用 babel</a>
+    </h1>
+  
+
+        
+        <a href="/2021/06/19/2016-06-14-how-to-use-babel/" class="archive-article-date">
+  	<time datetime="2021-06-19T05:00:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://babeljs.io/">Babel</a> 用于将 ES6 的代码转化为 ES5，使得 ES6 可以在目前的浏览器环境下使用。学习使用 babel 是为了使用 ES2015 做准备。本文将介绍如何使用 babel，以及一些相关的配置。</p>
+<p><img src="https://babeljs.io/images/logo.svg"></p>
+<p>学习 Babel 可以通过其手册 Babel handbook。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/thejameskyle/babel-handbook">babel-handbook</a></li>
+</ul>
+<p>其中包含多语言版本，分为<a target="_blank" rel="noopener" href="https://github.com/thejameskyle/babel-handbook/blob/master/translations/zh-Hans/user-handbook.md">用户手册</a>和<a target="_blank" rel="noopener" href="https://github.com/thejameskyle/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md">插件手册</a>。这是一个很好的学习 Babel 的资料。</p>
+<h2 id="babel-cli"><a href="#babel-cli" class="headerlink" title="babel-cli"></a>babel-cli</h2><p>在 node 和 npm 环境安装好的前提下，安装 babel，如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --global babel-cli</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后就可以编译文件了。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">babel main.js</span><br></pre></td></tr></table></figure>
+
+<p>编译后的文件显示在终端上，可以添加其他命令让它输出到指定文件下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">babel example.js --out-file compiled.js</span><br><span class="line">或</span><br><span class="line">babel example.js -o compiled.js</span><br></pre></td></tr></table></figure>
+
+<p>或将整个目录编译成一个新的目录：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">babel src --out-dir lib</span><br><span class="line">或</span><br><span class="line">babel src -d lib</span><br></pre></td></tr></table></figure>
+
+<p>但这很麻烦，并且并不是一个很好的解决方案，请看下一节项目内运行 babel-cli。</p>
+<h2 id="在项目内运行-babel-cli"><a href="#在项目内运行-babel-cli" class="headerlink" title="在项目内运行 babel-cli"></a>在项目内运行 babel-cli</h2><p>初始化项目</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+
+<p>再安装 babel-cli</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-cli</span><br></pre></td></tr></table></figure>
+
+<p>项目中的<code>package.json</code>应该包含如下内容：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;learn-es6&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;babel-cli&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^6.10.1&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>添加 npm scripts 命令。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;learn-es6&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line"><span class="addition">+   &quot;scripts&quot;: &#123;</span></span><br><span class="line"><span class="addition">+     &quot;build&quot;: &quot;babel src -d lib&quot;</span></span><br><span class="line"><span class="addition">+   &#125;,</span></span><br><span class="line">  &quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;babel-cli&quot;: &quot;^6.10.1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时在终端里运行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<p>还不能成功编译，因为没有配置<code>.babelrc</code>文件。</p>
+<h2 id="配置-babelrc"><a href="#配置-babelrc" class="headerlink" title="配置.babelrc"></a>配置<code>.babelrc</code></h2><p>通过配置<code>.babelrc</code>来告诉 babel 来做什么。</p>
+<p>在项目的根路径下创建<code>.babelrc</code>文件。然后输入以下内容作为开始：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;presets&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了让 babel 将 ES2015 转化为 ES5，我们要安装如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-preset-es2015</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后在<code>.babelrc</code>中添加参数：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;presets&quot;: [</span><br><span class="line"><span class="addition">+       &quot;es2015&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    &quot;plugins&quot;: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在在项目<code>src/main.js</code>中写一些 ES2015 的代码试试吧。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>在终端中输入命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<p>执行后终端中显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; learn-es6@1.0.0 build c:\gitWorkSpace\learn-es6</span><br><span class="line">&gt; babel src -d lib</span><br></pre></td></tr></table></figure>
+
+<p>然后可以看到目录中出现了<code>lib/main.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&quot;use strict&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>即编译成功。</p>
+<h2 id="配置-jshintrc"><a href="#配置-jshintrc" class="headerlink" title="配置.jshintrc"></a>配置<code>.jshintrc</code></h2><p>若编辑器中安装了 jshint 语法检查的插件。默认对于 ES2015 的代码可能会报错或者警告，看着可能会不爽。我们可以在配置文件中将它设置为允许 ES2015 的模式。</p>
+<p>在项目根目录下创建文件<code>.jshintrc</code>。内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;asi&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;esversion&quot;</span><span class="punctuation">:</span> <span class="number">2015</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述文件我分别设置了，使用无分号模式，es 版本使用 2015。</p>
+<p>关于<code>.jshintrc</code>的更详细配置可以参见官方示例：<a target="_blank" rel="noopener" href="https://github.com/jshint/jshint/blob/master/examples/.jshintrc">https://github.com/jshint/jshint/blob/master/examples/.jshintrc</a></p>
+<p>好，babel 就说到这里，下面开始进入真正的 ES2015 的学习！</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ES2015 ES6 ES5 babel</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JavaScript//" class="article-tag-list-link color1">JavaScript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/06/19/2016-06-14-how-to-use-babel/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2016-07-07-git-clone-not-master-branch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1342,120 +1500,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/06/19/2018-01-09-python_crawl_words/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2017-12-13-Ubuntu16.04-pycharm-icon-setting" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/19/2017-12-13-Ubuntu16.04-pycharm-icon-setting/">Ubuntu16.04设置Pycharm桌面快捷键</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/19/2017-12-13-Ubuntu16.04-pycharm-icon-setting/" class="archive-article-date">
-  	<time datetime="2021-06-19T05:00:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/applications</span><br></pre></td></tr></table></figure>
-
-<h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><p>这里我将pycharm下载并解压到了&#x2F;home&#x2F;liupeng&#x2F;developer文件夹下</p>
-<p>这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标</p>
-<h2 id="终端打开"><a href="#终端打开" class="headerlink" title="终端打开"></a>终端打开</h2><p>使用Ubuntu终端进行打开：<br>方法一（使用vim）：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi  /usr/share/applications/pycharm.<span class="property">desktop</span></span><br></pre></td></tr></table></figure>
-
-<p>方法二（使用gedit）：
-	</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit  /usr/share/applications/pycharm.<span class="property">desktop</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>然后就会弹出一个新框：</p>
-<h2 id="张贴"><a href="#张贴" class="headerlink" title="张贴"></a>张贴</h2><p>我们将下面的内容贴上去：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[<span class="title class_">Desktop</span> <span class="title class_">Entry</span>]</span><br><span class="line"><span class="title class_">Type</span>=<span class="title class_">Application</span></span><br><span class="line"><span class="title class_">Name</span>=<span class="title class_">Pycharm</span></span><br><span class="line"><span class="title class_">GenericName</span>=<span class="title class_">Pycharm3</span></span><br><span class="line"><span class="title class_">Comment</span>=<span class="title class_">Pycharm3</span>:<span class="title class_">The</span> <span class="title class_">Python</span> <span class="variable constant_">IDE</span></span><br><span class="line"><span class="title class_">Exec</span>=<span class="string">&quot;/home/snakeson/developer/pycharm-community-2017.2.3/bin/pycharm.sh&quot;</span> %f</span><br><span class="line"><span class="title class_">Icon</span>=<span class="regexp">/home/</span>snakeson/developer/pycharm-community-<span class="number">2017.2</span><span class="number">.3</span>/bin/pycharm.<span class="property">png</span></span><br><span class="line"><span class="title class_">Terminal</span>=pycharm</span><br><span class="line"><span class="title class_">Categories</span>=<span class="title class_">Pycharm</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<hr>
-<p>注意一定要将Desktop Entry复制进去，也就是上面的全部都要复制进去，这里我们需要替换掉两个地方：<strong>Exec&#x3D;”xx”<strong>和</strong>Icon&#x3D;</strong>,这里要替换掉我们的pycharm解压的目录，当然了，我已经替换好了，如果你的目录跟我的目录不一样的话，你得把路径给换了，不管你是pycharm2017还是pycharm2016,，例如Comment什么的都不要改变，只变上面提到的两个路径就可以了。</p>
-<h2 id="添加可执行权限"><a href="#添加可执行权限" class="headerlink" title="添加可执行权限"></a>添加可执行权限</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/share/applications/pycharm.<span class="property">desktop</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="拷贝到桌面"><a href="#拷贝到桌面" class="headerlink" title="拷贝到桌面"></a>拷贝到桌面</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将/usr/share/applications/pycharm.<span class="property">desktop</span>文件拷贝到桌面，双击即可运行。</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Ubuntu Pycharm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/liupeng//" class="article-tag-list-link color3">liupeng</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/19/2017-12-13-Ubuntu16.04-pycharm-icon-setting/">展开全文 >></a>
         </p>
       
 

@@ -198,6 +198,94 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-08-23-csdn-141475406" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/23/2024-08-23-csdn-141475406/">C HTML格式解析与生成</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/23/2024-08-23-csdn-141475406/" class="archive-article-date">
+  	<time datetime="2024-08-23T13:59:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141475406">https://blog.csdn.net/qq_30220519/article/details/141475406</a></p>
+</blockquote>
+<h6 id="cmake报错替换"><a href="#cmake报错替换" class="headerlink" title="cmake报错替换"></a>cmake报错替换</h6><blockquote>
+<p>if(NOT MyHTML_BUILD_WITHOUT_THREADS OR NOT MyCORE_BUILD_WITHOUT_THREADS)<br>    set(CMAKE_THREAD_PREFER_PTHREAD 1)<br>    if (WIN32)<br>        set(CMAKE_USE_WIN32_THREADS_INIT ON)<br>        set(CMAKE_THREAD_PREFER_PTHREADS TRUE)<br>        set(THREADS_PREFER_PTHREAD_FLAG TRUE)<br>    else ()<br>        find_package(Threads REQUIRED)<br>        if(NOT CMAKE_USE_PTHREADS_INIT)<br>            message(FATAL_ERROR “Could NOT find pthreads (missing: CMAKE_USE_PTHREADS_INIT)”)<br>        endif()<br>    endif()<br>endif() </p>
+</blockquote>
+<h6 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h6><blockquote>
+<p>add_executable(example examples&#x2F;myhtml&#x2F;modify_and_serialize.c)<br>target_link_libraries(example ${PROJECT_LIB_STATIC})</p>
+</blockquote>
+<h6 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;myhtml/serialization.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  Write output</span></span><br><span class="line"><span class="comment"> *  @param  buffer</span></span><br><span class="line"><span class="comment"> *  @param  size</span></span><br><span class="line"><span class="comment"> *  @param  ptr</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">mystatus_t</span> <span class="title">write_output</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* data, <span class="type">size_t</span> len, <span class="type">void</span>* ctx)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.*s&quot;</span>, (<span class="type">int</span>)len, data);</span><br><span class="line">    <span class="keyword">return</span> MyCORE_STATUS_OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  Main procedure</span></span><br><span class="line"><span class="comment"> *  @return int</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// initalize html engine</span></span><br><span class="line">    <span class="type">myhtml_t</span> *myhtml = <span class="built_in">myhtml_create</span>();</span><br><span class="line">    <span class="built_in">myhtml_init</span>(myhtml, MyHTML_OPTIONS_DEFAULT, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// init tree</span></span><br><span class="line">    <span class="type">myhtml_tree_t</span> *tree = <span class="built_in">myhtml_tree_create</span>();</span><br><span class="line">    <span class="built_in">myhtml_tree_init</span>(tree, myhtml);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// input string</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *input = <span class="string">&quot;&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;a href=http://nu.nl&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// parse html</span></span><br><span class="line">    <span class="built_in">myhtml_parse</span>(tree, MyENCODING_UTF_8, input, <span class="built_in">strlen</span>(input));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// collection of links</span></span><br><span class="line">    <span class="type">myhtml_collection_t</span> *collection = <span class="built_in">myhtml_get_nodes_by_name</span>(tree, <span class="literal">NULL</span>, <span class="string">&quot;a&quot;</span>, <span class="number">1</span>, <span class="literal">NULL</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// iterate over all nodes</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; collection-&gt;length; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// add attribute</span></span><br><span class="line">        <span class="built_in">myhtml_attribute_add</span>(collection-&gt;list[i], <span class="string">&quot;title&quot;</span>, <span class="number">5</span>, <span class="string">&quot;my value&quot;</span>, <span class="number">8</span>, MyENCODING_UTF_8);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="comment">// write the document again</span></span><br><span class="line">    <span class="built_in">myhtml_serialization_tree_callback</span>(<span class="built_in">myhtml_tree_get_document</span>(tree), write_output, <span class="literal">NULL</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">myhtml_collection_destroy</span>(collection);</span><br><span class="line">    <span class="built_in">myhtml_tree_destroy</span>(tree);</span><br><span class="line">    <span class="built_in">myhtml_destroy</span>(myhtml);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// done</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="修改前"><a href="#修改前" class="headerlink" title="修改前"></a>修改前</h6><blockquote>
+<p>“<html><head></head><body><a href=http://nu.nl></body></html></p>
+</blockquote>
+<h6 id="修改后"><a href="#修改后" class="headerlink" title="修改后"></a>修改后</h6><blockquote>
+<html><head></head><body><a target="_blank" rel="noopener" href="http://nu.nl" title="my value"></a></body></html></blockquote>
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/lexborisov/Modest" title="https:&#x2F;&#x2F;github.com&#x2F;lexborisov&#x2F;Modest">https://github.com/lexborisov/Modest</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/lexborisov/myhtml" title="GitHub - lexborisov&#x2F;myhtml: Fast C&#x2F;C++ HTML 5 Parser. Using threads.">GitHub - lexborisov&#x2F;myhtml: Fast C&#x2F;C++ HTML 5 Parser. Using threads.</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/23/2024-08-23-csdn-141475406/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-08-22-csdn-141429984" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -912,90 +1000,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/08/17/2024-08-17-csdn-141283598/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-08-16-csdn-141270505" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/16/2024-08-16-csdn-141270505/">C ICU webassembly库编译</a>
-    </h1>
-  
-
-        
-        <a href="/2024/08/16/2024-08-16-csdn-141270505/" class="archive-article-date">
-  	<time datetime="2024-08-16T13:57:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141270505">https://blog.csdn.net/qq_30220519/article/details/141270505</a></p>
-</blockquote>
-<h6 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h6><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/shassd/article/details/109907308" title="在本机搭建Linux环境_本地单机搭建linux系统-CSDN博客">在本机搭建Linux环境_本地单机搭建linux系统-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139201070" title="C++ wasm 使用教程-CSDN博客">C++ wasm 使用教程-CSDN博客</a></p>
-<h6 id="法一"><a href="#法一" class="headerlink" title="法一"></a>法一</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/mabels/icu.git</span><br><span class="line">git checkout -b release-65-1</span><br><span class="line">git diff -p wasm32-start..remotes/origin/wasm32 | patch -p1</span><br><span class="line"><span class="built_in">cd</span> icu4c/source</span><br><span class="line">./runConfigureICU wasm32 --prefix=<span class="variable">$PREFIX</span></span><br></pre></td></tr></table></figure>
-
-<h6 id="法二"><a href="#法二" class="headerlink" title="法二"></a>法二</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/unicode-org/icu</span><br><span class="line"><span class="built_in">cd</span> icu4c/source</span><br><span class="line">emconfigure  ./configure --prefix=<span class="variable">$PWD</span>/build --disable-draft --disable-extras --disable-icuio --disable-layoutex --disable-tests --disable-samples --enable-static --disable-shared --with-data-packaging=archive</span><br><span class="line"><span class="comment">#emconfigure ./configure --enable-static --prefix=/src/dist</span></span><br><span class="line"><span class="comment">#emconfigure ./configure --prefix=/opt/wasm --with-cross-build=`pwd` --enable-static=yes --enable-shared=no --target=wasm32-unknown-emscripten #--with-data-packaging=static --enable-icu-config --enable-extras=no --enable-tools=no --enable-samples=no --enable-tests=no &amp;&amp; emmake make clean install</span></span><br><span class="line">emmake make</span><br></pre></td></tr></table></figure>
-
-<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><p> </p>
-<p><img src="/images/csdn/141270505/4135ae7e5e3aff44.png"></p>
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/mabels/wasm-icu" title="https:&#x2F;&#x2F;github.com&#x2F;mabels&#x2F;wasm-icu">https://github.com/mabels/wasm-icu</a></p>
-<p><a target="_blank" rel="noopener" href="https://groups.google.com/g/emscripten-discuss/c/NZEb552GecA/m/XRLUYiftAgAJ?utm_medium=email&utm_source=footer" title="https:&#x2F;&#x2F;groups.google.com&#x2F;g&#x2F;emscripten-discuss&#x2F;c&#x2F;NZEb552GecA&#x2F;m&#x2F;XRLUYiftAgAJ?utm_medium&#x3D;email&amp;utm_source&#x3D;footer">https://groups.google.com/g/emscripten-discuss/c/NZEb552GecA/m/XRLUYiftAgAJ?utm_medium&#x3D;email&amp;utm_source&#x3D;footer</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43310551/article/details/86304618" title="命令行服务器（http-server)和跨域-CSDN博客">命令行服务器（http-server)和跨域-CSDN博客</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/08/16/2024-08-16-csdn-141270505/">展开全文 >></a>
         </p>
       
 

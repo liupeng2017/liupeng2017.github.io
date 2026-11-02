@@ -529,6 +529,234 @@ var _hmt = _hmt || [];
              
         <!-- 目录内容结束 -->
   
+    <article id="post-2026-11-02-harmonyos-arkts-97-true-false" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/11/02/2026-11-02-harmonyos-arkts-97-true-false/">HarmonyOS 高级认证 · ArkTS 判断速刷 97 题（订正版）</a>
+    </h1>
+  
+
+        
+        <a href="/2026/11/02/2026-11-02-harmonyos-arkts-97-true-false/" class="archive-article-date">
+  	<time datetime="2026-11-02T15:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-11-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>这份是把我备考时刷的 97 道 ArkTS 判断题整理成的一份速刷清单，题目来自我自己的一次复习对话记录，再逐条对着华为 &#x2F; OpenHarmony 官方文档核对答案。它<strong>不是官方真题原文</strong>，认证考试有答题保密约定，所以对外我只叫它「考点速刷」；但每一条的判断和理由我都按当期文档重新核过一遍，可以直接当自测表用。</p>
+<p>系统性的知识梳理见另一篇<a href="/2026/11/02/2026-11-02-harmonyos-advanced-cert-notes/">备考笔记</a>，本篇只做「一句话判断 + 一句话理由」的高密度版。</p>
+</blockquote>
+<h6 id="先说订正了什么"><a href="#先说订正了什么" class="headerlink" title="先说订正了什么"></a>先说订正了什么</h6><p>原始题库里有 1 条答案判错、4 条表述有歧义、12 条我暂时无法独立确认。发布前已经全部改掉或标注，刷题时按订正后的版本记。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>题号</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>答案判错，已订正</td>
+<td>44</td>
+<td>生命周期那条改成「错误」，并写清 UIAbility 与 FA 模型 Ability 的区别</td>
+</tr>
+<tr>
+<td>表述绝对化，已改写</td>
+<td>34、41、50、1</td>
+<td>收窄措辞或补上真正的规则，避免记成「一律如此」</td>
+</tr>
+<tr>
+<td>存疑，已标注</td>
+<td>6、12、23、24、29、31、46、51、60、74、89、96</td>
+<td>保留原判断，但注明「以官方当期文档为准」，别当结论背</td>
+</tr>
+</tbody></table>
+<p>另外整套题混了不同 API 版本的规则（第 7 题就是 API 21 才放开的新限制），考试以当期考纲为准，刷题时留意版本。</p>
+<h6 id="一、后台任务、线程、Worker、Native-子进程"><a href="#一、后台任务、线程、Worker、Native-子进程" class="headerlink" title="一、后台任务、线程、Worker、Native 子进程"></a>一、后台任务、线程、Worker、Native 子进程</h6><ol>
+<li>需要在后台运行的耗时任务只在所有线程都空闲时才触发执行。<br><strong>判断：正确</strong>。taskpool 的 IDLE 优先级就是给后台耗时任务用的，只在空闲时执行。原题还有半句「同一时间仅有一个同 IDLE 优先级任务执行」，这半句我在官方文档里没找到原句，按前半句判断即可。</li>
+<li>Worker 线程支持同步调用主线程接口。<br><strong>判断：错误</strong>。Worker 与主线程通过 <code>postMessage</code> 异步通信，不支持同步调用。</li>
+<li>entry 模块中引入 HAR 包内的 Worker 对象，路径写成 <code>har/ets/workers/Worker.ets</code>。<br><strong>判断：正确</strong>。跨包引用 Worker 时要带上模块名。</li>
+<li><code>NativeChildProcess_MainProc</code> 返回后子进程不会自动退出，需要手动调用终止接口。<br><strong>判断：错误</strong>。MainProc 返回后子进程自动退出。</li>
+<li>回调 <code>onProcessStart</code> 在主线程运行，不需要考虑线程同步。<br><strong>判断：错误</strong>。回调运行在子进程自己的线程里，跨进程交互必须考虑同步。</li>
+<li><code>NativeChildProcess_OnConnect</code> 的执行优先于 <code>NativeChildProcess_MainProc</code>。<br><strong>判断：原题判正确（存疑）</strong>。OnConnect 是客户端发起连接时的 IPC 回调，常规实现里 MainProc 反而更早，先后顺序请以当期 NativeChildProcess 文档和示例为准。</li>
+<li>应用退到后台申请长时间任务，同一 UIAbility 同一时刻最多支持两个长时任务（API 20 及之前）。<br><strong>判断：错误</strong>。API 20 及之前一个 UIAbility 同一时刻最多持有 1 个长时任务，API 21 才放宽到最多 10 个。</li>
+<li>主线程与其他线程存在大量数据交互时，可以用 <code>@Unsafe</code> 装饰器做线程间传递与同步。<br><strong>判断：错误</strong>。并发 Actor 模型用的是 <code>@Sendable</code>，没有 <code>@Unsafe</code> 这个装饰器。</li>
+<li>Actor 并发模型支持传输 Serializable 对象。<br><strong>判断：错误</strong>。Actor 消息传递支持 Sendable、Transferable；Serializable 是持久化用的，不能作为 Actor 传参。</li>
+</ol>
+<h6 id="二、ArkUI-状态管理-V2（-ObservedV2-Trace-Param-Provide-Consume）"><a href="#二、ArkUI-状态管理-V2（-ObservedV2-Trace-Param-Provide-Consume）" class="headerlink" title="二、ArkUI 状态管理 V2（@ObservedV2 &#x2F; @Trace &#x2F; @Param &#x2F; @Provide &#x2F; @Consume）"></a>二、ArkUI 状态管理 V2（@ObservedV2 &#x2F; @Trace &#x2F; @Param &#x2F; @Provide &#x2F; @Consume）</h6><ol start="10">
+<li>V2 里用 <code>@Attrs</code> 装饰的属性变化能触发 UI 刷新。<br><strong>判断：错误</strong>。V2 的响应式是 <code>@ObservedV2</code> + <code>@Trace</code>，没有 <code>@Attrs</code> 这套。</li>
+<li>嵌套类的属性被 <code>@Trace</code> 装饰，且该嵌套类被 <code>@ObservedV2</code> 装饰时，才具备触发 UI 刷新的能力。<br><strong>判断：正确</strong>。两层条件缺一不可。</li>
+<li><code>@ObservedV2</code> 实例目前不支持 JSON 序列化。<br><strong>判断：原题判正确（存疑）</strong>。V2 代理对象在序列化上确实有限制，但具体范围以状态管理 V2 文档为准。</li>
+<li>被 <code>@Trace</code> 装饰的属性变化时，只会通知与该属性关联的组件刷新。<br><strong>判断：正确</strong>。这就是 V2 的精准更新，按属性粒度刷新依赖节点。</li>
+<li>未被 <code>@Trace</code> 装饰的属性变化也能触发 UI 刷新。<br><strong>判断：错误</strong>。V2 只有 <code>@Trace</code> 标记的属性变更才驱动 UI。</li>
+<li>V2 的双向绑定用 <code>!!</code> 语法糖，自定义组件的双向绑定通过 <code>@Param</code> + <code>@Event</code> 组合实现。<br><strong>判断：正确</strong>。</li>
+<li><code>@Provide</code> &#x2F; <code>@Consume</code> 摆脱逐层传参，可以跨层级传递数据。<br><strong>判断：正确</strong>。</li>
+<li><code>@Provide</code> &#x2F; <code>@Consume</code> 能实现祖先与后代组件的双向数据同步。<br><strong>判断：正确</strong>。两者是同一份状态的双向绑定。</li>
+<li><code>@Provide</code> &#x2F; <code>@Consume</code> 可以在多层级父子组件之间传递状态。<br><strong>判断：正确</strong>。</li>
+<li><code>@Provide</code> 装饰的变量写在后代组件、<code>@Consume</code> 写在祖先组件。<br><strong>判断：错误</strong>。方向正好相反：<code>@Provide</code> 在祖先侧提供，<code>@Consume</code> 在后代侧消费。</li>
+<li>只要参数同时包含按值传递和按引用传递，状态变量改变就不会触发动态渲染。<br><strong>判断：错误</strong>。传递方式本身不是不刷新的原因，问题出在装饰器和属性层级。</li>
+<li>用对象字面量传对象，只修改对象的深层属性，不会触发 UI 刷新。<br><strong>判断：正确</strong>。没有 <code>@Trace</code> 标记深层属性、又没替换引用，V2 感知不到。</li>
+<li>传入两个以上对象字面量时，修改深层属性就一定能刷新 UI。<br><strong>判断：错误</strong>。数量不改变结论，深层属性照样不触发刷新。</li>
+</ol>
+<h6 id="三、DevEco-Previewer-预览"><a href="#三、DevEco-Previewer-预览" class="headerlink" title="三、DevEco Previewer 预览"></a>三、DevEco Previewer 预览</h6><ol start="23">
+<li><code>@StorageProp</code> 装饰的属性可以在 Previewer 正常预览 UI，但 AppStorage 的同步逻辑在预览器里不生效。<br><strong>判断：原题判正确（存疑）</strong>。预览器的能力边界随 DevEco Studio 版本变化，以当期文档为准。</li>
+<li><code>@StorageLink</code> 装饰的属性同上。<br><strong>判断：原题判正确（存疑）</strong>。与第 23 题同一组限制。</li>
+<li><code>@Link</code> 装饰的子组件可以直接单独预览。<br><strong>判断：错误</strong>。<code>@Link</code> 依赖父组件传入的绑定，单独预览会初始化失败，要预览父组件。</li>
+<li><code>@Consume</code> 装饰的子组件可以直接单独预览。<br><strong>判断：错误</strong>。<code>@Consume</code> 依赖祖先的 <code>@Provide</code>，单独预览取不到状态。</li>
+<li>组件内部调用了 C++ SO 库，仍然能在 Previewer 正常预览。<br><strong>判断：错误</strong>。预览器不支持 Native SO 调用。</li>
+<li>DevEco 本地模拟器用于在个人电脑上模拟鸿蒙环境，方便应用与服务调试。<br><strong>判断：正确</strong>。</li>
+<li>macOS 运行 DevEco 本地模拟器，系统版本至少 12.5。<br><strong>判断：原题判正确（存疑）</strong>。数值请查官方环境要求表格，别靠记忆。</li>
+<li>DevEco 本地模拟器可以跑在虚拟机里以节省硬件资源。<br><strong>判断：错误</strong>。官方不支持虚拟机嵌套运行模拟器。</li>
+<li>Mac 运行本地模拟器推荐至少 8G 内存。<br><strong>判断：原题判正确（存疑）</strong>。同第 29 题，以官方配置要求为准。</li>
+</ol>
+<h6 id="四、组件、布局、弹窗、LazyForEach、FrameNode"><a href="#四、组件、布局、弹窗、LazyForEach、FrameNode" class="headerlink" title="四、组件、布局、弹窗、LazyForEach、FrameNode"></a>四、组件、布局、弹窗、LazyForEach、FrameNode</h6><ol start="32">
+<li>Flex 布局要让子元素在交叉轴方向拉伸填充，设置 <code>alignItems: ItemAlign.Stretch</code>。<br><strong>判断：正确</strong>。</li>
+<li>输入框自定义键盘使用 <code>customKeyboard</code> 接口。<br><strong>判断：正确</strong>。</li>
+<li>List 组件自带复用池，只支持当前页面内节点复用。<br><strong>判断：正确（已改写）</strong>。List&#x2F;Grid 的<strong>内置</strong>复用池是页面级，随页面销毁；需要跨页面复用时，自己用 <code>BuilderNode</code> + <code>NodePool</code> 或 <code>@Reusable</code> 维护缓存池。</li>
+<li><code>FrameNode.isModifiable()</code> 用来判断当前节点能否设置属性、修改子节点。<br><strong>判断：正确</strong>。</li>
+<li>用 <code>componentContent</code> 形式创建 CustomDialog 可以解耦 UI，并支持动态更新弹窗内容。<br><strong>判断：正确</strong>。</li>
+<li><code>updateCustomDialog</code> 更新弹窗属性时，未传的参数会保留原有值。<br><strong>判断：错误</strong>。未设置的属性会被重置为默认值。</li>
+<li>想同时操作弹窗内部和外部控件，必须把 <code>isModal</code> 设为 false。<br><strong>判断：正确</strong>。<code>isModal = true</code> 时外部不可交互。</li>
+<li><code>keyboardAvoidMode.Default</code> 可启用弹窗自动避让软键盘。<br><strong>判断：正确</strong>。</li>
+<li>LazyForEach 生效条件：数据源实现 <code>IDataSource</code>、每项 key 唯一、超出可视区域的节点被回收。<br><strong>判断：正确</strong>。</li>
+<li>优先用自定义组件代替 <code>@Builder</code> 做 UI 复用是官方推荐方案。<br><strong>判断：错误</strong>。官方的口径更接近「轻量、无状态的 UI 复用优先 <code>@Builder</code>，开销更小；需要独立状态、生命周期或复用池的场景再用自定义组件（可配合 <code>@Reusable</code>）」，不是绝对的二选一。</li>
+</ol>
+<h6 id="五、UIAbility、Want、任务栈、生命周期、HAR-HSP-HAP"><a href="#五、UIAbility、Want、任务栈、生命周期、HAR-HSP-HAP" class="headerlink" title="五、UIAbility、Want、任务栈、生命周期、HAR &#x2F; HSP &#x2F; HAP"></a>五、UIAbility、Want、任务栈、生命周期、HAR &#x2F; HSP &#x2F; HAP</h6><ol start="42">
+<li>多模块工程里 feature 模块要用公共 library HAR，在 <code>oh-package.json5</code> 的 <code>dependencies</code> 里配置。<br><strong>判断：正确</strong>。</li>
+<li>构建 HAR 静态共享包：选中 HAR 模块 → Build → Make Module。<br><strong>判断：正确</strong>。</li>
+<li>UIAbility 的生命周期回调包含 onCreate、onStart、onBackground、onStop、onDestroy。<br><strong>判断：错误（本卷唯一大坑）</strong>。这是 Stage 模型与 FA 模型混在一起的说法。Stage 模型的 UIAbility 是 <code>onCreate</code> → <code>onWindowStageCreate</code> → <code>onForeground</code> →（<code>onNewWant</code>）→ <code>onBackground</code> → <code>onWindowStageDestroy</code> → <code>onDestroy</code>，另有 <code>onContinue</code>；<code>onStart</code> &#x2F; <code>onStop</code> &#x2F; <code>onActive</code> &#x2F; <code>onInactive</code> 属于 FA 模型的 Ability，不是 UIAbility 的回调。</li>
+<li><code>multiton</code> 启动类型的 UIAbility 每次启动都新建任务卡片，<code>singleton</code> 复用同一个任务卡片。<br><strong>判断：正确</strong>。</li>
+<li>先启动 UIAbility1（multiton）再返回销毁，启动 UIAbility2（singleton）再返回销毁，再启动一次 UIAbility2 再返回销毁，多任务列表里能看到 2 个任务视图。<br><strong>判断：原题判正确（存疑）</strong>。这是实测类结论，需要真机或官方示例佐证，别当规律背。</li>
+<li>Want 隐式启动 UIAbility 时没有匹配到组件，启动失败。<br><strong>判断：正确</strong>。</li>
+<li>Want 隐式启动只匹配到一个满足条件的 Ability，直接启动它。<br><strong>判断：正确</strong>。</li>
+<li>Want 隐式启动匹配到多个 UIAbility 时，系统直接选第一个启动。<br><strong>判断：错误</strong>。多个匹配时系统会拉起选择框，由用户指定。</li>
+<li>Want 隐式启动匹配到多个 UIAbility 时直接启动失败。<br><strong>判断：错误</strong>。正确行为就是第 49 题的理由：多个匹配项交给用户选择，不会失败。</li>
+<li>动态 HSP 与宿主应用的包名、进程、生命周期保持一致；动态 HAP 不可以和宿主包一起打包发布。<br><strong>判断：原题判正确（存疑）</strong>。这组术语容易记混，建议直接对照「动态加载 HAP &#x2F; HSP」原文再定。</li>
+</ol>
+<h6 id="六、Web-组件、JS-桥、鼠标事件、ContextMenu"><a href="#六、Web-组件、JS-桥、鼠标事件、ContextMenu" class="headerlink" title="六、Web 组件、JS 桥、鼠标事件、ContextMenu"></a>六、Web 组件、JS 桥、鼠标事件、ContextMenu</h6><ol start="52">
+<li>Web 组件的 <code>mixedMode()</code> 用于允许网页加载 HTTP 链接。<br><strong>判断：正确</strong>。</li>
+<li>WebView 通过 JSBridge 通道访问扩展的原生 API（Hybrid）。<br><strong>判断：正确</strong>。</li>
+<li>同层渲染可以让 H5 里渲染原生组件，解决层级覆盖问题。<br><strong>判断：正确</strong>。</li>
+<li>Hybrid 应用的界面与业务逻辑可复用 Web 生态：HTML + CSS 绘制界面，JS 编写业务逻辑。<br><strong>判断：正确</strong>。</li>
+<li>Web 组件 <code>loadUrl</code> 加载网络页面，<code>loadData</code> 加载 HTML 文本字符串。<br><strong>判断：正确</strong>。</li>
+<li>鼠标事件在 ArkUI 里会先做碰撞（命中）测试再回调响应，鼠标左键还会额外生成一份触摸事件。<br><strong>判断：正确</strong>。</li>
+<li>鼠标事件收到后不做任何处理，直接传递给上层应用。<br><strong>判断：错误</strong>。要经过命中测试、分发、回调冒泡。</li>
+<li><code>onContextMenuShow</code> 回调返回的结果类型是 <code>WebContextMenuResult</code>。<br><strong>判断：正确</strong>。</li>
+<li><code>WebContextMenuResult</code> 里有 <code>pasteAndMatchStyle</code> 方法。<br><strong>判断：原题判错误（存疑）</strong>。这是接口表细节，请查 Web 组件接口清单确认。</li>
+<li>Web 与 ArkTS 的 JS 桥接，最常用的是 <code>registerJavaScriptProxy</code>。<br><strong>判断：正确</strong>。</li>
+</ol>
+<h6 id="七、AppLinking、跨设备拖拽、意图共享"><a href="#七、AppLinking、跨设备拖拽、意图共享" class="headerlink" title="七、AppLinking、跨设备拖拽、意图共享"></a>七、AppLinking、跨设备拖拽、意图共享</h6><ol start="62">
+<li>AppLinking 在 <code>appLinkingOnly = false</code> 且目标应用已安装时，直接跳转打开目标应用。<br><strong>判断：正确</strong>。</li>
+<li>AppLinking 在 <code>appLinkingOnly = true</code> 且目标应用已安装时，直接跳转打开目标应用。<br><strong>判断：正确</strong>。</li>
+<li>AppLinking 在 <code>appLinkingOnly = true</code> 且目标应用未安装时，返回失败、系统不跳转，交给应用自行处理。<br><strong>判断：正确</strong>。</li>
+<li>跨设备拖拽要求两端设备登录同一个华为账号。<br><strong>判断：正确</strong>。</li>
+<li>跨设备拖拽要求两端打开 WiFi、蓝牙并接入同一局域网。<br><strong>判断：正确</strong>。</li>
+<li>所有资源文件都支持跨设备拖拽。<br><strong>判断：错误</strong>。部分资源不支持，例如 HAP 预置资源。</li>
+<li>跨设备拖拽需要打开键鼠穿越开关。<br><strong>判断：正确</strong>。</li>
+<li>端侧意图共享不能同时构建多个意图对象分发。<br><strong>判断：错误</strong>。支持批量构造多个意图对象分发。</li>
+</ol>
+<h6 id="八、数据库、IAP、文档扫描、ConnectivityKit-蓝牙"><a href="#八、数据库、IAP、文档扫描、ConnectivityKit-蓝牙" class="headerlink" title="八、数据库、IAP、文档扫描、ConnectivityKit 蓝牙"></a>八、数据库、IAP、文档扫描、ConnectivityKit 蓝牙</h6><ol start="70">
+<li>键值型数据库和关系型数据库都支持备份与恢复，键值型还支持删除备份文件释放本地空间。<br><strong>判断：正确</strong>。</li>
+<li>文档扫描能力从 MediaLibraryKit 导入，用于媒体库文档资源扫描管理。<br><strong>判断：错误</strong>。文档扫描属于 VisionKit。</li>
+<li>SpeechKit 提供语音转文档扫描功能。<br><strong>判断：错误</strong>。SpeechKit 是语音识别与语音合成，不做文档扫描。</li>
+<li>用户 IAP 购买成功后，应用客户端向应用服务上报 purchase 订单数据。<br><strong>判断：正确</strong>。</li>
+<li>ConnectivityKit 的 Connection 模块只负责蓝牙连接管理，不负责蓝牙开关控制和数据收发。<br><strong>判断：原题判正确（存疑）</strong>。蓝牙能力在 <code>@ohos.bluetoothManager</code> 与 Connectivity Kit 之间的具体划分需要核对当期文档。</li>
+</ol>
+<h6 id="九、代理提醒、未成年人模式"><a href="#九、代理提醒、未成年人模式" class="headerlink" title="九、代理提醒、未成年人模式"></a>九、代理提醒、未成年人模式</h6><ol start="75">
+<li>代理提醒适合长时间后台、用户可感知的任务（音乐播放、导航），防止进程被系统挂起。<br><strong>判断：正确</strong>。</li>
+<li>系统未成年人模式关闭时，用户可以在应用内开启系统的未成年人模式。<br><strong>判断：错误</strong>。应用不能控制系统总开关，只能控制应用内自身的未成年人模式。</li>
+<li>系统未成年人模式开启时，应用跟随系统进入未成年人模式。<br><strong>判断：正确</strong>。</li>
+<li>系统未成年人模式关闭时，用户可以在应用内单独开启应用自身的未成年人模式。<br><strong>判断：正确</strong>。</li>
+<li>应用内开启未成年人模式后，可以在应用内关闭系统级未成年人模式。<br><strong>判断：错误</strong>。应用无权控制系统全局开关。</li>
+</ol>
+<h6 id="十、事件订阅、NAPI、Promise、Crash-定位、混淆、工程化"><a href="#十、事件订阅、NAPI、Promise、Crash-定位、混淆、工程化" class="headerlink" title="十、事件订阅、NAPI、Promise、Crash 定位、混淆、工程化"></a>十、事件订阅、NAPI、Promise、Crash 定位、混淆、工程化</h6><ol start="80">
+<li>EventHub 取消事件订阅用 <code>off()</code>。<br><strong>判断：正确</strong>。</li>
+<li>NAPI 中 <code>napi_callback_info</code> 用于获取 JS 侧传入的参数，<code>napi_callback</code> 是回调函数类型，<code>async_complete_callback</code> 用于异步完成通知。<br><strong>判断：正确</strong>。</li>
+<li>Promise 一旦 fulfilled 或 rejected，状态固定，不能再改。<br><strong>判断：正确</strong>。</li>
+<li>JS Crash 日志可以用 hdc 获取，但只能看 HeapLog，拿不到完整 FaultLog。<br><strong>判断：错误</strong>。通过 hdc 可以拉取 FaultLog 文件。</li>
+<li>Release 包配合 HiStark + SourceMap 可以解析 JS 崩溃堆栈。<br><strong>判断：正确</strong>。</li>
+<li>Release 构建时把 <code>arkOptions.obfuscation.enable</code> 设为 false 即可开启混淆保护 HAP 资产。<br><strong>判断：错误</strong>。要设为 true 才开启混淆。</li>
+<li><code>obfuscation-rules.txt</code> 配置当前模块自身的混淆规则；<code>consumer-rules.txt</code> 是给依赖本模块的下游传递规则，不是本模块的混淆配置。<br><strong>判断：正确</strong>。</li>
+<li><code>consumer-rules.txt</code> 用来配置当前模块的混淆规则。<br><strong>判断：错误</strong>。同第 86 题，它面向下游消费者。</li>
+<li>hdc 拉起 UIAbility 传参时，<code>--ps</code> 传字符串参数，<code>--psn</code> 传数字参数。<br><strong>判断：正确</strong>。</li>
+</ol>
+<h6 id="十一、应用上架、应用分身、多开、关联安卓应用"><a href="#十一、应用上架、应用分身、多开、关联安卓应用" class="headerlink" title="十一、应用上架、应用分身、多开、关联安卓应用"></a>十一、应用上架、应用分身、多开、关联安卓应用</h6><ol start="89">
+<li>鸿蒙应用关联安卓版本应用，只能在发布鸿蒙应用时关联，全网发布后无法再关联。<br><strong>判断：原题判错误（存疑）</strong>。这属于 AppGallery Connect 的上架流程，能不能补关联请以 AGC 当期说明为准。</li>
+<li>应用状态为「公开测试」时，支持申请下架。<br><strong>判断：正确</strong>。</li>
+<li>已有多账号能力的应用，用 multiton（应用多实例）方案做多开，适配工作量更少。<br><strong>判断：正确</strong>。</li>
+<li>需要沙箱完全隔离、本身不支持多账号的应用，采用应用分身方案做多开。<br><strong>判断：正确</strong>。</li>
+</ol>
+<h6 id="十二、补充高频题"><a href="#十二、补充高频题" class="headerlink" title="十二、补充高频题"></a>十二、补充高频题</h6><ol start="93">
+<li>自定义组件生命周期顺序：aboutToAppear → build → onDidBuild → aboutToDisappear。<br><strong>判断：正确</strong>。</li>
+<li><code>@Local</code> 是 V2 状态管理里组件内局部状态的装饰器。<br><strong>判断：正确</strong>。</li>
+<li>List、Scroll 内置的复用池是页面级，页面销毁时复用池跟着销毁。<br><strong>判断：正确</strong>。与第 34 题是同一件事。</li>
+<li>跨设备拖拽必须同时满足同华为账号、蓝牙 + WiFi 开启、同局域网、键鼠穿越开启，缺一不可。<br><strong>判断：原题判正确（存疑）</strong>。这四条是官方列出的前提条件，但「缺一不可」是绝对化表述，实际以官方说明为准。</li>
+<li>应用间可以通过 URI + Want 拉起并传递参数。<br><strong>判断：正确</strong>。</li>
+</ol>
+<h6 id="怎么用这份清单"><a href="#怎么用这份清单" class="headerlink" title="怎么用这份清单"></a>怎么用这份清单</h6><p>先只看题干遮住判断做一遍，错的题号记下来；第二遍只做错题，并且要能说出「为什么错」，特别是 44、7、19、37、49 这几条——它们都属于「记混了两套模型 &#x2F; 记反了方向」的题型，考场上最容易得分也最容易丢分。存疑的 12 条不用背，知道自己不确定、考试时按文档口径判断就够了。</p>
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/training/exam-detail/101684221791158147" title="HarmonyOS 应用开发者高级认证-理论考试 - 华为开发者学堂">HarmonyOS 应用开发者高级认证-理论考试 - 华为开发者学堂</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/uiability-lifecycle-0000001820880925" title="UIAbility 生命周期 - 华为开发者">UIAbility 生命周期 - 华为开发者</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/doccenter-capabilities/taskpool-vs-worker" title="TaskPool 与 Worker 的区别 - 华为开发者">TaskPool 与 Worker 的区别 - 华为开发者</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/arkts-more-cases-V5" title="ArkTS 语言介绍 - 华为开发者">ArkTS 语言介绍 - 华为开发者</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/multi-device-guidance" title="一次开发多端部署 - 华为开发者">一次开发多端部署 - 华为开发者</a></p>
+<p>存疑的题号（6、12、23、24、29、31、46、51、60、74、89、96）涉及预览器、NativeChildProcess、ConnectivityKit、AGC 流程等细节，请直接到华为开发者文档站按关键词检索当期说明，不要依赖任何人的记忆，包括我的。</p>
+<blockquote>
+<p>配套阅读：<a href="/2026/11/02/2026-11-02-harmonyos-advanced-cert-notes/">HarmonyOS 应用开发者高级认证备考笔记</a></p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2026/11/02/2026-11-02-harmonyos-arkts-97-true-false/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2026-11-02-harmonyos-advanced-cert-notes" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1791,92 +2019,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2025/11/28/2025-11-28-csdn-155361900/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2025-11-21-csdn-155111519" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/21/2025-11-21-csdn-155111519/">C++静态变量依赖关系</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/21/2025-11-21-csdn-155111519/" class="archive-article-date">
-  	<time datetime="2025-11-21T14:10:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/155111519">https://blog.csdn.net/qq_30220519/article/details/155111519</a></p>
-</blockquote>
-<h6 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h6><blockquote>
-<p>常用单例之间操作相互依赖或者对同一份资源进行操作。进行对象或资源释放时候，很容易重复，导致程序异常。</p>
-</blockquote>
-<h6 id="依赖顺序"><a href="#依赖顺序" class="headerlink" title="依赖顺序"></a>依赖顺序</h6><blockquote>
-<p>&#x2F;&#x2F; a.cpp<br>static A a;  &#x2F;&#x2F; 第1个构造 → 最后释放<br>static LateDestructor late;  &#x2F;&#x2F; 依赖a，会后析构</p>
-<p>&#x2F;&#x2F; b.cpp<br>static B b;  &#x2F;&#x2F; 构造顺序依赖链接顺序 → 释放顺序不确定</p>
-<p>&#x2F;&#x2F; main.cpp<br>void foo() {<br>    static C c;  &#x2F;&#x2F; 在foo()首次调用时构造 → 在main.cpp其他静态变量之后释放<br>}</p>
-<p>int main() {<br>    foo();<br>    static D d;  &#x2F;&#x2F; 构造顺序较晚 → 释放顺序较早<br>    return 0;<br>}<br>释放顺序：d → c → a → b（b的顺序不确定）</p>
-</blockquote>
-<h6 id="aexit"><a href="#aexit" class="headerlink" title="aexit"></a>aexit</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func1</span><span class="params">()</span> </span>&#123; std::cout &lt; <span class="string">&quot;First\n&quot;</span>; &#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func2</span><span class="params">()</span> </span>&#123; std::cout &lt; <span class="string">&quot;Second\n&quot;</span>; &#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func3</span><span class="params">()</span> </span>&#123; std::cout &lt; <span class="string">&quot;Third\n&quot;</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">atexit</span>(func1);  <span class="comment">// 第一个注册</span></span><br><span class="line">    <span class="built_in">atexit</span>(func2);  <span class="comment">// 第二个注册</span></span><br><span class="line">    <span class="built_in">atexit</span>(func3);  <span class="comment">// 第三个注册</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;       <span class="comment">// 执行顺序: func3 → func2 → func1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="晚释放单例类"><a href="#晚释放单例类" class="headerlink" title="晚释放单例类"></a>晚释放单例类</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//C++单例延后释放类 解决单例相互依赖问题，将当前单例留到最后释放。</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FTLibraryInstance</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> std::string <span class="title">getVersion</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">static</span> FT_Library &amp;<span class="title">library</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span>        <span class="title">release</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义删除器</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">FTLibraryDeleter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(FT_Library *lib)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (lib)</span><br><span class="line">            <span class="built_in">FT_Done_FreeType</span>(*lib);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> std::unique_ptr&lt;FT_Library, FTLibraryDeleter&gt; kFTLibrary;</span><br><span class="line"></span><br><span class="line"><span class="function">FT_Library &amp;<span class="title">FTLibraryInstance::library</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!kFTLibrary) &#123;</span><br><span class="line">        <span class="keyword">auto</span> lib = <span class="keyword">new</span> FT_Library;</span><br><span class="line">        kFTLibrary.<span class="built_in">reset</span>(lib);</span><br><span class="line">        <span class="built_in">FT_New_Library</span>(&amp;gFTMemory, lib);</span><br><span class="line">        <span class="built_in">FT_Add_Default_Modules</span>(*lib);</span><br><span class="line">        <span class="built_in">FT_Set_Default_Properties</span>(*lib);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *kFTLibrary;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">std::string <span class="title">FTLibraryInstance::getVersion</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> lib = <span class="built_in">library</span>();</span><br><span class="line">    <span class="keyword">if</span> (!lib)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    FT_Int major, minor, patch;</span><br><span class="line">    <span class="built_in">FT_Library_Version</span>(lib, &amp;major, &amp;minor, &amp;patch);</span><br><span class="line">    std::string freetypeVersion = std::<span class="built_in">to_string</span>(major) + <span class="string">&quot;.&quot;</span> + std::<span class="built_in">to_string</span>(minor) + <span class="string">&quot;.&quot;</span> + std::<span class="built_in">to_string</span>(patch);</span><br><span class="line">    <span class="keyword">return</span> freetypeVersion;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">FTLibraryInstance::release</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    kFTLibrary.<span class="built_in">reset</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/11/21/2025-11-21-csdn-155111519/">展开全文 >></a>
         </p>
       
 

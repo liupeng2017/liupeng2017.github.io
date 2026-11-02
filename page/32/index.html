@@ -198,6 +198,87 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018-04-17-csdn-79975608" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/17/2018-04-17-csdn-79975608/">lua线程使用问题</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/17/2018-04-17-csdn-79975608/" class="archive-article-date">
+  	<time datetime="2018-04-17T07:45:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        本文已加密，请输入密码后继续阅读。
+        
+          <a class="article-more-a" href="/2018/04/17/2018-04-17-csdn-79975608/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/17/2018-04-17-csdn-79975608/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2018-04-16-csdn-79963950" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1774,423 +1855,6 @@ $ gem install sass
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2015/06/17/2015-06-17-web-app/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2015-06-15-JavaScript-Object-Oriented" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/06/15/2015-06-15-JavaScript-Object-Oriented/">JavaScript 面向对象</a>
-    </h1>
-  
-
-        
-        <a href="/2015/06/15/2015-06-15-JavaScript-Object-Oriented/" class="archive-article-date">
-  	<time datetime="2015-06-15T06:06:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-06-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文为慕课网 <a target="_blank" rel="noopener" href="http://www.imooc.com/learn/277">JavaScript深入浅出</a>  JavaScript 面向对象笔记。</p>
-<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
-<p>面向对象程序设计（Object-oriented programming，OOP）是一种程序设计范型，同时也是一种程序开发的方法。对象指的是类的实例。它将对象作为程序的基本单元，将程序和数据封装其中，以提高软件的重用性、灵活性和扩展性。</p>
-<p>——维基百科</p>
-</blockquote>
-<p>一般面向对象包含：继承，封装，多态，抽象</p>
-<hr>
-<h2 id="基于原型的继承"><a href="#基于原型的继承" class="headerlink" title="基于原型的继承"></a>基于原型的继承</h2><pre><code>function Foo() &#123;
-    this.y = 2;
-&#125;
-console.log(typeof Foo.prototype); //object
-
-Foo.prototype.x = 1;
-var obj3 = new Foo();
-
-console.log(obj3.y); //2
-console.log(obj3.x); //1
-</code></pre>
-<p>创建函数 <code>Foo</code> 的时候，就会有一个内置的 <code>Foo.prototype</code> 属性，并且这个属性是对象。</p>
-<p>在使用 <code>new Foo();</code> 创建对象实例时。<code>this</code> 会指向一个对象，并且这个对象的原型会指向 <code>Foo.prototype</code> 属性。<code>this.y = 2</code> 给这个对象赋值，并把这个对象返回。把这个对象赋值给 <code>obj3</code>。</p>
-<p><code>y</code> 是 <code>obj3</code> 上的，<code>x</code> 是 <code>obj3</code> 的原型 <code>Foo.prototype</code> 上的。</p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-prototype.png" alt="prototype"></p>
-<hr>
-<h3 id="prototype-属性与原型"><a href="#prototype-属性与原型" class="headerlink" title="prototype 属性与原型"></a>prototype 属性与原型</h3><p>prototype 是函数对象上预设的对象属性。</p>
-<p>原型是对象上的原型，通常是构造器的 prototype 属性。</p>
-<hr>
-<h4 id="例"><a href="#例" class="headerlink" title="例"></a>例</h4><pre><code>function Person(name, age) &#123;
-    this.name = name;
-    this.age = age;
-&#125;
-
-Person.prototype.LEGS_NUM = 2;
-Person.prototype.ARMS_NUM = 2;
-
-Person.prototype.hi = function() &#123;
-    console.log(&#39;Hi, my name is &#39; + this.name + &quot;. I&#39;m &quot; + this.age + &#39; years old now&#39;);
-&#125;;
-
-Person.prototype.walking = function() &#123;
-    console.log(this.name + &#39; is walking...&#39;);
-&#125;;
-
-function Student(name, age, className) &#123;
-    Person.call(this, name, age); //使 Person 中的 this 指向 Student
-    this.className = className;
-&#125;
-
-Student.prototype = Object.create(Person.prototype);
-Student.prototype.constructor = Student;
-
-Student.prototype.hi = function() &#123;
-    console.log(&#39;Hi, my name is &#39; + this.name + &quot;. I&#39;m &quot; + this.age + &#39; years old now, and from &#39; + this.className + &quot;.&quot;);
-&#125;;
-
-Student.prototype.learn = function(subject) &#123;
-    console.log(this.name + &#39; is learning &#39; + subject + &#39; at &#39; + this.className + &#39;.&#39;);
-&#125;
-
-//test
-var gao = new Student(&#39;Gao&#39;, &#39;24&#39;, &#39;Class 3123&#39;);
-console.log(gao); // 这个对象的具体内容见下图
-gao.hi(); //Hi, my name is Gao. I&#39;m 24 years old now, and from Class 3123.
-gao.LEGS_NUM; //2
-gao.walking(); //Gao is walking...
-gao.learn(&#39;JavaScript&#39;); //Gao is learning JavaScript at Class 3123.
-</code></pre>
-<ul>
-<li><code>Object.create(arg)</code> 创建一个空对象，并且这个对象的原型指向参数 <code>arg</code>。</li>
-<li><code>Student.prototype.constructor = Student</code> 为了保证一致性，否则 constructor 指向 Person。</li>
-</ul>
-<hr>
-<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>gao 对象的原型链：</p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-oop-gao.png" alt="Object"></p>
-<p>下面通过图形展示原型链：</p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-%E5%8E%9F%E5%9E%8B%E9%93%BE.png" alt="原型链"></p>
-<hr>
-<h4 id="Object-create-null-bind-null"><a href="#Object-create-null-bind-null" class="headerlink" title="Object.create(null) &amp; .bind(null)"></a><code>Object.create(null)</code> &amp; <code>.bind(null)</code></h4><p>这两种算是特例。</p>
-<p><code>Object.create(null)</code> 和 <code>.bind(null)</code> 这两种方式创建出来的对象是没有 <code>prototype</code> 属性的，为 <code>undefined</code>。</p>
-<hr>
-<h2 id="prototype-属性"><a href="#prototype-属性" class="headerlink" title="prototype 属性"></a>prototype 属性</h2><h3 id="改变-prototype"><a href="#改变-prototype" class="headerlink" title="改变 prototype"></a>改变 prototype</h3><p>JavaScript 中的 prototype 是对象，在运行的时候可以修改。</p>
-<p>给 prototype 添加或删除一些属性，是会影响到已经创建好的实例对象的。</p>
-<p>但是，直接修改 prototype 属性，是不会影响到已经创建好的实例对象的。但是会影响到新的实例对象。如下代码：</p>
-<pre><code>// 上接上面的代码
-
-// 给 prototype 添加或删除一些属性
-Student.prototype.x = 101;
-console.log(gao.x); //101
-
-// 直接修改 prototype 属性
-Student.prototype = &#123;
-    y: 2
-&#125;;
-
-// 不会影响到已创建好的实例对象
-console.log(gao.x); //101
-console.log(gao.y); //undefined
-
-// 会影响到新创建的实例对象
-var ying = new Student(&#39;Ying&#39;, 24, &#39;UI&#39;);
-console.log(ying.x); //undefined
-console.log(ying.y); //2
-</code></pre>
-<hr>
-<h3 id="内置构造器的-prototype-属性"><a href="#内置构造器的-prototype-属性" class="headerlink" title="内置构造器的 prototype 属性"></a>内置构造器的 <code>prototype</code> 属性</h3><p>修改内置构造器的 <code>prototype</code> 属性后，在实例化这个对象后，枚举其属性时，会把修改的内置构造器的 <code>prototype</code> 属性也枚举出来，有时候这是要避免的。可用 <code>defineProperty</code> 方法解决。如下代码：</p>
-<pre><code>Object.prototype.x = 1;
-var obj = &#123;&#125;;
-console.log(obj.x); //1
-console.log(obj);
-
-for (var k in obj) &#123;
-    console.log(&#39;result---&gt;&#39; + k);
-&#125;
-// result---&gt;x
-</code></pre>
-<p>使用 <code>defineProperty</code> 后：</p>
-<pre><code>Object.defineProperty(Object.prototype, &#39;x&#39;, &#123;
-    writable: true,
-    value: 1
-&#125;);
-var obj = &#123;&#125;;
-console.log(obj.x);//1
-console.log(obj);
-for (var k in obj) &#123;
-    console.log(&#39;result---&gt;&#39; + k);
-&#125;
-// nothing output here
-</code></pre>
-<p>其实也可以这样枚举，使用 <code>hasOwnProperty</code> 方法：</p>
-<pre><code>for (var key in obj) &#123;
-    if (obj.hasOwnProperty(key)) &#123;
-        console.log(&quot;result---&gt;&quot; + key);
-    &#125;
-&#125;
-</code></pre>
-<hr>
-<h3 id="创建对象-new-原型链"><a href="#创建对象-new-原型链" class="headerlink" title="创建对象-new&#x2F;原型链"></a>创建对象-new&#x2F;原型链</h3><p>![prototype](<a target="_blank" rel="noopener" href="http://7q5cdt.com1.z0.glb.clouddn.com/blog-new">http://7q5cdt.com1.z0.glb.clouddn.com/blog-new</a> prototype.png)</p>
-<hr>
-<h2 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h2><pre><code>console.log([1, 2] instanceof Array); //true
-console.log([1, 2] instanceof Object); //true
-console.log(new Object() instanceof Array); //false
-</code></pre>
-<p>左边要求是对象，右边要求是构造器或函数。它会判断：<strong>右边的构造器中的 <code>prototype</code> 属性是否出现在左边的对象的原型链上。</strong></p>
-<ul>
-<li><strong>注意：<strong>不同的 window 或 iframe 间的对象类型检测</strong>不能</strong>使用 <code>instanceof</code>！</li>
-</ul>
-<hr>
-<h2 id="实现继承的方式"><a href="#实现继承的方式" class="headerlink" title="实现继承的方式"></a>实现继承的方式</h2><pre><code>function Person() &#123;&#125;
-
-function Student() &#123;&#125;
-
-Student.prototype = Person.prototype; //1
-
-Student.prototype = new Person(); //2
-
-Student.prototype = Object.create(Person.prototype); //3
-
-Student.prototype.constructor = Student;
-</code></pre>
-<p>注释中：</p>
-<p>1 是错误的。如果改变了 Student 就会改变 Person</p>
-<p>2 可以实现继承，但是其调用了构造函数，若父类构造函数中有形参，那么传值就会比较奇怪。</p>
-<p>3 是最好的方法。创建了一个空对象，并且对象的原型指向参数 Person.prototype。这样便实现了继承。同时原型链写，不向上查找。但是 <code>Object.create</code> 是ES5 中的方法，所以可以使用下列代码做兼容：</p>
-<pre><code>if (!Object.create) &#123;
-    Object.create = function(proto) &#123;
-        function F() &#123;&#125;
-        F.prototype = proto;
-        return new F;
-    &#125;;
-&#125;
-</code></pre>
-<hr>
-<h2 id="模拟重载"><a href="#模拟重载" class="headerlink" title="模拟重载"></a>模拟重载</h2><pre><code>function Person() &#123;
-    var args = arguments;
-    if (typeof args[0] === &#39;object&#39; &amp;&amp; args[0]) &#123;
-        if (args[0].name) &#123;
-            this.name = args[0].name;
-        &#125;
-        if(args[0].age)&#123;
-            this.age = args[0].age;
-        &#125;
-    &#125; else &#123;
-        if (args[0]) &#123;
-            this.name = args[0];
-        &#125;
-        if (args[1]) &#123;
-            this.age = args[1];
-        &#125;
-    &#125;
-&#125;
-
-//重写 toString 方法
-Person.prototype.toString = function() &#123;
-    console.log(&#39;name=&#39;+this.name+&#39;, age=&#39;+this.age);
-&#125;;
-
-var gao = new Person(&#123;name:&#39;Gao&#39;,age:24&#125;);
-gao.toString(); // name=Gao, age=24
-
-var ying = new Person(&#39;Ying&#39;,25);
-ying.toString(); // name=Ying, age=25
-</code></pre>
-<p>对参数进行判断，模拟实现重载。</p>
-<hr>
-<h2 id="调用子类方法"><a href="#调用子类方法" class="headerlink" title="调用子类方法"></a>调用子类方法</h2><pre><code>function Person(name) &#123;
-    this.name = name;
-&#125;
-
-function Student(name, className) &#123;
-    this.className = className;
-    Person.call(this, name); // 调用基类的构造器
-&#125;
-
-var gao = new Student(&#39;Gao&#39;, &#39;3123&#39;);
-console.log(gao); // Student &#123;className: &quot;3123&quot;, name: &quot;Gao&quot;&#125;
-
-Person.prototype.init = function() &#123;&#125;;
-
-Student.prototype.init = function() &#123;
-    // do sth...
-    Person.prototype.init.apply(this, arguments); // 同时也想调用父类被覆盖的方法
-&#125;;
-</code></pre>
-<p>主要是两种：调用父类的构造器，调用原型链上父类被覆盖的方法。</p>
-<hr>
-<h2 id="链式调用"><a href="#链式调用" class="headerlink" title="链式调用"></a>链式调用</h2><pre><code>function ClassManager() &#123;&#125;
-ClassManager.prototype.addClass = function(str) &#123;
-    console.log(&#39;Class: &#39; + str + &#39; added&#39;);
-    return this;
-&#125;;
-
-var manager = new ClassManager();
-manager.addClass(&#39;classA&#39;).addClass(&#39;classB&#39;).addClass(&#39;classC&#39;);
-// Class: classA added
-// Class: classB added
-// Class: classC added
-</code></pre>
-<p>重点在于 return this。返回这个 ClassManager 的实例。这样这个实例又可以继续调用方法。</p>
-<hr>
-<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>在构造器中 <code>throw new Error(&#39;&#39;);</code> 抛异常。这样防止这个类被直接调用。</p>
-<pre><code>function DetectorBase() &#123;
-    throw new Error(&#39;Abstract class can not be invoked directly!&#39;);
-&#125;
-
-DetectorBase.detect = function() &#123;
-    console.log(&#39;Detection starting...&#39;);
-&#125;
-DetectorBase.stop = function() &#123;
-    console.log(&#39;Detection stopped.&#39;);
-&#125;;
-DetectorBase.init = function() &#123;
-    throw new Error(&#39;Error&#39;);
-&#125;
-
-var d = new DetectorBase();// Uncaught Error: Abstract class can not be invoked directly!
-
-function LinkDetector() &#123;&#125;
-LinkDetector.prototype = Object.create(DetectorBase.prototype);
-LinkDetector.prototype.constructor = LinkDetector;
-
-var l = new LinkDetector();
-console.log(l); //LinkDetector &#123;&#125;__proto__: LinkDetector
-l.detect(); //Uncaught TypeError: l.detect is not a function
-l.init(); //Uncaught TypeError: l.init is not a function
-</code></pre>
-<p><code>var d = new DetectorBase();</code> 是不能实例化的，会报错</p>
-<p><code>l.detect();</code> 但是这个为什么报错我就不知道了。</p>
-<p>已经在原课程下提问了，期待老师的讲解。 <a target="_blank" rel="noopener" href="http://www.imooc.com/qadetail/82732">抽象类中子类为什么不能调用父类的非抽象方法？</a></p>
-<p>问题已经解决了，应该是老师当时的课件写错了，应该再基类中将这两个方法写在其原型 prototype 上。如下：</p>
-<pre><code>function DetectorBase() &#123;
-    throw new Error(&#39;Abstract class can not be invoked directly!&#39;);
-&#125;
-
-DetectorBase.prototype.detect = function() &#123;
-    console.log(&#39;Detection starting...&#39;);
-&#125;;
-DetectorBase.prototype.stop = function() &#123;
-    console.log(&#39;Detection stopped.&#39;);
-&#125;;
-DetectorBase.prototype.init = function() &#123;
-    throw new Error(&#39;Error&#39;);
-&#125;;
-
-// var d = new DetectorBase();// Uncaught Error: Abstract class can not be invoked directly!
-
-function LinkDetector() &#123;&#125;
-LinkDetector.prototype = Object.create(DetectorBase.prototype);
-LinkDetector.prototype.constructor = LinkDetector;
-
-var l = new LinkDetector();
-console.log(l); //LinkDetector &#123;&#125;__proto__: LinkDetector
-l.detect(); //Detection starting...
-l.init(); //Uncaught Error: Error
-</code></pre>
-<hr>
-<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><pre><code>var moduleA;
-moduleA = function() &#123;
-    var prop = 1;
-
-    function func() &#123;&#125;
-
-    return &#123;
-        func: func,
-        prop: prop
-    &#125;;
-&#125;(); // 立即执行匿名函数
-</code></pre>
-<p>prop，func 不会被泄露到全局作用域。</p>
-<p>或者另一种写法，使用 new</p>
-<pre><code>moduleA = new function() &#123;
-    var prop = 1;
-
-    function func() &#123;&#125;
-
-    this.func = func;
-    this.prop = prop;
-&#125;
-</code></pre>
-<p>更复杂的可以使用 Sea.js Kissy Require.js 模块化工具。</p>
-<hr>
-<p>最后补充一点设计模式相关的资料，我还没有来得及看的：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="http://www.oschina.net/translate/learning-javascript-design-patterns">学用 JavaScript 设计模式</a></li>
-<li><a target="_blank" rel="noopener" href="http://blog.jobbole.com/29454/">常用的Javascript设计模式</a></li>
-<li><a target="_blank" rel="noopener" href="http://developer.51cto.com/art/201109/288650_all.htm">JavaScript设计模式深入分析</a></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JavaScript 面向对象 慕课网 ife</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JavaScript//" class="article-tag-list-link color1">JavaScript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/06/15/2015-06-15-JavaScript-Object-Oriented/">展开全文 >></a>
         </p>
       
 

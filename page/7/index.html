@@ -198,6 +198,88 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-09-17-csdn-142309917" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/09/17/2024-09-17-csdn-142309917/">Vue Application exit (SharedArrayBuffer is not defined)</a>
+    </h1>
+  
+
+        
+        <a href="/2024/09/17/2024-09-17-csdn-142309917/" class="archive-article-date">
+  	<time datetime="2024-09-17T03:06:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142309917">https://blog.csdn.net/qq_30220519/article/details/142309917</a></p>
+</blockquote>
+<h5 id="vite配置"><a href="#vite配置" class="headerlink" title="vite配置"></a>vite配置</h5><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineConfig &#123;  </span><br><span class="line">  <span class="attr">server</span>: &#123;</span><br><span class="line">    <span class="attr">cors</span>: <span class="literal">true</span>, <span class="comment">// 启用 CORS</span></span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;Cross-Origin-Opener-Policy&#x27;</span>: <span class="string">&#x27;same-origin&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;Cross-Origin-Embedder-Policy&#x27;</span>: <span class="string">&#x27;require-corp&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;cross-origin-resource-policy&#x27;</span>: <span class="string">&#x27;cross-origin&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h5><p> 报其它错误，如(CompileError: WebAssembly.instantiate(): expected magic word 00 61 73 6d, found 3c 21 44 4f @+0)。查看文件请求路径是否正常</p>
+<p><img src="/images/csdn/142309917/591190b7bf08cea5.png"></p>
+<p>大小0B表示路径异常，需调整资源请求路径</p>
+<p><img src="/images/csdn/142309917/9b60a52cd175edb3.png"></p>
+<p>可修改locateFile路径和wasmBinaryFile路径</p>
+<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><p><img src="/images/csdn/142309917/6627ee006a5e43c9.png"></p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://pengliu.blog.csdn.net/article/details/142290541" title="QT + WebAssembly + Vue环境搭建-CSDN博客">QT + WebAssembly + Vue环境搭建-CSDN博客</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
+<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/09/17/2024-09-17-csdn-142309917/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-09-16-csdn-142290541" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -923,99 +1005,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/09/09/2024-09-09-csdn-142052817/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-09-08-csdn-142033900" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/09/08/2024-09-08-csdn-142033900/">仿云雀网页视频检测下载</a>
-    </h1>
-  
-
-        
-        <a href="/2024/09/08/2024-09-08-csdn-142033900/" class="archive-article-date">
-  	<time datetime="2024-09-08T14:16:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142033900">https://blog.csdn.net/qq_30220519/article/details/142033900</a></p>
-</blockquote>
-<h5 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h5><blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-2024-08-28-git-b730defd52-full_build.7z" title="ffpemg下载">ffpemg下载</a></p>
-<p>pip install selenium</p>
-<p>pip install BeautifulSoup</p>
-<p>pip install ffmpy3</p>
-</blockquote>
-<h5 id="getMovePage-py"><a href="#getMovePage-py" class="headerlink" title="getMovePage.py"></a><strong>getMovePage.py</strong></h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.edge.options <span class="keyword">import</span> Options</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.edge.service <span class="keyword">import</span> Service</span><br><span class="line">edge_path = <span class="string">r&quot;C:\Users\11313\.cache\selenium\msedgedriver\win64\128.0.2739.67\msedgedriver.exe&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WebBrowser</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 无可视化界面</span></span><br><span class="line">        edge_options = Options()</span><br><span class="line">        edge_options.add_argument(<span class="string">&#x27;headless&#x27;</span>)</span><br><span class="line">        <span class="comment">#禁用GPU</span></span><br><span class="line">        edge_options.add_argument(<span class="string">&#x27;disable-gpu&#x27;</span>)</span><br><span class="line">        edge_options.add_argument(<span class="string">&#x27;disable-blink-features=AutomationsControlled&#x27;</span>)</span><br><span class="line">        <span class="comment"># edge_options.add_experimential_option(&#x27;excludeSwitchs&#x27;, [&#x27;enable-automation&#x27;])</span></span><br><span class="line">        user_agent = <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0&quot;</span></span><br><span class="line">        edge_options.add_argument(<span class="string">f&#x27;user_agent=<span class="subst">&#123;user_agent&#125;</span>&#x27;</span>)</span><br><span class="line">        edge_options.add_argument(<span class="string">f&#x27;lang=zh_CN.UTF-8&#x27;</span>)</span><br><span class="line">        edge_options.add_argument(<span class="string">f&#x27;UseWebView2=True&#x27;</span>)</span><br><span class="line">        <span class="comment">#edge_options.add_experimental_option(&quot;debuggerAddress&quot;, &quot;localhost:64218&quot;)</span></span><br><span class="line">        edge_options.add_argument(<span class="string">f&#x27;enable-automation&#x27;</span>) </span><br><span class="line">        service = Service(executable_path=edge_path, port=<span class="number">53478</span>, verbose = <span class="literal">True</span>)</span><br><span class="line">        <span class="variable language_">self</span>.browser = webdriver.Edge(service=service, options=edge_options)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">exit</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 清理，关闭浏览器</span></span><br><span class="line">        <span class="variable language_">self</span>.browser.quit()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getContent</span>(<span class="params">self, url</span>):        </span><br><span class="line">        <span class="comment"># 打开目标网页</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 等待元素加载完成</span></span><br><span class="line">        <span class="variable language_">self</span>.browser.get(url)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 获取页面内容</span></span><br><span class="line">        content = <span class="variable language_">self</span>.browser.page_source</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> content</span><br><span class="line"></span><br><span class="line"><span class="comment"># url=&quot;https://www.kankanwu.com/Domestic/sifangguan/player-0-0.html&quot;</span></span><br><span class="line"><span class="comment"># browser = WebBrowser()   </span></span><br><span class="line"><span class="comment"># # 处理页面内容</span></span><br><span class="line"><span class="comment"># print(browser.getContent(url))</span></span><br><span class="line"><span class="comment"># browser.exit()</span></span><br></pre></td></tr></table></figure>
-
-<p>注： 如果出现python msedgedriver Can not connect to the Service，请手动启动edge_path，将port&#x3D;53478替换为启动后端口号，再重新启动程序</p>
-<p><img src="/images/csdn/142033900/3bde51adea8552a7.png"></p>
-<h5 id="getM3u8-py"><a href="#getM3u8-py" class="headerlink" title="getM3u8.py"></a>getM3u8.py</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup </span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> Comment</span><br><span class="line"><span class="keyword">import</span> getMovePage</span><br><span class="line"></span><br><span class="line"><span class="comment"># 地址解析</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">parselKanKanWuUrl</span>(<span class="params">searchText</span>):</span><br><span class="line">    <span class="comment"># search_Obj=search_html.find_all(&quot;iframe&quot;)</span></span><br><span class="line">    <span class="comment"># print(search_Obj)</span></span><br><span class="line"></span><br><span class="line">    startIndex = searchText.find(<span class="string">&quot;https://v8.fentvoss.com&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span>(-<span class="number">1</span> == startIndex <span class="keyword">or</span> <span class="literal">None</span> == startIndex):</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    endIndex = searchText.find(<span class="string">&quot;index.m3u8&quot;</span>, startIndex)</span><br><span class="line">    <span class="keyword">if</span>(-<span class="number">1</span> == endIndex <span class="keyword">or</span> <span class="literal">None</span> == endIndex):</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    m3u8Url = searchText[startIndex : endIndex + <span class="built_in">len</span>(<span class="string">&quot;index.m3u8&quot;</span>)]</span><br><span class="line">    <span class="keyword">return</span> [m3u8Url]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getM3u8List</span>(<span class="params">url</span>):</span><br><span class="line">    browser = getMovePage.WebBrowser()   </span><br><span class="line">    <span class="comment"># 处理页面内容</span></span><br><span class="line">    content = browser.getContent(url)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># search_html=BeautifulSoup(content,&quot;html&quot;)</span></span><br><span class="line">    <span class="comment"># print(type(search_html))</span></span><br><span class="line">    <span class="comment"># tags = search_html.getText()</span></span><br><span class="line">    <span class="comment"># print(tags)</span></span><br><span class="line">    <span class="comment"># comments = [tag.string for tag in tags if isinstance(tag.string, Comment)]</span></span><br><span class="line">    browser.exit()</span><br><span class="line">    <span class="comment"># with open(&quot;./context.txt&quot;, &#x27;w&#x27;) as file:</span></span><br><span class="line">    <span class="comment">#     file.write(&#x27;\n&#x27;.join(content))</span></span><br><span class="line">    <span class="comment"># print(search_html.contents)</span></span><br><span class="line">    <span class="keyword">return</span> parselKanKanWuUrl(content)</span><br><span class="line"></span><br><span class="line"><span class="comment"># print(getM3u8List(&quot;https://www.kankanwu.com/Domestic/sifangguan/player-0-0.html&quot;))</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="downM3u8-py"><a href="#downM3u8-py" class="headerlink" title="downM3u8.py"></a>downM3u8.py</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> ffmpy3 <span class="keyword">import</span> FFmpeg </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">downM3u8</span>(<span class="params">m3u8list</span>):</span><br><span class="line">    FFmpegDir = <span class="string">r&quot;E:\program\ffmpeg\bin\ffmpeg.exe&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i,url <span class="keyword">in</span> <span class="built_in">enumerate</span>(m3u8list):</span><br><span class="line">        FFmpeg(FFmpegDir, inputs=&#123;url: <span class="literal">None</span>&#125;, \</span><br><span class="line">        outputs=&#123;<span class="string">&#x27;第&#123;&#125;集.mp4&#x27;</span>.<span class="built_in">format</span>(i):<span class="literal">None</span>&#125;).run()</span><br></pre></td></tr></table></figure>
-
-<p>注： FFmpegDir 需替换为环境搭建时安装位置</p>
-<h5 id="saveVideo-py"><a href="#saveVideo-py" class="headerlink" title="saveVideo.py"></a>saveVideo.py</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> getM3u8</span><br><span class="line"><span class="keyword">import</span> downM3u8</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;https://www.kankanwu.com/Domestic/sifangguan/player-0-0.html&quot;</span></span><br><span class="line"></span><br><span class="line">m3u8 = getM3u8.getM3u8List(url)</span><br><span class="line">downM3u8.downM3u8(m3u8)</span><br></pre></td></tr></table></figure>
-
-<p>注：集数切换只需改后缀，如player-0-2.html表示第二集</p>
-<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><p><img src="/images/csdn/142033900/5106d50c9f981cfd.png"></p>
-<p><img src="/images/csdn/142033900/f27203e084766676.png"></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/09/08/2024-09-08-csdn-142033900/">展开全文 >></a>
         </p>
       
 

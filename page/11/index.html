@@ -198,6 +198,90 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-08-16-csdn-141270505" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/16/2024-08-16-csdn-141270505/">C ICU webassembly库编译</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/16/2024-08-16-csdn-141270505/" class="archive-article-date">
+  	<time datetime="2024-08-16T13:57:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141270505">https://blog.csdn.net/qq_30220519/article/details/141270505</a></p>
+</blockquote>
+<h6 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h6><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/shassd/article/details/109907308" title="在本机搭建Linux环境_本地单机搭建linux系统-CSDN博客">在本机搭建Linux环境_本地单机搭建linux系统-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139201070" title="C++ wasm 使用教程-CSDN博客">C++ wasm 使用教程-CSDN博客</a></p>
+<h6 id="法一"><a href="#法一" class="headerlink" title="法一"></a>法一</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/mabels/icu.git</span><br><span class="line">git checkout -b release-65-1</span><br><span class="line">git diff -p wasm32-start..remotes/origin/wasm32 | patch -p1</span><br><span class="line"><span class="built_in">cd</span> icu4c/source</span><br><span class="line">./runConfigureICU wasm32 --prefix=<span class="variable">$PREFIX</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="法二"><a href="#法二" class="headerlink" title="法二"></a>法二</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/unicode-org/icu</span><br><span class="line"><span class="built_in">cd</span> icu4c/source</span><br><span class="line">emconfigure  ./configure --prefix=<span class="variable">$PWD</span>/build --disable-draft --disable-extras --disable-icuio --disable-layoutex --disable-tests --disable-samples --enable-static --disable-shared --with-data-packaging=archive</span><br><span class="line"><span class="comment">#emconfigure ./configure --enable-static --prefix=/src/dist</span></span><br><span class="line"><span class="comment">#emconfigure ./configure --prefix=/opt/wasm --with-cross-build=`pwd` --enable-static=yes --enable-shared=no --target=wasm32-unknown-emscripten #--with-data-packaging=static --enable-icu-config --enable-extras=no --enable-tools=no --enable-samples=no --enable-tests=no &amp;&amp; emmake make clean install</span></span><br><span class="line">emmake make</span><br></pre></td></tr></table></figure>
+
+<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><p> </p>
+<p><img src="/images/csdn/141270505/4135ae7e5e3aff44.png"></p>
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/mabels/wasm-icu" title="https:&#x2F;&#x2F;github.com&#x2F;mabels&#x2F;wasm-icu">https://github.com/mabels/wasm-icu</a></p>
+<p><a target="_blank" rel="noopener" href="https://groups.google.com/g/emscripten-discuss/c/NZEb552GecA/m/XRLUYiftAgAJ?utm_medium=email&utm_source=footer" title="https:&#x2F;&#x2F;groups.google.com&#x2F;g&#x2F;emscripten-discuss&#x2F;c&#x2F;NZEb552GecA&#x2F;m&#x2F;XRLUYiftAgAJ?utm_medium&#x3D;email&amp;utm_source&#x3D;footer">https://groups.google.com/g/emscripten-discuss/c/NZEb552GecA/m/XRLUYiftAgAJ?utm_medium&#x3D;email&amp;utm_source&#x3D;footer</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43310551/article/details/86304618" title="命令行服务器（http-server)和跨域-CSDN博客">命令行服务器（http-server)和跨域-CSDN博客</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/16/2024-08-16-csdn-141270505/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2024-08-15-csdn-140908599" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -928,88 +1012,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/08/10/2024-08-10-csdn-141098405/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-08-09-csdn-141071432" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/09/2024-08-09-csdn-141071432/">C++ xlsx文件格式读写</a>
-    </h1>
-  
-
-        
-        <a href="/2024/08/09/2024-08-09-csdn-141071432/" class="archive-article-date">
-  	<time datetime="2024-08-09T13:33:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141071432">https://blog.csdn.net/qq_30220519/article/details/141071432</a></p>
-</blockquote>
-<h6 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#ifndef _WIN32</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#endif</span><br><span class="line">#include &quot;xlsxio_write.h&quot;</span><br><span class="line">#include &quot;xlsxio_read.h&quot;</span><br><span class="line"></span><br><span class="line">int testWrite()</span><br><span class="line">&#123;</span><br><span class="line">    const char* filename = &quot;example.xlsx&quot;;</span><br><span class="line">    xlsxiowriter handle;</span><br><span class="line">    //open .xlsx file for writing (will overwrite if it already exists)</span><br><span class="line">    if ((handle = xlsxiowrite_open(filename, &quot;MySheet&quot;)) == NULL) &#123;</span><br><span class="line">        fprintf(stderr, &quot;Error creating .xlsx file\n&quot;);</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line">    //set row height</span><br><span class="line">    xlsxiowrite_set_row_height(handle, 1);</span><br><span class="line">    //how many rows to buffer to detect column widths</span><br><span class="line">    xlsxiowrite_set_detection_rows(handle, 10);</span><br><span class="line">    //write column names</span><br><span class="line">    xlsxiowrite_add_column(handle, &quot;Col1&quot;, 0);</span><br><span class="line">    xlsxiowrite_add_column(handle, &quot;Col2&quot;, 21);</span><br><span class="line">    xlsxiowrite_add_column(handle, &quot;Col3&quot;, 0);</span><br><span class="line">    xlsxiowrite_add_column(handle, &quot;Col4&quot;, 2);</span><br><span class="line">    xlsxiowrite_add_column(handle, &quot;Col5&quot;, 0);</span><br><span class="line">    xlsxiowrite_add_column(handle, &quot;Col6&quot;, 0);</span><br><span class="line">    xlsxiowrite_add_column(handle, &quot;Col7&quot;, 0);</span><br><span class="line">    xlsxiowrite_next_row(handle);</span><br><span class="line">    //write data</span><br><span class="line">    int i;</span><br><span class="line">    for (i = 0; i &lt; 1000; i++) &#123;</span><br><span class="line">        xlsxiowrite_add_cell_string(handle, &quot;Test&quot;);</span><br><span class="line">        xlsxiowrite_add_cell_string(handle, &quot;A b  c   d    e     f\nnew line&quot;);</span><br><span class="line">        xlsxiowrite_add_cell_string(handle, &quot;&amp;% &lt;test&gt; \&quot;&#x27;&quot;);</span><br><span class="line">        xlsxiowrite_add_cell_string(handle, NULL);</span><br><span class="line">        xlsxiowrite_add_cell_int(handle, i);</span><br><span class="line">        xlsxiowrite_add_cell_datetime(handle, time(NULL));</span><br><span class="line">        xlsxiowrite_add_cell_float(handle, 3.1415926);</span><br><span class="line">        xlsxiowrite_next_row(handle);</span><br><span class="line">    &#125;</span><br><span class="line">    //close .xlsx file</span><br><span class="line">    xlsxiowrite_close(handle);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//callback data structure for listing sheets</span><br><span class="line">struct xlsx_list_sheets_data &#123;</span><br><span class="line">    char* firstsheet;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//callback function for listing sheets</span><br><span class="line">int xlsx_list_sheets_callback(const char* name, void* callbackdata)</span><br><span class="line">&#123;</span><br><span class="line">    struct xlsx_list_sheets_data* data = (struct xlsx_list_sheets_data*)callbackdata;</span><br><span class="line">    if (!data-&gt;firstsheet)</span><br><span class="line">        data-&gt;firstsheet = strdup(name);</span><br><span class="line">    printf(&quot; - %s\n&quot;, name);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//callback function for end of row</span><br><span class="line">int sheet_row_callback(size_t row, size_t maxcol, void* callbackdata)</span><br><span class="line">&#123;</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//callback function for cell data</span><br><span class="line">int sheet_cell_callback(size_t row, size_t col, const XLSXIOCHAR* value, void* callbackdata)</span><br><span class="line">&#123;</span><br><span class="line">    if (col &gt; 1)</span><br><span class="line">        printf(&quot;\t&quot;);</span><br><span class="line">    if (value)</span><br><span class="line">        printf(&quot;%s&quot;, value);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int testRead() &#123;</span><br><span class="line">    const char* filename = &quot;example.xlsx&quot;;</span><br><span class="line">    xlsxioreader xlsxioread;</span><br><span class="line">    //open .xlsx file for reading</span><br><span class="line">    if ((xlsxioread = xlsxioread_open(filename)) == NULL) &#123;</span><br><span class="line">        fprintf(stderr, &quot;Error opening .xlsx file\n&quot;);</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line">    //list available sheets</span><br><span class="line">    struct xlsx_list_sheets_data sheetdata;</span><br><span class="line">    sheetdata.firstsheet = NULL;</span><br><span class="line">    printf(&quot;Available sheets:\n&quot;);</span><br><span class="line">    xlsxioread_list_sheets(xlsxioread, xlsx_list_sheets_callback, &amp;sheetdata);</span><br><span class="line"></span><br><span class="line">    //read data</span><br><span class="line">    xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);</span><br><span class="line"></span><br><span class="line">    //clean up</span><br><span class="line">    free(sheetdata.firstsheet);</span><br><span class="line">    xlsxioread_close(xlsxioread);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void test() &#123;</span><br><span class="line">    testWrite();    // 测试写入</span><br><span class="line">    testRead();     // 测试读取</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h6><h6 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h6><p><img src="/images/csdn/141071432/3203c9ea1e7800b6.png"></p>
-<h6 id="写"><a href="#写" class="headerlink" title="写"></a>写</h6><p><img src="/images/csdn/141071432/d43ff7bee7b38ec6.png"></p>
-<h6 id="读"><a href="#读" class="headerlink" title="读"></a>读</h6><p><img src="/images/csdn/141071432/dbcb77030db1dc2c.png"></p>
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/jmcnamara/libxlsxwriter.git" title="https:&#x2F;&#x2F;github.com&#x2F;jmcnamara&#x2F;libxlsxwriter.git">https://github.com/jmcnamara/libxlsxwriter.git</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/brechtsanders/xlsxio" title="GitHub - brechtsanders&#x2F;xlsxio: XLSX I&#x2F;O - C library for reading and writing .xlsx files">GitHub - brechtsanders&#x2F;xlsxio: XLSX I&#x2F;O - C library for reading and writing .xlsx files</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140559445" title="C++ PDF PoDoFo库使用教程-CSDN博客">C++ PDF PoDoFo库使用教程-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140448196" title="C++ 导出CSV文件_c++导出cvs文件-CSDN博客">C++ 导出CSV文件_c++导出cvs文件-CSDN博客</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/08/09/2024-08-09-csdn-141071432/">展开全文 >></a>
         </p>
       
 

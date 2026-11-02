@@ -198,6 +198,88 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2025-01-02-csdn-144888119" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/01/02/2025-01-02-csdn-144888119/">C++字体库开发之可变字体路径获取十五</a>
+    </h1>
+  
+
+        
+        <a href="/2025/01/02/2025-01-02-csdn-144888119/" class="archive-article-date">
+  	<time datetime="2025-01-02T07:41:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/144888119">https://blog.csdn.net/qq_30220519/article/details/144888119</a></p>
+</blockquote>
+<h5 id=""><a href="#" class="headerlink" title=""></a></h5><p><img src="/images/csdn/144888119/a0655a4fb4726d02.png"></p>
+<h5 id="skia"><a href="#skia" class="headerlink" title="skia"></a>skia</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> data</span><br><span class="line">	= SkData::<span class="built_in">MakeFromFileName</span>(<span class="string">&quot;D:\\可变字体woff\\DecovarAlpha-VF.ttf&quot;</span>);</span><br><span class="line"><span class="keyword">auto</span> typefaceTest = SkTypeface::<span class="built_in">MakeFromData</span>(data);</span><br><span class="line">SkFontArguments::VariationPosition::Coordinate coordinates[<span class="number">15</span>];</span><br><span class="line"><span class="keyword">auto</span> ret = typefaceTest-&gt;<span class="built_in">getVariationDesignPosition</span>(coordinates, <span class="number">15</span>);</span><br><span class="line"></span><br><span class="line">SkPath path;</span><br><span class="line"><span class="function">SkFont <span class="title">font</span><span class="params">(typefaceTest, <span class="number">1</span>)</span></span>;</span><br><span class="line">font.<span class="built_in">getPath</span>(<span class="number">21</span>, &amp;path);	<span class="comment">// &#x27;T&#x27;</span></span><br><span class="line">path.<span class="built_in">dump</span>();</span><br><span class="line"></span><br><span class="line">SkFontArguments skFontArguments;</span><br><span class="line">SkFontArguments::VariationPosition::Coordinate coordinate;</span><br><span class="line">coordinate.axis = <span class="number">1414679875</span>;	<span class="comment">// &#x27;T&#x27; &#x27;R&#x27; &#x27;M&#x27; &#x27;C&#x27;</span></span><br><span class="line">coordinate.value = <span class="number">1000</span>;</span><br><span class="line">SkFontArguments::VariationPosition variationPosition;</span><br><span class="line">variationPosition.coordinates = &amp;coordinate;</span><br><span class="line">variationPosition.coordinateCount = <span class="number">1</span>;</span><br><span class="line">skFontArguments.<span class="built_in">setVariationDesignPosition</span>(variationPosition);</span><br><span class="line"><span class="keyword">auto</span> newTypeFace = typefaceTest-&gt;<span class="built_in">makeClone</span>(skFontArguments);</span><br><span class="line">ret = newTypeFace-&gt;<span class="built_in">getVariationDesignPosition</span>(coordinates, <span class="number">15</span>);</span><br><span class="line"></span><br><span class="line"><span class="function">SkFont <span class="title">fontVariant</span><span class="params">(newTypeFace, <span class="number">1</span>)</span></span>;</span><br><span class="line">fontVariant.<span class="built_in">getPath</span>(<span class="number">21</span>, &amp;path); <span class="comment">// &#x27;T&#x27;</span></span><br><span class="line">path.<span class="built_in">dump</span>();</span><br></pre></td></tr></table></figure>
+
+<h5 id="freetype"><a href="#freetype" class="headerlink" title="freetype"></a>freetype</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> fontMgr = <span class="built_in">SkFontMgr_New_Custom_Empty</span>();</span><br><span class="line"><span class="keyword">auto</span> freetypeTypeface = fontMgr-&gt;<span class="built_in">makeFromData</span>(skData);</span><br><span class="line">SkPath            pathFreetype;</span><br><span class="line"><span class="function">SkFont           <span class="title">fontFreetype</span><span class="params">(freetypeTypeface, <span class="number">1</span>)</span></span>;</span><br><span class="line">fontFreetype.<span class="built_in">getPath</span>(<span class="number">129</span>, &amp;pathFreetype);</span><br><span class="line">pathFreetype.<span class="built_in">dump</span>();</span><br><span class="line"></span><br><span class="line"><span class="function">SkAutoSTMalloc&lt;4, FT_Fixed&gt; <span class="title">coords</span><span class="params">(data.getAxisCount())</span></span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; data.<span class="built_in">getAxisCount</span>(); ++i) &#123;</span><br><span class="line">	coords[i] = data.<span class="built_in">getAxis</span>()[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">FT_Set_Var_Design_Coordinates</span>(rec-&gt;fFace.<span class="built_in">get</span>(), data.<span class="built_in">getAxisCount</span>(), coords.<span class="built_in">get</span>())) &#123;</span><br><span class="line">	<span class="built_in">LOG_INFO</span>(<span class="string">&quot;INFO: font %s has variations, but specified variations could not be set.\n&quot;</span>,</span><br><span class="line">			 rec-&gt;fFace-&gt;family_name);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://v-fonts.com/" title="Variable Fonts">Variable Fonts</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.axis-praxis.org/specimens/__DEFAULT__" title="Axis-Praxis: Variable Fonts in the browser">Axis-Praxis: Variable Fonts in the browser</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141143565" title="C++字体库开发之freetype vs harfbuzz sfnt表，字体名称，可变轴八_c++ 使用的freetype库-CSDN博客">C++字体库开发之freetype vs harfbuzz sfnt表，字体名称，可变轴八_c++ 使用的freetype库-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/144879125" title="C++字体库开发之WOFF字体解析十四-CSDN博客">C++字体库开发之WOFF字体解析十四-CSDN博客</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
+<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2025/01/02/2025-01-02-csdn-144888119/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2025-01-02-csdn-144879125" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -925,87 +1007,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2024/10/17/2024-10-17-csdn-143028617/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2024-10-16-csdn-142977180" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/10/16/2024-10-16-csdn-142977180/">C Lua5.4.6 SDK开发库</a>
-    </h1>
-  
-
-        
-        <a href="/2024/10/16/2024-10-16-csdn-142977180/" class="archive-article-date">
-  	<time datetime="2024-10-16T03:29:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-10-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142977180">https://blog.csdn.net/qq_30220519/article/details/142977180</a></p>
-</blockquote>
-<h5 id="下载"><a href="#下载" class="headerlink" title="下载"></a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_30220519/89892197" title="下载">下载</a></h5><h5 id="lua执行"><a href="#lua执行" class="headerlink" title=".lua执行"></a>.lua执行</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;lua.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;lualib.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;lauxlib.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">luaopen_ui</span><span class="params">(lua_State *L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="keyword">struct</span> <span class="title class_">luaL_Reg</span> lib_f[] = &#123;% raw %&#125;&#123;&#123;<span class="string">&quot;saveFile&quot;</span>, saveFile&#125;,&#123;% endraw %&#125;</span><br><span class="line">                                            &#123;<span class="string">&quot;loadFile&quot;</span>, loadFile&#125;,</span><br><span class="line">                                            &#123;<span class="literal">NULL</span>, <span class="literal">NULL</span>&#125;&#125;;</span><br><span class="line">    <span class="built_in">luaL_newlib</span>(L, lib_f);  <span class="comment">// 导出函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">saveFile</span><span class="params">(lua_State *L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">luaL_argcheck</span>(L, doc != <span class="literal">nullptr</span>, <span class="number">1</span>, <span class="string">&quot;invalid user data&quot;</span>);</span><br><span class="line">    <span class="built_in">luaL_checktype</span>(L, <span class="number">-1</span>, LUA_TSTRING);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> path = <span class="built_in">lua_tostring</span>(L, <span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">loadFile</span><span class="params">(lua_State *L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">luaL_argcheck</span>(L, doc != <span class="literal">nullptr</span>, <span class="number">1</span>, <span class="string">&quot;invalid user data&quot;</span>);</span><br><span class="line">    <span class="built_in">luaL_checktype</span>(L, <span class="number">-1</span>, LUA_TSTRING);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> path = <span class="built_in">lua_tostring</span>(L, <span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">runOnce</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *filePath)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    lua_State *L = <span class="built_in">luaL_newstate</span>();</span><br><span class="line">    <span class="built_in">luaL_openlibs</span>(L);</span><br><span class="line">    <span class="comment">// 加载函数</span></span><br><span class="line">    <span class="built_in">luaL_getsubtable</span>(L, LUA_REGISTRYINDEX, <span class="string">&quot;_PRELOAD&quot;</span>);</span><br><span class="line">    <span class="built_in">lua_pushcfunction</span>(L, luaopen_ui);</span><br><span class="line">    <span class="built_in">lua_setfield</span>(L, <span class="number">-2</span>, <span class="string">&quot;ui&quot;</span>);</span><br><span class="line">	<span class="comment">// lua_pushcfunction(L, luaopen_ui2);</span></span><br><span class="line">    <span class="comment">// lua_setfield(L, -2, &quot;ui2&quot;);</span></span><br><span class="line">    <span class="built_in">lua_pop</span>(L, <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 运行文件</span></span><br><span class="line">    <span class="type">int</span> retLoad = <span class="built_in">luaL_dofile</span>(L, filePath);</span><br><span class="line">    <span class="keyword">if</span> (<span class="number">0</span> != retLoad) &#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">char</span> *sz = <span class="built_in">lua_tostring</span>(L, <span class="number">-1</span>);</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;doLuaFile err:&quot;</span> &lt;&lt; retLoad &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; sz &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//    lua_error(L);</span></span><br><span class="line">    <span class="built_in">lua_close</span>(L);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="lua编码"><a href="#lua编码" class="headerlink" title=".lua编码"></a>.lua编码</h5><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--[[ </span></span><br><span class="line"><span class="comment">Example:</span></span><br><span class="line"><span class="comment">ui = require(&quot;ui&quot;)</span></span><br><span class="line"><span class="comment">ui.saveFile(&quot;D:/test.bin&quot;)</span></span><br><span class="line"><span class="comment">ui.loadFile(&quot;D:/test.bin&quot;)</span></span><br><span class="line"><span class="comment">--]]</span></span><br><span class="line"></span><br><span class="line">ui = <span class="built_in">require</span>(<span class="string">&quot;ui&quot;</span>)</span><br><span class="line">ui.saveFile(<span class="string">&quot;D:/out.bin&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;finish&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://www.lua.org/" title="The Programming Language Lua">The Programming Language Lua</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.runoob.com/lua/lua-tutorial.html" title="Lua 教程 | 菜鸟教程">Lua 教程 | 菜鸟教程</a></p>
-<p><a target="_blank" rel="noopener" href="https://pengliu.blog.csdn.net/article/details/79963950" title="https:&#x2F;&#x2F;pengliu.blog.csdn.net&#x2F;article&#x2F;details&#x2F;79963950">https://pengliu.blog.csdn.net/article/details/79963950</a></p>
-<p><a target="_blank" rel="noopener" href="https://pengliu.blog.csdn.net/article/details/79975608" title="https:&#x2F;&#x2F;pengliu.blog.csdn.net&#x2F;article&#x2F;details&#x2F;79975608">https://pengliu.blog.csdn.net/article/details/79975608</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/10/16/2024-10-16-csdn-142977180/">展开全文 >></a>
         </p>
       
 
