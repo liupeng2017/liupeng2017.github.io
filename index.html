@@ -340,7 +340,7 @@ var _hmt = _hmt || [];
  </p>
 <h2 id="窗口自动靠边程序演示"><a href="#窗口自动靠边程序演示" class="headerlink" title="窗口自动靠边程序演示"></a>窗口自动靠边程序演示</h2><p>BOOL AdjustPos(CRect* lpRect)<br>{&#x2F;&#x2F;自动靠边<br>int iSX&#x3D;GetSystemMetrics(SM_CXFULLSCREEN);<br>int iSY&#x3D;GetSystemMetrics(SM_CYFULLSCREEN);<br>RECT rWorkArea;<br>BOOL bResult &#x3D; SystemParametersInfo(SPI_GETWORKAREA, sizeof(RECT), &amp;rWorkAre<br>a, 0);<br>CRect rcWA;<br>if(!bResult)<br>{&#x2F;&#x2F;如果调用不成功就利用GetSystemMetrics获取屏幕面积<br>rcWA&#x3D;CRect(0,0,iSX,iSY);<br>}<br>else<br>rcWA&#x3D;rWorkArea;<br>int iX&#x3D;lpRect-&gt;left;<br>int iY&#x3D;lpRect-&gt;top;<br> <br>if(iX &lt; rcWA.left + DETASTEP &amp;&amp; iX!&#x3D;rcWA.left)<br>{&#x2F;&#x2F;调整左<br>&#x2F;&#x2F;pWnd-&gt;SetWindowPos(NULL,rcWA.left,iY,0,0,SWP_NOSIZE);<br>lpRect-&gt;OffsetRect(rcWA.left-iX,0);<br>AdjustPos(lpRect);<br>return TRUE;<br>}<br>if(iY &lt; rcWA.top + DETASTEP &amp;&amp; iY!&#x3D;rcWA.top)<br>{&#x2F;&#x2F;调整上<br>&#x2F;&#x2F;pWnd-&gt;SetWindowPos(NULL ,iX,rcWA.top,0,0,SWP_NOSIZE);<br>lpRect-&gt;OffsetRect(0,rcWA.top-iY);<br>AdjustPos(lpRect);<br>return TRUE;<br>}<br>if(iX + lpRect-&gt;Width() &gt; rcWA.right - DETASTEP &amp;&amp; iX !&#x3D;rcWA.right-lpRect-&gt;W<br> <br>idth())<br>{&#x2F;&#x2F;调整右<br>&#x2F;&#x2F;pWnd-&gt;SetWindowPos(NULL ,rcWA.right-rcW.Width(),iY,0,0,SWP_NOSIZE);<br>lpRect-&gt;OffsetRect(rcWA.right-lpRect-&gt;right,0);<br>AdjustPos(lpRect);<br>return TRUE;<br>}<br>if(iY + lpRect-&gt;Height() &gt; rcWA.bottom - DETASTEP &amp;&amp; iY !&#x3D;rcWA.bottom-lpRect<br>-&gt;Height())<br>{&#x2F;&#x2F;调整下<br>&#x2F;&#x2F;pWnd-&gt;SetWindowPos(NULL ,iX,rcWA.bottom-rcW.Height(),0,0,SWP_NOSIZE);<br>lpRect-&gt;OffsetRect(0,rcWA.bottom-lpRect-&gt;bottom);<br>return TRUE;<br>}<br>return FALSE;<br>}<br>&#x2F;&#x2F;然后在ONMOVEING事件中使用所下过程调用<br> <br>CRect r&#x3D;*pRect;<br>AdjustPos(&amp;r);<br>*pRect&#x3D;(RECT)r;<br> <br>给系统菜单添加一个菜单项<br>给系统菜单添加一个菜单项需要进行下述三个步骤：<br>首先，使用Resource Symbols对话（在View菜单中选择Resource Symbols．．．可以显<br>示该对话）定义菜单项ID，该ID应大于0x0F而小于0xF000；<br>其次，调用CWnd::GetSystemMenu获取系统菜单的指针并调用CWnd:: Appendmenu将菜单<br>项添加到菜单中。下例给系统菜单添加两个新的<br>int CMainFrame:: OnCreate (LPCREATESTRUCT lpCreateStruct)<br>{<br>…<br>&#x2F;&#x2F;Make sure system menu item is in the right range.<br> <br>ASSERT(IDM_MYSYSITEM&lt;0xF000);<br>&#x2F;&#x2F;Get pointer to system menu.<br>CMenu* pSysMenu&#x3D;GetSystemMenu(FALSE);<br>ASSERT_VALID(pSysMenu);<br>&#x2F;&#x2F;Add a separator and our menu item to system menu.<br>CString StrMenuItem(_T (“New menu item”));<br>pSysMenu-&gt;AppendMenu(MF_SEPARATOR);<br>pSysMenu-&gt;AppendMenu(MF_STRING, IDM_MYSYSITEM, StrMenuItem);<br>…<br>} 
  </p>
-<h2 id="运行其它程序"><a href="#运行其它程序" class="headerlink" title="运行其它程序"></a>运行其它程序</h2><p>&#x2F;&#x2F;1、运行EMAIL或网址<br>char szMailAddress[80];<br>strcpy(szMailAddress,”mailto:<a href="mailto:&#110;&#x65;&#x74;&#118;&#99;&#x40;&#50;&#x31;&#x63;&#x6e;&#46;&#99;&#111;&#109;">netvc@21cn.com</a>“);<br>ShellExecute(NULL, “open”, szMailAddress, NULL, NULL, SW_SHOWNORMAL);<br> <br>&#x2F;&#x2F; 2、运行可执行程序<br>WinExec(“notepad.exe”,SW_SHOW); &#x2F;&#x2F;运行计事本 
+<h2 id="运行其它程序"><a href="#运行其它程序" class="headerlink" title="运行其它程序"></a>运行其它程序</h2><p>&#x2F;&#x2F;1、运行EMAIL或网址<br>char szMailAddress[80];<br>strcpy(szMailAddress,”mailto:<a href="mailto:&#110;&#101;&#x74;&#x76;&#99;&#64;&#x32;&#49;&#99;&#110;&#46;&#x63;&#x6f;&#x6d;">netvc@21cn.com</a>“);<br>ShellExecute(NULL, “open”, szMailAddress, NULL, NULL, SW_SHOWNORMAL);<br> <br>&#x2F;&#x2F; 2、运行可执行程序<br>WinExec(“notepad.exe”,SW_SHOW); &#x2F;&#x2F;运行计事本 
  </p>
 <h2 id="动态增加或删除菜单"><a href="#动态增加或删除菜单" class="headerlink" title="动态增加或删除菜单"></a>动态增加或删除菜单</h2><p>1、 增加菜单<br>&#x2F;&#x2F;添加<br>CMenu *mainmenu;<br>mainmenu&#x3D;AfxGetMainWnd()-&gt;GetMenu(); &#x2F;&#x2F;得到主菜单<br>(mainmenu-&gt;GetSubMenu (0))-&gt;AppendMenu (MF_SEPARATOR);&#x2F;&#x2F;添加分隔符<br>(mainmenu-&gt;GetSubMenu (0))-&gt;AppendMenu(MF_STRING,ID_APP_ABOUT,_T(“Always on<br>&amp;Top”)); &#x2F;&#x2F;添加新的菜单项<br>DrawMenuBar(); &#x2F;&#x2F;重画菜单<br>2、 删除菜单<br>&#x2F;&#x2F;删除<br>CMenu *mainmenu;<br>mainmenu&#x3D;AfxGetMainWnd()-&gt;GetMenu(); &#x2F;&#x2F;得到主菜单<br> <br>CString str ;<br>for(int i&#x3D;(mainmenu-&gt;GetSubMenu (0))-&gt;GetMenuItemCount()-1;i&gt;&#x3D;0;i–) &#x2F;&#x2F;取得菜<br>单的项数。<br>{<br>(mainmenu-&gt;GetSubMenu (0))-&gt;GetMenuString(i,str,MF_BYPOSITION);<br>&#x2F;&#x2F;将指定菜单项的标签拷贝到指定的缓冲区。MF_BYPOSITION的解释见上。<br>if(str&#x3D;&#x3D;”Always on &amp;Top”) &#x2F;&#x2F;如果是刚才我们增加的菜单项，则删除。<br>{<br>(mainmenu-&gt;GetSubMenu (0))-&gt;DeleteMenu(i,MF_BYPOSITION);<br>break;<br>} 
  </p>
@@ -1189,7 +1189,37 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HarmonyOS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ArkTS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">认证考试</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/鸿蒙开发//" class="article-tag-list-link color5">鸿蒙开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -1418,7 +1448,37 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HarmonyOS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DevEco Studio</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">练习题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/鸿蒙开发//" class="article-tag-list-link color5">鸿蒙开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -1684,7 +1744,37 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HarmonyOS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CPP</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NDK</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/鸿蒙开发//" class="article-tag-list-link color5">鸿蒙开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -2043,15 +2133,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">scrapy 爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">scrapy_redis 爬虫</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2103,15 +2193,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">HarmonyOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ArkTS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DevEco Studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">认证考试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CPP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NDK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">练习题</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">windows python saprk 工具软件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2124,6 +2238,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
