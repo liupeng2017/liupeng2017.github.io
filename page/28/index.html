@@ -204,6 +204,107 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-05-11-csdn-138729514" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/05/11/2024-05-11-csdn-138729514/">【异构】并行任务计算</a>
+    </h1>
+  
+
+        
+        <a href="/2024/05/11/2024-05-11-csdn-138729514/" class="archive-article-date">
+  	<time datetime="2024-05-11T12:54:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/138729514">https://blog.csdn.net/qq_30220519/article/details/138729514</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://cdrdv2-public.intel.com/772402/onetbb_cookbook_2021.6-772401-772402.pdf" title="https:&#x2F;&#x2F;cdrdv2-public.intel.com&#x2F;772402&#x2F;onetbb_cookbook_2021.6-772401-772402.pdf">https://cdrdv2-public.intel.com/772402/onetbb_cookbook_2021.6-772401-772402.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://cdrdv2-public.intel.com/816904/onetbb_get-started-guide_2021.12-772618-816904.pdf" title="https:&#x2F;&#x2F;cdrdv2-public.intel.com&#x2F;816904&#x2F;onetbb_get-started-guide_2021.12-772618-816904.pdf">https://cdrdv2-public.intel.com/816904/onetbb_get-started-guide_2021.12-772618-816904.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/shijianfeng/5152901" title="https:&#x2F;&#x2F;blog.51cto.com&#x2F;shijianfeng&#x2F;5152901">https://blog.51cto.com/shijianfeng/5152901</a></p>
+<p>&#x2F;&#x2F; 同构，多进程<br><a target="_blank" rel="noopener" href="https://github.com/microsoft/Microsoft-MPI">https://github.com/microsoft/Microsoft-MPI</a>  &#x2F;&#x2F; 消息传递接口 （MPI）<br><a target="_blank" rel="noopener" href="https://github.com/rabauke/mpl">https://github.com/rabauke/mpl</a>  &#x2F;&#x2F; 同类，Boost.MPI</p>
+<p><a target="_blank" rel="noopener" href="https://www.mpich.org/" title="MPICH | High-Performance Portable MPI">MPICH | High-Performance Portable MPI</a></p>
+<p>&#x2F;&#x2F; 同构，多线程任务计算<br><a target="_blank" rel="noopener" href="https://github.com/ClearLove27149/TaskCpp">https://github.com/ClearLove27149/TaskCpp</a><br><a target="_blank" rel="noopener" href="https://github.com/ddemidov/compute">https://github.com/ddemidov/compute</a>  &#x2F;&#x2F; GPU计算<br><a target="_blank" rel="noopener" href="https://github.com/oneapi-src/oneTBB#stable-releases">https://github.com/oneapi-src/oneTBB#stable-releases</a>  &#x2F;&#x2F; tbb<br><a target="_blank" rel="noopener" href="https://github.com/intel/tbb">https://github.com/intel/tbb</a> &#x2F;&#x2F; tbb</p>
+<p>&#x2F;&#x2F; 异构，并行任务计算，支持流程<br><a target="_blank" rel="noopener" href="https://taskflow.github.io/taskflow/index.html">https://taskflow.github.io/taskflow/index.html</a><br><a target="_blank" rel="noopener" href="https://github.com/taskflow/taskflow.git">https://github.com/taskflow/taskflow.git</a></p>
+<p>#include &lt;taskflow&#x2F;taskflow.hpp&gt;<br>#include <vector></p>
+<p>&#x2F;&#x2F;    &#x2F;&#x2F; Offload Tasks to a GPU<br>&#x2F;&#x2F;__global__ void saxpy(int n, float a, float* x, float* y) {<br>&#x2F;&#x2F;    int i &#x3D; blockIdx.x * blockDim.x + threadIdx.x;<br>&#x2F;&#x2F;    if (i &lt; n) {<br>&#x2F;&#x2F;        y[i] &#x3D; a * x[i] + y[i];<br>&#x2F;&#x2F;    }<br>&#x2F;&#x2F;}</p>
+<p>int test() {<br>    tf::Executor executor;<br>    tf::Taskflow taskflow;</p>
+<p>    auto [A, B, C, D] &#x3D; taskflow.emplace(  &#x2F;&#x2F; create four tasks<br>        []() { std::cout &lt;&lt; “TaskA\n”; },<br>        []() { std::cout &lt;&lt; “TaskB\n”; },<br>        []() { std::cout &lt;&lt; “TaskC\n”; },<br>        []() { std::cout &lt;&lt; “TaskD\n”; }<br>    );</p>
+<p>    tf::Task E &#x3D; taskflow.emplace([](tf::Subflow&amp; subflow) { &#x2F;&#x2F; subflow task B<br>        tf::Task B1 &#x3D; subflow.emplace([]() {}).name(“B1”);<br>        tf::Task B2 &#x3D; subflow.emplace([]() {}).name(“B2”);<br>        tf::Task B3 &#x3D; subflow.emplace([]() {}).name(“B3”);<br>        B3.succeed(B1, B2);  &#x2F;&#x2F; B3 runs after B1 and B2<br>        }).name(“B”);<br>    A.precede(B, C);  &#x2F;&#x2F; A runs before B and C<br>    D.succeed(B, C, E);  &#x2F;&#x2F; D runs after  B and C</p>
+<p>    &#x2F;&#x2F; creates a feedback loop {0: cond, 1: stop}<br>    tf::Task stop &#x3D; taskflow.emplace([]() {}).name(“stop”);<br>    tf::Task cond &#x3D; taskflow.emplace([]() { return std::rand() % 2; }).name(“cond”);<br>    cond.precede(cond, stop);  &#x2F;&#x2F; moves on to ‘cond’ on returning 0, or ‘stop’ on 1</p>
+<p>    &#x2F;&#x2F;tf::Task cudaflow &#x3D; taskflow.emplace([&amp;](tf::cudaFlow&amp; cf) {<br>    &#x2F;&#x2F;    tf::cudaTask h2d_x &#x3D; cf.copy(dx, hx.data(), N).name(“h2d_x”);<br>    &#x2F;&#x2F;    tf::cudaTask h2d_y &#x3D; cf.copy(dy, hy.data(), N).name(“h2d_y”);<br>    &#x2F;&#x2F;    tf::cudaTask d2h_x &#x3D; cf.copy(hx.data(), dx, N).name(“d2h_x”);<br>    &#x2F;&#x2F;    tf::cudaTask d2h_y &#x3D; cf.copy(hy.data(), dy, N).name(“d2h_y”);<br>    &#x2F;&#x2F;    tf::cudaTask saxpy &#x3D; cf.kernel((N + 255) &#x2F; 256, 256, 0, saxpy, N, 2.0f, dx, dy)<br>    &#x2F;&#x2F;        .name(“saxpy”);  &#x2F;&#x2F; parameters to the saxpy kernel<br>    &#x2F;&#x2F;    saxpy.succeed(h2d_x, h2d_y)<br>    &#x2F;&#x2F;        .precede(d2h_x, d2h_y);<br>    &#x2F;&#x2F;    }).name(“cudaFlow”);</p>
+<p>    &#x2F;&#x2F; Compose Task Graphs<br>    tf::Taskflow f1, f2;<br>    &#x2F;&#x2F; create taskflow f1 of two tasks<br>    tf::Task f1A &#x3D; f1.emplace([]() { std::cout &lt;&lt; “Task f1A\n”; }).name(“f1A”);<br>    tf::Task f2B &#x3D; f2.emplace([]() { std::cout &lt;&lt; “Task f2B\n”; }).name(“f2B”);<br>    tf::Task f1_module_task &#x3D; f2.composed_of(f1).name(“module”);</p>
+<p>    f1_module_task.succeed(f1A, f2B)<br>        .precede(f1A);</p>
+<p>    &#x2F;&#x2F; tf::Future<void> run_once &#x3D; executor.run(taskflow); <br>    &#x2F;&#x2F; run_once.get(); &#x2F;&#x2F; wait on this run to finish<br>    <br>    executor.run(taskflow).wait();</p>
+<p>    &#x2F;&#x2F; create asynchronous tasks directly from an executor<br>    std::future<int> future &#x3D; executor.async([]() {<br>        std::cout &lt;&lt; “async task returns 1\n”;<br>        return 1;<br>        });<br>    executor.silent_async([]() { std::cout &lt;&lt; “async task does not return\n”; });</p>
+<p>    &#x2F;&#x2F; create asynchronous tasks with dynamic dependencies<br>    tf::AsyncTask AA &#x3D; executor.silent_dependent_async([]() { printf(“A\n”); });<br>    executor.wait_for_all();</p>
+<p>    &#x2F;&#x2F; run the taskflow four times<br>    executor.run_n(taskflow, 4);</p>
+<p>    &#x2F;&#x2F; runs the taskflow five times<br>    executor.run_until(taskflow,  [ counter &#x3D; 5]() mutable { return –counter &#x3D;&#x3D; 0; });</p>
+<p>    &#x2F;&#x2F; standard parallel CPU algorithms<br>    &#x2F;&#x2F;std::vector<int> data{ 8, 32, 65, 64, 7 };<br>    &#x2F;&#x2F;tf::Task task1 &#x3D; taskflow.for_each( &#x2F;&#x2F; assign each element to 100 in parallel<br>    &#x2F;&#x2F;    data.begin(), data.end(), [](auto&amp; i) { i &#x3D; 100; }<br>    &#x2F;&#x2F;);<br>    &#x2F;&#x2F;tf::Task task2 &#x3D; taskflow.reduce(   &#x2F;&#x2F; reduce a range of items in parallel<br>    &#x2F;&#x2F;    data.begin(), data.end(), data.begin(), [](auto a, auto b) { return a + b; }<br>    &#x2F;&#x2F;);<br>    &#x2F;&#x2F;tf::Task task3 &#x3D; taskflow.sort(     &#x2F;&#x2F; sort a range of items in parallel<br>    &#x2F;&#x2F;    data.begin(), data.end(), [](auto a, auto b) { return a &lt; b; }<br>    &#x2F;&#x2F;);</p>
+<p>    &#x2F;&#x2F;&#x2F;&#x2F; create a pipeline to propagate five tokens through three serial stages<br>    &#x2F;&#x2F;tf::Pipeline pl(“num_lines”,<br>    &#x2F;&#x2F;    tf::Pipe{ tf::PipeType::SERIAL, [](tf::Pipeflow&amp; pf) {<br>    &#x2F;&#x2F;      if (pf.token() &#x3D;&#x3D; 5) {<br>    &#x2F;&#x2F;        pf.stop();<br>    &#x2F;&#x2F;      }<br>    &#x2F;&#x2F;    } },<br>    &#x2F;&#x2F;    tf::Pipe{ tf::PipeType::SERIAL, [](tf::Pipeflow&amp; pf) {<br>    &#x2F;&#x2F;      printf(“stage 2: input buffer[%zu] &#x3D; %d\n”, pf.line(), buffer[pf.line()]);<br>    &#x2F;&#x2F;    } },<br>    &#x2F;&#x2F;    tf::Pipe{ tf::PipeType::SERIAL, [](tf::Pipeflow&amp; pf) {<br>    &#x2F;&#x2F;      printf(“stage 3: input buffer[%zu] &#x3D; %d\n”, pf.line(), buffer[pf.line()]);<br>    &#x2F;&#x2F;    } }<br>    &#x2F;&#x2F;);<br>    &#x2F;&#x2F;taskflow.composed_of(pl)<br>    &#x2F;&#x2F;    executor.run(taskflow).wait();</p>
+<p>    &#x2F;&#x2F; dump the graph to a DOT file through std::cout<br>    taskflow.dump(std::cout);<br>    return 0;<br>}</p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/05/11/2024-05-11-csdn-138729514/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-05-11-csdn-138706146" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1068,124 +1169,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-05-06-csdn-138498105" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/05/06/2024-05-06-csdn-138498105/">gprof性能分析</a>
-    </h1>
-  
-
-        
-        <a href="/2024/05/06/2024-05-06-csdn-138498105/" class="archive-article-date">
-  	<time datetime="2024-05-06T08:03:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/138498105">https://blog.csdn.net/qq_30220519/article/details/138498105</a></p>
-</blockquote>
-<p>针对代码调优，不侵入函数，图表分析，调用链路优化</p>
-<p>LINUX:</p>
-<p>1.Linux下cmake环境配置</p>
-<p>2.git checkout lp&#x2F;gprof</p>
-<p>3.gprof使用手册：<a target="_blank" rel="noopener" href="https://sourceware.org/binutils/docs-2.17/gprof/index.html?spm=a2c6h.12873639.article-detail.8.3889613bAvNNS2" title="GNU gprof">GNU gprof</a></p>
-<p>3.启动docker环境，运行：build.sh</p>
-<p>4.bin目录运行：.&#x2F;pPerf，运行退出后，当前目录下自动生成gmon.out</p>
-<p>5.运行：gprof -b .&#x2F;pixsoPerf gmon.out&gt;gmon.txt</p>
-<p>6.可视化环境配置：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/oloroso/p/6548189.html" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;oloroso&#x2F;p&#x2F;6548189.html">https://www.cnblogs.com/oloroso/p/6548189.html</a>，docker下安装只有一次，可以配置到本地或wsl</p>
-<p>7.cd gprof2dot &amp;&amp; cat ..&#x2F;bin&#x2F;gmon.txt | python3 gprof2dot.py | dot -Tpdf -o output.pdf</p>
-<p>WINDOWS:</p>
-<p>1.安装附件verysleepy-0.91.exe，qcachegrind074-32bit-x86.zip</p>
-<p>2.启动main.exe，启动verysleepy，左侧选中main进程，点击右下角allProfile开始性能分析</p>
-<p>3.点击stop停止</p>
-<p>4.点击菜单file-》export as Callgrind</p>
-<p>5.启动qcachegrind.exe打开导出文件</p>
-<p>附一：</p>
-<p>gprof2dot 命令行选项<br>选项 含义<br>-o FILE, –output&#x3D;FILE 指定输出文件，默认是标准输出(也即屏幕)，还可以通过重定向来实现该选项<br>-n PERCENTAGE, –node-thres&#x3D;PERCENTAGE 运行时间占比小于PERCENTAGE的节点(函数调用)不展示(默认阈值是0.5)<br>-e PERCENTAGE, –edge-thres&#x3D;PERCENTAGE 作用和上面类似，对边进行剪枝<br>-f FORMAT, –format&#x3D;FORMAT 性能分析日志的来源，支持的来源有：axe, callgrind, hprof, json, oprofile, perf, prof, pstats, sleepy, sysprof, xperf。该脚本支持多种性能分析工具，默认是prof，我们采用的是callgrind分析工具。<br>–total&#x3D;TOTALMETHOD 采用哪种方法统计总时间：callratios 或者 callstacks(只对perf分析工具有作用)，默认是callratios 。<br>-c THEME, –colormap&#x3D;THEME 颜色主题：color, pink, gray, bw，默认是color，效果也最好。<br>-s, –strip 不显示函数参数、模版参数、常量修饰符等对展示无影响的符号，启用该选项会让生成的图片更直观易懂，一般启用。<br>-w, –wrap 当函数名过长的时候自动换行，启用会让生成的图片更美观<br>–show-samples 展示function samples？<br>-z ROOT, –root&#x3D;ROOT 只展示ROOT函数及其子孙调用关系，忽略其他调用，当函数调用关系复杂只分析某一部分函数的调用关系时非常有用。<br>-l LEAF, –leaf&#x3D;LEAF 只展示某个函数及其父亲调用关系，忽略其他调用。<br>–skew&#x3D;THEME_SKEW 调整节点颜色的区分度。值&lt;1区分度更明显，否则更不明显。建议用默认值，或者&lt;1的值。</p>
-<p>示例：python3 gprof2dot.py -n0 -e0</p>
-<p>附件：</p>
-<p>win下搭建gprof2dot环境依赖<a target="_blank" rel="noopener" href="https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/5.0.1/windows_10_cmake_Release_graphviz-install-5.0.1-win64.exe" title="graphviz">graphviz</a>：<a target="_blank" rel="noopener" href="https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/5.0.1/windows_10_cmake_Release_graphviz-install-5.0.1-win64.exe" title="https:&#x2F;&#x2F;gitlab.com&#x2F;api&#x2F;v4&#x2F;projects&#x2F;4207231&#x2F;packages&#x2F;generic&#x2F;graphviz-releases&#x2F;5.0.1&#x2F;windows_10_cmake_Release_graphviz-install-5.0.1-win64.exe">https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/5.0.1/windows_10_cmake_Release_graphviz-install-5.0.1-win64.exe</a></p>
-<p>verysleepy.exe  <a target="_blank" rel="noopener" href="https://github.com/VerySleepy/verysleepy" title="GitHub - VerySleepy&#x2F;verysleepy: Very Sleepy, a sampling CPU profiler for Windows">GitHub - VerySleepy&#x2F;verysleepy: Very Sleepy, a sampling CPU profiler for Windows</a></p>
-<p>qcachegrind.zip <a target="_blank" rel="noopener" href="https://github.com/aur-archive/qcachegrind-qt5-git" title="GitHub - aur-archive&#x2F;qcachegrind-qt5-git">GitHub - aur-archive&#x2F;qcachegrind-qt5-git</a></p>
-<p>docker下安装本地库：</p>
-<p>apt-get install .&#x2F;libimagequant0_2.12.2-1.1_amd64.deb<br>apt-get install .&#x2F;libimagequant-dev_2.12.2-1.1_amd64.deb</p>
-<p>Arch Linux：yay -S intel-vtune-profiler-standalone<br>vtune -collect hpc-performance &#x2F;path&#x2F;to&#x2F;main</p>
-<p>其它工具参考：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/google/orbit" title="谷歌性能分析">谷歌性能分析</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/gperftools/gperftools" title="GitHub - gperftools&#x2F;gperftools: Main gperftools repository">GitHub - gperftools&#x2F;gperftools: Main gperftools repository</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/google/perfetto" title="https:&#x2F;&#x2F;github.com&#x2F;google&#x2F;perfetto">https://github.com/google/perfetto</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/pierricgimmig/orbitprofile" title="https:&#x2F;&#x2F;github.com&#x2F;pierricgimmig&#x2F;orbitprofile">https://github.com/pierricgimmig/orbitprofile</a></p>
-<p><a target="_blank" rel="noopener" href="https://kcachegrind.sourceforge.net/html/Home.html" title="KCachegrind">KCachegrind</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.graphviz.org/" title="graphviz">graphviz</a>  kprof</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/include-what-you-use/include-what-you-use" title="include-what-you-use">include-what-you-use</a></p>
-<p><a target="_blank" rel="noopener" href="https://ceefour.github.io/wincachegrind/" title="WinCacheGrind">WinCacheGrind</a></p>
-<p>git:&#x2F;&#x2F;git.code.sf.net&#x2F;p&#x2F;oprofile&#x2F;oprofile</p>
-<p><a target="_blank" rel="noopener" href="https://quick-bench.com/q/ED4MLeeJX-gr-VfFZTz09Odzr8A">https://quick-bench.com/q/ED4MLeeJX-gr-VfFZTz09Odzr8A</a>    C++代码压测<br>chrome:&#x2F;&#x2F;tracing&#x2F; <br><a target="_blank" rel="noopener" href="https://github.com/catapult-project/catapult">https://github.com/catapult-project/catapult</a>   chrome性能数据分析<br><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/edit?pli=1#heading=h.yr4qxyxotyw">https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/edit?pli=1#heading=h.yr4qxyxotyw</a>   chrome性能数据格式，可自定义输出到chorme显示</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/oloroso/p/6548189.html" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;oloroso&#x2F;p&#x2F;6548189.html">https://www.cnblogs.com/oloroso/p/6548189.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://scipion-em.github.io/docs/release-3.0.0/docs/developer/vtune-profiler.html" title="Intel VTune profiler — Scipion 3.0.0 documentation">Intel VTune profiler — Scipion 3.0.0 documentation</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/wolfpld/tracy" title="GitHub - wolfpld&#x2F;tracy: Frame profiler">GitHub - wolfpld&#x2F;tracy: Frame profiler</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html" title="https:&#x2F;&#x2F;www.intel.com&#x2F;content&#x2F;www&#x2F;us&#x2F;en&#x2F;developer&#x2F;tools&#x2F;oneapi&#x2F;vtune-profiler.html">https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png" alt="2d50062d779a47afb478b75948ec28e5.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg" alt="d4a3f7989b534e9b8b67a6fa085b1129.jpeg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/05/06/2024-05-06-csdn-138498105/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/27/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/29/">Next &raquo;</a>
@@ -1569,6 +1552,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

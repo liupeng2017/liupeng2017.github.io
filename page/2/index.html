@@ -204,6 +204,133 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2025-11-28-csdn-155361900" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/28/2025-11-28-csdn-155361900/">Harmony OS C++实战</a>
+    </h1>
+  
+
+        
+        <a href="/2025/11/28/2025-11-28-csdn-155361900/" class="archive-article-date">
+  	<time datetime="2025-11-28T13:01:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/155361900">https://blog.csdn.net/qq_30220519/article/details/155361900</a></p>
+</blockquote>
+<h6 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h6><ol>
+<li>安装<a target="_blank" rel="noopener" href="https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_package_901_9/9b/v3/0fdyewgcSaSmJXn-PCNYXg/devecostudio-windows-6.0.1.251.zip?HW-CC-KV=V1&HW-CC-Date=20251124T121714Z&HW-CC-Expire=7200&HW-CC-Sign=26B3C34592A4CEE2842EC0BC08AA80110C078020C344F1CB1A92E267C007C337" title="devcostudio">devcostudio</a>打开</li>
+<li>File-&gt;New-&gt;CreateProject-&gt;Native C++</li>
+<li><pre><code class="language-bash">cd src/main &amp;&amp; git clone https://github.com/freetype/freetype &amp;&amp; mv freetype/* cpp/
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">4.  多平台配置</span><br><span class="line">    </span><br><span class="line">    &gt; 新增build-profile.json5下abiFilters，支持多平台  </span><br><span class="line">    &gt;     &quot;externalNativeOptions&quot;: &#123;  </span><br><span class="line">    &gt;       &quot;path&quot;: &quot;./src/main/cpp/CMakeLists.txt&quot;,  </span><br><span class="line">    &gt;       &quot;arguments&quot;: &quot;&quot;,  </span><br><span class="line">    &gt;       &quot;cppFlags&quot;: &quot;&quot;,  </span><br><span class="line">    &gt;         </span><br><span class="line">    &gt;       &quot;abiFilters&quot;: \[  </span><br><span class="line">    &gt;         &quot;x86\_64&quot;,  </span><br><span class="line">    &gt;         &quot;arm64-v8a&quot;  </span><br><span class="line">    &gt;       \]  </span><br><span class="line">    &gt;     &#125;</span><br><span class="line">    </span><br><span class="line">5.  点击锤子🔨make module生成，右上角圆点切换debug|release。输出文件在build\\default\\outputs\\default\\\*.hap，解压有ABI对应的.so文件。</span><br><span class="line">6.  ts或其它库调用使用时，需在src同级目录下新建libs文件夹，拷贝abiFilters所有文件夹到libs下。</span><br><span class="line"></span><br><span class="line">###### .so cmake配置</span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line">cmake_minimum_required(VERSION 3.5.0)</span><br><span class="line">project(NativeFileAccess)</span><br><span class="line"></span><br><span class="line">set(NATIVERENDER_ROOT_PATH $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;)</span><br><span class="line"></span><br><span class="line">if(DEFINED PACKAGE_FIND_FILE)</span><br><span class="line">    include($&#123;PACKAGE_FIND_FILE&#125;)</span><br><span class="line">endif()</span><br><span class="line"></span><br><span class="line">include_directories($&#123;NATIVERENDER_ROOT_PATH&#125;</span><br><span class="line">                    $&#123;NATIVERENDER_ROOT_PATH&#125;/include)</span><br><span class="line">link_directories($&#123;NATIVERENDER_ROOT_PATH&#125;/../../../libs/$&#123;OHOS_ARCH&#125;)</span><br><span class="line"></span><br><span class="line">add_library(file_access SHARED FileAccessMethods.cpp)</span><br><span class="line"></span><br><span class="line">if (CMAKE_BUILD_TYPE STREQUAL &quot;Debug&quot;)</span><br><span class="line">    set_property(TARGET file_access PROPERTY IMPORTED_LOCATION $&#123;NATIVERENDER_ROOT_PATH&#125;/libs/$&#123;OHOS_ARCH&#125;/libfreetyped.so)</span><br><span class="line">else()</span><br><span class="line">    set_property(TARGET file_access PROPERTY IMPORTED_LOCATION $&#123;NATIVERENDER_ROOT_PATH&#125;/libs/$&#123;OHOS_ARCH&#125;/libfreetype.so)</span><br><span class="line">endif ()</span><br><span class="line"></span><br><span class="line">set_property(TARGET file_access PROPERTY IMPORTED_LOCATION $&#123;NATIVERENDER_ROOT_PATH&#125;/libs/$&#123;OHOS_ARCH&#125;/libc++_shared.so)</span><br><span class="line">target_link_libraries(file_access PUBLIC libace_napi.z.so libhilog_ndk.z.so librawfile.z.so libc++_shared.so)</span><br><span class="line">target_link_libraries(file_access PUBLIC debug libfreetyped.so optimized libfreetype.so)</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+<h6 id="库依赖查看"><a href="#库依赖查看" class="headerlink" title="库依赖查看"></a>库依赖查看</h6><blockquote>
+<p>readelf -d lib.so</p>
+</blockquote>
+<p><strong>注</strong>：so.x.x不支持，需用.so加载</p>
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-compiling-and-building-86" title="https:&#x2F;&#x2F;developer.huawei.com&#x2F;consumer&#x2F;cn&#x2F;doc&#x2F;harmonyos-faqs&#x2F;faqs-compiling-and-building-86">https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-compiling-and-building-86</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-access-control-14" title="https:&#x2F;&#x2F;developer.huawei.com&#x2F;consumer&#x2F;cn&#x2F;doc&#x2F;harmonyos-faqs&#x2F;faqs-access-control-14">https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-access-control-14</a></p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/openharmony-sig/tpc_c_cplusplus.git" title="https:&#x2F;&#x2F;gitee.com&#x2F;openharmony-sig&#x2F;tpc_c_cplusplus.git">https://gitee.com/openharmony-sig/tpc_c_cplusplus.git</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/AiMiDi/icu-cmake" title="https:&#x2F;&#x2F;github.com&#x2F;AiMiDi&#x2F;icu-cmake">https://github.com/AiMiDi/icu-cmake</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-ndk-72" title="https:&#x2F;&#x2F;developer.huawei.com&#x2F;consumer&#x2F;cn&#x2F;doc&#x2F;harmonyos-faqs&#x2F;faqs-ndk-72">https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-ndk-72</a></p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/harmonyos_samples/NativeFileAccess" title="https:&#x2F;&#x2F;gitee.com&#x2F;harmonyos_samples&#x2F;NativeFileAccess">https://gitee.com/harmonyos_samples&#x2F;NativeFileAccess</a></p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/harmonyos_samples/hiaifoundationkit-samplecode-clientdemo-cpp" title="https:&#x2F;&#x2F;gitee.com&#x2F;harmonyos_samples&#x2F;hiaifoundationkit-samplecode-clientdemo-cpp">https://gitee.com/harmonyos_samples&#x2F;hiaifoundationkit-samplecode-clientdemo-cpp</a></p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/harmonyos_samples/native-multi-threads" title="https:&#x2F;&#x2F;gitee.com&#x2F;harmonyos_samples&#x2F;native-multi-threads">https://gitee.com/harmonyos_samples&#x2F;native-multi-threads</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
+<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HarmonyOS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CPP</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NDK</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/鸿蒙开发//" class="article-tag-list-link color5">鸿蒙开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2025/11/28/2025-11-28-csdn-155361900/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2025-11-21-csdn-155111519" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1099,102 +1226,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2025-03-28-csdn-146609684" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/03/28/2025-03-28-csdn-146609684/">CMake基础教程二</a>
-    </h1>
-  
-
-        
-        <a href="/2025/03/28/2025-03-28-csdn-146609684/" class="archive-article-date">
-  	<time datetime="2025-03-28T12:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-03-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        本文已加密，请输入密码后继续阅读。
-        
-          <a class="article-more-a" href="/2025/03/28/2025-03-28-csdn-146609684/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/工具与效率//" class="article-tag-list-link color1">工具与效率</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/03/28/2025-03-28-csdn-146609684/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1578,6 +1609,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

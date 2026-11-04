@@ -204,6 +204,92 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-07-14-csdn-140418211" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/14/2024-07-14-csdn-140418211/">C判断一个点在三角形上</a>
+    </h1>
+  
+
+        
+        <a href="/2024/07/14/2024-07-14-csdn-140418211/" class="archive-article-date">
+  	<time datetime="2024-07-14T08:15:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140418211">https://blog.csdn.net/qq_30220519/article/details/140418211</a></p>
+</blockquote>
+<h6 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h6><p>鼠标操作时，经常要判断是否命中显示控件，特开发此算法快速判断。</p>
+<h6 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h6><p>三角形三等分点定理是指在任意三角形ABC中，可以找到三个点D、E和F，使得线段AD、BE和CF均等分三角形ABC。 这意味着三个等分点分别位于三个边界上，并且每个等分点都将三角形划分为等面积部分。</p>
+<h6 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 点</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="type">float</span> x;</span><br><span class="line">    <span class="type">float</span> y;</span><br><span class="line">&#125; *Point;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 直线距离</span></span><br><span class="line"><span class="function"><span class="type">float</span> <span class="title">distance</span><span class="params">(Point a, Point b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sqrt</span>((b-&gt;x - a-&gt;x) * (b-&gt;x - a-&gt;x) + (b-&gt;y - a-&gt;y) * (b-&gt;y - a-&gt;y));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 三角形面积</span></span><br><span class="line"><span class="function"><span class="type">float</span> <span class="title">area</span><span class="params">(Point a, Point b, Point c)</span> </span>&#123;</span><br><span class="line">    <span class="type">float</span> ab = <span class="built_in">distance</span>(a, b);</span><br><span class="line">    <span class="type">float</span> ac = <span class="built_in">distance</span>(a, c);</span><br><span class="line">    <span class="type">float</span> bc = <span class="built_in">distance</span>(b, c);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.5</span> * <span class="built_in">sqrt</span>(<span class="number">4</span> * ab * ab * ac * ac - (ab * ab + ac * ac - bc * bc) * (ab * ab + ac * ac - bc * bc));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断点是否在三角形上</span></span><br><span class="line"><span class="function">_Bool <span class="title">isPtOn</span><span class="params">(Point a, Point b, Point c, Point pt)</span> </span>&#123;</span><br><span class="line">    <span class="type">float</span> triangleArea = <span class="built_in">area</span>(a, b, c);</span><br><span class="line"> </span><br><span class="line">    <span class="type">float</span> splitTriangle1 = <span class="built_in">area</span>(a, b, pt);</span><br><span class="line">    <span class="type">float</span> splitTriangle2 = <span class="built_in">area</span>(a, c, pt);</span><br><span class="line">    <span class="type">float</span> splitTriangle3 = <span class="built_in">area</span>(b, c, pt);</span><br><span class="line">    <span class="keyword">return</span> (splitTriangle1 + splitTriangle2 + splitTriangle3 == triangleArea);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    Point a = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">float</span>) * <span class="number">2</span>);</span><br><span class="line">    a-&gt;x = <span class="number">-5</span>;</span><br><span class="line">    a-&gt;y = <span class="number">0</span>;</span><br><span class="line">    Point b = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">float</span>) * <span class="number">2</span>);</span><br><span class="line">    b-&gt;x = <span class="number">0</span>;</span><br><span class="line">    b-&gt;y = <span class="number">5</span>;</span><br><span class="line">    Point c = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">float</span>) * <span class="number">2</span>);</span><br><span class="line">    c-&gt;x = <span class="number">5</span>;</span><br><span class="line">    c-&gt;y = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 在三角形上</span></span><br><span class="line">    Point d = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">float</span>) * <span class="number">2</span>);</span><br><span class="line">    d-&gt;x = <span class="number">0</span>;</span><br><span class="line">    d-&gt;y = <span class="number">1</span>;</span><br><span class="line">    _Bool ret = <span class="built_in">isPtOn</span>(a, b, c, d);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ret);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 不在三角形上</span></span><br><span class="line">    d-&gt;x = <span class="number">0</span>;</span><br><span class="line">    d-&gt;y = <span class="number">-1</span>;</span><br><span class="line">	ret = <span class="built_in">isPtOn</span>(a, b, c, d);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ret);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<h6 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h6><p>如何判断在矩形，任意多边形上？（提示：计算多边形面积是等于点切割多边形面积和）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140409033" title="C双指针元素去重-CSDN博客">C双指针元素去重-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/luoyayun361/article/details/75452667" title="Qt 判断一个点是否落在三角形内(算法)_qt判断一个点在三角形内-CSDN博客">Qt 判断一个点是否落在三角形内(算法)_qt判断一个点在三角形内-CSDN博客</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/14/2024-07-14-csdn-140418211/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-07-14-csdn-140409033" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1060,102 +1146,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-07-09-csdn-140299181" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/09/2024-07-09-csdn-140299181/">C++ pdf库总结</a>
-    </h1>
-  
-
-        
-        <a href="/2024/07/09/2024-07-09-csdn-140299181/" class="archive-article-date">
-  	<time datetime="2024-07-09T08:37:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        本文已加密，请输入密码后继续阅读。
-        
-          <a class="article-more-a" href="/2024/07/09/2024-07-09-csdn-140299181/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/09/2024-07-09-csdn-140299181/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/15/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/17/">Next &raquo;</a>
@@ -1539,6 +1529,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

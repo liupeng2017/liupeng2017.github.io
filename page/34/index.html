@@ -204,6 +204,143 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2015-04-12-Syncing-a-fork" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/12/2015-04-12-Syncing-a-fork/">同步一个 fork</a>
+    </h1>
+  
+
+        
+        <a href="/2015/04/12/2015-04-12-Syncing-a-fork/" class="archive-article-date">
+  	<time datetime="2015-04-12T07:14:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>fork 了别人的仓库后，原作者又更新了仓库，如何将自己的代码和原仓库保持一致？本文将给你解答。</p>
+<h2 id="如何使用搜索引擎"><a href="#如何使用搜索引擎" class="headerlink" title="如何使用搜索引擎"></a>如何使用搜索引擎</h2><p>其实这个问题并不难，我又被坑了。百度搜的东西不靠谱啊，以后这种问题一定要用<strong>英文</strong>在 <a target="_blank" rel="noopener" href="http://www.google.com/">Google</a> 或者 <a target="_blank" rel="noopener" href="http://cn.bing.com/">Bing</a> 上搜索，这样才能搜到原汁原味的答案。就当是一个教训吧。   </p>
+<p>搜索 fork sync，就可以看到 GitHub 自己的帮助文档 <a target="_blank" rel="noopener" href="https://help.github.com/articles/syncing-a-fork/">Syncing a fork</a> 点进去看这篇的时候，注意到有一个 Tip: Before you can sync your fork with an upstream repository, you must <a target="_blank" rel="noopener" href="https://help.github.com/articles/configuring-a-remote-for-a-fork/">configure a remote that points to the upstream repository</a> in Git.   </p>
+<p>根据这两篇文章，问题迎刃而解！   </p>
+<h2 id="具体方法"><a href="#具体方法" class="headerlink" title="具体方法"></a>具体方法</h2><h3 id="Configuring-a-remote-for-a-fork"><a href="#Configuring-a-remote-for-a-fork" class="headerlink" title="Configuring a remote for a fork"></a>Configuring a remote for a fork</h3><ul>
+<li><p>给 fork 配置一个 remote   </p>
+</li>
+<li><p>主要使用 <code>git remote -v</code> 查看远程状态。</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br><span class="line"># origin  https://github.com/YOUR_USERNAME/YOUR_FORK.git (fetch)</span><br><span class="line"># origin  https://github.com/YOUR_USERNAME/YOUR_FORK.git (push)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加一个将被同步给 fork 远程的上游仓库</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>再次查看状态确认是否配置成功。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br><span class="line"># origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (fetch)</span><br><span class="line"># origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (push)</span><br><span class="line"># upstream  https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git (fetch)</span><br><span class="line"># upstream  https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git (push)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Syncing-a-fork"><a href="#Syncing-a-fork" class="headerlink" title="Syncing a fork"></a>Syncing a fork</h3><ul>
+<li>从上游仓库 fetch 分支和提交点，传送到本地，并会被存储在一个本地分支 upstream&#x2F;master<br><code>git fetch upstream</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git fetch upstream</span><br><span class="line"># remote: Counting objects: 75, done.</span><br><span class="line"># remote: Compressing objects: 100% (53/53), done.</span><br><span class="line"># remote: Total 62 (delta 27), reused 44 (delta 9)</span><br><span class="line"># Unpacking objects: 100% (62/62), done.</span><br><span class="line"># From https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY</span><br><span class="line">#  * [new branch]      master     -&gt; upstream/master</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>切换到本地主分支(如果不在的话)<br><code>git checkout master</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line"># Switched to branch &#x27;master&#x27;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>把 upstream&#x2F;master 分支合并到本地 master 上，这样就完成了同步，并且不会丢掉本地修改的内容。<br><code>git merge upstream/master</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git merge upstream/master</span><br><span class="line"># Updating a422352..5fdff0f</span><br><span class="line"># Fast-forward</span><br><span class="line">#  README                    |    9 -------</span><br><span class="line">#  README.md                 |    7 ++++++</span><br><span class="line">#  2 files changed, 7 insertions(+), 9 deletions(-)</span><br><span class="line">#  delete mode 100644 README</span><br><span class="line">#  create mode 100644 README.md</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果想更新到 GitHub 的 fork 上，直接 <code>git push origin master</code> 就好了。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">GitHub 同步 fork</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/GitHub//" class="article-tag-list-link color2">GitHub</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2015/04/12/2015-04-12-Syncing-a-fork/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2015-04-06-arrays-similar" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1156,6 +1293,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

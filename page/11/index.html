@@ -204,6 +204,105 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-08-17-csdn-141283598" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/17/2024-08-17-csdn-141283598/">C++仿C#实现事件处理</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/17/2024-08-17-csdn-141283598/" class="archive-article-date">
+  	<time datetime="2024-08-17T09:14:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141283598">https://blog.csdn.net/qq_30220519/article/details/141283598</a></p>
+</blockquote>
+<h6 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;beacon/beacon.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">mouseEvent</span> : <span class="keyword">public</span> beacon::args &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">mouseEvent</span>(<span class="type">int</span> x, <span class="type">int</span> y) : <span class="built_in">x</span>(x), <span class="built_in">y</span>(y) &#123;&#125;</span><br><span class="line">    <span class="type">int</span> x, y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">object</span> : <span class="keyword">public</span> beacon::sender &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">mouseHandler</span> : <span class="keyword">public</span> beacon::multi_handler &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Button</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">on_event</span><span class="params">(beacon::sender* sender, beacon::args* args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> event = args-&gt;<span class="built_in">to</span>&lt;mouseEvent&gt;();</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Mouse event at %d, %d\n&quot;</span>, event.x, event.y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">    <span class="function">mouseEvent <span class="title">event</span><span class="params">(<span class="number">10</span>, <span class="number">20</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    object sender;</span><br><span class="line">    Button button;</span><br><span class="line"></span><br><span class="line">    mouseHandler handler;</span><br><span class="line">    handler.<span class="built_in">addListener</span>&lt;mouseEvent&gt;(beacon::callback::<span class="built_in">bind</span>(&amp;Button::on_event, &amp;button));</span><br><span class="line">    handler.<span class="built_in">raise</span>(&amp;sender, &amp;event);</span><br><span class="line">    </span><br><span class="line">    beacon::interval inter;</span><br><span class="line">    inter.<span class="built_in">set</span>(<span class="number">1000</span>, [](<span class="type">const</span> <span class="type">char</span>* msg)&#123; <span class="built_in">puts</span>(msg); &#125;, <span class="string">&quot;Hello, World!&quot;</span>);</span><br><span class="line">    std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">milliseconds</span>(<span class="number">10000</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>g++ example.cpp -o test.exe</p>
+</blockquote>
+<h6 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Mouse event at 10, 20</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br></pre></td></tr></table></figure>
+
+<h6 id="编译错误"><a href="#编译错误" class="headerlink" title="编译错误"></a>编译错误</h6><p><img src="/images/csdn/141283598/b7442ed349550ab1.png"></p>
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/ImanolFotia/beacon" title="GitHub - ImanolFotia&#x2F;beacon: Beacon is a multiparadigm C++ event management library with focus on fast and simple integration">GitHub - ImanolFotia&#x2F;beacon: Beacon is a multiparadigm C++ event management library with focus on fast and simple integration</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140217179" title="C++ 仿QT信号槽二_c++模仿qt里面的信号与槽,做一个消息不同类消息传递-CSDN博客">C++ 仿QT信号槽二_c++模仿qt里面的信号与槽,做一个消息不同类消息传递-CSDN博客</a> </p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139306471" title="自定义窗口事件循环系统-CSDN博客">自定义窗口事件循环系统-CSDN博客</a> </p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/17/2024-08-17-csdn-141283598/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-08-16-csdn-141270505" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1037,126 +1136,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-08-10-csdn-141098405" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/10/2024-08-10-csdn-141098405/">C++ 算法之螺旋矩阵生成</a>
-    </h1>
-  
-
-        
-        <a href="/2024/08/10/2024-08-10-csdn-141098405/" class="archive-article-date">
-  	<time datetime="2024-08-10T15:54:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141098405">https://blog.csdn.net/qq_30220519/article/details/141098405</a></p>
-</blockquote>
-<h6 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fmt/core.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;io.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">generateMatrix</span>(<span class="type">int</span> n) &#123;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">res</span>(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, <span class="number">0</span>)); <span class="comment">// 使用vector定义一个二维数组</span></span><br><span class="line">        <span class="type">int</span> startx = <span class="number">0</span>, starty = <span class="number">0</span>; <span class="comment">// 定义每循环一个圈的起始位置</span></span><br><span class="line">        <span class="type">int</span> loop = n / <span class="number">2</span>; <span class="comment">// 每个圈循环几次，例如n为奇数3，那么loop = 1 只是循环一圈，矩阵中间的值需要单独处理</span></span><br><span class="line">        <span class="type">int</span> mid = n / <span class="number">2</span>; <span class="comment">// 矩阵中间的位置，例如：n为3， 中间的位置就是(1，1)，n为5，中间位置为(2, 2)</span></span><br><span class="line">        <span class="type">int</span> count = <span class="number">1</span>; <span class="comment">// 用来给矩阵中每一个空格赋值</span></span><br><span class="line">        <span class="type">int</span> offset = <span class="number">1</span>; <span class="comment">// 每一圈循环，需要控制每一条边遍历的长度</span></span><br><span class="line">        <span class="type">int</span> i,j;</span><br><span class="line">        <span class="keyword">while</span> (loop --) &#123;</span><br><span class="line">            i = startx;</span><br><span class="line">            j = starty;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 下面开始的四个for就是模拟转了一圈</span></span><br><span class="line">            <span class="comment">// 模拟填充上行从左到右(左闭右开)</span></span><br><span class="line">            <span class="keyword">for</span> (j = starty; j &lt; starty + n - offset; j++) &#123;</span><br><span class="line">                res[startx][j] = count++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 模拟填充右列从上到下(左闭右开)</span></span><br><span class="line">            <span class="keyword">for</span> (i = startx; i &lt; startx + n - offset; i++) &#123;</span><br><span class="line">                res[i][j] = count++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 模拟填充下行从右到左(左闭右开)</span></span><br><span class="line">            <span class="keyword">for</span> (; j &gt; starty; j--) &#123;</span><br><span class="line">                res[i][j] = count++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 模拟填充左列从下到上(左闭右开)</span></span><br><span class="line">            <span class="keyword">for</span> (; i &gt; startx; i--) &#123;</span><br><span class="line">                res[i][j] = count++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 第二圈开始的时候，起始位置要各自加1， 例如：第一圈起始位置是(0, 0)，第二圈起始位置是(1, 1)</span></span><br><span class="line">            startx++;</span><br><span class="line">            starty++;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// offset 控制每一圈里每一条边遍历的长度</span></span><br><span class="line">            offset += <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果n为奇数的话，需要单独给矩阵最中间的位置赋值</span></span><br><span class="line">        <span class="keyword">if</span> (n % <span class="number">2</span>) &#123;</span><br><span class="line">            res[mid][mid] = count;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Solution solution;</span><br><span class="line">    <span class="keyword">auto</span> rets = solution.<span class="built_in">generateMatrix</span>(<span class="number">6</span>);</span><br><span class="line">    <span class="comment">// 打印二维数组</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; rets.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; rets[i].<span class="built_in">size</span>(); ++j) &#123;</span><br><span class="line">            fmt::<span class="built_in">print</span>(<span class="string">&quot;&#123;:02d&#125; &quot;</span>,  rets[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">        fmt::<span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h6><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">01 02 03 04 05 06 </span><br><span class="line">20 21 22 23 24 07 </span><br><span class="line">19 32 33 34 25 08 </span><br><span class="line">18 31 36 35 26 09 </span><br><span class="line">17 30 29 28 27 10 </span><br><span class="line">16 15 14 13 12 11</span><br></pre></td></tr></table></figure>
-
-<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><p><img src="/images/csdn/141098405/7474dba5a8b06af1.png"></p>
-<h6 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fmt/core.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 获取圈数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getScrewNums</span><span class="params">(<span class="type">int</span> r, <span class="type">int</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> shortV = std::<span class="built_in">min</span>(r, c);</span><br><span class="line">    <span class="keyword">return</span>  shortV / <span class="number">2</span> + shortV % <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 获取列</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getsubCSize</span><span class="params">(<span class="type">int</span> c, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (c - n*<span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 获取行</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getSubRSize</span><span class="params">(<span class="type">int</span> r, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (r - n*<span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printMatrix</span><span class="params">(<span class="type">int</span>* matrix, <span class="type">int</span> r, <span class="type">int</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 打印二维数组</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; r; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; c; ++j) &#123;</span><br><span class="line">            fmt::<span class="built_in">print</span>(<span class="string">&quot;&#123;:02d&#125; &quot;</span>, matrix[i * c + j]);</span><br><span class="line">        &#125;</span><br><span class="line">        fmt::<span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 获取每个圈元素个数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getElementNums</span><span class="params">(<span class="type">int</span> r, <span class="type">int</span> c, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> times = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">auto</span> rowNums = <span class="built_in">getSubRSize</span>(r, n);</span><br><span class="line">    <span class="keyword">auto</span> colNums = <span class="built_in">getsubCSize</span>(c, n);   </span><br><span class="line">    <span class="keyword">if</span>(<span class="number">0</span> == rowNums || <span class="number">0</span> == colNums)</span><br><span class="line">        times = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> (rowNums + colNums) * times;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 创建螺旋矩阵单圈</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">createScrewMatrix</span><span class="params">(<span class="type">int</span>* matrix, <span class="type">int</span> r, <span class="type">int</span> c, <span class="type">int</span> n, <span class="type">int</span>&amp; val)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> startR = n;</span><br><span class="line">    <span class="keyword">if</span>(startR &gt; (r/<span class="number">2</span> + r%<span class="number">2</span>))</span><br><span class="line">        startR = (r/<span class="number">2</span> + r%<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">auto</span> startC = n;</span><br><span class="line">    <span class="keyword">if</span>(startC &gt; (c/<span class="number">2</span> + c%<span class="number">2</span>))</span><br><span class="line">        startC = (c/<span class="number">2</span> + c%<span class="number">2</span>);        </span><br><span class="line">    <span class="type">int</span>* subMatrix = &amp;matrix[startR* c + startC];</span><br><span class="line">    <span class="keyword">auto</span> subRSize = r - n*<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">auto</span> subCSize = c - n*<span class="number">2</span>;</span><br><span class="line">    <span class="comment">//fmt::print(&quot;R&#123;:02d&#125; C&#123;:02d&#125;\n&quot;, subRSize, subCSize);</span></span><br><span class="line">    <span class="comment">//fmt::print(&quot;startR&#123;:02d&#125; startC&#123;:02d&#125; \n&quot;,startR, startC);</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="number">0</span> == subRSize &amp;&amp; <span class="number">0</span> == subCSize)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">0</span> == subRSize)</span><br><span class="line">        subRSize = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="number">0</span> == subCSize)</span><br><span class="line">        subCSize = <span class="number">1</span>;        </span><br><span class="line">    <span class="comment">// 单个</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="number">1</span> == subRSize &amp;&amp; <span class="number">1</span> == subCSize) &#123;</span><br><span class="line">        subMatrix[<span class="number">0</span>] = val++;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">1</span> == subRSize)&#123; <span class="comment">// 单行</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; subCSize; ++i) &#123;</span><br><span class="line">            subMatrix[i] = val++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="number">1</span> == subCSize) &#123; <span class="comment">// 单列</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; subRSize; ++i) &#123;</span><br><span class="line">            <span class="comment">//fmt::print(&quot;Index&#123;:02d&#125;\n&quot;, (startR + i)* c + startC);</span></span><br><span class="line">            matrix[(startR + i)* c + startC] = val++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;   <span class="comment">// 多行多列</span></span><br><span class="line">        <span class="comment">// 顶部</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; subCSize - <span class="number">1</span>; ++i) &#123;</span><br><span class="line">            subMatrix[i] = val++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 右侧</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; subRSize - <span class="number">1</span>; ++i) &#123;</span><br><span class="line">            matrix[(startR + i)* c + startC + subCSize - <span class="number">1</span>] = val++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 底部</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = subCSize - <span class="number">1</span>; i &gt; <span class="number">0</span>; --i) &#123;</span><br><span class="line">            matrix[(startR + subRSize - <span class="number">1</span>)* c + startC + i] = val++;</span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        <span class="comment">// 左侧</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = subRSize - <span class="number">1</span>; i &gt; <span class="number">0</span>; --i) &#123;</span><br><span class="line">            matrix[(startR + i)* c + startC] = val++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 创建一个螺旋矩阵</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> r = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span> c = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span> maxNum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">auto</span> matrix = <span class="keyword">new</span> <span class="type">int</span>[r*c];</span><br><span class="line">    <span class="keyword">auto</span> screwNums = <span class="built_in">getScrewNums</span>(r, c);</span><br><span class="line">    fmt::<span class="built_in">print</span>(<span class="string">&quot;screwNums&#123;:02d&#125;\n&quot;</span>,screwNums);    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; screwNums; ++i) &#123;</span><br><span class="line">        <span class="built_in">createScrewMatrix</span>(matrix, r, c, i, maxNum);</span><br><span class="line">        <span class="built_in">printMatrix</span>(matrix, r, c);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span>[] matrix;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="过程推导"><a href="#过程推导" class="headerlink" title="过程推导"></a>过程推导</h6><blockquote>
-<p>00 01 02 03 04        00 01 02 03 04         00 01 02 03 04</p>
-<p>15 00 00 00 05        15 16 17 18 05         15 16 17 18 05</p>
-<p>14 00 00 00 06        14 23 00 19 06         14 23 24 19 06</p>
-<p>13 00 00 00 07        13 22 21 20 07         13 22 21 20 07</p>
-<p>12 11 10 09 08        12 11 10 09 08         12 11 10 09 08</p>
-</blockquote>
-<blockquote>
-<p>00 01 02 03 04 05        00 01 02 03 04 05</p>
-<p>13 00 00 00 00 06        13 14 15 16 17 06</p>
-<p>12 11 10 09 08 07        12 11 10 09 08 07</p>
-</blockquote>
-<blockquote>
-<p>00 01 02 03 04 05 06 07 08 09                        00 01 02 03 04 05 06 07 08 09</p>
-<p>35 00 00 00 00 00 00 00 00 10                        35 36 37 38 39 40 41 42 43 10   </p>
-<p>34 00 00 00 00 00 00 00 00 11                        34 63 64 65 66 67 68 69 44 11</p>
-<p>33 00 00 00 00 00 00 00 00 12                        33 62 83 84 85 86 87 70 45 12     </p>
-<p>32 00 00 00 00 00 00 00 00 13                        32 61 82 95 96 97 88 71 46 13   </p>
-<p>31 00 00 00 00 00 00 00 00 14        ……          31 60 81 94 99 98 89 72 47 14</p>
-<p>30 00 00 00 00 00 00 00 00 15                        30 59 80 93 92 91 90 73 48 15</p>
-<p>29 00 00 00 00 00 00 00 00 16                        29 58 79 78 77 76 75 74 49 16</p>
-<p>28 00 00 00 00 00 00 00 00 17                        28 57 56 55 54 53 52 51 50 17 </p>
-<p>27 26 25 24 23 22 21 20 19 18                        27 26 25 24 23 22 21 20 19 18</p>
-</blockquote>
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a><strong>参考</strong></h6><p><a target="_blank" rel="noopener" href="https://github.com/youngyangyang04/leetcode-master%C2%A0" title="https:&#x2F;&#x2F;github.com&#x2F;youngyangyang04&#x2F;leetcode-master ">https://github.com/youngyangyang04/leetcode-master</a> </p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/08/10/2024-08-10-csdn-141098405/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
@@ -1540,6 +1519,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

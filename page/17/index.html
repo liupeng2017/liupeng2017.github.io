@@ -204,6 +204,102 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-07-09-csdn-140299181" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/09/2024-07-09-csdn-140299181/">C++ pdf库总结</a>
+    </h1>
+  
+
+        
+        <a href="/2024/07/09/2024-07-09-csdn-140299181/" class="archive-article-date">
+  	<time datetime="2024-07-09T08:37:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        本文已加密，请输入密码后继续阅读。
+        
+          <a class="article-more-a" href="/2024/07/09/2024-07-09-csdn-140299181/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/09/2024-07-09-csdn-140299181/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-07-08-csdn-140275837" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1034,98 +1130,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-07-04-csdn-140189597" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/04/2024-07-04-csdn-140189597/">C++时区转换</a>
-    </h1>
-  
-
-        
-        <a href="/2024/07/04/2024-07-04-csdn-140189597/" class="archive-article-date">
-  	<time datetime="2024-07-04T12:53:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140189597">https://blog.csdn.net/qq_30220519/article/details/140189597</a></p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;cctz/civil_time.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;cctz/time_zone.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 时区转换库</span></span><br><span class="line"><span class="comment">// https://github.com/google/cctz</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (cctz::civil_day <span class="built_in">d</span>(<span class="number">2016</span>, <span class="number">2</span>, <span class="number">1</span>); d &lt; cctz::<span class="built_in">civil_month</span>(<span class="number">2016</span>, <span class="number">3</span>); ++d) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Hello &quot;</span> &lt;&lt; d;</span><br><span class="line">        <span class="keyword">if</span> (d.<span class="built_in">day</span>() == <span class="number">29</span>) &#123;</span><br><span class="line">            std::cout &lt;&lt; <span class="string">&quot; &lt;- leap day is a &quot;</span> &lt;&lt; cctz::<span class="built_in">get_weekday</span>(d);</span><br><span class="line">        &#125;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cctz::time_zone nyc;</span><br><span class="line">    cctz::<span class="built_in">load_time_zone</span>(<span class="string">&quot;America/New_York&quot;</span>, &amp;nyc);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Converts the input civil time in NYC to an absolute time.</span></span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span> moon_walk =</span><br><span class="line">        cctz::<span class="built_in">convert</span>(cctz::<span class="built_in">civil_second</span>(<span class="number">1969</span>, <span class="number">7</span>, <span class="number">20</span>, <span class="number">22</span>, <span class="number">56</span>, <span class="number">0</span>), nyc);</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Moon walk in NYC: &quot;</span></span><br><span class="line">        &lt;&lt; cctz::format(<span class="string">&quot;%Y-%m-%d %H:%M:%S %Ez\n&quot;</span>, moon_walk, nyc);</span><br><span class="line"></span><br><span class="line">    cctz::time_zone syd;</span><br><span class="line">    <span class="keyword">if</span> (!cctz::<span class="built_in">load_time_zone</span>(<span class="string">&quot;Australia/Sydney&quot;</span>, &amp;syd)) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Moon walk in SYD: &quot;</span></span><br><span class="line">        &lt;&lt; cctz::format(<span class="string">&quot;%Y-%m-%d %H:%M:%S %Ez\n&quot;</span>, moon_walk, syd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>参考</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/google/cctz" title="GitHub - google&#x2F;cctz: CCTZ is a C++ library for translating between absolute and civil times using the rules of a time zone.">GitHub - google&#x2F;cctz: CCTZ is a C++ library for translating between absolute and civil times using the rules of a time zone.</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/04/2024-07-04-csdn-140189597/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/16/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/18/">Next &raquo;</a>
@@ -1509,6 +1513,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

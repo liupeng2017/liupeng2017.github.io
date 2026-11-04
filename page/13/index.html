@@ -204,6 +204,99 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-08-05-csdn-140937007" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/05/2024-08-05-csdn-140937007/">C++ 正则表达式调试器</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/05/2024-08-05-csdn-140937007/" class="archive-article-date">
+  	<time datetime="2024-08-05T13:10:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140937007">https://blog.csdn.net/qq_30220519/article/details/140937007</a></p>
+</blockquote>
+<h6 id="设计背景"><a href="#设计背景" class="headerlink" title="设计背景"></a>设计背景</h6><p>部分网页正则表达式测试工具，输入$匹配符会卡死，决定自己实现一个</p>
+<h6 id="界面设计"><a href="#界面设计" class="headerlink" title="界面设计"></a>界面设计</h6><p><img src="/images/csdn/140937007/03cea793088e9f72.png"></p>
+<h6 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">RegexpDialog::on_edt_regx_textChanged</span><span class="params">(<span class="type">const</span> QString &amp;pattern)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> text = ui-&gt;edt_content-&gt;<span class="built_in">text</span>();</span><br><span class="line">    <span class="function">QRegularExpression <span class="title">regxp</span><span class="params">(pattern)</span></span>;</span><br><span class="line">    <span class="comment">// 查找所有匹配项</span></span><br><span class="line">    QRegularExpressionMatchIterator matches = regxp.<span class="built_in">globalMatch</span>(text);</span><br><span class="line">    QStringList matchTexts;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (matches.<span class="built_in">hasNext</span>()) &#123;</span><br><span class="line">        QRegularExpressionMatch match = matches.<span class="built_in">next</span>();</span><br><span class="line">        <span class="keyword">if</span>(match.<span class="built_in">hasMatch</span>()) &#123;</span><br><span class="line">            matchTexts &lt;&lt; match.<span class="built_in">capturedTexts</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> listModel = (QStringListModel*)ui-&gt;lst_match-&gt;<span class="built_in">model</span>();</span><br><span class="line">    listModel-&gt;<span class="built_in">setStringList</span>(matchTexts);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://www.jyshare.com/front-end/854/" title="正则表达式在线测试 | 菜鸟工具">正则表达式在线测试 | 菜鸟工具</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/05/2024-08-05-csdn-140937007/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-08-04-csdn-140912830" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1201,93 +1294,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-07-28-csdn-140743655" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/28/2024-07-28-csdn-140743655/">mstc远程连接不锁屏</a>
-    </h1>
-  
-
-        
-        <a href="/2024/07/28/2024-07-28-csdn-140743655/" class="archive-article-date">
-  	<time datetime="2024-07-28T08:17:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140743655">https://blog.csdn.net/qq_30220519/article/details/140743655</a></p>
-</blockquote>
-<h6 id="连接不锁屏"><a href="#连接不锁屏" class="headerlink" title="连接不锁屏"></a>连接不锁屏</h6><h6 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h6><p><img src="/images/csdn/140743655/02d5f71fb1b3688f.png"></p>
-<h6 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h6><p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/fallingflower/article/details/125215235" title="win10 解决多用户同时远程连接教程（超详细图文）_win10多用户登录-CSDN博客">win10 解决多用户同时远程连接教程（超详细图文）_win10多用户登录-CSDN博客</a></p>
-<p> <a target="_blank" rel="noopener" href="https://github.com/stascorp/rdpwrap/releases/download/v1.6.2/RDPWrap-v1.6.2.zip" title="win7软件">win7软件</a></p>
-<h6 id="logout-bat"><a href="#logout-bat" class="headerlink" title="logout.bat"></a>logout.bat</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> /f <span class="string">&quot;skip=1 tokens=3&quot;</span> %%s <span class="keyword">in</span> (<span class="string">&#x27;query user %USERNAME%&#x27;</span>) <span class="keyword">do</span> (%windir%\System32\tscon.exe %%s /dest:console)</span><br></pre></td></tr></table></figure>
-
-<p>断开连接时切换到远程时用户，管理员运行此脚本</p>
-<h6 id="重启命令"><a href="#重启命令" class="headerlink" title="重启命令"></a>重启命令</h6><p>shutdown -s -t 0：立即关闭计算机。</p>
-<p>shutdown -r -t 0：立即重启计算机。</p>
-<p>shutdown -r -t 60：60秒后重启计算机。</p>
-<p>shutdown &#x2F;g：注销当前用户并重新启动计算机。</p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/07/28/2024-07-28-csdn-140743655/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
@@ -1671,6 +1677,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

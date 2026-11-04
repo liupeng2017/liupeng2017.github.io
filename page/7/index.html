@@ -204,6 +204,100 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-09-19-csdn-142358483" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/09/19/2024-09-19-csdn-142358483/">C HTML格式解析与生成之gumbo</a>
+    </h1>
+  
+
+        
+        <a href="/2024/09/19/2024-09-19-csdn-142358483/" class="archive-article-date">
+  	<time datetime="2024-09-19T06:04:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142358483">https://blog.csdn.net/qq_30220519/article/details/142358483</a></p>
+</blockquote>
+<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../src/gumbo.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 提取纯文本内容</span></span><br><span class="line"><span class="function"><span class="type">static</span> std::string <span class="title">cleantext</span><span class="params">(GumboNode* node)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (node-&gt;type == GUMBO_NODE_TEXT) &#123;</span><br><span class="line">    <span class="keyword">return</span> std::<span class="built_in">string</span>(node-&gt;v.text.text);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (node-&gt;type == GUMBO_NODE_ELEMENT &amp;&amp;</span><br><span class="line">             node-&gt;v.element.tag != GUMBO_TAG_SCRIPT &amp;&amp;</span><br><span class="line">             node-&gt;v.element.tag != GUMBO_TAG_STYLE) &#123;</span><br><span class="line">    std::string contents = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    GumboVector* children = &amp;node-&gt;v.element.children;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; children-&gt;length; ++i) &#123;</span><br><span class="line">      <span class="type">const</span> std::string text = <span class="built_in">cleantext</span>((GumboNode*) children-&gt;data[i]);</span><br><span class="line">      <span class="keyword">if</span> (i != <span class="number">0</span> &amp;&amp; !text.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        contents.<span class="built_in">append</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      contents.<span class="built_in">append</span>(text);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> contents;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 提取url链接</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">search_for_links</span><span class="params">(GumboNode* node)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (node-&gt;type != GUMBO_NODE_ELEMENT) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  GumboAttribute* href;</span><br><span class="line">  <span class="keyword">if</span> (node-&gt;v.element.tag == GUMBO_TAG_A &amp;&amp;</span><br><span class="line">      (href = <span class="built_in">gumbo_get_attribute</span>(&amp;node-&gt;v.element.attributes, <span class="string">&quot;href&quot;</span>))) &#123;</span><br><span class="line">    std::cout &lt;&lt; href-&gt;value &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  GumboVector* children = &amp;node-&gt;v.element.children;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; children-&gt;length; ++i) &#123;</span><br><span class="line">    <span class="built_in">search_for_links</span>(<span class="keyword">static_cast</span>&lt;GumboNode*&gt;(children-&gt;data[i]));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找标题</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span>* <span class="title">find_title</span><span class="params">(<span class="type">const</span> GumboNode* root)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">assert</span>(root-&gt;type == GUMBO_NODE_ELEMENT);</span><br><span class="line">  <span class="built_in">assert</span>(root-&gt;v.element.children.length &gt;= <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">const</span> GumboVector* root_children = &amp;root-&gt;v.element.children;</span><br><span class="line">  GumboNode* head = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; root_children-&gt;length; ++i) &#123;</span><br><span class="line">    GumboNode* child = (GumboNode*) root_children-&gt;data[i];</span><br><span class="line">    <span class="keyword">if</span> (child-&gt;type == GUMBO_NODE_ELEMENT &amp;&amp;</span><br><span class="line">        child-&gt;v.element.tag == GUMBO_TAG_HEAD) &#123;</span><br><span class="line">      head = child;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">assert</span>(head != <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">  GumboVector* head_children = &amp;head-&gt;v.element.children;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; head_children-&gt;length; ++i) &#123;</span><br><span class="line">    GumboNode* child = (GumboNode*) head_children-&gt;data[i];</span><br><span class="line">    <span class="keyword">if</span> (child-&gt;type == GUMBO_NODE_ELEMENT &amp;&amp;</span><br><span class="line">        child-&gt;v.element.tag == GUMBO_TAG_TITLE) &#123;</span><br><span class="line">      <span class="keyword">if</span> (child-&gt;v.element.children.length != <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&lt;empty title&gt;&quot;</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      GumboNode* title_text = (GumboNode *) child-&gt;v.element.children.data[<span class="number">0</span>];</span><br><span class="line">      <span class="built_in">assert</span>(title_text-&gt;type == GUMBO_NODE_TEXT ||</span><br><span class="line">             title_text-&gt;type == GUMBO_NODE_WHITESPACE);</span><br><span class="line">      <span class="keyword">return</span> title_text-&gt;v.text.text;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;&lt;no title found&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> std::string <span class="title">find_line</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> std::string&amp; original_text, <span class="type">const</span> GumboAttribute&amp; attr)</span> </span>&#123;</span><br><span class="line">  <span class="type">size_t</span> attr_index = attr.original_value.data - original_text.<span class="built_in">data</span>();</span><br><span class="line">  <span class="type">size_t</span> begin = original_text.<span class="built_in">rfind</span>(<span class="string">&quot;\n&quot;</span>, attr_index) + <span class="number">1</span>;</span><br><span class="line">  <span class="type">size_t</span> end = original_text.<span class="built_in">find</span>(<span class="string">&quot;\n&quot;</span>, attr_index);</span><br><span class="line">  <span class="keyword">if</span> (end != std::string::npos) &#123;</span><br><span class="line">    end--;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    end = (<span class="type">size_t</span>) original_text.<span class="built_in">length</span>() - <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  end = std::<span class="built_in">min</span>(end, attr_index + <span class="number">40</span>);</span><br><span class="line">  begin = std::<span class="built_in">max</span>(begin, attr_index - <span class="number">40</span>);</span><br><span class="line">  <span class="keyword">return</span> original_text.<span class="built_in">substr</span>(begin, end - begin);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找class元素</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">search_for_class</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    GumboNode* node, <span class="type">const</span> std::string&amp; original_text, <span class="type">const</span> <span class="type">char</span>* cls_name)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (node-&gt;type != GUMBO_NODE_ELEMENT) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  GumboAttribute* cls_attr;</span><br><span class="line">  <span class="keyword">if</span> ((cls_attr = <span class="built_in">gumbo_get_attribute</span>(&amp;node-&gt;v.element.attributes, <span class="string">&quot;class&quot;</span>)) &amp;&amp;</span><br><span class="line">      <span class="built_in">strstr</span>(cls_attr-&gt;value, cls_name) != <span class="literal">NULL</span>) &#123;</span><br><span class="line">    std::cout &lt;&lt; cls_attr-&gt;value_start.line &lt;&lt; <span class="string">&quot;:&quot;</span></span><br><span class="line">              &lt;&lt; cls_attr-&gt;value_start.column &lt;&lt; <span class="string">&quot; - &quot;</span></span><br><span class="line">              &lt;&lt; <span class="built_in">find_line</span>(original_text, *cls_attr) &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  GumboVector* children = &amp;node-&gt;v.element.children;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; children-&gt;length; ++i) &#123;</span><br><span class="line">    <span class="built_in">search_for_class</span>(</span><br><span class="line">        <span class="keyword">static_cast</span>&lt;GumboNode*&gt;(children-&gt;data[i]), original_text, cls_name);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Usage: clean_text &lt;html filename&gt;\n&quot;</span>;</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span>* filename = argv[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">  <span class="function">std::ifstream <span class="title">in</span><span class="params">(filename, std::ios::in | std::ios::binary)</span></span>;</span><br><span class="line">  <span class="keyword">if</span> (!in) &#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;File &quot;</span> &lt;&lt; filename &lt;&lt; <span class="string">&quot; not found!\n&quot;</span>;</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  std::string contents;</span><br><span class="line">  in.<span class="built_in">seekg</span>(<span class="number">0</span>, std::ios::end);</span><br><span class="line">  contents.<span class="built_in">resize</span>(in.<span class="built_in">tellg</span>());</span><br><span class="line">  in.<span class="built_in">seekg</span>(<span class="number">0</span>, std::ios::beg);</span><br><span class="line">  in.<span class="built_in">read</span>(&amp;contents[<span class="number">0</span>], contents.<span class="built_in">size</span>());</span><br><span class="line">  in.<span class="built_in">close</span>();</span><br><span class="line"></span><br><span class="line">  GumboOutput* output = <span class="built_in">gumbo_parse_with_options</span>(</span><br><span class="line">      &amp;kGumboDefaultOptions, contents.<span class="built_in">data</span>(), contents.<span class="built_in">length</span>());</span><br><span class="line">  std::cout &lt;&lt; <span class="built_in">cleantext</span>(output-&gt;root) &lt;&lt; std::endl;</span><br><span class="line">  <span class="comment">//search_for_links(output-&gt;root);</span></span><br><span class="line">  <span class="comment">//find_title(output-&gt;root);</span></span><br><span class="line">  <span class="comment">//const char* cls = &quot;article&quot;;</span></span><br><span class="line">  <span class="comment">//search_for_class(output-&gt;root, contents, cls);</span></span><br><span class="line">  <span class="built_in">gumbo_destroy_output</span>(&amp;kGumboDefaultOptions, output);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><p><img src="/images/csdn/142358483/c555c3afa69aa821.png"></p>
+<p><img src="/images/csdn/142358483/f70087559e9b1a5f.png"></p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://pengliu.blog.csdn.net/article/details/141475406" title="C HTML格式解析与生成-CSDN博客">C HTML格式解析与生成-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/google/gumbo-parser" title="GitHub - google&#x2F;gumbo-parser: An HTML5 parsing library in pure C99">GitHub - google&#x2F;gumbo-parser: An HTML5 parsing library in pure C99</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
+<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/09/19/2024-09-19-csdn-142358483/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-09-17-csdn-142309917" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1058,87 +1152,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-09-09-csdn-142052817" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/09/09/2024-09-09-csdn-142052817/">Windows磁盘文件恢复工具</a>
-    </h1>
-  
-
-        
-        <a href="/2024/09/09/2024-09-09-csdn-142052817/" class="archive-article-date">
-  	<time datetime="2024-09-09T02:48:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142052817">https://blog.csdn.net/qq_30220519/article/details/142052817</a></p>
-</blockquote>
-<h5 id="下载"><a href="#下载" class="headerlink" title="下载"></a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_30220519/89728617" title="下载 ">下载</a></h5><h5 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">FILE_RECOVERER::recoverFiles</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>-&gt;fat32_info == <span class="literal">nullptr</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    HANDLE hdisk = <span class="keyword">this</span>-&gt;<span class="built_in">openDisk</span>(<span class="keyword">this</span>-&gt;path_to_recover);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (hdisk == INVALID_HANDLE_VALUE)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CreateDirectory</span>(<span class="keyword">this</span>-&gt;path_to_save, <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>-&gt;fat32_info-&gt;files_and_dirs.<span class="built_in">size</span>(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        FILE_ENTRY* file_entry = <span class="keyword">this</span>-&gt;fat32_info-&gt;files_and_dirs.<span class="built_in">at</span>(i);</span><br><span class="line">        <span class="keyword">if</span> (file_entry-&gt;<span class="built_in">isFolder</span>())</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">unsigned</span> <span class="type">char</span>* file_data = <span class="keyword">this</span>-&gt;fat32_info-&gt;<span class="built_in">readFile</span>(hdisk, <span class="keyword">this</span>-&gt;fat32_info-&gt;<span class="built_in">getFAT</span>(<span class="number">1</span>), file_entry);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (file_data == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>-&gt;<span class="built_in">checkIfFileExtensionValid</span>(file_entry-&gt;<span class="built_in">getFileExtension</span>()))</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>-&gt;<span class="built_in">saveRecoveredFile</span>(file_data, file_entry);</span><br><span class="line">        <span class="keyword">delete</span>[] file_data;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CloseHandle</span>(hdisk);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><h5 id=""><a href="#" class="headerlink" title=""></a></h5><p><img src="/images/csdn/142052817/f14c58e59417587b.png"></p>
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://github.com/WonderWoman2020/os-projekt" title="https:&#x2F;&#x2F;github.com&#x2F;WonderWoman2020&#x2F;os-projekt">https://github.com/WonderWoman2020/os-projekt</a> </p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/09/09/2024-09-09-csdn-142052817/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -1522,6 +1535,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

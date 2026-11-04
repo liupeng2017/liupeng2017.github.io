@@ -547,6 +547,250 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-2026-11-04-hexo-github-pages-custom-domain" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/11/04/2026-11-04-hexo-github-pages-custom-domain/">Hexo 自建博客：本地构建、推到 GitHub Pages、再挂上自己的域名</a>
+    </h1>
+  
+
+        
+        <a href="/2026/11/04/2026-11-04-hexo-github-pages-custom-domain/" class="archive-article-date">
+  	<time datetime="2026-11-04T15:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-11-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>这篇不是我抄教程整理的那种「三分钟搭建个人博客」，而是把我现在这个站从本地构建到线上一整条链路拆开讲清楚，包括我自己踩过的坑。文中不出现具体身份信息：仓库地址、用户名、邮箱、域名、环境变量名都用占位符或泛化描述，日期写成 <code>&lt;年&gt;/&lt;月&gt;/&lt;日&gt;</code> 这种形式，代码块里的路径只保留目录结构层面的信息。</p>
+</blockquote>
+<h6 id="先看清整条链路"><a href="#先看清整条链路" class="headerlink" title="先看清整条链路"></a>先看清整条链路</h6><p>很多人把「Hexo 部署」当成一条命令，出问题时才发现它其实是四段独立的东西，每一段都会单独坏掉。</p>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>我这里的实际做法</th>
+<th>坏掉时的表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内容与元数据</td>
+<td><code>source/_posts/*.md</code>，front-matter 带 <code>title / date / tags / categories</code></td>
+<td>日期、排序、分类错乱</td>
+</tr>
+<tr>
+<td>静态生成</td>
+<td><code>hexo generate</code> 输出到 <code>public/</code>，主题用 yilia</td>
+<td>模板报错、某页 0 字节</td>
+</tr>
+<tr>
+<td>发布</td>
+<td><code>hexo-deployer-git</code> 把 <code>public/</code> 提交进仓库的 Pages 分支</td>
+<td>commit 失败、推送冲突</td>
+</tr>
+<tr>
+<td>域名与 HTTPS</td>
+<td>GitHub Pages 的 Custom domain + CNAME + DNS A 记录</td>
+<td>404、证书没生效、跳回 github.io</td>
+</tr>
+</tbody></table>
+<p>对应的目录也分得很清楚：<code>source/</code> 是源码、<code>public/</code> 是产物、<code>.deploy_git/</code> 是部署用的临时仓库（它自己是一个独立 git 仓库，历史里能看到每次「Site updated」）。这三个都别手改产物目录——<code>.deploy_git</code> 会被清掉重写，<code>public/</code> 每次构建覆盖。</p>
+<h6 id="环境与初始化"><a href="#环境与初始化" class="headerlink" title="环境与初始化"></a>环境与初始化</h6><p>Node、Hexo、主题三样都有版本耦合，我是这么固定的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 nvm 或直接指定某个 Node 版本，别用「系统里默认那个」</span></span><br><span class="line">node -v          <span class="comment"># 本机锁在 18.x，构建脚本写死路径</span></span><br><span class="line">npm i -g hexo-cli</span><br><span class="line">hexo init my-blog &amp;&amp; <span class="built_in">cd</span> my-blog &amp;&amp; npm i</span><br><span class="line">npm i hexo-deployer-git hexo-generator-cname hexo-blog-encrypt</span><br></pre></td></tr></table></figure>
+
+<p>版本上我这边是 <code>hexo ^7.3.0</code> + <code>hexo-deployer-git ^4.0.0</code> + <code>hexo-generator-cname ^0.3.0</code> + <code>hexo-blog-encrypt ^4.1.0</code>，主题是 yilia（一个还在用 EJS 模板的老主题，后面会讲它带来的两个坑）。写进 <code>package.json</code> 而不是全局装是最省事的复现方式：换机器只 <code>npm ci</code>。</p>
+<p>配置文件里真正决定线上形态的就这几行：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># _config.yml</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://&lt;你的域名&gt;</span>          <span class="comment"># 必须带协议，且与最终访问地址完全一致</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:&lt;你的用户名&gt;/&lt;你的用户名&gt;.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<p><code>url</code> 是全站绝对链接的基准：sitemap、canonical、RSS、分享卡片的 OG 标签、主题里 <code>url_for</code> 生成的地址全都从它推出来。先占位再改域名的话，改完之后要重新构建并检查 sitemap 里的地址，不要只改 DNS。</p>
+<h6 id="推到-GitHub-Pages"><a href="#推到-GitHub-Pages" class="headerlink" title="推到 GitHub Pages"></a>推到 GitHub Pages</h6><p>仓库名必须是 <code>&lt;用户名&gt;.github.io</code>（用户级站点），分支可以选 <code>master</code> 或 <code>gh-pages</code>，在 Pages 设置里指认哪个都行；项目级站点则是 <code>&lt;仓库名&gt;.github.io/&lt;子路径&gt;</code>，那时 <code>root</code> 要写成 <code>/&lt;仓库名&gt;/</code>，这是最多人翻车的地方。</p>
+<p>用 SSH 而不是 token 的理由很实际：token 会过期、会被复制进 CI 日志；SSH 私钥留在本机 <code>~/.ssh</code>，仓库里什么都不留。公钥加到 GitHub 的 <strong>Settings → SSH and GPG keys</strong>，然后验证一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com      <span class="comment"># 看到 Hi &lt;用户名&gt;! You&#x27;ve successfully authenticated 就通了</span></span><br></pre></td></tr></table></figure>
+
+<p><code>hexo deploy</code> 背后其实就是替你在 <code>.deploy_git</code> 里做 <code>git add . &amp;&amp; git commit &amp;&amp; git push</code>。这里有个坑：机器上没有全局 git 身份时，commit 那一步会直接失败，报 <code>Please tell me who you are</code>。两种解法，我选前者，因为它不污染全局配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:&lt;你的用户名&gt;/&lt;你的用户名&gt;.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">&lt;提交显示名&gt;</span></span><br><span class="line">  <span class="attr">email:</span> <span class="string">&lt;不公开的邮箱&gt;</span>          <span class="comment"># 这个地址会写进公开仓库的历史，注意别用真实常用邮箱</span></span><br></pre></td></tr></table></figure>
+
+<p>还有一点要记住：Pages 分支的<strong>每一次提交都是公开的</strong>，所以任何敏感文件都不应该出现在产物目录里。我的做法是把部署相关的规则写进源码仓库的 <code>.gitignore</code>，并且构建后扫一遍产物：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># .gitignore（源码仓库）</span><br><span class="line">public/</span><br><span class="line">.deploy*/</span><br><span class="line">db.json</span><br><span class="line">.secrets/</span><br><span class="line">*.key</span><br><span class="line">*.csr</span><br><span class="line">*.pem</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建后自检：产物里只要出现密钥类文件就中止</span></span><br><span class="line">find public -maxdepth 3 \( -name <span class="string">&#x27;*.key&#x27;</span> -o -name <span class="string">&#x27;*.pem&#x27;</span> -o -name <span class="string">&#x27;*.csr&#x27;</span> \) -<span class="built_in">print</span> -quit</span><br></pre></td></tr></table></figure>
+
+<h6 id="挂自己的域名"><a href="#挂自己的域名" class="headerlink" title="挂自己的域名"></a>挂自己的域名</h6><p>域名解析这一层和 Hexo 完全无关，但最容易在这里翻车。</p>
+<p><strong>CNAME 文件由谁生成。</strong> Pages 靠仓库根目录的 <code>CNAME</code> 记住你的域名。而 <code>hexo-deployer-git</code> 的机制是：清空 <code>.deploy_git</code> → 把 <code>public/</code> 整个复制进去 → <code>git add -A</code> → <code>git push --force</code>。也就是说线上分支的内容严格等于 <code>public/</code>，你手动提交到那个分支的 <code>CNAME</code>（或者任何文件）会在下一次部署时消失，force push 也不给你在线上分支直接改内容的余地。装了 <code>hexo-generator-cname</code> 之后，它每次 <code>hexo generate</code> 都把 <code>_config.yml</code> 里 <code>url</code> 的域名写进 <code>public/CNAME</code>，产物带着它走，就不会丢。我没在 <code>source/</code> 下手写过 CNAME，一个插件解决的事不需要两份真相。</p>
+<p><strong>DNS 怎么填。</strong> 顶级域（<code>example.com</code>）不能用 CNAME（RFC 限制，CNAME 不能与其他记录共存），要填 GitHub Pages 的四台 A 记录；<code>www</code> 用 CNAME 指向 <code>&lt;用户名&gt;.github.io</code>。四个 IP 以 GitHub 官方文档当期给出的为准，别抄博客里的旧值：</p>
+<table>
+<thead>
+<tr>
+<th>主机记录</th>
+<th>类型</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@</code></td>
+<td>A</td>
+<td>185.199.108.153 &#x2F; 109.153 &#x2F; 110.153 &#x2F; 111.153（以官方文档为准）</td>
+</tr>
+<tr>
+<td><code>www</code></td>
+<td>CNAME</td>
+<td><code>&lt;用户名&gt;.github.io</code></td>
+</tr>
+</tbody></table>
+<p>然后在 <strong>Settings → Pages → Custom domain</strong> 填域名，勾 <strong>Enforce HTTPS</strong>。HTTPS 证书由 GitHub 自动签发，前提是解析已经生效；没生效时那个勾是灰的或者点了不报错但证书迟迟不来，这时候先回去查解析而不是反复点。</p>
+<p><strong>别用肉眼验证。</strong> <code>curl -I https://&lt;你的域名&gt;</code> 一次 404 不代表失败，可能只是 Pages 还在构建（我的经验是 1～2 分钟）。这两条命令能分开「解析没到」和「构建没好」两种情况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dig +short A &lt;你的域名&gt;            <span class="comment"># 空或不是 GitHub 的 IP → DNS 层问题</span></span><br><span class="line">curl -sI https://&lt;你的域名&gt; | <span class="built_in">head</span> -1   <span class="comment"># 200 且有证书 → DNS 和构建都通了</span></span><br></pre></td></tr></table></figure>
+
+<p>批量发布几十篇时，写个轮询脚本比手动刷页面靠谱：按 URL 列表逐个请求、失败重试几次、把状态码记进日志。这里有一条血泪教训——<strong>URL 要按字节比对，不要按屏幕显示比对</strong>。我的 permalink 模板是 <code>:year/:month/:day/:title/</code>，展开后形如 <code>&lt;年&gt;/&lt;月&gt;/&lt;日&gt;/&lt;slug&gt;/</code>，某些终端会把日期里的斜杠显示成短横线，看着一样、实际差一个字符，我因此差点把一条 200 的链接误判成 404；脚本里把字符串拆成字符码比对才确认清楚。</p>
+<h6 id="私密文章与密码门"><a href="#私密文章与密码门" class="headerlink" title="私密文章与密码门"></a>私密文章与密码门</h6><p><code>hexo-blog-encrypt</code> 是纯前端加密：正文在构建时就被密文写进 HTML，浏览器里用你输入的密码做 PBKDF2 解密。这意味着<strong>密码本身绝对不能进仓库</strong>——写在 front-matter 或 <code>_config.yml</code> 里都会随源码进公开仓库，等于把钥匙贴在门上。我的做法是构建时从环境变量注入：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># _config.yml</span></span><br><span class="line"><span class="attr">encrypt:</span></span><br><span class="line">  <span class="attr">kdf:</span></span><br><span class="line">    <span class="attr">iterations:</span> <span class="number">600000</span>     <span class="comment"># 低于当期 OWASP 推荐值插件会告警</span></span><br><span class="line">  <span class="attr">autoSave:</span> <span class="literal">false</span>          <span class="comment"># 不把密码留在 localStorage，公共设备场景必须关</span></span><br><span class="line">  <span class="attr">stableSalt:</span> <span class="literal">false</span>        <span class="comment"># 每次构建换 salt，避免离线撞库</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">私密</span></span><br><span class="line">      <span class="attr">password:</span></span><br><span class="line">        <span class="attr">env:</span> <span class="string">&lt;SITE_PASSWORD&gt;</span>   <span class="comment"># 只写变量名，不写值</span></span><br></pre></td></tr></table></figure>
+
+<p>值放在仓库外的 <code>.secrets/&lt;name&gt;.txt</code>，配一条 npm script 在构建前注入环境变量，<strong>变量没设置时构建直接失败</strong>——宁可发不出去，也不能把明文发出去。三个开关（迭代次数、autoSave、stableSalt）不是我拍脑袋，是这类插件默认值普遍偏松，公共设备上 localStorage 存密码这点尤其不能接受。</p>
+<h6 id="我在这个站上真实踩过的坑"><a href="#我在这个站上真实踩过的坑" class="headerlink" title="我在这个站上真实踩过的坑"></a>我在这个站上真实踩过的坑</h6><p>按「值得别人也防一遍」排序：</p>
+<ol>
+<li><strong>主题模板里的相对路径。</strong> yilia 的 <code>layout.ejs</code> 有一行 <code>src=&quot;../source-src/js/clicklove.js&quot;</code>。这个文件确实躺在主题的 <code>source-src/</code> 里，但构建不会把它复制进站点产物，所以首页把它解析成 <code>/source-src/...</code>、文章页解析成 <code>/年/月/日/source-src/...</code>，两种都验证过是 404——也就是说「点击出现小红心」这个功能一直是坏的，直到为写这篇去翻 Network 面板才发现。教训：模板里引用资源一律用 <code>url_for()</code>，并且别假设「源码里有这个文件」等于「线上能取到」。</li>
+<li><strong>配置里留了个没人实现的入口。</strong> <code>_config.yml</code> 写着 <code>rss: /atom.xml</code>，但没装 <code>hexo-generator-feed</code>，于是 <code>/atom.xml</code> 一直 404，主题侧边栏的 RSS 图标是个死链。要么补插件，要么把这个入口关掉——留个坏掉的图标比没有更糟。<code>favicon.png</code> 也是同一类问题。</li>
+<li><strong>模板报错会被静默吞掉，产出 0 字节页面。</strong> 我新写聚合页时用了 <code>partial(&#39;post/title&#39;)</code>，实际路径应该是 <code>partial(&#39;_partial/post/title&#39;)</code>。<code>hexo generate</code> 的 exit code 正常、日志看不出问题，只有产物大小是 0。所以构建之后要有一步「抽查关键页面的字节数和标题」，而不是只看命令有没有报错。</li>
+<li><strong>图床防盗链。</strong> 从第三方内容平台搬运过来的文章，图片指向对方 CDN，直接外链在自己的域名上会被防盗链拦掉。做法是把附件全部下载到本地 <code>images/&lt;来源平台&gt;/&lt;文章ID&gt;/</code> 并重写链接，这一步要独立的同步脚本，别指望 Markdown 渲染帮你做。</li>
+<li><strong><code>.deploy_git</code> 不是工作区。</strong> 想改线上内容去 <code>source/</code> 改，在那儿改的东西下次部署就没了。</li>
+</ol>
+<p>还有两个我<strong>没验证完、但建议你上线前检查</strong>的点：一是 <code>hexo-generator-json-content</code> 生成的 <code>content.json</code> 会不会把加密文章的正文带出去（我还没逐项核对，如果带出去就得给私密文章加排除）；二是加密文章的标题、摘要仍会出现在归档页和 sitemap 里——这是这类插件的固有行为，接受不了就得换部署方式（比如私密内容不放静态站）。</p>
+<h6 id="备选方案与成本"><a href="#备选方案与成本" class="headerlink" title="备选方案与成本"></a>备选方案与成本</h6><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>适合谁</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GitHub Pages（本站用的）</td>
+<td>纯静态、不想运维、代码即内容</td>
+<td>只有静态、构建时间偶发延迟、历史必须干净</td>
+</tr>
+<tr>
+<td>Cloudflare Pages &#x2F; Vercel</td>
+<td>想要 PR 预览、表单函数、边缘缓存</td>
+<td>多一套平台概念，构建环境要重新配</td>
+</tr>
+<tr>
+<td>对象存储 + CDN</td>
+<td>图片多、访问量不稳</td>
+<td>计费模型要看清，证书另配</td>
+</tr>
+<tr>
+<td>自建 VPS + Nginx + certbot</td>
+<td>想连评论、访问统计、密码门一起自持</td>
+<td>真·运维，patch 和备份都得管</td>
+</tr>
+</tbody></table>
+<p>成本上只有域名是年费，价格取决于后缀和注册商，注意首年优惠与续费价的差别，以及自动续费；其余环节在这个规模下都是免费档。</p>
+<h6 id="上线检查清单"><a href="#上线检查清单" class="headerlink" title="上线检查清单"></a>上线检查清单</h6><ul>
+<li><input disabled="" type="checkbox"> <code>_config.yml</code> 的 <code>url</code> 与最终访问地址完全一致（协议、域名、有无尾斜杠）</li>
+<li><input disabled="" type="checkbox"> 构建产物里有 <code>CNAME</code>，内容与域名一致</li>
+<li><input disabled="" type="checkbox"> <code>find public -name &#39;*.key&#39; -o -name &#39;*.pem&#39;</code> 为空</li>
+<li><input disabled="" type="checkbox"> 源码仓库 <code>.gitignore</code> 覆盖 <code>public/</code>、<code>.deploy*/</code>、<code>.secrets/</code>、密钥后缀</li>
+<li><input disabled="" type="checkbox"> 私密文章的密码来自环境变量，未设置时构建失败</li>
+<li><input disabled="" type="checkbox"> 逐篇抽查线上 URL 返回 200，脚本轮询而不是手点</li>
+<li><input disabled="" type="checkbox"> <code>/archives</code>、<code>/tags</code>、<code>/categories</code> 这类导航页有内容（Hexo 默认不生成聚合页，需要自己放 <code>index.md</code> + 布局）</li>
+<li><input disabled="" type="checkbox"> RSS &#x2F; favicon &#x2F; 主题里的静态资源没有 404（浏览器 Network 面板过一遍）</li>
+</ul>
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site">Managing a custom domain for your GitHub Pages site - GitHub Docs</a></p>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment">Hexo 官方文档 - 部署</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/hexo-generator-cname">hexo-generator-cname - npm</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/hexo-blog-encrypt">hexo-blog-encrypt - npm</a></p>
+<p><a target="_blank" rel="noopener" href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">OWASP - Password Storage Cheat Sheet（PBKDF2 迭代次数推荐值）</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">GitHub Pages</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">域名</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">博客运维</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/博客与站点//" class="article-tag-list-link color1">博客与站点</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2026/11/04/2026-11-04-hexo-github-pages-custom-domain/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2026-11-02-harmonyos-arkts-97-true-false" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -2030,133 +2274,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2025-11-28-csdn-155361900" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/28/2025-11-28-csdn-155361900/">Harmony OS C++实战</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/28/2025-11-28-csdn-155361900/" class="archive-article-date">
-  	<time datetime="2025-11-28T13:01:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/155361900">https://blog.csdn.net/qq_30220519/article/details/155361900</a></p>
-</blockquote>
-<h6 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h6><ol>
-<li>安装<a target="_blank" rel="noopener" href="https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_package_901_9/9b/v3/0fdyewgcSaSmJXn-PCNYXg/devecostudio-windows-6.0.1.251.zip?HW-CC-KV=V1&HW-CC-Date=20251124T121714Z&HW-CC-Expire=7200&HW-CC-Sign=26B3C34592A4CEE2842EC0BC08AA80110C078020C344F1CB1A92E267C007C337" title="devcostudio">devcostudio</a>打开</li>
-<li>File-&gt;New-&gt;CreateProject-&gt;Native C++</li>
-<li><pre><code class="language-bash">cd src/main &amp;&amp; git clone https://github.com/freetype/freetype &amp;&amp; mv freetype/* cpp/
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">4.  多平台配置</span><br><span class="line">    </span><br><span class="line">    &gt; 新增build-profile.json5下abiFilters，支持多平台  </span><br><span class="line">    &gt;     &quot;externalNativeOptions&quot;: &#123;  </span><br><span class="line">    &gt;       &quot;path&quot;: &quot;./src/main/cpp/CMakeLists.txt&quot;,  </span><br><span class="line">    &gt;       &quot;arguments&quot;: &quot;&quot;,  </span><br><span class="line">    &gt;       &quot;cppFlags&quot;: &quot;&quot;,  </span><br><span class="line">    &gt;         </span><br><span class="line">    &gt;       &quot;abiFilters&quot;: \[  </span><br><span class="line">    &gt;         &quot;x86\_64&quot;,  </span><br><span class="line">    &gt;         &quot;arm64-v8a&quot;  </span><br><span class="line">    &gt;       \]  </span><br><span class="line">    &gt;     &#125;</span><br><span class="line">    </span><br><span class="line">5.  点击锤子🔨make module生成，右上角圆点切换debug|release。输出文件在build\\default\\outputs\\default\\\*.hap，解压有ABI对应的.so文件。</span><br><span class="line">6.  ts或其它库调用使用时，需在src同级目录下新建libs文件夹，拷贝abiFilters所有文件夹到libs下。</span><br><span class="line"></span><br><span class="line">###### .so cmake配置</span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line">cmake_minimum_required(VERSION 3.5.0)</span><br><span class="line">project(NativeFileAccess)</span><br><span class="line"></span><br><span class="line">set(NATIVERENDER_ROOT_PATH $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;)</span><br><span class="line"></span><br><span class="line">if(DEFINED PACKAGE_FIND_FILE)</span><br><span class="line">    include($&#123;PACKAGE_FIND_FILE&#125;)</span><br><span class="line">endif()</span><br><span class="line"></span><br><span class="line">include_directories($&#123;NATIVERENDER_ROOT_PATH&#125;</span><br><span class="line">                    $&#123;NATIVERENDER_ROOT_PATH&#125;/include)</span><br><span class="line">link_directories($&#123;NATIVERENDER_ROOT_PATH&#125;/../../../libs/$&#123;OHOS_ARCH&#125;)</span><br><span class="line"></span><br><span class="line">add_library(file_access SHARED FileAccessMethods.cpp)</span><br><span class="line"></span><br><span class="line">if (CMAKE_BUILD_TYPE STREQUAL &quot;Debug&quot;)</span><br><span class="line">    set_property(TARGET file_access PROPERTY IMPORTED_LOCATION $&#123;NATIVERENDER_ROOT_PATH&#125;/libs/$&#123;OHOS_ARCH&#125;/libfreetyped.so)</span><br><span class="line">else()</span><br><span class="line">    set_property(TARGET file_access PROPERTY IMPORTED_LOCATION $&#123;NATIVERENDER_ROOT_PATH&#125;/libs/$&#123;OHOS_ARCH&#125;/libfreetype.so)</span><br><span class="line">endif ()</span><br><span class="line"></span><br><span class="line">set_property(TARGET file_access PROPERTY IMPORTED_LOCATION $&#123;NATIVERENDER_ROOT_PATH&#125;/libs/$&#123;OHOS_ARCH&#125;/libc++_shared.so)</span><br><span class="line">target_link_libraries(file_access PUBLIC libace_napi.z.so libhilog_ndk.z.so librawfile.z.so libc++_shared.so)</span><br><span class="line">target_link_libraries(file_access PUBLIC debug libfreetyped.so optimized libfreetype.so)</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-</ol>
-<h6 id="库依赖查看"><a href="#库依赖查看" class="headerlink" title="库依赖查看"></a>库依赖查看</h6><blockquote>
-<p>readelf -d lib.so</p>
-</blockquote>
-<p><strong>注</strong>：so.x.x不支持，需用.so加载</p>
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-compiling-and-building-86" title="https:&#x2F;&#x2F;developer.huawei.com&#x2F;consumer&#x2F;cn&#x2F;doc&#x2F;harmonyos-faqs&#x2F;faqs-compiling-and-building-86">https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-compiling-and-building-86</a></p>
-<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-access-control-14" title="https:&#x2F;&#x2F;developer.huawei.com&#x2F;consumer&#x2F;cn&#x2F;doc&#x2F;harmonyos-faqs&#x2F;faqs-access-control-14">https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-access-control-14</a></p>
-<p><a target="_blank" rel="noopener" href="https://gitee.com/openharmony-sig/tpc_c_cplusplus.git" title="https:&#x2F;&#x2F;gitee.com&#x2F;openharmony-sig&#x2F;tpc_c_cplusplus.git">https://gitee.com/openharmony-sig/tpc_c_cplusplus.git</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/AiMiDi/icu-cmake" title="https:&#x2F;&#x2F;github.com&#x2F;AiMiDi&#x2F;icu-cmake">https://github.com/AiMiDi/icu-cmake</a></p>
-<p><a target="_blank" rel="noopener" href="https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-ndk-72" title="https:&#x2F;&#x2F;developer.huawei.com&#x2F;consumer&#x2F;cn&#x2F;doc&#x2F;harmonyos-faqs&#x2F;faqs-ndk-72">https://developer.huawei.com/consumer/cn/doc/harmonyos-faqs/faqs-ndk-72</a></p>
-<p><a target="_blank" rel="noopener" href="https://gitee.com/harmonyos_samples/NativeFileAccess" title="https:&#x2F;&#x2F;gitee.com&#x2F;harmonyos_samples&#x2F;NativeFileAccess">https://gitee.com/harmonyos_samples&#x2F;NativeFileAccess</a></p>
-<p><a target="_blank" rel="noopener" href="https://gitee.com/harmonyos_samples/hiaifoundationkit-samplecode-clientdemo-cpp" title="https:&#x2F;&#x2F;gitee.com&#x2F;harmonyos_samples&#x2F;hiaifoundationkit-samplecode-clientdemo-cpp">https://gitee.com/harmonyos_samples&#x2F;hiaifoundationkit-samplecode-clientdemo-cpp</a></p>
-<p><a target="_blank" rel="noopener" href="https://gitee.com/harmonyos_samples/native-multi-threads" title="https:&#x2F;&#x2F;gitee.com&#x2F;harmonyos_samples&#x2F;native-multi-threads">https://gitee.com/harmonyos_samples&#x2F;native-multi-threads</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HarmonyOS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CPP</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NDK</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/鸿蒙开发//" class="article-tag-list-link color5">鸿蒙开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/11/28/2025-11-28-csdn-155361900/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -2540,6 +2657,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

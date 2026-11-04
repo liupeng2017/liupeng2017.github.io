@@ -204,6 +204,105 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-05-17-csdn-139010523" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/05/17/2024-05-17-csdn-139010523/">C++性能调优</a>
+    </h1>
+  
+
+        
+        <a href="/2024/05/17/2024-05-17-csdn-139010523/" class="archive-article-date">
+  	<time datetime="2024-05-17T09:53:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139010523">https://blog.csdn.net/qq_30220519/article/details/139010523</a></p>
+</blockquote>
+<p>mkdir build &amp;&amp; cd build<br>cmake -DCMAKE_CXX_COMPILER&#x3D;”%VCINSTALLDIR%&#x2F;bin&#x2F;cl.exe” -DCMAKE_CXX_INCLUDE_WHAT_YOU_USE&#x3D;”&#x2F;mnt&#x2F;include-what-you-use&#x2F;build&#x2F;bin&#x2F;include-what-you-use” -G Ninja ..</p>
+<p>export IWYU_BINARY&#x3D;&#x2F;mnt&#x2F;include-what-you-use&#x2F;build&#x2F;bin&#x2F;include-what-you-use<br>python3 &#x2F;mnt&#x2F;include-what-you-use&#x2F;iwyu_tool.py -j 8 -p .&gt; iwyu.out<br>python3 &#x2F;mnt&#x2F;include-what-you-use&#x2F;fix_includes.py -b –comments –update_comments &lt; iwyu.out</p>
+<p>clang -pg -lstdc++ -o .&#x2F;cmake&#x2F;test .&#x2F;cmake&#x2F;cmake.cpp -lc_p<br>.&#x2F;cmake&#x2F;test<br>gprof -b -qfunc1 fic_untilTool_test gmon.out&gt;gmon.txt<br>gprof -b test gmon.out -Ffunc1 -efuncTest &gt;gmon.txt<br>kprof -f .&#x2F;test<br>gprof .&#x2F;test | gprof2dot.py | xdot<br>-b 不显示描述<br>-A 显示函数源码<br>-pa 只打印a的flat profile,-Pa只屏蔽a<br>-qa 只打印a的call,-Qa只屏蔽a</p>
+<p>sprof .&#x2F;module.so Perf.profile -p &gt;log.txt<br>time .&#x2F;program<br> <br>gcov .&#x2F;summer-proj覆盖测试<br>gprof .&#x2F;Perf | gprof2dot.py | dot -Tpng -o output.png<br>cd gprof2dot &amp;&amp; cat ..&#x2F;bin&#x2F;gmon.txt | python3 gprof2dot.py -n0 -e0 | dot -Tpdf -o output.pdf<br>编译开关-ftest-coverage -fprofile-arcs<br>改run.sh  换行类型</p>
+<p>apt-get install .&#x2F;libimagequant0_2.12.2-1.1_amd64.deb<br>apt-get install .&#x2F;libimagequant-dev_2.12.2-1.1_amd64.deb</p>
+<p>dpkg-deb -c quantum6.deb</p>
+<p>泄露分析,编译链接-g<br>valgrind –tool&#x3D;memcheck –leak-check&#x3D;full –show-leak-kinds&#x3D;all .&#x2F;bin&#x2F;Perf<br>valgrind –tool&#x3D;callgrind ..&#x2F;bin&#x2F;Perf<br>python gprof2dot.py -f callgrind -n10 -s callgrind.out.31113 | dot -Tpng -o valgrind.png</p>
+<p>pprof安装<br>export CPUPROFILE_FREQUENCY&#x3D;1<br>go install github.com&#x2F;google&#x2F;pprof@latest<br>pprof –text .&#x2F;Perf test_capture.prof &gt; profile.txt<br>pprof –callgrind .&#x2F;Perf test_capture.prof &gt; callgrind.res<br>pprof  .&#x2F;Perf test_capture.prof –web<br>pprof  .&#x2F;Perf test_capture.prof –pdf &gt; prof.pdf</p>
+<p>查看-pg是否生效<br>-lc_p<br>nm libobjectmodule.so | grep mcount<br>ldd .&#x2F;Perf | grep libc</p>
+<p>apt-get install libpopt-dev<br>apt-get install libiberty-dev<br>apt-get install libfdt-dev</p>
+<p>#Recommended profilers¶<br>VerySleepy (Windows only)<br>HotSpot (Linux only)<br>Xcode Instruments (macOS only)</p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/05/17/2024-05-17-csdn-139010523/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-05-16-csdn-138975456" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1023,141 +1122,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-05-14-csdn-138868427" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/05/14/2024-05-14-csdn-138868427/">C++多平台日志库，支持wasm</a>
-    </h1>
-  
-
-        
-        <a href="/2024/05/14/2024-05-14-csdn-138868427/" class="archive-article-date">
-  	<time datetime="2024-05-14T12:15:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/138868427">https://blog.csdn.net/qq_30220519/article/details/138868427</a></p>
-</blockquote>
-<p>#include <memory><br>#include <string><br>#include &lt;unordered_set&gt;</p>
-<p>Log.h:</p>
-<p>    class Log<br>    {<br>    public:<br>        using SP &#x3D; std::shared_ptr<Log>;<br>        enum class Level {<br>            eInfo,<br>            eWarning,<br>            eError,<br>        };<br>        struct Message {<br>            Level       m_level;         &#x2F;&#x2F; 日志级别<br>            const char       *m_module;        &#x2F;&#x2F; 所属模块<br>            std::string_view  m_tag;           &#x2F;&#x2F; 自定义打印标签<br>            const char       *m_file;          &#x2F;&#x2F; 文件<br>            std::size_t m_lineNumber;    &#x2F;&#x2F; 行编号<br>            const char       *m_func;          &#x2F;&#x2F; 函数<br>            std::size_t m_verboseLevel;  &#x2F;&#x2F; 详细级别<br>            std::string_view  m_message;       &#x2F;&#x2F; 消息内容<br>        };<br>        Log();<br>        static Log *instance();<br>        static void release();</p>
-<p>    public:<br>        void log(const Message &amp;str) const;<br>        bool connectToWebSocket(const std::string &amp;url);<br>        void closeWebSocket();</p>
-<p>        void setUserIdentity(const std::string &amp;userIdentity);</p>
-<p>    private:<br>        std::string getCurrentTime(bool bLocal, bool bIncludeMs) const;<br>        const char *getLevelStr(Level level) const;<br>        std::string formatLine(const Message &amp;message) const;<br>        void        outputJsonValue(std::string &amp;line, const std::string &amp;key, const std::string_view &amp;value) const;</p>
-<p>    private:<br>        std::string                     m_userIdentity;<br>    };</p>
-<p>    #if _MSC_VER  &#x2F;&#x2F; Visual C++     &#x3D;<br>    #    define MY_FUNC __FUNCSIG__<br>    #elif __GUNC__  &#x2F;&#x2F; GCC<br>    #    define MY_FUNC __PRETTY_FUNCTION__<br>    #elif __INTEL_COMPILER  &#x2F;&#x2F; Intel C++<br>    #    define MY_FUNC __PRETTY_FUNCTION__<br>    #elif (defined(__clang__) &amp;&amp; (__clang__ &#x3D;&#x3D; 1))  &#x2F;&#x2F; Clang++<br>    #    define MY_FUNC __PRETTY_FUNCTION__<br>    #else<br>    #    if defined(__func__)<br>    #        define MY_FUNC __func__<br>    #    else<br>    #        define MY_FUNC “”<br>    #    endif<br>    #endif</p>
-<p>    #define MESSAGE_DEFAULT(level, msg)                                      \<br>        {                                                                    \<br>            level, MODULE_NAME_DEF, “”, __FILE__, __LINE__, MY_FUNC, 0, msg \<br>        }<br>    #define MESSAGE_TAG_DEFAULT(level, tag, msg)                              \<br>        {                                                                     \<br>            level, MODULE_NAME_DEF, tag, __FILE__, __LINE__, MY_FUNC, 0, msg \<br>        }<br>    #define MESSAGE_DEFAULT_VERBOSE(level, msg, verbose)                           \<br>        {                                                                          \<br>            level, MODULE_NAME_DEF, “”, __FILE__, __LINE__, MY_FUNC, verbose, msg \<br>        }</p>
-<p>    #define LOG_INFO(message)  Log::instance()-&gt;log(MESSAGE_DEFAULT(Log::Level::eInfo, message));</p>
-<p>    #define LOG_WARN(message)  Log::instance()-&gt;log(MESSAGE_DEFAULT(Log::Level::eWarning, message));</p>
-<p>    #define LOG_ERROR(message) Log::instance()-&gt;log(MESSAGE_DEFAULT(Log::Level::eError, message));</p>
-<p>    #define LOG_INFO_TAG(tag, message) \<br>        Log::instance()-&gt;log(MESSAGE_TAG_DEFAULT(Log::Level::eInfo, tag, message));</p>
-<p>    #define LOG_WARN_TAG(tag, message) \<br>        Log::instance()-&gt;log(MESSAGE_TAG_DEFAULT(Log::Level::eWarning, tag, message));</p>
-<p>    #define LOG_ERROR_TAG(tag, message) \<br>        Log::instance()-&gt;log(MESSAGE_TAG_DEFAULT(Log::Level::eError, tag, message));<br>    #endif</p>
-<p>Log.cpp:<br>        <br>    #include “Log.h”</p>
-<p>    #include <algorithm><br>    #include <chrono><br>    #include <iomanip><br>    #include <iostream><br>    #include <sstream></p>
-<p>    #ifdef __EMSCRIPTEN__<br>    #    include &lt;emscripten&#x2F;emscripten.h&gt;<br>    #    include &lt;emscripten&#x2F;html5.h&gt;<br>    #    include &lt;emscripten&#x2F;websocket.h&gt;<br>    #    include &lt;stdio.h&gt;<br>    #    include &lt;stdlib.h&gt;</p>
-<p>    EMSCRIPTEN_WEBSOCKET_T gWebSocket  &#x3D; -1;</p>
-<p>    EM_BOOL WebSocketOpen(int eventType, const EmscriptenWebSocketOpenEvent *e, void *userData)<br>    {<br>        printf(“open(eventType&#x3D;%d, userData&#x3D;%ld)\n”, eventType, (long)userData);</p>
-<p>        emscripten_websocket_send_utf8_text(e-&gt;socket, “hello on the other side”);</p>
-<p>        char data[] &#x3D; {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};<br>        emscripten_websocket_send_binary(e-&gt;socket, data, sizeof(data));</p>
-<p>        &#x2F;&#x2F; emscripten_websocket_close(e-&gt;socket, 0, 0);<br>        return 0;<br>    }</p>
-<p>    EM_BOOL WebSocketClose(int eventType, const EmscriptenWebSocketCloseEvent *e, void *userData)<br>    {<br>        printf(“close(eventType&#x3D;%d, wasClean&#x3D;%d, code&#x3D;%d, reason&#x3D;%s, userData&#x3D;%ld)\n”,<br>               eventType,<br>               e-&gt;wasClean,<br>               e-&gt;code,<br>               e-&gt;reason,<br>               (long)userData);<br>        return 0;<br>    }</p>
-<p>    EM_BOOL WebSocketError(int eventType, const EmscriptenWebSocketErrorEvent *e, void *userData)<br>    {<br>        printf(“error(eventType&#x3D;%d, userData&#x3D;%ld)\n”, eventType, (long)userData);<br>        return 0;<br>    }</p>
-<p>    EM_BOOL WebSocketMessage(int eventType, const EmscriptenWebSocketMessageEvent *e, void *userData)<br>    {<br>        printf(“message(eventType&#x3D;%d, userData&#x3D;%ld, data&#x3D;%p, numBytes&#x3D;%d, isText&#x3D;%d)\n”,<br>               eventType,<br>               (long)userData,<br>               e-&gt;data,<br>               e-&gt;numBytes,<br>               e-&gt;isText);<br>        if (e-&gt;isText)<br>            printf(“text data: \“%s\“\n”, e-&gt;data);<br>        else {<br>            printf(“binary data:”);<br>            for (int i &#x3D; 0; i &lt; e-&gt;numBytes; ++i)<br>                printf(“ %02X”, e-&gt;data[i]);<br>            printf(“\n”);</p>
-<p>            &#x2F;&#x2F; emscripten_websocket_delete(e-&gt;socket);<br>            &#x2F;&#x2F; exit(0);<br>        }<br>        return 0;<br>    }</p>
-<p>    #endif</p>
-<p>    static Log* m_instance  &#x3D; nullptr;</p>
-<p>    Log* Log::instance(){<br>        if(!m_instance)<br>            m_instance &#x3D; new Log();<br>        return m_instance;<br>    }</p>
-<p>    void Log::release(){<br>        if(m_instance)<br>            delete m_instance;<br>        m_instance &#x3D; nullptr;<br>    }</p>
-<p>    Log::Log() {}</p>
-<p>    &#x2F;*<br>     * 用户具体信息<br>     *&#x2F;<br>    void Log::setUserIdentity(const std::string &amp;userIdentity)<br>    {<br>        m_userIdentity &#x3D; userIdentity;<br>    }</p>
-<p>    std::string Log::getCurrentTime(bool bLocal, bool bIncludeMs) const<br>    {<br>        std::stringstream ss;<br>        auto timePoint &#x3D; std::chrono::system_clock::now();<br>        auto tSeconds &#x3D; std::chrono::duration_cast<a href="std::chrono::seconds">std::chrono::seconds</a>(timePoint.time_since_epoch());<br>    #if (defined __EMSCRIPTEN__)<br>        &#x2F;&#x2F; 用WebAssembly得方式打印时间<br>        std::time_t tt  &#x3D; std::chrono::system_clock::to_time_t(timePoint);<br>        std::tm    *ptm &#x3D; std::localtime(&amp;tt);<br>        ss &lt;&lt; std::put_time(ptm, “%Y-%m-%d %H:%M:%S”);<br>    #elif defined(WINDOWS_DEV_MODE) || defined(QT_PLATFORM)<br>        auto secNow &#x3D; tSeconds.count();<br>        tm tmNow;<br>        if(bLocal)<br>            localtime_s(&amp;tmNow, &amp;secNow);<br>        else<br>            gmtime_s(&amp;tmNow, &amp;secNow);<br>        ss &lt;&lt; std::put_time(&amp;tmNow, “%Y-%m-%d %H:%M:%S”);<br>    #else<br>        &#x2F;&#x2F; 用WebAssembly得方式打印时间<br>        std::time_t tt  &#x3D; std::chrono::system_clock::to_time_t(timePoint);<br>        std::tm    *ptm &#x3D; std::localtime(&amp;tt);<br>        ss &lt;&lt; std::put_time(ptm, “%Y-%m-%d %H:%M:%S”);<br>    #endif</p>
-<p>        if(bIncludeMs) {<br>            auto tMilli &#x3D; std::chrono::duration_cast<a href="std::chrono::milliseconds">std::chrono::milliseconds</a>(timePoint.time_since_epoch());<br>            auto ms &#x3D; tMilli - tSeconds;<br>            ss &lt;&lt; “.” &lt;&lt; std::setfill(‘0’) &lt;&lt; std::setw(3) &lt;&lt; ms.count();<br>        }<br>    &#x2F;&#x2F;    ss &lt;&lt; std::put_time(std::localtime(&amp;timeT), “%X,”);<br>        return ss.str();<br>    }</p>
-<p>    const char *Log::getLevelStr(Level level) const<br>    {<br>        switch (level) {<br>        case Log::Level::eError:<br>            return “ERROR”;<br>        case Log::Level::eWarning:<br>            return “WARNING”;<br>        case Log::Level::eInfo:<br>            return “INFO”;<br>        default:<br>            return “UNKNOWN”;<br>        }<br>    }</p>
-<p>    bool Log::connectToWebSocket(const std::string &amp;url)<br>    {<br>    #if (defined __EMSCRIPTEN__)<br>        if (!emscripten_websocket_is_supported()) {<br>            printf(“WebSockets are not supported, cannot continue!\n”);<br>            return false;<br>        }<br>        closeWebSocket();<br>        EmscriptenWebSocketCreateAttributes attr;<br>        emscripten_websocket_init_create_attributes(&amp;attr);</p>
-<p>        attr.url   &#x3D; url.c_str();<br>        gWebSocket &#x3D; emscripten_websocket_new(&amp;attr);<br>        if (gWebSocket &lt;&#x3D; 0) {<br>            printf(“WebSocket creation failed, error code %d!\n”, (EMSCRIPTEN_RESULT)gWebSocket);<br>            return false;<br>        }<br>        emscripten_websocket_set_onopen_callback(gWebSocket, (void *)42, WebSocketOpen);<br>        emscripten_websocket_set_onclose_callback(gWebSocket, (void *)43, WebSocketClose);<br>        emscripten_websocket_set_onerror_callback(gWebSocket, (void *)44, WebSocketError);<br>        emscripten_websocket_set_onmessage_callback(gWebSocket, (void *)45, WebSocketMessage);<br>    #endif<br>        return true;<br>    }</p>
-<p>    void Log::closeWebSocket()<br>    {<br>    #if (defined __EMSCRIPTEN__)<br>        if (gWebSocket &gt; 0) {<br>            emscripten_websocket_close(gWebSocket, 0, 0);  &#x2F;&#x2F; 关闭旧的连接<br>            &#x2F;&#x2F; emscripten_websocket_delete(0);<br>        }<br>        gWebSocket &#x3D; -1;<br>    #endif<br>    }</p>
-<p>    void Log::log(const Message &amp;str) const<br>    {<br>        auto logLine &#x3D; formatLine(str);<br>    #if (defined __EMSCRIPTEN__)<br>        &#x2F;&#x2F;    0 (CONNECTING): The connection is still being established.<br>        &#x2F;&#x2F;    1 (OPEN): The connection is open and ready to send&#x2F;receive data.<br>        &#x2F;&#x2F;    2 (CLOSING): The connection is in the process of closing.<br>        &#x2F;&#x2F;    3 (CLOSED): The connection has been closed or could not be opened.<br>        unsigned short readyState &#x3D; 0;<br>        if (gWebSocket &gt; 0)<br>            emscripten_websocket_get_ready_state(gWebSocket, &amp;readyState);<br>        if (1 !&#x3D; readyState || gWebSocket &lt;&#x3D; 0) {<br>            if (Level::eError &#x3D;&#x3D; str.m_level)<br>                emscripten_console_error(logLine.c_str());<br>            else if (Level::eWarning &#x3D;&#x3D; str.m_level)<br>                emscripten_console_warn(logLine.c_str());<br>            else<br>                emscripten_console_log(logLine.c_str());<br>        } else {<br>            emscripten_websocket_send_utf8_text(gWebSocket, logLine.c_str());<br>        }<br>    #else<br>        if (Level::eError &#x3D;&#x3D; str.m_level)<br>            std::cerr &lt;&lt; logLine &lt;&lt; std::endl;<br>        else<br>            std::cout &lt;&lt; logLine &lt;&lt; std::endl;<br>    #endif<br>    }</p>
-<p>    void Log::outputJsonValue(std::string &amp;line, const std::string &amp;key, const std::string_view &amp;value) const<br>    {<br>        if (line.empty())<br>            line.append(“{“);<br>        else<br>            line.append(“, “);<br>        line.append(“\“”);<br>        line.append(key);<br>        line.append(“\“”);<br>        line.append(“:”);<br>        line.append(“\“”);<br>        line.append(value);<br>        line.append(“\“”);<br>    }</p>
-<p>    &#x2F;**<br>     * 日志行输出<br>     * @param message<br>     * @return<br>     *&#x2F;<br>    std::string Log::formatLine(const Message&amp; message) const<br>    {<br>        std::string line;<br>    #if (defined __EMSCRIPTEN__)<br>        std::string now &#x3D; getCurrentTime(true, true);<br>        outputJsonValue(line, “TIME”, now);<br>    #endif<br>        if (!message.m_tag.empty())<br>            outputJsonValue(line, “Tag”, message.m_tag);<br>        if (!m_userIdentity.empty())<br>            outputJsonValue(line, “user”, m_userIdentity);<br>        outputJsonValue(line, “MODULE”, message.m_module);</p>
-<p>    #if (defined __EMSCRIPTEN__)<br>        std::string newFileNamePath &#x3D; message.m_file;<br>        std::replace(newFileNamePath.begin(), newFileNamePath.end(), ‘\\‘, ‘&#x2F;‘);  &#x2F;&#x2F; windows下符号替换<br>        outputJsonValue(line, “FILE”, newFileNamePath);</p>
-<p>        outputJsonValue(line, “FUNC”, message.m_func);<br>        outputJsonValue(line, “LINE”, std::to_string(message.m_lineNumber));<br>        outputJsonValue(line, “LEVEL”, getLevelStr(message.m_level));<br>        &#x2F;&#x2F;    outputJsonValue(line, “VERBOSE”, std::to_string(message.m_verboseLevel));<br>    #endif<br>        outputJsonValue(line, “MSG”, message.m_message);<br>        line.append(“}”);</p>
-<p>    #if (defined __EMSCRIPTEN__)<br>        if (Level::eError &#x3D;&#x3D; message.m_level) {<br>            char             buffer[2048];<br>            auto             len &#x3D; emscripten_get_callstack(EM_LOG_JS_STACK | EM_LOG_C_STACK, buffer, 2048);<br>            std::string_view stringView(buffer, len);<br>            outputJsonValue(line, “callstack”, std::string{stringView});<br>            line.append(“, \“callstack\“:\n”);<br>        }<br>    #endif<br>        return line;<br>    }</p>
-<p>使用示例：<br>    #include “Log.h”<br>    <br>    void main() {<br>        LOG_INFO(“setHotZoneMode invalid mode”);<br>    }</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/ArthurSonzogni/quill" title="GitHub - ArthurSonzogni&#x2F;quill: Asynchronous Low Latency Logging Library">GitHub - ArthurSonzogni&#x2F;quill: Asynchronous Low Latency Logging Library</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/05/14/2024-05-14-csdn-138868427/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/25/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/27/">Next &raquo;</a>
@@ -1541,6 +1505,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

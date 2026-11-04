@@ -204,6 +204,144 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-05-25-csdn-139201070" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/05/25/2024-05-25-csdn-139201070/">C++ wasm 使用教程</a>
+    </h1>
+  
+
+        
+        <a href="/2024/05/25/2024-05-25-csdn-139201070/" class="archive-article-date">
+  	<time datetime="2024-05-25T09:58:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139201070">https://blog.csdn.net/qq_30220519/article/details/139201070</a></p>
+</blockquote>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a><a target="_blank" rel="noopener" href="https://github.com/emscripten-core/emscripten">环境搭建</a></h2><ul>
+<li>git clone <a target="_blank" rel="noopener" href="https://github.com/emscripten-core/emsdk.git">https://github.com/emscripten-core/emsdk.git</a></li>
+<li>git pull</li>
+<li>.&#x2F;emsdk install latest</li>
+<li>.&#x2F;emsdk activate latest</li>
+<li>source .&#x2F;emsdk_env.sh</li>
+<li>.&#x2F;emcc -v &amp;&amp; .&#x2F;emcc c11__Thread_local.c -s WASM_WORKERS –threadprofiler –memoryprofiler -v -o test.html &amp;&amp; node a.out.js</li>
+<li>emrun –no_browser –port 8087 .</li>
+<li>emrun FILENAME.html</li>
+<li>docker run –rm -v $(pwd):&#x2F;src -u ( i d − u ) : (id -u): (id−u):(id -g)<br>emscripten&#x2F;emsdk emcc helloworld.cpp -o helloworld.js</li>
+</ul>
+<h2 id="emcmake"><a href="#emcmake" class="headerlink" title="emcmake"></a>emcmake</h2><ul>
+<li>call emsdk_env.bat</li>
+<li>::TIMEOUT &#x2F;T 0.5</li>
+<li>cmd &#x2F;c buildApp.bat</li>
+<li>::TIMEOUT &#x2F;T 3</li>
+<li>cd -wasm</li>
+<li>mkdir wasm</li>
+<li>cd wasm</li>
+<li>cmd &#x2F;c emcmake cmake -DWASM&#x3D;ON -DPRODUCTMODE&#x3D;OFF -DSRC_MAP_DEBUG_MODE&#x3D;%1 -DDEBUG_SRC_SITE&#x3D;%2 …</li>
+<li>::TIMEOUT &#x2F;T 3</li>
+<li>::emmake make clean</li>
+<li>::for &#x2F;l %%a in (1,1,4) do ( emmake make -j32)</li>
+<li>emmake make -j32</li>
+<li>pause</li>
+<li>cmd &#x2F;c call build_wasm.bat 0 “<a target="_blank" rel="noopener" href="http://localhost:999/%E2%80%9D">http://localhost:999/”</a></li>
+<li>http-server .&#x2F;wasm -p 999 –cors</li>
+<li>emake报错时需将mingw32-make改成make<br><a target="_blank" rel="noopener" href="https://github.com/ArthurSonzogni/FluidScripten">MVP CMake</a></li>
+</ul>
+<h2 id="面向WebAssembly编程笔记"><a href="#面向WebAssembly编程笔记" class="headerlink" title="面向WebAssembly编程笔记"></a><a target="_blank" rel="noopener" href="https://github.com/3dgen/cppwasm-book">面向WebAssembly编程笔记</a></h2><h2 id="创建虚拟文件系统，实现fopen打开本地文"><a href="#创建虚拟文件系统，实现fopen打开本地文" class="headerlink" title="创建虚拟文件系统，实现fopen打开本地文"></a><a target="_blank" rel="noopener" href="https://emscripten.org/docs/getting_started/Tutorial.html">创建虚拟文件系统，实现fopen打开本地文</a></h2><blockquote>
+<p>预加载本地文件</p>
+</blockquote>
+<p>.&#x2F;emcc test&#x2F;hello_world_file.cpp -o hello.html <strong>–preload-file test&#x2F;hello_world_file.txt</strong></p>
+<h2 id="Emscripten-Test-Suite"><a href="#Emscripten-Test-Suite" class="headerlink" title="Emscripten Test Suite"></a><a target="_blank" rel="noopener" href="https://emscripten.org/docs/getting_started/test-suite.html">Emscripten Test Suite</a></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def test_cmake_px_icu(self):</span><br><span class="line">  os.mkdir(&#x27;build&#x27;)</span><br><span class="line">  self.run_process([EMCMAKE, &#x27;cmake&#x27;, test_file(&#x27;cmake/px_icu&#x27;)], cwd=&#x27;build&#x27;)</span><br><span class="line">  self.run_process([&#x27;cmake&#x27;, &#x27;--build&#x27;, &#x27;build&#x27;])</span><br><span class="line">  self.assertContained(&#x27;OK&#x27;, self.run_js(&#x27;build/test_prog.js&#x27;))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Emscripten-多线程"><a href="#Emscripten-多线程" class="headerlink" title="Emscripten 多线程"></a><a target="_blank" rel="noopener" href="https://emscripten.org/docs/api_reference/wasm_workers.html">Emscripten 多线程</a></h2><ul>
+<li>多线程 -s WASM_WORKERS</li>
+<li>单线程 -s SINGLE_FILE</li>
+<li><a target="_blank" rel="noopener" href="https://pursuitking.com/go_2/1-12.html">lock-free</a> atomic原子不断轮询设置操作，不可中断(其它线程不会读到操作一半的值)，解决死锁</li>
+<li>示例目录:upstream\emscripten\tests\wasm_worker</li>
+</ul>
+<h2 id="NetWork"><a href="#NetWork" class="headerlink" title="NetWork"></a><a target="_blank" rel="noopener" href="https://emscripten.org/docs/porting/networking.html">NetWork</a></h2><ul>
+<li>emscripten_async_wget</li>
+<li>-lwebsocket.js -s WEBSOCKET_URL</li>
+<li>捕获异常：-fexceptions -fwasm-exceptions</li>
+<li>定时器：emcc -O3 example.cpp -sASYNCIFY</li>
+<li>异常位置打印：-fsanitize&#x3D;undefined ，-fsanitize-minimal-runtime，-fsanitize&#x3D;address</li>
+</ul>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ul>
+<li>emcc -sENVIRONMENT&#x3D;web，只生成web代码，不生成nodejs代码，减少大小</li>
+<li>toolchain profiler：set EMPROFILE&#x3D;1，emcc test.c -o test.html，emprofile –graph</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chenchao521/articles/15493198.html">https://www.cnblogs.com/chenchao521/articles/15493198.html</a></p>
+<p>编译qt源码<br>进入源码目录，命令行输入，<br>.&#x2F;configure.bat -no-warnings-are-errors -xplatform wasm-emscripten -platform win32-g++ -nomake examples -prefix %CD%\qtbase<br>大概10分钟就可以编译完毕</p>
+<p>构建需要的模块<br>E:&#x2F;Qt&#x2F;Qt5.10.1&#x2F;Tools&#x2F;mingw530_32&#x2F;bin&#x2F;make.exe module-qtbase module-qtdeclarative<br>如果不需要裁剪，可以直接 E:&#x2F;Qt&#x2F;Qt5.10.1&#x2F;Tools&#x2F;mingw530_32&#x2F;bin&#x2F;make.exe</p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/blog/yunhuangbeiqing">1</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/WebAssembly/C_to_wasm">mozilla</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cntofu.com/book/150/zh/ch1-quick-guide/ch1-04-compile.md">cntofu</a></li>
+</ul>
+<h2 id="源码调试"><a href="#源码调试" class="headerlink" title="源码调试"></a>源码调试</h2><p>DWARF<br><a target="_blank" rel="noopener" href="https://github.com/bytecodealliance/wasm-micro-runtime/tree/main/test-tools/wamr-ide">wamr</a><br><a target="_blank" rel="noopener" href="https://github.com/nokotan/VSExtForEmscripten?tab=readme-ov-file">vs</a></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p><a target="_blank" rel="noopener" href="https://github.com/ArthurSonzogni">demo</a><br><a target="_blank" rel="noopener" href="https://github.com/bytecodealliance/wasm-micro-runtime/tree/main/test-tools/wamr-ide">wamr</a><br><a target="_blank" rel="noopener" href="https://github.com/nokotan/VSExtForEmscripten?tab=readme-ov-file">vs</a></p>
+<h3 id="创作不易，-小小的支持一下吧！"><a href="#创作不易，-小小的支持一下吧！" class="headerlink" title="创作不易， 小小的支持一下吧！"></a>创作不易， 小小的支持一下吧！</h3><p><img src="/images/csdn/139574266/d2e64fabd552c53a.png" alt="微信"></p>
+<p><img src="/images/csdn/139574266/d2bee1b9bc24f8c6.jpg" alt="支付宝"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/05/25/2024-05-25-csdn-139201070/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-05-25-csdn-139200870" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1065,105 +1203,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-05-17-csdn-139010523" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/05/17/2024-05-17-csdn-139010523/">C++性能调优</a>
-    </h1>
-  
-
-        
-        <a href="/2024/05/17/2024-05-17-csdn-139010523/" class="archive-article-date">
-  	<time datetime="2024-05-17T09:53:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139010523">https://blog.csdn.net/qq_30220519/article/details/139010523</a></p>
-</blockquote>
-<p>mkdir build &amp;&amp; cd build<br>cmake -DCMAKE_CXX_COMPILER&#x3D;”%VCINSTALLDIR%&#x2F;bin&#x2F;cl.exe” -DCMAKE_CXX_INCLUDE_WHAT_YOU_USE&#x3D;”&#x2F;mnt&#x2F;include-what-you-use&#x2F;build&#x2F;bin&#x2F;include-what-you-use” -G Ninja ..</p>
-<p>export IWYU_BINARY&#x3D;&#x2F;mnt&#x2F;include-what-you-use&#x2F;build&#x2F;bin&#x2F;include-what-you-use<br>python3 &#x2F;mnt&#x2F;include-what-you-use&#x2F;iwyu_tool.py -j 8 -p .&gt; iwyu.out<br>python3 &#x2F;mnt&#x2F;include-what-you-use&#x2F;fix_includes.py -b –comments –update_comments &lt; iwyu.out</p>
-<p>clang -pg -lstdc++ -o .&#x2F;cmake&#x2F;test .&#x2F;cmake&#x2F;cmake.cpp -lc_p<br>.&#x2F;cmake&#x2F;test<br>gprof -b -qfunc1 fic_untilTool_test gmon.out&gt;gmon.txt<br>gprof -b test gmon.out -Ffunc1 -efuncTest &gt;gmon.txt<br>kprof -f .&#x2F;test<br>gprof .&#x2F;test | gprof2dot.py | xdot<br>-b 不显示描述<br>-A 显示函数源码<br>-pa 只打印a的flat profile,-Pa只屏蔽a<br>-qa 只打印a的call,-Qa只屏蔽a</p>
-<p>sprof .&#x2F;module.so Perf.profile -p &gt;log.txt<br>time .&#x2F;program<br> <br>gcov .&#x2F;summer-proj覆盖测试<br>gprof .&#x2F;Perf | gprof2dot.py | dot -Tpng -o output.png<br>cd gprof2dot &amp;&amp; cat ..&#x2F;bin&#x2F;gmon.txt | python3 gprof2dot.py -n0 -e0 | dot -Tpdf -o output.pdf<br>编译开关-ftest-coverage -fprofile-arcs<br>改run.sh  换行类型</p>
-<p>apt-get install .&#x2F;libimagequant0_2.12.2-1.1_amd64.deb<br>apt-get install .&#x2F;libimagequant-dev_2.12.2-1.1_amd64.deb</p>
-<p>dpkg-deb -c quantum6.deb</p>
-<p>泄露分析,编译链接-g<br>valgrind –tool&#x3D;memcheck –leak-check&#x3D;full –show-leak-kinds&#x3D;all .&#x2F;bin&#x2F;Perf<br>valgrind –tool&#x3D;callgrind ..&#x2F;bin&#x2F;Perf<br>python gprof2dot.py -f callgrind -n10 -s callgrind.out.31113 | dot -Tpng -o valgrind.png</p>
-<p>pprof安装<br>export CPUPROFILE_FREQUENCY&#x3D;1<br>go install github.com&#x2F;google&#x2F;pprof@latest<br>pprof –text .&#x2F;Perf test_capture.prof &gt; profile.txt<br>pprof –callgrind .&#x2F;Perf test_capture.prof &gt; callgrind.res<br>pprof  .&#x2F;Perf test_capture.prof –web<br>pprof  .&#x2F;Perf test_capture.prof –pdf &gt; prof.pdf</p>
-<p>查看-pg是否生效<br>-lc_p<br>nm libobjectmodule.so | grep mcount<br>ldd .&#x2F;Perf | grep libc</p>
-<p>apt-get install libpopt-dev<br>apt-get install libiberty-dev<br>apt-get install libfdt-dev</p>
-<p>#Recommended profilers¶<br>VerySleepy (Windows only)<br>HotSpot (Linux only)<br>Xcode Instruments (macOS only)</p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/05/17/2024-05-17-csdn-139010523/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/24/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/26/">Next &raquo;</a>
@@ -1547,6 +1586,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>

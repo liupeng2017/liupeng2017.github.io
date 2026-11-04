@@ -204,6 +204,87 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-09-09-csdn-142052817" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/09/09/2024-09-09-csdn-142052817/">Windows磁盘文件恢复工具</a>
+    </h1>
+  
+
+        
+        <a href="/2024/09/09/2024-09-09-csdn-142052817/" class="archive-article-date">
+  	<time datetime="2024-09-09T02:48:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142052817">https://blog.csdn.net/qq_30220519/article/details/142052817</a></p>
+</blockquote>
+<h5 id="下载"><a href="#下载" class="headerlink" title="下载"></a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_30220519/89728617" title="下载 ">下载</a></h5><h5 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">FILE_RECOVERER::recoverFiles</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>-&gt;fat32_info == <span class="literal">nullptr</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    HANDLE hdisk = <span class="keyword">this</span>-&gt;<span class="built_in">openDisk</span>(<span class="keyword">this</span>-&gt;path_to_recover);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (hdisk == INVALID_HANDLE_VALUE)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CreateDirectory</span>(<span class="keyword">this</span>-&gt;path_to_save, <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>-&gt;fat32_info-&gt;files_and_dirs.<span class="built_in">size</span>(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        FILE_ENTRY* file_entry = <span class="keyword">this</span>-&gt;fat32_info-&gt;files_and_dirs.<span class="built_in">at</span>(i);</span><br><span class="line">        <span class="keyword">if</span> (file_entry-&gt;<span class="built_in">isFolder</span>())</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">unsigned</span> <span class="type">char</span>* file_data = <span class="keyword">this</span>-&gt;fat32_info-&gt;<span class="built_in">readFile</span>(hdisk, <span class="keyword">this</span>-&gt;fat32_info-&gt;<span class="built_in">getFAT</span>(<span class="number">1</span>), file_entry);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (file_data == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>-&gt;<span class="built_in">checkIfFileExtensionValid</span>(file_entry-&gt;<span class="built_in">getFileExtension</span>()))</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>-&gt;<span class="built_in">saveRecoveredFile</span>(file_data, file_entry);</span><br><span class="line">        <span class="keyword">delete</span>[] file_data;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CloseHandle</span>(hdisk);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><h5 id=""><a href="#" class="headerlink" title=""></a></h5><p><img src="/images/csdn/142052817/f14c58e59417587b.png"></p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://github.com/WonderWoman2020/os-projekt" title="https:&#x2F;&#x2F;github.com&#x2F;WonderWoman2020&#x2F;os-projekt">https://github.com/WonderWoman2020/os-projekt</a> </p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
+<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/09/09/2024-09-09-csdn-142052817/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-09-08-csdn-142033900" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1000,105 +1081,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-08-30-csdn-141713871" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/30/2024-08-30-csdn-141713871/">C++ 有向图算法</a>
-    </h1>
-  
-
-        
-        <a href="/2024/08/30/2024-08-30-csdn-141713871/" class="archive-article-date">
-  	<time datetime="2024-08-30T03:38:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141713871">https://blog.csdn.net/qq_30220519/article/details/141713871</a></p>
-</blockquote>
-<h6 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h6><p>Breadth-First Search (BFS)</p>
-<p>目的: 主要用于遍历或搜索图中的所有顶点。<br>特点: 从根节点开始，先访问所有与之相邻的节点，然后再一层一层地深入。<br>应用: 可以用来寻找两节点间的最短路径（当边的权重相等时），检测图中是否存在环路，以及层次遍历二叉树等。<br>数据结构: 使用队列来存储待访问的节点。<br>Depth-First Search (DFS):<br>目的: 同样用于遍历或搜索图中的所有顶点。<br>特点: 从根节点开始，尽可能深地搜索树的分支。<br>应用: 用于解决连通性问题，如检测环路、拓扑排序、迷宫求解等。<br>数据结构: 使用栈（可以是递归栈）来存储待访问的节点。</p>
-<p>Dijkstra算法</p>
-<p>目的: 用于找到图中一个节点到其他所有节点的最短路径。<br>特点: 要求图中没有负权边，并且是从一个源节点开始计算最短路径。<br>应用: 寻找两点之间的最短路径，广泛应用于路由算法。<br>数据结构: 使用优先队列（最小堆）来存储待处理的节点。</p>
-<p>Kruskal算法</p>
-<p>目的: 用于找到图的最小生成树（Minimum Spanning Tree, MST）。<br>特点: 是一种贪心算法，适用于边稀疏的图。<br>应用: 在网络设计中用于构建成本最低的网络连接。<br>数据结构: 使用并查集（Union-Find）来维护生成树的形成过程。</p>
-<p>需要注意的是，Kruskal算法通常不直接用于有向图，因为它主要用于无向图中的最小生成树问题。对于有向图，我们通常考虑的是最短路径问题，而不是生成树问题</p>
-<h6 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../src/algo/bfs.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../src/algo/dfs.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../src/algo/dijkstra.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../src/algo/kruskal.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;gtest/gtest.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GraphTest</span> : <span class="keyword">public</span> ::testing::Test</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">TEST_F</span>(GraphTest, BFSTest)</span><br><span class="line">&#123;</span><br><span class="line">  Graph graph&#123; <span class="literal">false</span>, <span class="literal">false</span> &#125;;</span><br><span class="line">  graph.<span class="built_in">addEdges</span>(<span class="string">&#x27;a&#x27;</span>, &#123; <span class="string">&#x27;b&#x27;</span> &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdges</span>(<span class="string">&#x27;b&#x27;</span>, &#123; <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;c&#x27;</span> &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdges</span>(<span class="string">&#x27;c&#x27;</span>, &#123; <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span> &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdges</span>(<span class="string">&#x27;d&#x27;</span>, &#123; <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;e&#x27;</span> &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdges</span>(<span class="string">&#x27;e&#x27;</span>, &#123; <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span> &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> begin = std::chrono::high_resolution_clock::<span class="built_in">now</span>();</span><br><span class="line">  BFS bfs&#123; graph &#125;;</span><br><span class="line"><span class="comment">//  DFS dfs&#123; graph &#125;;</span></span><br><span class="line">  bfs.<span class="built_in">traverseGraph</span>();</span><br><span class="line">  <span class="keyword">auto</span> end = std::chrono::high_resolution_clock::<span class="built_in">now</span>();</span><br><span class="line">  <span class="keyword">auto</span> elapsed = std::chrono::<span class="built_in">duration_cast</span>&lt;std::chrono::microseconds&gt;(end - begin);</span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;BFSTest : time in microseconds : &quot;</span> &lt;&lt; elapsed.<span class="built_in">count</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 节点遍历</span></span><br><span class="line">  <span class="type">const</span> <span class="keyword">auto</span>&amp; nodes = graph.<span class="built_in">getNodes</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">TEST_F</span>(GraphTest, DijkstraTest)</span><br><span class="line">&#123;</span><br><span class="line">  Graph graph&#123; <span class="literal">true</span>, <span class="literal">true</span> &#125;;</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;a&#x27;</span>, &#123; &#123; <span class="string">&#x27;d&#x27;</span>, <span class="number">3</span> &#125;, &#123; <span class="string">&#x27;h&#x27;</span>, <span class="number">5</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;b&#x27;</span>, &#123; &#123; <span class="string">&#x27;c&#x27;</span>, <span class="number">4</span> &#125;, &#123; <span class="string">&#x27;i&#x27;</span>, <span class="number">1</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;c&#x27;</span>, &#123; &#123; <span class="string">&#x27;a&#x27;</span>, <span class="number">4</span> &#125;, &#123; <span class="string">&#x27;l&#x27;</span>, <span class="number">5</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;d&#x27;</span>, &#123; &#123; <span class="string">&#x27;b&#x27;</span>, <span class="number">2</span> &#125;, &#123; <span class="string">&#x27;e&#x27;</span>, <span class="number">1</span> &#125;, &#123; <span class="string">&#x27;f&#x27;</span>, <span class="number">8</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;e&#x27;</span>, &#123; &#123; <span class="string">&#x27;c&#x27;</span>, <span class="number">5</span> &#125;, &#123; <span class="string">&#x27;j&#x27;</span>, <span class="number">7</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;f&#x27;</span>, &#123; &#123; <span class="string">&#x27;e&#x27;</span>, <span class="number">2</span> &#125;, &#123; <span class="string">&#x27;h&#x27;</span>, <span class="number">2</span> &#125;, &#123; <span class="string">&#x27;i&#x27;</span>, <span class="number">7</span> &#125;, &#123; <span class="string">&#x27;k&#x27;</span>, <span class="number">10</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;g&#x27;</span>, &#123; &#123; <span class="string">&#x27;e&#x27;</span>, <span class="number">3</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;h&#x27;</span>, &#123; &#123; <span class="string">&#x27;g&#x27;</span>, <span class="number">6</span> &#125;, &#123; <span class="string">&#x27;l&#x27;</span>, <span class="number">4</span> &#125;&#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;i&#x27;</span>, &#123; &#123; <span class="string">&#x27;k&#x27;</span>, <span class="number">6</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;j&#x27;</span>, &#123; &#123; <span class="string">&#x27;c&#x27;</span>, <span class="number">8</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;k&#x27;</span>, &#123; &#123; <span class="string">&#x27;g&#x27;</span>, <span class="number">3</span> &#125;, &#123; <span class="string">&#x27;j&#x27;</span>, <span class="number">5</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;l&#x27;</span>, &#123; &#123; <span class="string">&#x27;g&#x27;</span>, <span class="number">2</span> &#125;, &#123; <span class="string">&#x27;e&#x27;</span>, <span class="number">5</span> &#125;, &#123;<span class="string">&#x27;f&#x27;</span>, <span class="number">12</span> &#125; &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="type">char</span> src = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">  <span class="type">char</span> dst = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line">  Dijkstra dijkstra&#123; graph &#125;;</span><br><span class="line">  <span class="keyword">auto</span> begin = std::chrono::high_resolution_clock::<span class="built_in">now</span>();</span><br><span class="line">  dijkstra.<span class="built_in">traverseGraph</span>(src);</span><br><span class="line">  <span class="keyword">auto</span> end = std::chrono::high_resolution_clock::<span class="built_in">now</span>();</span><br><span class="line">  <span class="keyword">auto</span> elapsed = std::chrono::<span class="built_in">duration_cast</span>&lt;std::chrono::microseconds&gt;(end - begin);</span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;DijkstraTest : time in microseconds : &quot;</span> &lt;&lt; elapsed.<span class="built_in">count</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 最短路径</span></span><br><span class="line">  <span class="type">const</span> <span class="keyword">auto</span> nodesList = std::make_unique&lt;std::list&lt;<span class="type">char</span>&gt;&gt;();</span><br><span class="line">  nodesList-&gt;<span class="built_in">push_front</span>(dst);</span><br><span class="line">  dijkstra.<span class="built_in">traverseGraph</span>(src);</span><br><span class="line">  <span class="type">const</span> std::map&lt;<span class="type">char</span>, route&gt;&amp; routes = dijkstra.<span class="built_in">getRoutes</span>();</span><br><span class="line"></span><br><span class="line">  std::optional&lt;<span class="type">char</span>&gt; predecessor;</span><br><span class="line">  predecessor = routes.<span class="built_in">at</span>(dst).predecessor;</span><br><span class="line">  <span class="keyword">while</span> (predecessor != std::<span class="literal">nullopt</span>) &#123;</span><br><span class="line">    nodesList-&gt;<span class="built_in">push_front</span>(predecessor.<span class="built_in">value</span>());</span><br><span class="line">    predecessor = routes.<span class="built_in">at</span>(predecessor.<span class="built_in">value</span>()).predecessor;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> shortPaths = std::make_unique&lt;std::vector&lt;<span class="type">char</span>&gt;&gt;(nodesList-&gt;<span class="built_in">begin</span>(), nodesList-&gt;<span class="built_in">end</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">TEST_F</span>(GraphTest, KruskalTest)</span><br><span class="line">&#123;</span><br><span class="line">  Graph graph&#123; <span class="literal">false</span>, <span class="literal">true</span> &#125;;</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;a&#x27;</span>, &#123; &#123; <span class="string">&#x27;b&#x27;</span>, <span class="number">3</span> &#125;, &#123; <span class="string">&#x27;f&#x27;</span>, <span class="number">2</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;b&#x27;</span>, &#123; &#123; <span class="string">&#x27;c&#x27;</span>, <span class="number">17</span> &#125;, &#123; <span class="string">&#x27;d&#x27;</span>, <span class="number">16</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;c&#x27;</span>, &#123; &#123; <span class="string">&#x27;d&#x27;</span>, <span class="number">8</span> &#125;, &#123; <span class="string">&#x27;i&#x27;</span>, <span class="number">18</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;d&#x27;</span>, &#123; &#123; <span class="string">&#x27;e&#x27;</span>, <span class="number">11</span> &#125;, &#123; <span class="string">&#x27;i&#x27;</span>, <span class="number">4</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;e&#x27;</span>, &#123; &#123; <span class="string">&#x27;f&#x27;</span>, <span class="number">1</span> &#125;, &#123; <span class="string">&#x27;g&#x27;</span>, <span class="number">6</span> &#125;, &#123; <span class="string">&#x27;h&#x27;</span>, <span class="number">5</span> &#125;, &#123; <span class="string">&#x27;i&#x27;</span>, <span class="number">10</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;f&#x27;</span>, &#123; &#123; <span class="string">&#x27;g&#x27;</span>, <span class="number">7</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;g&#x27;</span>, &#123; &#123; <span class="string">&#x27;h&#x27;</span>, <span class="number">15</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;h&#x27;</span>, &#123; &#123; <span class="string">&#x27;i&#x27;</span>, <span class="number">12</span> &#125;, &#123; <span class="string">&#x27;j&#x27;</span>, <span class="number">13</span> &#125; &#125;);</span><br><span class="line">  graph.<span class="built_in">addEdgesWeighted</span>(<span class="string">&#x27;i&#x27;</span>, &#123; &#123; <span class="string">&#x27;j&#x27;</span>, <span class="number">9</span> &#125; &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">auto</span> begin = std::chrono::high_resolution_clock::<span class="built_in">now</span>();</span><br><span class="line">  Kruskal kruskal&#123; graph &#125;;</span><br><span class="line">  std::unique_ptr&lt;std::vector&lt;Edge&gt;&gt; edges = kruskal.<span class="built_in">makeMinSpanningTree</span>();</span><br><span class="line">  <span class="keyword">auto</span> end = std::chrono::high_resolution_clock::<span class="built_in">now</span>();</span><br><span class="line">  <span class="keyword">auto</span> elapsed = std::chrono::<span class="built_in">duration_cast</span>&lt;std::chrono::microseconds&gt;(end - begin);</span><br><span class="line">  std::cout &lt;&lt; <span class="string">&quot;KruskalTest : time in microseconds : &quot;</span> &lt;&lt; elapsed.<span class="built_in">count</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 最小生成树，边的权值之和最低的子图</span></span><br><span class="line">  <span class="keyword">auto</span> edgesTuple  = std::make_unique&lt;std::vector&lt;std::tuple&lt;<span class="type">char</span>, <span class="type">char</span>&gt;&gt;&gt;();</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">const</span> Edge&amp; edge : *edges) &#123;</span><br><span class="line">    edgesTuple-&gt;<span class="built_in">push_back</span>(std::tuple&lt;<span class="type">char</span>, <span class="type">char</span>&gt;&#123; edge.src, edge.dst &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://pengliu.blog.csdn.net/article/details/141323352" title="C++ 有向图拓扑排序算法_有向图排序c++-CSDN博客">C++ 有向图拓扑排序算法_有向图排序c++-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Przemyslawmd/Graphs" title="https:&#x2F;&#x2F;github.com&#x2F;Przemyslawmd&#x2F;Graphs">https://github.com/Przemyslawmd/Graphs</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/08/30/2024-08-30-csdn-141713871/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -1482,6 +1464,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">GitHub Pages</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">域名</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
               </li>
             
             <div class="clearfix"></div>
