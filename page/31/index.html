@@ -204,7 +204,7 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-2017-12-13-Ubuntu16.04-pycharm-icon-setting" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2018-01-09-python_crawl_words" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
     
@@ -212,12 +212,12 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/19/2017-12-13-Ubuntu16.04-pycharm-icon-setting/">Ubuntu16.04设置Pycharm桌面快捷键</a>
+      <a class="article-title" href="/2021/06/19/2018-01-09-python_crawl_words/">News_scrapy_redis 框架系统</a>
     </h1>
   
 
         
-        <a href="/2021/06/19/2017-12-13-Ubuntu16.04-pycharm-icon-setting/" class="archive-article-date">
+        <a href="/2021/06/19/2018-01-09-python_crawl_words/" class="archive-article-date">
   	<time datetime="2021-06-19T05:00:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-19</time>
 </a>
         
@@ -228,29 +228,96 @@ var _hmt = _hmt || [];
         <ul>
 <li>content<br>{:toc}</li>
 </ul>
-<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/applications</span><br></pre></td></tr></table></figure>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>该文档针对爬虫系统设计目标中相应的场景给出技术方案</p>
+<h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><p>1、代码复用，功能模块化。可以支持上千个网站的数据爬取；</p>
+<p>2、易扩展。爬虫框架易扩展，爬取规则、解析规则、入库规则易扩展，支持框架切换；</p>
+<p>3、健壮性、可维护性。对数据爬取过程中的各种异常，例如：断网、反爬升级、爬“脏数据”等，需要实时的监控，以及给出准确的定位。异常处理以及降级措施需要完善；</p>
+<p>4、后续扩展为分布式结构；</p>
+<p>5、支持功能模块的易调整；</p>
+<h2 id="框架使用说明"><a href="#框架使用说明" class="headerlink" title="框架使用说明"></a>框架使用说明</h2><p><strong>News_scrapy_redis4. <a target="_blank" rel="noopener" href="https://github.com/xudailong/News_scrapy_redis.git">github地址</a></strong></p>
+<ol>
+<li><p><code>News_scrapy_redis</code> 基于<code>scrapy_redis</code>实现数据的增量爬取（含去重），支持分布式，支持异常日志等输出，功能模块化。</p>
+</li>
+<li><p>树结构：</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">├─.<span class="property">idea</span></span><br><span class="line">├─<span class="title class_">Daily</span>_crawler</span><br><span class="line">├─<span class="variable constant_">ETL</span></span><br><span class="line">├─log</span><br><span class="line">├─<span class="title class_">News</span>_scrapy</span><br><span class="line">│  ├─spiders</span><br><span class="line">│  │  └─__pycache__</span><br><span class="line">│  └─__pycache__</span><br><span class="line">├─<span class="title class_">News</span>_simhash</span><br><span class="line">└─<span class="title class_">News</span>_statistics</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><p>这里我将pycharm下载并解压到了&#x2F;home&#x2F;liupeng&#x2F;developer文件夹下</p>
-<p>这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标</p>
-<h2 id="终端打开"><a href="#终端打开" class="headerlink" title="终端打开"></a>终端打开</h2><p>使用Ubuntu终端进行打开：<br>方法一（使用vim）：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi  /usr/share/applications/pycharm.<span class="property">desktop</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>各模块说明：</p>
+<blockquote>
+<p>Daily_crawler：    </p>
+</blockquote>
+<ul>
+<li><code>daily_crawler.cron crontab</code>的定时文件, 定时运行<code>start_crawl.sh</code>脚本</li>
+<li><code>start_crawl.sh</code> 启动爬虫模块，并将每次爬取所花费的时间 写入 log&#x2F;run_time.txt</li>
+<li><code>push_urls.py</code> 每次在爬虫之前运行，清空调度队列，并将start_url push到调度队列中</li>
+<li><code>news_crawl.sh</code> 执行爬虫模块（增量爬取）， 并自动进行相似文档去重，ETL, 存入mongodb</li>
+</ul>
+<blockquote>
+<p>ETL:（暂时用不到）</p>
+</blockquote>
+<ul>
+<li><code>/Model</code> 存放训练好的词典，语料，TF-IDF，LDA， word2vec模型</li>
+<li><code>auto_embedding.py</code> 新闻语料的清洗，以及自动化生成新闻的标题和内容embedding</li>
+<li><code>auto_embedding_simhash.py</code> 增加了自动化相似文档的去重</li>
+<li><code>stop_words</code> 常用的中文停留词</li>
+<li><code>train_step1</code> 训练LDA模型</li>
+<li><code>train_step2</code> 训练LDA模型</li>
+</ul>
+<blockquote>
+<p>log:</p>
+</blockquote>
+<ul>
+<li><code>auto_embedding_simhash.log</code> 执行auto_embedding_simhash.py的日志文件</li>
+<li><code>crawler.log</code> 执行scrapy-redis爬虫模块的日志文件</li>
+<li><code>news_count.log</code> 执行news_statistics.py的日志文件</li>
+<li><code>run_time.txt</code> 每次执行爬虫脚本的运行时间</li>
+</ul>
+<blockquote>
+<p>News_data:</p>
+</blockquote>
+<ul>
+<li>每个文件夹是抓每天从各个网站抓取到的新闻</li>
+</ul>
+<blockquote>
+<p>News_scrapy:</p>
+</blockquote>
+<ul>
+<li>基于scrapy-redis的爬虫模块，在scrapy的基础上修改得到</li>
+<li>各大网站数据的爬取解析工作主要在该文件中进行</li>
+</ul>
+<blockquote>
+<p>News_simhash（此处只需要进行title的去重）:</p>
+</blockquote>
+<ul>
+<li>实现相似文档的去重</li>
+<li>automatic_simhash.py 自动实现相似文档的去重（仅基于新闻内容）</li>
+<li>content_index.pkl 序列化的新闻内容SimhashIndex类，相当于所有新闻sinhash_value的一张表，并且随着抓取的新闻越来越多，该表会不断增大title_index.pkl 序列化的新闻标题SimhashIndex类， 未使用</li>
+<li><code>generate_simhash_index.py</code> 初始化这张Simhash_index，生成content和title的Simhash_index</li>
+<li><code>near_duplicates.py</code> 对初始化的Simhash_index进行相似新闻内容的去重</li>
+<li>test.py 测试content_index.pkl中content_index类新闻的数量</li>
+</ul>
+<blockquote>
+<p>News_statistics:</p>
+</blockquote>
+<ul>
+<li><code>news_count.json</code> 每天从各个网站抓取的新闻数量</li>
+<li><code>news_statistics.py</code> 统计新闻增量的脚本</li>
+</ul>
+</li>
+</ol>
+<h2 id="框架环境"><a href="#框架环境" class="headerlink" title="框架环境"></a>框架环境</h2><ol>
+<li>Redis环境环境</li>
+<li>scrapy框架环境</li>
+<li>python3环境环境</li>
+</ol>
+<h2 id="框架完善"><a href="#框架完善" class="headerlink" title="框架完善"></a>框架完善</h2><ol>
+<li>IP代理池</li>
+<li>cookies池 </li>
+<li>其他</li>
+</ol>
 
-<p>方法二（使用gedit）：
-	</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit  /usr/share/applications/pycharm.<span class="property">desktop</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>然后就会弹出一个新框：</p>
-<h2 id="张贴"><a href="#张贴" class="headerlink" title="张贴"></a>张贴</h2><p>我们将下面的内容贴上去：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[<span class="title class_">Desktop</span> <span class="title class_">Entry</span>]</span><br><span class="line"><span class="title class_">Type</span>=<span class="title class_">Application</span></span><br><span class="line"><span class="title class_">Name</span>=<span class="title class_">Pycharm</span></span><br><span class="line"><span class="title class_">GenericName</span>=<span class="title class_">Pycharm3</span></span><br><span class="line"><span class="title class_">Comment</span>=<span class="title class_">Pycharm3</span>:<span class="title class_">The</span> <span class="title class_">Python</span> <span class="variable constant_">IDE</span></span><br><span class="line"><span class="title class_">Exec</span>=<span class="string">&quot;/home/snakeson/developer/pycharm-community-2017.2.3/bin/pycharm.sh&quot;</span> %f</span><br><span class="line"><span class="title class_">Icon</span>=<span class="regexp">/home/</span>snakeson/developer/pycharm-community-<span class="number">2017.2</span><span class="number">.3</span>/bin/pycharm.<span class="property">png</span></span><br><span class="line"><span class="title class_">Terminal</span>=pycharm</span><br><span class="line"><span class="title class_">Categories</span>=<span class="title class_">Pycharm</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<hr>
-<p>注意一定要将Desktop Entry复制进去，也就是上面的全部都要复制进去，这里我们需要替换掉两个地方：<strong>Exec&#x3D;”xx”<strong>和</strong>Icon&#x3D;</strong>,这里要替换掉我们的pycharm解压的目录，当然了，我已经替换好了，如果你的目录跟我的目录不一样的话，你得把路径给换了，不管你是pycharm2017还是pycharm2016,，例如Comment什么的都不要改变，只变上面提到的两个路径就可以了。</p>
-<h2 id="添加可执行权限"><a href="#添加可执行权限" class="headerlink" title="添加可执行权限"></a>添加可执行权限</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/share/applications/pycharm.<span class="property">desktop</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="拷贝到桌面"><a href="#拷贝到桌面" class="headerlink" title="拷贝到桌面"></a>拷贝到桌面</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将/usr/share/applications/pycharm.<span class="property">desktop</span>文件拷贝到桌面，双击即可运行。</span><br></pre></td></tr></table></figure>
       
 
       
@@ -263,7 +330,7 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Ubuntu Pycharm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">scrapy_redis 爬虫</a>
         		</li>
       		
 		</ul>
@@ -275,7 +342,7 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/liupeng//" class="article-tag-list-link color3">liupeng</a>
+        			<a href="/categories/爬虫//" class="article-tag-list-link color3">爬虫</a>
         		</li>
       		
 		</ul>
@@ -284,7 +351,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/19/2017-12-13-Ubuntu16.04-pycharm-icon-setting/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/06/19/2018-01-09-python_crawl_words/">展开全文 >></a>
         </p>
       
 
@@ -317,6 +384,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2018-01-13-close-win10-update" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -421,6 +492,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2018-01-13-setup-mysql-inubuntu" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -529,6 +604,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2018-02-01-about-inner-outer-ip" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -636,6 +715,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2018-02-10-centos-crontab" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -764,6 +847,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2019-01-10-QLocalServer类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -872,6 +959,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2019-01-10-QSharedMemory共享内存" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -961,6 +1052,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="test-随笔" class="article article-type-test  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1028,6 +1123,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-你好，Hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1140,6 +1239,10 @@ tags:
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2018-04-17-csdn-79976413" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1221,6 +1324,10 @@ tags:
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
   
     <nav id="page-nav">
@@ -1239,16 +1346,51 @@ tags:
     		&copy; 2026 liupeng
     	</div>
 		
-      <!--统计start-->
+      <!--统计start
+          busuanzi 对没在它后台登记的站点会加内联 display:none：数据其实取回来了
+          （实测本站 PV/UV 有值），但页面上看不见。下面这段先把容器显式显示，
+          再等它填值——6 秒后仍然取不到数字的句子整体收起来，避免出现「本站总访问量次」。-->
       <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
       </script>
-      <span id="busuanzi_container_site_pv">
+      <span id="busuanzi_container_site_pv" class="bz-count">
 	  本站总访问量<span id="busuanzi_value_site_pv"></span>次
 	  </span>
-		  <span id="busuanzi_container_site_uv">
+      <span id="busuanzi_container_site_uv" class="bz-count">
 	  您是本站的第<span id="busuanzi_value_site_uv"></span>个小伙伴
 	  </span>
+      <span id="busuanzi_container_page_pv" class="bz-count">
 	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	  </span>
+      <style>
+        #footer-info .bz-count { display: inline !important; margin-right: 8px; white-space: nowrap; }
+      </style>
+      <script>
+      (function () {
+        var pairs = [
+          ['busuanzi_value_site_pv', 'busuanzi_container_site_pv'],
+          ['busuanzi_value_site_uv', 'busuanzi_container_site_uv'],
+          ['busuanzi_value_page_pv', 'busuanzi_container_page_pv']
+        ];
+        var filled = {};
+        var tries = 0;
+        var timer = setInterval(function () {
+          tries++;
+          pairs.forEach(function (p) {
+            var v = document.getElementById(p[0]);
+            var c = document.getElementById(p[1]);
+            if (!v || !c) return;
+            if (/^\s*\d+\s*$/.test(v.textContent)) { filled[p[1]] = true; c.style.display = 'inline'; }
+          });
+          if (tries > 20) {
+            clearInterval(timer);
+            pairs.forEach(function (p) {
+              var c = document.getElementById(p[1]);
+              if (c && !filled[p[1]]) c.style.display = 'none';
+            });
+          }
+        }, 300);
+      })();
+      </script>
       <!--统计end-->	
 	
       	<div class="footer-right">
@@ -1361,11 +1503,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1457,15 +1599,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">scrapy 爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">scrapy_redis 爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1553,6 +1695,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">下雪了</a>
               </li>
              
@@ -1562,10 +1708,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

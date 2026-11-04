@@ -278,6 +278,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2024-06-04-csdn-139442835" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -371,6 +375,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2024-06-03-csdn-139424962" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -460,6 +468,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2024-06-02-csdn-139392565" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -541,6 +553,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2024-06-02-csdn-139392421" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -627,6 +643,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2024-06-01-csdn-139375561" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -726,6 +746,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2024-06-01-csdn-139374316" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -807,6 +831,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2024-05-31-csdn-139360587" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -881,6 +909,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2024-05-31-csdn-139346743" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1916,6 +1948,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
     <article id="post-2024-05-30-csdn-139334605" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -2004,6 +2040,10 @@ var _hmt = _hmt || [];
 <!-- 目录内容 -->
              
         <!-- 目录内容结束 -->
+
+
+
+
   
   
     <nav id="page-nav">
@@ -2022,16 +2062,51 @@ var _hmt = _hmt || [];
     		&copy; 2026 liupeng
     	</div>
 		
-      <!--统计start-->
+      <!--统计start
+          busuanzi 对没在它后台登记的站点会加内联 display:none：数据其实取回来了
+          （实测本站 PV/UV 有值），但页面上看不见。下面这段先把容器显式显示，
+          再等它填值——6 秒后仍然取不到数字的句子整体收起来，避免出现「本站总访问量次」。-->
       <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
       </script>
-      <span id="busuanzi_container_site_pv">
+      <span id="busuanzi_container_site_pv" class="bz-count">
 	  本站总访问量<span id="busuanzi_value_site_pv"></span>次
 	  </span>
-		  <span id="busuanzi_container_site_uv">
+      <span id="busuanzi_container_site_uv" class="bz-count">
 	  您是本站的第<span id="busuanzi_value_site_uv"></span>个小伙伴
 	  </span>
+      <span id="busuanzi_container_page_pv" class="bz-count">
 	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	  </span>
+      <style>
+        #footer-info .bz-count { display: inline !important; margin-right: 8px; white-space: nowrap; }
+      </style>
+      <script>
+      (function () {
+        var pairs = [
+          ['busuanzi_value_site_pv', 'busuanzi_container_site_pv'],
+          ['busuanzi_value_site_uv', 'busuanzi_container_site_uv'],
+          ['busuanzi_value_page_pv', 'busuanzi_container_page_pv']
+        ];
+        var filled = {};
+        var tries = 0;
+        var timer = setInterval(function () {
+          tries++;
+          pairs.forEach(function (p) {
+            var v = document.getElementById(p[0]);
+            var c = document.getElementById(p[1]);
+            if (!v || !c) return;
+            if (/^\s*\d+\s*$/.test(v.textContent)) { filled[p[1]] = true; c.style.display = 'inline'; }
+          });
+          if (tries > 20) {
+            clearInterval(timer);
+            pairs.forEach(function (p) {
+              var c = document.getElementById(p[1]);
+              if (c && !filled[p[1]]) c.style.display = 'none';
+            });
+          }
+        }, 300);
+      })();
+      </script>
       <!--统计end-->	
 	
       	<div class="footer-right">
@@ -2144,11 +2219,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2240,15 +2315,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">scrapy 爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">scrapy_redis 爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2336,6 +2411,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">下雪了</a>
               </li>
              
@@ -2345,10 +2424,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

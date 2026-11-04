@@ -229,12 +229,12 @@ var _hmt = _hmt || [];
      data-hbe-format="4"
      data-wpm="密码不正确，请重新输入。"
      data-whm="密码不正确，请重新输入。"
-     data-salt="28b231c11d4452fce365c1dd8169d63f8767be74445b33dd81c72d8bbebff8aa"
-     data-nonce="6def4e1f53172591c14a9646"
+     data-salt="4250df57fa3af0f0513d0974ad18a2f42156dda586ab8d6c5b6adcb4c279168e"
+     data-nonce="74b8e2cccbebb0837cc8b1e9"
      data-kdf-iterations="600000"
      data-auto-save="false">
   <script id="hbeData" type="hbeData">
-    805dd055b98d20fe6c0a672b7ddfa5e036242e91cf979ce942b6de58b8a5dffe67535d48a7ec5f78bb21233b2806f65b96fe2759be25304487eb9520a3efe081544affe29a05afad5c7febae18467518258a4879a8b8b8b49de340e2d6c6ed27640cb1bf7af9bfb74010685cd84293bc683c9b5dea0ec0e1fa245c76413402f1581db2efeddab549c0defdda33e284de76cd2d9aa5e1d2f4f6db0021da7585764d4807a637d8a976c840ab4eac416811e2e890596e6a441385cda1c643bb3badd2f1127e78106c431504b716ca325f6109d51761ea6a8d704d7eb75de4552dc96b
+    53e4d56a038e47135574e36f4e46443613d2f960ada7902dbfb4dc1a8782eb4b8d6c73878ee8fcdb9bd8c913ca7c4671d073aacf21497acd00dbdfa7f1649f1493a009566903c9901b9f1007a0ad7d2984f4867d25f916dd7a6ddb822bd849fa9ea26d05ec003412ebcdce52d228c87f221f0069a5d4931c65204038378f9cd01fba1d504d0e689dabc9e49772a7402fcee96f33a1447e3f507305278edbc5c79dcc0e04a9e999fe96692b62a362daeaea4e66a871fb2336207869a6594fd61b671dac66adb2c5aadf3e431e1768dbbd7f6aa9af502c3ae777e429726d39e5a845
   </script>
   <div class="hbe hbe-content">
     <form id="hbeForm" class="hbe hbe-form">
@@ -432,26 +432,6 @@ var _hmt = _hmt || [];
 
 <!-- 目录内容 -->
         
-		 
-			  <!-- 来必力City版安装代码 -->
-<div id="lv-container" data-id="city" data-uid="MTAyMC80MTgwOS8xODM1NQ==">
-	<script type="text/javascript">
-   (function(d, s) {
-       var j, e = d.getElementsByTagName(s)[0];
-
-       if (typeof LivereTower === 'function') { return; }
-
-       j = d.createElement(s);
-       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-       j.async = true;
-
-       e.parentNode.insertBefore(j, e);
-   })(document, 'script');
-	</script>
-<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>		
-</div>
-<!-- City版安装代码已完成 -->
-			  
             <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
             <span class="btn-bg"></span>
             <span class="btn-text">文章导航</span>
@@ -477,6 +457,10 @@ var _hmt = _hmt || [];
            </script>
              
         <!-- 目录内容结束 -->
+
+
+
+
           </div>
         </div>
       </div>
@@ -487,16 +471,51 @@ var _hmt = _hmt || [];
     		&copy; 2026 liupeng
     	</div>
 		
-      <!--统计start-->
+      <!--统计start
+          busuanzi 对没在它后台登记的站点会加内联 display:none：数据其实取回来了
+          （实测本站 PV/UV 有值），但页面上看不见。下面这段先把容器显式显示，
+          再等它填值——6 秒后仍然取不到数字的句子整体收起来，避免出现「本站总访问量次」。-->
       <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
       </script>
-      <span id="busuanzi_container_site_pv">
+      <span id="busuanzi_container_site_pv" class="bz-count">
 	  本站总访问量<span id="busuanzi_value_site_pv"></span>次
 	  </span>
-		  <span id="busuanzi_container_site_uv">
+      <span id="busuanzi_container_site_uv" class="bz-count">
 	  您是本站的第<span id="busuanzi_value_site_uv"></span>个小伙伴
 	  </span>
+      <span id="busuanzi_container_page_pv" class="bz-count">
 	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	  </span>
+      <style>
+        #footer-info .bz-count { display: inline !important; margin-right: 8px; white-space: nowrap; }
+      </style>
+      <script>
+      (function () {
+        var pairs = [
+          ['busuanzi_value_site_pv', 'busuanzi_container_site_pv'],
+          ['busuanzi_value_site_uv', 'busuanzi_container_site_uv'],
+          ['busuanzi_value_page_pv', 'busuanzi_container_page_pv']
+        ];
+        var filled = {};
+        var tries = 0;
+        var timer = setInterval(function () {
+          tries++;
+          pairs.forEach(function (p) {
+            var v = document.getElementById(p[0]);
+            var c = document.getElementById(p[1]);
+            if (!v || !c) return;
+            if (/^\s*\d+\s*$/.test(v.textContent)) { filled[p[1]] = true; c.style.display = 'inline'; }
+          });
+          if (tries > 20) {
+            clearInterval(timer);
+            pairs.forEach(function (p) {
+              var c = document.getElementById(p[1]);
+              if (c && !filled[p[1]]) c.style.display = 'none';
+            });
+          }
+        }, 300);
+      })();
+      </script>
       <!--统计end-->	
 	
       	<div class="footer-right">
@@ -609,11 +628,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -705,15 +724,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">scrapy 爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">scrapy_redis 爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -801,6 +820,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">下雪了</a>
               </li>
              
@@ -810,10 +833,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">

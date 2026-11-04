@@ -229,12 +229,12 @@ var _hmt = _hmt || [];
      data-hbe-format="4"
      data-wpm="密码不正确，请重新输入。"
      data-whm="密码不正确，请重新输入。"
-     data-salt="5ef2393aed29708cdbbc41867b162804ad37ba2048e4b989c96f1886258b1cb2"
-     data-nonce="b7d3b1c7bd958b99585c6c53"
+     data-salt="7348ca4e58f4063af3a36a7062aba54ac1ee7db1827c0440ea0517ab9b2a5239"
+     data-nonce="342aa5bc1975a3ecf4ddd95e"
      data-kdf-iterations="600000"
      data-auto-save="false">
   <script id="hbeData" type="hbeData">
-    2992390321d0af0d3880b5e979e5e96dae4811f58238529e38dbc067f4cfb70b90a889aa4e143301834b7c5610b48f75432859fede5126fa12ee56c20ac815e856e0bee8afa1b5a9d2ba036513340c9ee340b1aec63761d183db70723f184fadce9fe50ea1e26af9f60f77967ac9f1ff5ccdc6cd0da83b95bdbe25a54780f8fa938f9757e79f03f47c2230725a64fcaf078b55ca3001ea774c5155c1542202467dfcae716683227b05dcffcb4e98b4929976ef43f423dadb28f5ab012778c5e875497bd29426e14dfe0cbd4bc6b1e0962bd7148b69a5a5c26c4f01c98d577a070b97ec7e9cc4f8695b5ee1ea3bbb8064ddf9b831a94f9a08ea52bea046b7a7d582c16c8977289b4b8892deef7ffb256c87559ebe20db8e6949317224aaa182b11208bd972e540754e13f572f60dfdf404b300006c074d8b3947f3e44576df0ea840577fd78d323b7bcf868363c75257e920bead30f880fe9fd1d894e9e1949a6d5756874f67510c72011f3e16ab53da42117
+    aca8c2158bd18c484877f5d956eb55c2fe472dc29a4b1c9eddaee00661b76d4cad1ce2aebb9e618b602cd72f739bf4ac2f77095d51f30393eff8d434dbe8c4aef12c460c586fa464005bc51ae0a8b8feadcb2e180a23e19d26c7bff9c28506ccbe462de546fd49afb3470956f1fed67663b7004d72fcedd8883f80873e391bd705ce69996502abeed5f0787100795f1bdf304a05b880da6335880e71d394965afb76fba13a50ece43a55e99536cb6b4f4a8b654ea36e12897665e38c8adca01e41396e0a00de094214c075d69040d8d0778ea0fdbf625a0facd48a880ed6fc019c0a5ce47aad34003d99cee51f0edab2efb053caafaddd8a94def443f232b2eced36e16c5f7057c0e2d38ffc6f6506d7e29d0bb8033e2d6cfbba884f643dea30a8787d00c55eaa10800562e3b6c1a61edfc9b7a2fcd9d381759c41ea9d9be402ba44dc6d55298dbc8ddb003154adf26483a6e0b70983170dad5cd5b5941dd232c74e5bf816972d7a1b762ea53b6f3e6c9a2f
   </script>
   <div class="hbe hbe-content">
     <form id="hbeForm" class="hbe hbe-form">
@@ -432,26 +432,6 @@ var _hmt = _hmt || [];
 
 <!-- 目录内容 -->
         
-		 
-			  <!-- 来必力City版安装代码 -->
-<div id="lv-container" data-id="city" data-uid="MTAyMC80MTgwOS8xODM1NQ==">
-	<script type="text/javascript">
-   (function(d, s) {
-       var j, e = d.getElementsByTagName(s)[0];
-
-       if (typeof LivereTower === 'function') { return; }
-
-       j = d.createElement(s);
-       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-       j.async = true;
-
-       e.parentNode.insertBefore(j, e);
-   })(document, 'script');
-	</script>
-<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>		
-</div>
-<!-- City版安装代码已完成 -->
-			  
             <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
             <span class="btn-bg"></span>
             <span class="btn-text">文章导航</span>
@@ -477,6 +457,10 @@ var _hmt = _hmt || [];
            </script>
              
         <!-- 目录内容结束 -->
+
+
+
+
           </div>
         </div>
       </div>
@@ -487,16 +471,51 @@ var _hmt = _hmt || [];
     		&copy; 2026 liupeng
     	</div>
 		
-      <!--统计start-->
+      <!--统计start
+          busuanzi 对没在它后台登记的站点会加内联 display:none：数据其实取回来了
+          （实测本站 PV/UV 有值），但页面上看不见。下面这段先把容器显式显示，
+          再等它填值——6 秒后仍然取不到数字的句子整体收起来，避免出现「本站总访问量次」。-->
       <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
       </script>
-      <span id="busuanzi_container_site_pv">
+      <span id="busuanzi_container_site_pv" class="bz-count">
 	  本站总访问量<span id="busuanzi_value_site_pv"></span>次
 	  </span>
-		  <span id="busuanzi_container_site_uv">
+      <span id="busuanzi_container_site_uv" class="bz-count">
 	  您是本站的第<span id="busuanzi_value_site_uv"></span>个小伙伴
 	  </span>
+      <span id="busuanzi_container_page_pv" class="bz-count">
 	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	  </span>
+      <style>
+        #footer-info .bz-count { display: inline !important; margin-right: 8px; white-space: nowrap; }
+      </style>
+      <script>
+      (function () {
+        var pairs = [
+          ['busuanzi_value_site_pv', 'busuanzi_container_site_pv'],
+          ['busuanzi_value_site_uv', 'busuanzi_container_site_uv'],
+          ['busuanzi_value_page_pv', 'busuanzi_container_page_pv']
+        ];
+        var filled = {};
+        var tries = 0;
+        var timer = setInterval(function () {
+          tries++;
+          pairs.forEach(function (p) {
+            var v = document.getElementById(p[0]);
+            var c = document.getElementById(p[1]);
+            if (!v || !c) return;
+            if (/^\s*\d+\s*$/.test(v.textContent)) { filled[p[1]] = true; c.style.display = 'inline'; }
+          });
+          if (tries > 20) {
+            clearInterval(timer);
+            pairs.forEach(function (p) {
+              var c = document.getElementById(p[1]);
+              if (c && !filled[p[1]]) c.style.display = 'none';
+            });
+          }
+        }, 300);
+      })();
+      </script>
       <!--统计end-->	
 	
       	<div class="footer-right">
@@ -609,11 +628,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
+                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Baidu ife JavaScript 正则 Regular</a>
+                <a href="javascript:void(0)" class="js-tag color5">tools CSS reveal 配色</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -705,15 +724,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">scrapy 爬虫</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">scrapy_redis 爬虫</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ubuntu Pycharm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -801,6 +820,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">下雪了</a>
               </li>
              
@@ -810,10 +833,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">windows api</a>
               </li>
              
               <li class="article-tag-list-item">
