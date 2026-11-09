@@ -204,6 +204,99 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-07-04-csdn-140189778" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/04/2024-07-04-csdn-140189778/">C++字体库开发之字体回退三</a>
+    </h1>
+  
+
+        
+        <a href="/2024/07/04/2024-07-04-csdn-140189778/" class="archive-article-date">
+  	<time datetime="2024-07-04T13:01:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140189778">https://blog.csdn.net/qq_30220519/article/details/140189778</a></p>
+</blockquote>
+<p>代码片段<br>class FontCoverage<br>{<br>public:<br>    using SP                &#x3D; std::shared_ptr<FontCoverage>;<br>    virtual ~FontCoverage() &#x3D; default;</p>
+<p>    virtual void                     set(int index, FontTypes::CoverageLevel level) &#x3D; 0;<br>    virtual FontTypes::CoverageLevel get(int index)                                 &#x3D; 0;<br>    virtual FontCoverage::SP         clone()                                        &#x3D; 0;<br>};</p>
+<p>freetype:<br>    FTCoverage::SP coverage &#x3D; std::make_shared<FTCoverage>();<br>    FT_CharMap    *charMap  &#x3D; (*m_face)-&gt;charmaps;<br>    for (int i &#x3D; 0; i &lt; (*m_face)-&gt;num_charmaps; i++) {<br>        FT_Select_Charmap((*m_face), charMap[i]-&gt;encoding);<br>        FT_UInt gIndex;<br>        for (auto charCode &#x3D; FT_Get_First_Char((*m_face), &amp;gIndex); gIndex !&#x3D; 0;<br>             charCode      &#x3D; FT_Get_Next_Char((*m_face), charCode, &amp;gIndex)) {<br>            coverage-&gt;set(charCode, FontTypes::CoverageLevel::COVERAGE_EXACT);<br>        }<br>    }<br>harfbuzz:<br>    FontCoverage::SP coverage &#x3D; std::make_shared<HBCoverage>();<br>    hb_set_t        *chars    &#x3D; hb_set_create();<br>    hb_codepoint_t   ch       &#x3D; HB_SET_VALUE_INVALID;</p>
+<p>    hb_face_collect_unicodes(m_face, chars);<br>    while (hb_set_next(chars, &amp;ch))<br>        coverage-&gt;set(ch, FontTypes::CoverageLevel::COVERAGE_EXACT);<br>    hb_set_destroy(chars);<br>    <br>关键点<br>1.字体解析需包含完整的unicode范围<br>2.根据unicode，字体名，大小等最优匹配得到回退列表</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140161915" title="C++字体库开发二-CSDN博客">C++字体库开发二-CSDN博客</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/04/2024-07-04-csdn-140189778/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-07-04-csdn-140189597" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1034,105 +1127,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-06-29-csdn-140065026" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/06/29/2024-06-29-csdn-140065026/">UML建模笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2024/06/29/2024-06-29-csdn-140065026/" class="archive-article-date">
-  	<time datetime="2024-06-29T14:42:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-06-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140065026">https://blog.csdn.net/qq_30220519/article/details/140065026</a></p>
-</blockquote>
-<h6 id="5个视图"><a href="#5个视图" class="headerlink" title="5个视图"></a>5个视图</h6><ol>
-<li>设计。类，接口，对象如何协作。</li>
-<li>实现。组件，运行程序，文档关系。</li>
-<li>用例。用户功能期望。</li>
-<li>进程。并发与同步相关进程，线程。</li>
-<li>部署。部署到计算机。</li>
-</ol>
-<h6 id="建模目的"><a href="#建模目的" class="headerlink" title="建模目的"></a>建模目的</h6><ol>
-<li>和客户共创</li>
-<li>追踪需求变更</li>
-<li>协同开发</li>
-<li>进度控制</li>
-<li>持续迭代</li>
-<li>测试</li>
-<li>生成代码</li>
-</ol>
-<h6 id="开发周期"><a href="#开发周期" class="headerlink" title="开发周期"></a>开发周期</h6><p>用户需求，领域分析，概要设计，详细设计，编码测试，部署</p>
-<h6 id="开发模式"><a href="#开发模式" class="headerlink" title="开发模式"></a>开发模式</h6><p>需求不明确，工作量小。极限编程，即兴开发，敏捷</p>
-<p>需求不明确，工作量大。瀑布，迭代</p>
-<p>需求明确，工作量大。瀑布，迭代</p>
-<p>需求明确，工作量小。敏捷，迭代</p>
-<p>用户动态参与，每阶段需要输出动态系统。敏捷，迭代</p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/06/29/2024-06-29-csdn-140065026/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/17/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/19/">Next &raquo;</a>
@@ -1532,6 +1526,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>

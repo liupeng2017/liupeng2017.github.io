@@ -547,6 +547,196 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-2026-11-09-winpe-install-windows11" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/11/09/2026-11-09-winpe-install-windows11/">WinPE 启动盘制作 + Windows 11 专业版安装全流程</a>
+    </h1>
+  
+
+        
+        <a href="/2026/11/09/2026-11-09-winpe-install-windows11/" class="archive-article-date">
+  	<time datetime="2026-11-09T12:34:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-11-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>适用场景：新装机、系统崩溃进不了桌面、或者想彻底重装一块系统盘。整篇流程走下来大概半小时。<strong>文中 <code>clean</code> 一步会清空整块磁盘，操作前务必备份数据，无价。</strong></p>
+</blockquote>
+<h6 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h6><p>三样东西：</p>
+<ul>
+<li><strong>一个 8GB 以上的 U 盘</strong>。制作启动盘会格式化它，里面原有的东西先拷出来。</li>
+<li><strong>PE 制作工具</strong>。推荐微 PE 工具箱，从官网下载：<a target="_blank" rel="noopener" href="https://www.wepe.com.cn/">https://www.wepe.com.cn/</a>。其他惯用的 PE 工具也可以，但一定走官方渠道——下载站的安装包经常捆绑全家桶，PE 环境被植入东西比系统中毒还麻烦。</li>
+<li><strong>Windows 11 专业版 ISO</strong>。到微软官方下载页：<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/software-download/windows11">https://www.microsoft.com/zh-cn/software-download/windows11</a>，选择简体中文 64 位镜像。网上流传的 ISO 直链大多带时效签名，过几个小时就失效，所以本文只放官方页面。下载完建议用页面给出的哈希值校验一下完整性。</li>
+</ul>
+<p>顺带一提：如果只是想给一台还能正常开机的电脑干净重装，用微软官方的 Media Creation Tool 或 Rufus 直接写 ISO 更省事；PE 的价值在于磁盘分区、引导修复这些维护操作，以及系统已经起不来时的兜底。</p>
+<h6 id="二、制作-PE-启动盘"><a href="#二、制作-PE-启动盘" class="headerlink" title="二、制作 PE 启动盘"></a>二、制作 PE 启动盘</h6><ol>
+<li>解压下载好的 PE 工具，双击其中的「U盘启动制作工具」。</li>
+<li>设备选择你的 U 盘，镜像选择 PE 的 ISO。</li>
+<li>点击开始制作，等进度走完。再强调一次：这一步会清空 U 盘。</li>
+</ol>
+<h6 id="三、从-U-盘启动"><a href="#三、从-U-盘启动" class="headerlink" title="三、从 U 盘启动"></a>三、从 U 盘启动</h6><p>插上 U 盘，开机时<strong>不停按启动菜单快捷键</strong>，在菜单里选择带 <code>UEFI</code> 前缀的 U 盘启动项（不要选 Legacy 项，后面要用 GPT + UEFI 引导）。</p>
+<p>常见品牌的启动菜单键：</p>
+<table>
+<thead>
+<tr>
+<th>品牌</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>联想 &#x2F; 戴尔 &#x2F; 华为 &#x2F; 宏碁</td>
+<td>F12</td>
+</tr>
+<tr>
+<td>华硕</td>
+<td>F8</td>
+</tr>
+<tr>
+<td>微星</td>
+<td>F11</td>
+</tr>
+<tr>
+<td>技嘉</td>
+<td>F12</td>
+</tr>
+<tr>
+<td>惠普</td>
+<td>Esc</td>
+</tr>
+</tbody></table>
+<p>以开机画面下方的提示为准，手速要快，现在 NVMe 机器开机很快，错过就得重来。</p>
+<h6 id="四、建立-GPT-分区引导"><a href="#四、建立-GPT-分区引导" class="headerlink" title="四、建立 GPT 分区引导"></a>四、建立 GPT 分区引导</h6><p>进入 PE 桌面后，先打开控制台（命令提示符），用 diskpart 把目标磁盘转成 GPT：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">diskpart</span><br><span class="line">list disk</span><br><span class="line">select disk <span class="number">0</span></span><br><span class="line">clean</span><br><span class="line"><span class="built_in">convert</span> gpt</span><br><span class="line"><span class="keyword">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>逐行解释：</p>
+<ul>
+<li><code>list disk</code> 列出所有磁盘，<strong>按容量确认目标盘的编号</strong>，下一步的 <code>0</code> 要换成实际编号。选错盘就是把别人的数据清掉了。</li>
+<li><code>clean</code> 清空该磁盘的全部分区和数据，不可逆。</li>
+<li><code>convert gpt</code> 转换为 GPT 分区表，这是 UEFI 引导的前提。</li>
+</ul>
+<p>然后打开 PE 里的磁盘分区工具（DiskGenius 之类），用「快速分区」：</p>
+<ul>
+<li>分区表类型选 <strong>GUID（GPT）</strong>，工具会自动创建 ESP 引导分区和 MSR 保留分区，这两个别删；</li>
+<li>系统盘 C 盘建议分 <strong>100GB 以上</strong>；</li>
+<li>勾选 <strong>4K 对齐</strong>（SSD 必须）。</li>
+</ul>
+<h6 id="五、还原系统"><a href="#五、还原系统" class="headerlink" title="五、还原系统"></a>五、还原系统</h6><p>打开 PE 里的「系统还原工具」（CGI、Dism++ 这类都可以）：</p>
+<ol>
+<li>映像文件选择下载好的 Windows 11 ISO，工具会读取其中的 <code>install.wim</code>，版本选<strong>专业版</strong>；</li>
+<li>目标分区选刚分好的 <strong>C 盘</strong>；</li>
+<li>勾选「修复引导 &#x2F; 添加引导」，引导分区指向那个 <strong>ESP 分区</strong>；</li>
+<li>开始还原，等进度条走完。</li>
+</ol>
+<h6 id="六、重启，完成安装"><a href="#六、重启，完成安装" class="headerlink" title="六、重启，完成安装"></a>六、重启，完成安装</h6><p>还原完成后重启，<strong>第一时间拔掉 U 盘</strong>，让机器从硬盘启动。之后 Windows 会自动完成设备部署并进入开箱设置（OOBE），按提示配好区域、键盘、账户就能进桌面了。</p>
+<p>提醒一句：Windows 11 官方最低要求 TPM 2.0 和安全启动，装机前最好确认设备满足条件，免得后续更新和功能受限。</p>
+<h6 id="七、激活-Windows"><a href="#七、激活-Windows" class="headerlink" title="七、激活 Windows"></a>七、激活 Windows</h6><p>激活请走正规授权，按自己的情况三选一：</p>
+<ul>
+<li><strong>数字许可证</strong>：这台设备之前激活过同版本的 Windows 11（许可证绑定主板或微软账户），重装后联网会自动激活，什么都不用做。</li>
+<li><strong>零售密钥</strong>：在「设置 → 系统 → 激活」里输入购买的正版密钥；或者右键以管理员身份打开终端，执行：</li>
+</ul>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slmgr -ipk 你购买的正版产品密钥</span><br><span class="line">slmgr -ato</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>企业 &#x2F; 教育用户</strong>：由单位统一部署的 KMS 服务器或 MAK 批量授权激活，服务器地址找单位 IT 要，不要在网上随便填来路不明的 KMS 地址。</li>
+</ul>
+<p>想确认激活状态，管理员终端里依次执行：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">slmgr -xpr</span><br><span class="line">slmgr -dli</span><br><span class="line">slmgr -dlv</span><br></pre></td></tr></table></figure>
+
+<p>分别查看激活有效期（永久激活会显示「计算机已永久激活」）、许可证概要和详细信息。</p>
+<h6 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h6><p>整个流程就四件事：做启动盘 → U 盘启动 → GPT 分区 → 还原镜像。最容易翻车的两个点：一是 <code>clean</code> 之前没确认磁盘编号，二是还原完忘了拔 U 盘又进了 PE。下载走官方渠道、激活走正版授权，这套方案可以用很多年。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">WinPE</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Windows 11</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">系统安装</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">U盘启动</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Windows与网络//" class="article-tag-list-link color1">Windows与网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2026/11/09/2026-11-09-winpe-install-windows11/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2026-11-04-hexo-github-pages-custom-domain" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -2181,102 +2371,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2025-11-29-csdn-155364185" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/29/2025-11-29-csdn-155364185/">Python代理池</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/29/2025-11-29-csdn-155364185/" class="archive-article-date">
-  	<time datetime="2025-11-28T16:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/155364185">https://blog.csdn.net/qq_30220519/article/details/155364185</a></p>
-</blockquote>
-<h6 id="有效IP"><a href="#有效IP" class="headerlink" title="有效IP"></a>有效IP</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 获取代理IP</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getProxyIPs</span>():</span><br><span class="line">    url = <span class="string">&#x27;https://proxy/get_ip.php&#x27;</span></span><br><span class="line">    response = requests.get(url, params=params)</span><br><span class="line">    data = response.json()</span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line">    listIPs = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> val <span class="keyword">in</span> data[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;proxies&#x27;</span>]:</span><br><span class="line">        url = <span class="string">&quot;https://&quot;</span> + <span class="built_in">str</span>(val)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = requests.get(<span class="string">&quot;https://web.com/api&quot;</span>, verify=<span class="literal">False</span>, timeout=<span class="number">15</span>, allow_redirects=<span class="literal">True</span>, proxies=&#123;<span class="string">&quot;https&quot;</span>: url&#125;)</span><br><span class="line">            listIPs.append(url)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">return</span> listIPs</span><br></pre></td></tr></table></figure>
-
-<h6 id="IP池"><a href="#IP池" class="headerlink" title="IP池"></a>IP池</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">genIPPool</span>(<span class="params">maxCount</span>):</span><br><span class="line">    unique_list = []</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>: <span class="comment"># 重新拉取新的</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            my_list = getProxyIPs()</span><br><span class="line">            [unique_list .append(item) <span class="keyword">for</span> item <span class="keyword">in</span> my_list <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> unique_list ]</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(ipHttpsProxys) &gt; maxCount:</span><br><span class="line">            <span class="keyword">return</span> unique_list</span><br></pre></td></tr></table></figure>
-
-<h6 id="均衡更新"><a href="#均衡更新" class="headerlink" title="均衡更新"></a>均衡更新</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ipHttpsProxys = []</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reqUrl</span>(<span class="params">url</span>):</span><br><span class="line">    failRemove = <span class="literal">False</span>    <span class="comment">#请求失败是否从代理池移除，触发ip池更新</span></span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> == <span class="built_in">len</span>(ipHttpsProxys):</span><br><span class="line">        ipHttpsProxys = genIPPool(<span class="number">10</span>)</span><br><span class="line">    proxyUrl = ipHttpsProxys[<span class="number">0</span>]</span><br><span class="line">    proxies = &#123;</span><br><span class="line">        <span class="string">&quot;https&quot;</span>: proxyUrl </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">del</span> ipHttpsProxys[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> failRemove:</span><br><span class="line">        ipHttpsProxys.append(proxyUrl)</span><br><span class="line">    ssl._create_default_https_context = ssl._create_unverified_context</span><br><span class="line">    json_response = requests.get(url, proxies=proxies).json()</span><br><span class="line">    <span class="keyword">if</span> failRemove:</span><br><span class="line">        ipHttpsProxys.append(proxyUrl)</span><br></pre></td></tr></table></figure>
-
-<h6 id="拥塞调控"><a href="#拥塞调控" class="headerlink" title="拥塞调控"></a>拥塞调控</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">getDatas</span>(<span class="params">url, retryMaxCount</span>):</span><br><span class="line">    sleepTime = <span class="number">0.5</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">id</span> <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        retryCount = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> (retryCount &lt; retryMaxCount):</span><br><span class="line">            time.sleep(sleepTime)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                reqUrl(url + <span class="string">f&quot;?id=<span class="subst">&#123;<span class="built_in">id</span>&#125;</span>&quot;</span>)</span><br><span class="line">                sleepTime /= <span class="number">2</span></span><br><span class="line">                <span class="keyword">if</span> sleepTime &lt; <span class="number">0.5</span>:</span><br><span class="line">                    sleepTime = <span class="number">0.5</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                sleepTime *= <span class="number">2</span></span><br><span class="line">                <span class="keyword">if</span>(sleepTime &gt; <span class="number">60</span>):</span><br><span class="line">                    sleepTime = <span class="number">60</span></span><br><span class="line">                retryCount += <span class="number">1</span>  </span><br><span class="line">        <span class="keyword">if</span> retryCount == retryMaxCount:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;<span class="built_in">id</span>&#125;</span> fail!&quot;</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python与爬虫//" class="article-tag-list-link color5">Python与爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/11/29/2025-11-29-csdn-155364185/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -2676,6 +2770,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>

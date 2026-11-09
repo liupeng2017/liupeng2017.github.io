@@ -204,6 +204,91 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-08-11-csdn-141114294" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/11/2024-08-11-csdn-141114294/">C++ CMake FFmpeg配置</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/11/2024-08-11-csdn-141114294/" class="archive-article-date">
+  	<time datetime="2024-08-11T15:51:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        本文已加密，请输入密码后继续阅读。
+        
+          <a class="article-more-a" href="/2024/08/11/2024-08-11-csdn-141114294/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/11/2024-08-11-csdn-141114294/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-08-10-csdn-141098405" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1043,113 +1128,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-08-05-csdn-140937199" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/08/05/2024-08-05-csdn-140937199/">C++ exe程序内存占用分析</a>
-    </h1>
-  
-
-        
-        <a href="/2024/08/05/2024-08-05-csdn-140937199/" class="archive-article-date">
-  	<time datetime="2024-08-05T13:23:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/140937199">https://blog.csdn.net/qq_30220519/article/details/140937199</a></p>
-</blockquote>
-<h6 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/google/bloaty</span><br><span class="line">$ <span class="built_in">cd</span> bloaty</span><br><span class="line">$ cmake -B build -G Ninja -S .</span><br><span class="line">$ cmake --build build</span><br><span class="line">$ cmake --build build --target install</span><br></pre></td></tr></table></figure>
-
-<h6 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bloaty.exe	--list-sources</span><br><span class="line"></span><br><span class="line">rmembers       the .o files <span class="keyword">in</span> a .a file</span><br><span class="line">compileunits    <span class="built_in">source</span> file <span class="keyword">for</span> the .o file (translation unit). requires debug info.</span><br><span class="line">inputfiles      the filename specified on the Bloaty command-line</span><br><span class="line">inlines         <span class="built_in">source</span> line/file <span class="built_in">where</span> inlined code came from.  requires debug info.</span><br><span class="line">sections        object file section</span><br><span class="line">segments        load commands <span class="keyword">in</span> the binary</span><br><span class="line">symbols         symbols from symbol table (configure demangling with --demangle)</span><br><span class="line">rawsymbols      unmangled symbols</span><br><span class="line">fullsymbols     full demangled symbols</span><br><span class="line">shortsymbols    short demangled symbols</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bloaty.exe	--<span class="built_in">help</span></span><br><span class="line"></span><br><span class="line">USAGE: bloaty [OPTION]... FILE... [-- BASE_FILE...]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line"></span><br><span class="line">  --csv              Output <span class="keyword">in</span> CSV format instead of human-readable.</span><br><span class="line">  --tsv              Output <span class="keyword">in</span> TSV format instead of human-readable.</span><br><span class="line">  -c FILE            Load configuration from &lt;file&gt;.</span><br><span class="line">  -d SOURCE,SOURCE   Comma-separated list of sources to scan.</span><br><span class="line">  --debug-file=FILE  Use this file <span class="keyword">for</span> debug symbols and/or symbol table.</span><br><span class="line">  -C MODE            How to demangle symbols.  Possible values are:</span><br><span class="line">  --demangle=MODE      --demangle=none   no demangling, <span class="built_in">print</span> raw symbols</span><br><span class="line">                       --demangle=short  demangle, but omit arg/return types</span><br><span class="line">                       --demangle=full   <span class="built_in">print</span> full demangled <span class="built_in">type</span></span><br><span class="line">                     The default is --demangle=short.</span><br><span class="line">  --disassemble=FUNCTION</span><br><span class="line">                     Disassemble this <span class="keyword">function</span> (EXPERIMENTAL)</span><br><span class="line">  --domain=DOMAIN    Which domains to show.  Possible values are:</span><br><span class="line">                       --domain=vm</span><br><span class="line">                       --domain=file</span><br><span class="line">                       --domain=both (the default)</span><br><span class="line">  -n NUM             How many rows to show per level before collapsing</span><br><span class="line">                     other keys into <span class="string">&#x27;[Other]&#x27;</span>.  Set to <span class="string">&#x27;0&#x27;</span> <span class="keyword">for</span> unlimited.</span><br><span class="line">                     Defaults to 20.</span><br><span class="line">  -s SORTBY          Whether to <span class="built_in">sort</span> by VM or File size.  Possible values</span><br><span class="line">                     are:</span><br><span class="line">                       -s vm</span><br><span class="line">                       -s file</span><br><span class="line">                       -s both (the default: sorts by max(vm, file)).</span><br><span class="line">  -w                 Wide output; don<span class="string">&#x27;t truncate long labels.</span></span><br><span class="line"><span class="string">  --help             Display this message and exit.</span></span><br><span class="line"><span class="string">  --list-sources     Show a list of available sources and exit.</span></span><br><span class="line"><span class="string">  --source-filter=PATTERN</span></span><br><span class="line"><span class="string">                     Only show keys with names matching this pattern.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Options for debugging Bloaty:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  --debug-vmaddr=ADDR</span></span><br><span class="line"><span class="string">  --debug-fileoff=OFF</span></span><br><span class="line"><span class="string">                     Print extended debugging information for the given</span></span><br><span class="line"><span class="string">                     VM address and/or file offset.</span></span><br><span class="line"><span class="string">  -v                 Verbose output.  Dumps warnings encountered during</span></span><br><span class="line"><span class="string">                     processing and full VM/file maps at the end.</span></span><br><span class="line"><span class="string">                     Add more v&#x27;</span>s (-vv, -vvv) <span class="keyword">for</span> even more.</span><br></pre></td></tr></table></figure>
-
-<h6 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* data = <span class="string">&quot;而此时是ii四十九而此时是ii四十九而此时是ii四十九而此时是ii四十九而此时是ii四十九而此时是ii四十九而此时是ii四十九而此时是ii四十九而此时是ii四十九而此时是ii四十九&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;test main\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -g main.cpp -o  my_program.exe</span><br><span class="line">bloaty   my_program.exe</span><br></pre></td></tr></table></figure>
-
-<p> </p>
-<p><img src="/images/csdn/140937199/59766f9beb35ed97.png"></p>
-<h6 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bloaty -c bloaty_package.bloaty my_program.exe</span><br></pre></td></tr></table></figure>
-
-<p> bloaty_package.bloaty</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">custom_data_source: &#123;</span><br><span class="line">  name: &quot;bloaty_package&quot;</span><br><span class="line">  base_data_source: &quot;compileunits&quot;</span><br><span class="line"></span><br><span class="line">  rewrite: &#123;</span><br><span class="line">    pattern: &quot;^(\\.\\./)?src&quot;</span><br><span class="line">    replacement: &quot;src&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  rewrite: &#123;</span><br><span class="line">    pattern: &quot;^(\\.\\./)?(third_party/\\w+)&quot;</span><br><span class="line">    replacement: &quot;\\2&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/google/bloaty" title="GitHub - google&#x2F;bloaty: Bloaty: a size profiler for binaries">GitHub - google&#x2F;bloaty: Bloaty: a size profiler for binaries</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weiwei9363/article/details/121475302" title="C&#x2F;C++ Native 包大小测量_bloaty-CSDN博客">C&#x2F;C++ Native 包大小测量_bloaty-CSDN博客</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/08/05/2024-08-05-csdn-140937199/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
@@ -1549,6 +1527,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>

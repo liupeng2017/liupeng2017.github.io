@@ -204,6 +204,102 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2025-11-29-csdn-155364185" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/29/2025-11-29-csdn-155364185/">Python代理池</a>
+    </h1>
+  
+
+        
+        <a href="/2025/11/29/2025-11-29-csdn-155364185/" class="archive-article-date">
+  	<time datetime="2025-11-28T16:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/155364185">https://blog.csdn.net/qq_30220519/article/details/155364185</a></p>
+</blockquote>
+<h6 id="有效IP"><a href="#有效IP" class="headerlink" title="有效IP"></a>有效IP</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 获取代理IP</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getProxyIPs</span>():</span><br><span class="line">    url = <span class="string">&#x27;https://proxy/get_ip.php&#x27;</span></span><br><span class="line">    response = requests.get(url, params=params)</span><br><span class="line">    data = response.json()</span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line">    listIPs = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> val <span class="keyword">in</span> data[<span class="string">&#x27;data&#x27;</span>][<span class="string">&#x27;proxies&#x27;</span>]:</span><br><span class="line">        url = <span class="string">&quot;https://&quot;</span> + <span class="built_in">str</span>(val)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = requests.get(<span class="string">&quot;https://web.com/api&quot;</span>, verify=<span class="literal">False</span>, timeout=<span class="number">15</span>, allow_redirects=<span class="literal">True</span>, proxies=&#123;<span class="string">&quot;https&quot;</span>: url&#125;)</span><br><span class="line">            listIPs.append(url)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">return</span> listIPs</span><br></pre></td></tr></table></figure>
+
+<h6 id="IP池"><a href="#IP池" class="headerlink" title="IP池"></a>IP池</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">genIPPool</span>(<span class="params">maxCount</span>):</span><br><span class="line">    unique_list = []</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>: <span class="comment"># 重新拉取新的</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            my_list = getProxyIPs()</span><br><span class="line">            [unique_list .append(item) <span class="keyword">for</span> item <span class="keyword">in</span> my_list <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> unique_list ]</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(ipHttpsProxys) &gt; maxCount:</span><br><span class="line">            <span class="keyword">return</span> unique_list</span><br></pre></td></tr></table></figure>
+
+<h6 id="均衡更新"><a href="#均衡更新" class="headerlink" title="均衡更新"></a>均衡更新</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ipHttpsProxys = []</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reqUrl</span>(<span class="params">url</span>):</span><br><span class="line">    failRemove = <span class="literal">False</span>    <span class="comment">#请求失败是否从代理池移除，触发ip池更新</span></span><br><span class="line">    <span class="keyword">if</span> <span class="number">0</span> == <span class="built_in">len</span>(ipHttpsProxys):</span><br><span class="line">        ipHttpsProxys = genIPPool(<span class="number">10</span>)</span><br><span class="line">    proxyUrl = ipHttpsProxys[<span class="number">0</span>]</span><br><span class="line">    proxies = &#123;</span><br><span class="line">        <span class="string">&quot;https&quot;</span>: proxyUrl </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">del</span> ipHttpsProxys[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> failRemove:</span><br><span class="line">        ipHttpsProxys.append(proxyUrl)</span><br><span class="line">    ssl._create_default_https_context = ssl._create_unverified_context</span><br><span class="line">    json_response = requests.get(url, proxies=proxies).json()</span><br><span class="line">    <span class="keyword">if</span> failRemove:</span><br><span class="line">        ipHttpsProxys.append(proxyUrl)</span><br></pre></td></tr></table></figure>
+
+<h6 id="拥塞调控"><a href="#拥塞调控" class="headerlink" title="拥塞调控"></a>拥塞调控</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">getDatas</span>(<span class="params">url, retryMaxCount</span>):</span><br><span class="line">    sleepTime = <span class="number">0.5</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">id</span> <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        retryCount = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> (retryCount &lt; retryMaxCount):</span><br><span class="line">            time.sleep(sleepTime)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                reqUrl(url + <span class="string">f&quot;?id=<span class="subst">&#123;<span class="built_in">id</span>&#125;</span>&quot;</span>)</span><br><span class="line">                sleepTime /= <span class="number">2</span></span><br><span class="line">                <span class="keyword">if</span> sleepTime &lt; <span class="number">0.5</span>:</span><br><span class="line">                    sleepTime = <span class="number">0.5</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                sleepTime *= <span class="number">2</span></span><br><span class="line">                <span class="keyword">if</span>(sleepTime &gt; <span class="number">60</span>):</span><br><span class="line">                    sleepTime = <span class="number">60</span></span><br><span class="line">                retryCount += <span class="number">1</span>  </span><br><span class="line">        <span class="keyword">if</span> retryCount == retryMaxCount:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;<span class="built_in">id</span>&#125;</span> fail!&quot;</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
+<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Python与爬虫//" class="article-tag-list-link color5">Python与爬虫</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2025/11/29/2025-11-29-csdn-155364185/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2025-11-28-csdn-155361900" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1141,91 +1237,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2025-03-28-csdn-146609950" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/03/28/2025-03-28-csdn-146609950/">JIRA DSL使用笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2025/03/28/2025-03-28-csdn-146609950/" class="archive-article-date">
-  	<time datetime="2025-03-28T12:10:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-03-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        本文已加密，请输入密码后继续阅读。
-        
-          <a class="article-more-a" href="/2025/03/28/2025-03-28-csdn-146609950/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/03/28/2025-03-28-csdn-146609950/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1625,6 +1636,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>

@@ -204,6 +204,108 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-05-14-csdn-138868607" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/05/14/2024-05-14-csdn-138868607/">C++实现CSS布局管理器</a>
+    </h1>
+  
+
+        
+        <a href="/2024/05/14/2024-05-14-csdn-138868607/" class="archive-article-date">
+  	<time datetime="2024-05-14T12:19:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/138868607">https://blog.csdn.net/qq_30220519/article/details/138868607</a></p>
+</blockquote>
+<p>&#x2F;*<br>Yoga 是一个针对 Web 标准的嵌入式布局引擎。<br><a target="_blank" rel="noopener" href="https://www.yogalayout.dev/docs/styling/">https://www.yogalayout.dev/docs/styling/</a><br><a target="_blank" rel="noopener" href="https://www.yogalayout.dev/playground">https://www.yogalayout.dev/playground</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" title="Flex 布局教程：语法篇 - 阮一峰的网络日志">Flex 布局教程：语法篇 - 阮一峰的网络日志</a><br>其它类似：<br><a target="_blank" rel="noopener" href="https://github.com/Tencent/Taitank">https://github.com/Tencent/Taitank</a><br>*&#x2F;<br>#include &lt;yoga&#x2F;Yoga.h&gt;</p>
+<p>void applyLayout(YGNodeRef node) {<br>    &#x2F;&#x2F;if (!YGNodeHasNewLayout(node)) {<br>    &#x2F;&#x2F;    return;<br>    &#x2F;&#x2F;}<br>    if (!YGNodeIsDirty(node))<br>        return;</p>
+<p>    &#x2F;&#x2F; Reset the flag<br>    YGNodeSetHasNewLayout(node, false);</p>
+<p>    &#x2F;&#x2F; Do the real work</p>
+<p>    for (size_t i &#x3D; 0; i &lt; YGNodeGetChildCount(node); i++) {<br>        applyLayout(YGNodeGetChild(node, i));<br>    }<br>}</p>
+<p>static float _baselineFunc(<br>    YGNodeConstRef &#x2F;*node*&#x2F;,<br>    const float &#x2F;*width*&#x2F;,<br>    const float height) {<br>    return height &#x2F; 2;<br>}</p>
+<p>static float<br>_baseline(YGNodeConstRef node, const float &#x2F;*width*&#x2F;, const float &#x2F;*height*&#x2F;) {<br>    auto* baseline &#x3D; (float*)YGNodeGetContext(node);<br>    return *baseline;<br>}</p>
+<p>static YGSize _measure1(<br>    YGNodeConstRef &#x2F;*node*&#x2F;,<br>    float &#x2F;*width*&#x2F;,<br>    YGMeasureMode &#x2F;*widthMode*&#x2F;,<br>    float &#x2F;*height*&#x2F;,<br>    YGMeasureMode &#x2F;*heightMode*&#x2F;) {<br>    return YGSize{ 42, 50 };<br>}</p>
+<p>static void _dirtied(YGNodeConstRef node) {<br>    int* dirtiedCount &#x3D; (int*)YGNodeGetContext(node);<br>    (*dirtiedCount)++;<br>}</p>
+<p>void test() {<br>    &#x2F;&#x2F; 设置<br>    YGConfigRef config &#x3D; YGConfigNew();<br>    YGConfigSetUseWebDefaults(config, true);<br>    &#x2F;&#x2F; Setup config…<br>    YGConfigSetErrata(config, YGErrataClassic); &#x2F;&#x2F; None,Classic,All<br>    YGConfigSetPointScaleFactor(config, 2.0f);    &#x2F;&#x2F; 网格对齐，0禁用</p>
+<p>    YGNodeRef root &#x3D; YGNodeNewWithConfig(config);</p>
+<p>    &#x2F;&#x2F;YGNodeRef root &#x3D; YGNodeNew();<br>    YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);<br>    YGNodeStyleSetOverflow(root, YGOverflowHidden);<br>    YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);<br>    YGNodeStyleSetJustifyContent(root, YGJustifyCenter);<br>    YGNodeStyleSetAlignItems(root, YGAlignCenter);<br>    YGNodeStyleSetAlignContent(root, YGAlignCenter);<br>    YGNodeStyleSetFlexWrap(root, YGWrapWrapReverse);<br>    YGNodeStyleSetFlexGrow(root, 1);<br>    YGNodeStyleSetFlexShrink(root, 1);<br>    YGNodeStyleSetFlexBasisPercent(root, 0);<br>    YGNodeStyleSetMargin(root, YGEdgeLeft, 10);<br>    YGNodeStyleSetPadding(root, YGEdgeTop, 10);<br>    YGNodeStyleSetPaddingPercent(root, YGEdgeLeft, 3);<br>    YGNodeStyleSetBorder(root, YGEdgeBottom, 10);<br>    YGNodeStyleSetGap(root, YGGutterRow, 10);<br>    &#x2F;&#x2F;YGNodeStyleSetGapPercent(root, YGGutterRow, 10);<br>    YGNodeStyleSetWidth(root, 100.0f);<br>    YGNodeStyleSetHeight(root, 100.0f);<br>    YGNodeStyleSetMaxHeight(root, 500);<br>    YGNodeStyleSetMinHeight(root, 500);<br>    YGNodeStyleSetMinWidthPercent(root, 10);</p>
+<p>    const YGNodeRef root_child0_child0 &#x3D; YGNodeNewWithConfig(config);<br>    YGNodeRef child0 &#x3D; YGNodeNew();<br>    YGNodeStyleSetPosition(child0, YGEdgeTop, 10);<br>    YGNodeStyleSetAlignSelf(child0, YGAlignCenter);<br>    YGNodeStyleSetPositionPercent(child0, YGEdgeTop, 50);<br>    YGNodeStyleSetWidthPercent(child0, 20);<br>    YGNodeStyleSetAspectRatio(child0, 1 &#x2F; 1);    &#x2F;&#x2F; 宽高比<br>    YGNodeStyleSetFlexGrow(child0, 1.0f);<br>    YGNodeStyleSetFlexBasis(child0, 50);<br>    YGNodeStyleSetMargin(child0, YGEdgeRight, 10.0f);<br>    YGNodeStyleSetDisplay(child0, YGDisplayNone);<br>    YGNodeStyleSetMarginAuto(child0, YGEdgeRight);<br>    YGNodeInsertChild(root, child0, 0.0f);</p>
+<p>    float baselineValue &#x3D; 10;<br>    YGNodeRef child1 &#x3D; YGNodeNew();<br>    YGNodeCopyStyle(child0, child1);<br>    YGNodeSetContext(child1, &amp;baselineValue);<br>    YGNodeStyleSetFlexGrow(child1, 1.0f);<br>    YGNodeSetIsReferenceBaseline(child1, true);<br>    YGNodeSetBaselineFunc(child1, _baselineFunc);<br>    YGNodeSetBaselineFunc(child1, _baseline);<br>    YGNodeSetMeasureFunc(child1, _measure1);<br>    int dirtiedCount &#x3D; 0;<br>    YGNodeSetContext(root, &amp;dirtiedCount);<br>    YGNodeSetDirtiedFunc(root, _dirtied);<br>    YGNodeInsertChild(root, child1, 1.0f);</p>
+<p>    &#x2F;&#x2F; 层级单独创建<br>    YGNodeRef const root_child0 &#x3D; YGNodeNew();<br>    YGNodeRef const root_child1 &#x3D; YGNodeNew();<br>    YGNodeRef children[] &#x3D; { root_child0, root_child1 };<br>    YGNodeSetChildren(root, children, 2);<br>    root &#x3D; YGNodeGetOwner(root_child0);</p>
+<p>    &#x2F;&#x2F; 布局<br>    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);</p>
+<p>    &#x2F;&#x2F; 获取 margin, border, and padding<br>    float left &#x3D; YGNodeLayoutGetLeft(child0);<br>    float height &#x3D; YGNodeLayoutGetHeight(child0);</p>
+<p>    &#x2F;&#x2F; 设置测量函数  MeasureMode  Exactly(stretch-fit)  Undefined(max-content)  AtMost(fit-content)<br>    &#x2F;&#x2F; 通过测量函数委托给不同的布局系统，比如文本排版<br>    &#x2F;&#x2F;Widget widget{}; <br>    &#x2F;&#x2F;YGNodeSetContext(node, &amp;w);<br>    &#x2F;&#x2F;YGNodeSetMeasureFunc(node, &amp;measureWidget);</p>
+<p>    &#x2F;&#x2F; 添加脏区<br>    &#x2F;&#x2F;YGNodeMarkDirty(child1);</p>
+<p>    &#x2F;&#x2F; 设置行flex行间距<br>    &#x2F;&#x2F; YGNodeStyleSetGap(node, YGGutterRow, amount);</p>
+<p>    &#x2F;&#x2F; 设置布局后偏移<br>    &#x2F;&#x2F; YGNodeStyleSetPosition(node, edge, position);</p>
+<p>      &#x2F;&#x2F; ceil&#x2F;floor flags<br>    &#x2F;&#x2F;ASSERT_FLOAT_EQ(6.0, YGRoundValueToPixelGrid(6.01, 2.0, false, false));</p>
+<p>    &#x2F;&#x2F;YGNodeFree(child0);<br>    &#x2F;&#x2F;YGNodeFree(child1);<br>    &#x2F;&#x2F;YGNodeRemoveAllChildren(root);<br>    YGNodeFreeRecursive(root);<br>    YGConfigFree(config);<br>}  
+ </p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/05/14/2024-05-14-csdn-138868607/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-05-14-csdn-138868427" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1099,102 +1201,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-05-12-csdn-138770069" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/05/12/2024-05-12-csdn-138770069/">C++动态心型</a>
-    </h1>
-  
-
-        
-        <a href="/2024/05/12/2024-05-12-csdn-138770069/" class="archive-article-date">
-  	<time datetime="2024-05-12T14:37:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        本文已加密，请输入密码后继续阅读。
-        
-          <a class="article-more-a" href="/2024/05/12/2024-05-12-csdn-138770069/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/05/12/2024-05-12-csdn-138770069/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/26/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/28/">Next &raquo;</a>
@@ -1594,6 +1600,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>

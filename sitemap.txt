@@ -1,3 +1,4 @@
+https://liupeng.icu/2026/11/09/2026-11-09-winpe-install-windows11/
 https://liupeng.icu/2026/11/04/2026-11-04-hexo-github-pages-custom-domain/
 https://liupeng.icu/2026/01/09/2026-01-09-csdn-156773083/
 https://liupeng.icu/2025/11/29/2025-11-29-csdn-155364185/
@@ -428,6 +429,10 @@ https://liupeng.icu/tags/Hexo/
 https://liupeng.icu/tags/GitHub-Pages/
 https://liupeng.icu/tags/%E5%9F%9F%E5%90%8D/
 https://liupeng.icu/tags/%E5%8D%9A%E5%AE%A2%E8%BF%90%E7%BB%B4/
+https://liupeng.icu/tags/WinPE/
+https://liupeng.icu/tags/Windows-11/
+https://liupeng.icu/tags/%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85/
+https://liupeng.icu/tags/U%E7%9B%98%E5%90%AF%E5%8A%A8/
 https://liupeng.icu/categories/jekyll/
 https://liupeng.icu/categories/Bootstrap/
 https://liupeng.icu/categories/Sublime/

@@ -204,6 +204,102 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-09-09-csdn-142058580" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/09/09/2024-09-09-csdn-142058580/">C++插件管理系统</a>
+    </h1>
+  
+
+        
+        <a href="/2024/09/09/2024-09-09-csdn-142058580/" class="archive-article-date">
+  	<time datetime="2024-09-09T06:41:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142058580">https://blog.csdn.net/qq_30220519/article/details/142058580</a></p>
+</blockquote>
+<h6 id="插件加载目录结构"><a href="#插件加载目录结构" class="headerlink" title="插件加载目录结构"></a>插件加载目录结构</h6><blockquote>
+<p>execute<br>    plug.exe<br>    plugify.dll<br>    plugify.pconfig<br>    res<br>        cpp-lang-module.pmodule<br>        example_plugin.pplugin<br>        bin<br>            cpp-lang-module.dll<br>            example_plugin.dll</p>
+</blockquote>
+<h5 id="plugify-pconfig"><a href="#plugify-pconfig" class="headerlink" title="plugify.pconfig"></a>plugify.pconfig</h5><blockquote>
+<p>{<br>    “baseDir”: “res”,<br>    “logSeverity”: “debug”,<br>    “repositories”: [<br>    ],<br>    “preferOwnSymbols”: false<br>}</p>
+</blockquote>
+<h5 id="example-plugin-pplugin"><a href="#example-plugin-pplugin" class="headerlink" title="example_plugin.pplugin"></a>example_plugin.pplugin</h5><blockquote>
+<p>{<br>    “fileVersion”: 1,<br>    “version”: 1,<br>    “versionName”: “1.0”,<br>    “friendlyName”: “PluginCPP”,<br>    “description”: “An example of a plugin. This can be used as a starting point when creating your own plugin.”,<br>    “createdBy”: “untrustedmodders”,<br>    “createdByURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/">https://github.com/untrustedmodders/</a>“,<br>    “docsURL”: “<a target="_blank" rel="noopener" href="https://github.com/orgs/untrustedmodders/README.md">https://github.com/orgs/untrustedmodders/README.md</a>“,<br>    “downloadURL”: “<a target="_blank" rel="noopener" href="https://github.com/orgs/untrustedmodders/example-repo.zip">https://github.com/orgs/untrustedmodders/example-repo.zip</a>“,<br>    “updateURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/plugify/issues">https://github.com/untrustedmodders/plugify/issues</a>“,<br>    “entryPoint”: “bin&#x2F;example_plugin”,<br>    “supportedPlatforms”: [],<br>    “languageModule”: {<br>        “name”: “cpp”<br>    },<br>    “dependencies”: [],<br>    “exportedMethods”: [<br>        {<br>            “name”: “MakePrint”,<br>            “funcName”: “MakePrint”,<br>            “paramTypes”: [<br>                {<br>                    “type”: “int32”,<br>                    “name”: “count”<br>                },<br>                {<br>                    “type”: “string”,<br>                    “name”: “message”<br>                }<br>            ],<br>            “retType”: {<br>                “type”: “void”<br>            }<br>        }<br>    ]<br>}</p>
+</blockquote>
+<h5 id="cpp-lang-module-pmodule"><a href="#cpp-lang-module-pmodule" class="headerlink" title="cpp-lang-module.pmodule"></a>cpp-lang-module.pmodule</h5><blockquote>
+<p>{<br>    “fileVersion”: 1,<br>    “version”: 0,<br>    “versionName”: “v0”,<br>    “friendlyName”: “Cpp language module”,<br>    “language”: “cpp”,<br>    “description”: “Adds support for C++ plugins”,<br>    “createdBy”: “untrustedmodders”,<br>    “createdByURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/">https://github.com/untrustedmodders/</a>“,<br>    “docsURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/cpp-lang-module/blob/main/README.md">https://github.com/untrustedmodders/cpp-lang-module/blob/main/README.md</a>“,<br>    “downloadURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/cpp-lang-module/releases/download/v0/cpp-lang-module.zip">https://github.com/untrustedmodders/cpp-lang-module/releases/download/v0/cpp-lang-module.zip</a>“,<br>    “updateURL”: “<a target="_blank" rel="noopener" href="https://untrustedmodders.github.io/cpp-lang-module/cpp-lang-module.json">https://untrustedmodders.github.io/cpp-lang-module/cpp-lang-module.json</a>“,<br>    “supportedPlatforms”: [],<br>    “forceLoad”: false<br>}</p>
+</blockquote>
+<h5 id="插件定义"><a href="#插件定义" class="headerlink" title="插件定义"></a>插件定义</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/cpp_plugin.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugin_export.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ExamplePlugin</span> : <span class="keyword">public</span> plugify::IPluginEntry &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnPluginStart</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Example Start!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnPluginEnd</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Example End!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">MakePrint</span><span class="params">(<span class="type">int</span> count, <span class="type">const</span> std::string&amp; message)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; count; ++i) &#123;</span><br><span class="line">			std::cout &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; g_examplePlugin;</span><br><span class="line"></span><br><span class="line"><span class="built_in">EXPOSE_PLUGIN</span>(PLUGIN_API, &amp;g_examplePlugin)</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line"><span class="function">PLUGIN_API <span class="type">void</span> <span class="title">MakePrint</span><span class="params">(<span class="type">int</span> count, <span class="type">const</span> std::string&amp; message)</span> </span>&#123;</span><br><span class="line">	g_examplePlugin.<span class="built_in">MakePrint</span>(count, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="模块定义"><a href="#模块定义" class="headerlink" title="模块定义"></a>模块定义</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/assembly.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/plugin.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/plugify_provider.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/language_module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/cpp_plugin.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;module_export.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;array&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CppLanguageModule</span> <span class="keyword">final</span> : <span class="keyword">public</span> plugify::ILanguageModule &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">CppLanguageModule</span>() = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ILanguageModule</span></span><br><span class="line">	<span class="function">plugify::InitResult <span class="title">Initialize</span><span class="params">(std::weak_ptr&lt;plugify::IPlugifyProvider&gt; provider, plugify::ModuleRef <span class="keyword">module</span>)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Shutdown</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnMethodExport</span><span class="params">(plugify::PluginRef plugin)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function">plugify::LoadResult <span class="title">OnPluginLoad</span><span class="params">(plugify::PluginRef plugin)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnPluginStart</span><span class="params">(plugify::PluginRef plugin)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnPluginEnd</span><span class="params">(plugify::PluginRef plugin)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">IsDebugBuild</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">const</span> std::shared_ptr&lt;plugify::IPlugifyProvider&gt;&amp; <span class="title">GetProvider</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> _provider; &#125;</span><br><span class="line">	<span class="function">plugify::MemAddr <span class="title">GetNativeMethod</span><span class="params">(std::string_view methodName)</span> <span class="type">const</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">GetNativeMethod</span><span class="params">(std::string_view methodName, plugify::MemAddr* addressDest)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	std::shared_ptr&lt;plugify::IPlugifyProvider&gt; _provider;</span><br><span class="line">	</span><br><span class="line">	std::map&lt;plugify::UniqueId, AssemblyHolder&gt; _assemblyMap;</span><br><span class="line">	std::unordered_map&lt;std::string, plugify::MemAddr, string_hash, std::equal_to&lt;&gt;&gt; _nativesMap;</span><br><span class="line">	</span><br><span class="line">	std::vector&lt;plugify::MemAddr*&gt; _addresses;</span><br><span class="line"></span><br><span class="line">	<span class="type">static</span> std::array&lt;<span class="type">void</span>*, 15&gt; _pluginApi;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ILanguageModule</span></span><br><span class="line"><span class="function">InitResult <span class="title">CppLanguageModule::Initialize</span><span class="params">(std::weak_ptr&lt;IPlugifyProvider&gt; provider, ModuleRef <span class="comment">/*module*/</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!(_provider = provider.<span class="built_in">lock</span>())) &#123;</span><br><span class="line">		<span class="keyword">return</span> ErrorData&#123; <span class="string">&quot;Provider not exposed&quot;</span> &#125;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	_provider-&gt;<span class="built_in">Log</span>(<span class="string">&quot;[CPPLM]  Inited!&quot;</span>, Severity::Debug);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> InitResultData&#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">plug.exe</span><br><span class="line">plugify init</span><br><span class="line">[+] Info: Plugify Init!</span><br><span class="line">[+] Info: Version: 1.0.0.0</span><br><span class="line">[+] Info: Git: [v35-1-g08987de]:(v35) - Fix cmake typo <span class="keyword">in</span> <span class="built_in">test</span> on main at <span class="string">&#x27;Sun Sep 1 09:21:31 2024&#x27;</span></span><br><span class="line">[+] Info: Compiled on: Windows-10.0.19045 from: Ninja with: <span class="string">&#x27;MSVC&#x27;</span></span><br><span class="line">[~] Debug: Loading <span class="built_in">local</span> packages</span><br><span class="line">[~] Debug: Loading remote packages</span><br><span class="line">[#] Error: Packages manifest from <span class="string">&#x27;https://github.com/untrustedmodders/plugify/issues&#x27;</span> has JSON parsing error: 8:1: expected_brace</span><br><span class="line">   &lt;!DOCTYPE html&gt;</span><br><span class="line">   ^</span><br><span class="line">[~] Debug: PackageManager loaded <span class="keyword">in</span> 788.826ms</span><br><span class="line">[~] Debug: [CPPLM] Inited!</span><br><span class="line">Example Start!</span><br><span class="line">[~] Debug: PluginManager loaded <span class="keyword">in</span> 10.951ms</span><br></pre></td></tr></table></figure>
+
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/cpp-lang-module" title="GitHub - untrustedmodders&#x2F;cpp-lang-module: C++ Language Module">GitHub - untrustedmodders&#x2F;cpp-lang-module: C++ Language Module</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
+<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/09/09/2024-09-09-csdn-142058580/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-09-09-csdn-142052817" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1000,87 +1096,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-09-02-csdn-141829165" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/09/02/2024-09-02-csdn-141829165/">多标签文件管理器</a>
-    </h1>
-  
-
-        
-        <a href="/2024/09/02/2024-09-02-csdn-141829165/" class="archive-article-date">
-  	<time datetime="2024-09-02T12:25:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/141829165">https://blog.csdn.net/qq_30220519/article/details/141829165</a></p>
-</blockquote>
-<h6 id="下载使用"><a href="#下载使用" class="headerlink" title="下载使用"></a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_30220519/89706297" title="下载使用">下载使用</a></h6><h6 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">CPanel::showAllFilesFromCurrentFolderAndBelow</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	_currentDisplayMode = AllObjectsMode;</span><br><span class="line">	_watcher.<span class="built_in">setPathToWatch</span>(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">	_workerThreadPool.<span class="built_in">enqueue</span>([<span class="keyword">this</span>]() &#123;</span><br><span class="line">		std::unique_lock&lt;std::recursive_mutex&gt; <span class="built_in">locker</span>(_fileListAndCurrentDirMutex);</span><br><span class="line">		<span class="type">const</span> QString path = _currentDirObject.<span class="built_in">fullAbsolutePath</span>();</span><br><span class="line"></span><br><span class="line">		_items.<span class="built_in">clear</span>();</span><br><span class="line"></span><br><span class="line">		<span class="comment">//locker.unlock();</span></span><br><span class="line">		<span class="comment">// <span class="doctag">TODO:</span> synchronization and lock-ups</span></span><br><span class="line">		<span class="type">const</span> <span class="type">bool</span> showHiddenFiles = <span class="built_in">CSettings</span>().<span class="built_in">value</span>(KEY_INTERFACE_SHOW_HIDDEN_FILES, <span class="literal">true</span>).<span class="built_in">toBool</span>();</span><br><span class="line">		<span class="built_in">scanDirectory</span>(<span class="built_in">CFileSystemObject</span>(path), [showHiddenFiles, <span class="keyword">this</span>](<span class="type">const</span> CFileSystemObject&amp; item) &#123;</span><br><span class="line">			<span class="keyword">if</span> (item.<span class="built_in">isFile</span>() &amp;&amp; item.<span class="built_in">exists</span>() &amp;&amp; (showHiddenFiles || !item.<span class="built_in">isHidden</span>()))</span><br><span class="line">				_items[item.<span class="built_in">hash</span>()] = item;</span><br><span class="line">		&#125;);</span><br><span class="line">		<span class="comment">//locker.lock();</span></span><br><span class="line"></span><br><span class="line">		<span class="built_in">sendContentsChangedNotification</span>(refreshCauseOther);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Calculates directory size, stores it in the corresponding CFileSystemObject and sends data change notification</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">CPanel::displayDirSize</span><span class="params">(qulonglong dirHash)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	_workerThreadPool.<span class="built_in">enqueue</span>([<span class="keyword">this</span>, dirHash] &#123;</span><br><span class="line">		std::unique_lock&lt;std::recursive_mutex&gt; <span class="built_in">locker</span>(_fileListAndCurrentDirMutex);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> it = _items.<span class="built_in">find</span>(dirHash);</span><br><span class="line">		<span class="built_in">assert_and_return_r</span>(it != _items.<span class="built_in">end</span>(), );</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (it-&gt;second.<span class="built_in">isDir</span>())</span><br><span class="line">		&#123;</span><br><span class="line">			locker.<span class="built_in">unlock</span>(); <span class="comment">// Without this .unlock() the UI thread will get blocked very easily</span></span><br><span class="line">			<span class="type">const</span> FilesystemObjectsStatistics stats = <span class="built_in">calculateStatistics</span>(std::<span class="built_in">vector</span>&lt;qulonglong&gt;(<span class="number">1</span>, dirHash));</span><br><span class="line">			locker.<span class="built_in">lock</span>();</span><br><span class="line">			<span class="comment">// Since we unlocked the mutex, the item we were working on may well be out of the _items list by now</span></span><br><span class="line">			<span class="comment">// So we find it again and see if it&#x27;s still there</span></span><br><span class="line">			it = _items.<span class="built_in">find</span>(dirHash);</span><br><span class="line">			<span class="keyword">if</span> (it == _items.<span class="built_in">end</span>())</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">			it-&gt;second.<span class="built_in">setDirSize</span>(stats.occupiedSpace);</span><br><span class="line">			<span class="built_in">sendContentsChangedNotification</span>(refreshCauseOther);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><p><img src="/images/csdn/141829165/27e61515d57bc008.png"></p>
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://github.com/VioletGiraffe/file-commander" title="https:&#x2F;&#x2F;github.com&#x2F;VioletGiraffe&#x2F;file-commander">https://github.com/VioletGiraffe/file-commander</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/09/02/2024-09-02-csdn-141829165/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -1480,6 +1495,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>

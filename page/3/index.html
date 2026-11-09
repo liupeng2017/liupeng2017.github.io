@@ -204,6 +204,91 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2025-03-28-csdn-146609950" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/03/28/2025-03-28-csdn-146609950/">JIRA DSL使用笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2025/03/28/2025-03-28-csdn-146609950/" class="archive-article-date">
+  	<time datetime="2025-03-28T12:10:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-03-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        本文已加密，请输入密码后继续阅读。
+        
+          <a class="article-more-a" href="/2025/03/28/2025-03-28-csdn-146609950/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">私密</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2025/03/28/2025-03-28-csdn-146609950/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2025-03-28-csdn-146609684" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1035,111 +1120,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2025-01-09-csdn-145042789" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/01/09/2025-01-09-csdn-145042789/">C++字体库开发之字体回退策略十六</a>
-    </h1>
-  
-
-        
-        <a href="/2025/01/09/2025-01-09-csdn-145042789/" class="archive-article-date">
-  	<time datetime="2025-01-09T13:19:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/145042789">https://blog.csdn.net/qq_30220519/article/details/145042789</a></p>
-</blockquote>
-<h6 id="回退表"><a href="#回退表" class="headerlink" title="回退表"></a>回退表</h6><blockquote>
-<p>{<br>    “blocks”: [<br>        “UBLOCK_BASIC_LATIN”,<br>    ],<br>    “font”: {<br>        “family”: “Noto Sans SC”,<br>        “style”: [<br>            {<br>                “name”: “Thin”,<br>                “weight”: 250,<br>                “sha1”: “xxxxx”<br>            },<br>        ]<br>    }<br>}</p>
-</blockquote>
-<h6 id="语言块"><a href="#语言块" class="headerlink" title="语言块"></a>语言块</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">blockTable.<span class="built_in">emplace</span>(<span class="string">&quot;UBLOCK_BASIC_LATIN&quot;</span>, UBLOCK_BASIC_LATIN);</span><br><span class="line">			...</span><br><span class="line">blockTable.<span class="built_in">emplace</span>(<span class="string">&quot;UBLOCK_ARABIC&quot;</span>, UBLOCK_ARABIC);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; [key, value] : blockTable) &#123;</span><br><span class="line">	codeStrToUBlock.<span class="built_in">emplace</span>(value, key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="数据定义"><a href="#数据定义" class="headerlink" title="数据定义"></a>数据定义</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">FontKey</span> &#123;</span><br><span class="line">	std::string family;</span><br><span class="line">	std::string style;</span><br><span class="line">	std::string hash;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">using</span> FontKeys = std::vector&lt;FontKey&gt;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 回退Context</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">KnowHint</span> &#123;</span><br><span class="line">	<span class="type">uint32_t</span> codepoint;</span><br><span class="line">	FontKey key;</span><br><span class="line">	<span class="type">int</span> weight;</span><br><span class="line">	<span class="type">bool</span> italic;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h6 id="回退解析"><a href="#回退解析" class="headerlink" title="回退解析"></a>回退解析</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::unordered_map&lt;std::string, FontKeys&gt; uBlockStrToFontList;</span><br></pre></td></tr></table></figure>
-
-<h6 id="回退策略"><a href="#回退策略" class="headerlink" title="回退策略"></a>回退策略</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::set&lt;<span class="type">int</span>&gt; <span class="title">matchFontWeight</span><span class="params">(<span class="type">const</span> std::string&amp; style)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">static</span> std::map&lt;std::string, std::set&lt;<span class="type">int</span>&gt;&gt; fallbackStyleWeights &#123;</span><br><span class="line">        &#123; <span class="string">&quot;ExtraLight&quot;</span>, &#123; <span class="number">100</span>, <span class="number">200</span>, <span class="number">250</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;Thin&quot;</span>, &#123; <span class="number">100</span>, <span class="number">250</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;Light&quot;</span>, &#123; <span class="number">300</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;Normal&quot;</span>, &#123; <span class="number">350</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;Regular&quot;</span>, &#123; <span class="number">400</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;Medium&quot;</span>, &#123; <span class="number">500</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;SemiBold&quot;</span>, &#123; <span class="number">600</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;Bold&quot;</span>, &#123; <span class="number">700</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;ExtraBold&quot;</span>, &#123; <span class="number">800</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;Black&quot;</span>, &#123; <span class="number">900</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;Heavy&quot;</span>, &#123; <span class="number">900</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="string">&quot;ExtraBlack&quot;</span>, &#123; <span class="number">950</span> &#125; &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; iter : fallbackStyleWeights) &#123;</span><br><span class="line">        <span class="keyword">if</span> (std::string::npos != style.<span class="built_in">find</span>(iter.first))</span><br><span class="line">            <span class="keyword">return</span> iter.second;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="number">400</span> &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 字重 和 斜体最近匹配</span></span><br><span class="line"><span class="function">FontKey <span class="title">matchBestFontKey</span><span class="params">(<span class="type">const</span> FontKeys&amp; fontKey, <span class="type">const</span> Hint&amp; hint)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FontKeys allBestKeys;</span><br><span class="line">    <span class="type">uint32_t</span> distance = <span class="number">1000</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; key : fontKey) &#123;</span><br><span class="line">        <span class="keyword">auto</span> fontWeights = <span class="built_in">matchFontWeight</span>(key.style);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; weight : fontWeights) &#123;</span><br><span class="line">            <span class="keyword">auto</span> newDistance = std::<span class="built_in">abs</span>(weight - hint.fontWeight);</span><br><span class="line">            <span class="keyword">if</span> (<span class="number">0</span> == newDistance &amp;&amp; !hint.isItalic)</span><br><span class="line">                <span class="keyword">return</span> key; <span class="comment">// 字重完全吻合</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (newDistance &lt; distance) &#123; <span class="comment">// 字重越来越接近</span></span><br><span class="line">                allBestKeys = &#123; key &#125;;</span><br><span class="line">                distance = newDistance;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (newDistance == distance) &#123;</span><br><span class="line">                allBestKeys.<span class="built_in">emplace_back</span>(key);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (allBestKeys.<span class="built_in">empty</span>())</span><br><span class="line">        <span class="keyword">return</span> fontKey.<span class="built_in">front</span>();	<span class="comment">// 取最低字重</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (allBestKeys.<span class="built_in">size</span>() == <span class="number">1</span> || !hint.isItalic) <span class="comment">// 单个 或 不是斜体</span></span><br><span class="line">        <span class="keyword">return</span> allBestKeys.<span class="built_in">front</span>();</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; bestKey : allBestKeys) &#123; <span class="comment">// 斜体</span></span><br><span class="line">            <span class="keyword">if</span> (std::string::npos != bestKey.style.<span class="built_in">find</span>(<span class="string">&quot;Italic&quot;</span>))</span><br><span class="line">                <span class="keyword">return</span> bestKey;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> allBestKeys.<span class="built_in">front</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取回退</span></span><br><span class="line"><span class="function">FontKey <span class="title">matchFallback</span><span class="params">(<span class="type">const</span> KnowHint&amp; hint)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> blockType = <span class="built_in">ublock_getCode</span>(hint.codepoint);</span><br><span class="line">    <span class="type">const</span> <span class="keyword">auto</span>&amp; blockStr = codeStrToUBlock.<span class="built_in">at</span>(blockType);</span><br><span class="line">    <span class="keyword">auto</span> findIter = uBlockStrToFontList.<span class="built_in">find</span>(blockStr);</span><br><span class="line">    <span class="keyword">if</span> (findIter == uBlockStrToFontList.<span class="built_in">end</span>())</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">FontKey</span>(</span><br><span class="line">            <span class="string">&quot;Noto Sans&quot;</span>, <span class="string">&quot;Regular&quot;</span>, <span class="string">&quot;xxxxxxxx&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!findIter-&gt;second.<span class="built_in">empty</span>())</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">matchBestFontKey</span>(findIter-&gt;second, hint);	<span class="comment">// 匹配最佳</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 打底最佳</span></span><br><span class="line">    <span class="keyword">auto</span> iter = m_options.<span class="built_in">find</span>(<span class="string">&quot;UBLOCK_BASIC_LATIN&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (iter == m_options.<span class="built_in">end</span>())</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">FontKey</span>(</span><br><span class="line">            <span class="string">&quot;Noto Sans&quot;</span>, <span class="string">&quot;Regular&quot;</span>, <span class="string">&quot;xxxxx&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">matchBestFontKey</span>(iter-&gt;second, hint); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h6 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FontKey oldKey &#123; <span class="string">&quot;Inter&quot;</span>, <span class="string">&quot;Regular&quot;</span>, <span class="string">&quot;xxxx&quot;</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> weight = <span class="built_in">getFontWeight</span>(oldKey);</span><br><span class="line"><span class="keyword">auto</span> italic = <span class="built_in">isItalic</span>(oldKey);</span><br><span class="line">Hint hint &#123; codepoint, oldKey, weight, italic &#125;;</span><br><span class="line"><span class="keyword">auto</span> newKey = <span class="built_in">matchFallback</span>(hint);</span><br></pre></td></tr></table></figure>
-
-<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://pengliu.blog.csdn.net/article/details/140189778" title="C++字体库开发之字体回退三_c++shx字体-CSDN博客">C++字体库开发之字体回退三_c++shx字体-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://pengliu.blog.csdn.net/article/details/141613345" title="C++字体库开发之字体回退十-CSDN博客">C++字体库开发之字体回退十-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://pengliu.blog.csdn.net/article/details/144888119" title="C++字体库开发之可变字体路径获取十五-CSDN博客">C++字体库开发之可变字体路径获取十五-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://gitlab.gnome.org/GNOME/pango.git" title="GNOME &#x2F; pango · GitLab">GNOME &#x2F; pango · GitLab</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/01/09/2025-01-09-csdn-145042789/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1539,6 +1519,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>

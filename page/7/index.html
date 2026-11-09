@@ -204,6 +204,98 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-09-19-csdn-142368280" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/09/19/2024-09-19-csdn-142368280/">基于剪切板的高速翻译工具</a>
+    </h1>
+  
+
+        
+        <a href="/2024/09/19/2024-09-19-csdn-142368280/" class="archive-article-date">
+  	<time datetime="2024-09-19T11:45:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142368280">https://blog.csdn.net/qq_30220519/article/details/142368280</a></p>
+</blockquote>
+<h5 id="下载"><a href="#下载" class="headerlink" title="下载"></a><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_30220519/89772567" title="下载">下载</a></h5><h5 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;curl/curl.h&gt;</span></span></span><br><span class="line"><span class="function">std::wstring <span class="title">get_current_clipboard</span><span class="params">(HWND hwnd)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">OpenClipboard</span>(hwnd)) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">L&quot;&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	HANDLE h = <span class="built_in">GetClipboardData</span>(CF_UNICODETEXT);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!h) &#123;</span><br><span class="line">		<span class="built_in">CloseClipboard</span>();</span><br><span class="line">		<span class="keyword">return</span> <span class="string">L&quot;&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="type">wchar_t</span>* data = (<span class="type">wchar_t</span>*)<span class="built_in">GlobalLock</span>(h);</span><br><span class="line">	<span class="keyword">if</span> (!data) &#123;</span><br><span class="line">		<span class="built_in">CloseClipboard</span>();</span><br><span class="line">		<span class="keyword">return</span> <span class="string">L&quot;&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	std::wstring result = data;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">GlobalUnlock</span>(h);</span><br><span class="line">	<span class="built_in">CloseClipboard</span>();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">put_in_clipboard</span><span class="params">(HWND hwnd, <span class="type">const</span> std::wstring&amp; data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">OpenClipboard</span>(hwnd)) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">EmptyClipboard</span>();</span><br><span class="line"></span><br><span class="line">	HGLOBAL h = <span class="built_in">GlobalAlloc</span>(GMEM_MOVEABLE, (data.<span class="built_in">length</span>() + <span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="type">wchar_t</span>));</span><br><span class="line">	<span class="keyword">if</span> (h == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">CloseClipboard</span>();</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="type">wchar_t</span>* text = (<span class="type">wchar_t</span>*)<span class="built_in">GlobalLock</span>(h);</span><br><span class="line">	<span class="keyword">if</span> (text == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">GlobalFree</span>(h);</span><br><span class="line">		<span class="built_in">CloseClipboard</span>();</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">wcscpy</span>(text, data.<span class="built_in">c_str</span>());</span><br><span class="line"></span><br><span class="line">	<span class="built_in">GlobalUnlock</span>(h);</span><br><span class="line">	<span class="built_in">SetClipboardData</span>(CF_UNICODETEXT, h);</span><br><span class="line">	<span class="built_in">CloseClipboard</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	CURL*    curl;</span><br><span class="line">	CURLcode res;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (m_processing == <span class="number">1</span>) &#123;</span><br><span class="line">		m_processing = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	curl = <span class="built_in">curl_easy_init</span>();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (curl)</span><br><span class="line">	&#123;</span><br><span class="line">		std::string url = <span class="string">&quot;https://translate.googleapis.com/translate_a/single?client=gtx&amp;&quot;</span>;</span><br><span class="line"></span><br><span class="line">		url += <span class="string">&quot;sl=&quot;</span> + g::cfg.source_lang + <span class="string">&quot;&amp;&quot;</span>;</span><br><span class="line">		url += <span class="string">&quot;tl=&quot;</span> + g::cfg.target_lang + <span class="string">&quot;&amp;&quot;</span>;</span><br><span class="line">		url += <span class="string">&quot;dt=t&amp;q=&quot;</span>;</span><br><span class="line"></span><br><span class="line">		std::wstring clipboard = utils::<span class="built_in">remove_chars</span>(utils::<span class="built_in">get_current_clipboard</span>(hwnd), FORBIDDEN_CHARS);</span><br><span class="line"></span><br><span class="line">		<span class="type">char</span>* esc = <span class="built_in">curl_easy_escape</span>(curl, utils::<span class="built_in">to_utf8</span>(clipboard).<span class="built_in">c_str</span>(), <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">if</span> (esc) &#123;</span><br><span class="line">			url += esc;</span><br><span class="line">			<span class="built_in">curl_free</span>(esc);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		std::wstring buffer;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">curl_easy_setopt</span>(curl, CURLOPT_URL, url.<span class="built_in">c_str</span>());</span><br><span class="line">		<span class="built_in">curl_easy_setopt</span>(curl, CURLOPT_USERAGENT, <span class="string">&quot;lswap/&quot;</span> LSWAP_VERSION_STRING);</span><br><span class="line">		<span class="built_in">curl_easy_setopt</span>(curl, CURLOPT_WRITEFUNCTION, utils::write_callback);</span><br><span class="line">		<span class="built_in">curl_easy_setopt</span>(curl, CURLOPT_WRITEDATA, &amp;buffer);</span><br><span class="line">		<span class="built_in">curl_easy_setopt</span>(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);</span><br><span class="line"></span><br><span class="line">		res = <span class="built_in">curl_easy_perform</span>(curl);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (res == CURLE_OK)</span><br><span class="line">		&#123;</span><br><span class="line">			std::wstring text = utils::<span class="built_in">parse_json</span>(buffer);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (g::m_log)</span><br><span class="line">			&#123;</span><br><span class="line">				fmt&#123; fmt_def, fc_cyan, <span class="string">&quot;LOG: &quot;</span> &#125;;</span><br><span class="line">				wfmt&#123; fmt_def, fc_none, <span class="string">L&quot;&lt;NonTranslated&gt; %ls\n&quot;</span>, clipboard.<span class="built_in">c_str</span>() &#125;;</span><br><span class="line"></span><br><span class="line">				fmt&#123; fmt_def, fc_cyan, <span class="string">&quot;LOG: &quot;</span> &#125;;</span><br><span class="line">				wfmt&#123; fmt_def, fc_none, <span class="string">L&quot;&lt;Translated&gt; %ls\n&quot;</span>, text.<span class="built_in">c_str</span>() &#125;;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="built_in">put_in_clipboard</span>(hwnd, text);</span><br><span class="line">			m_processing = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">curl_global_cleanup</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	HWND hwnd;</span><br><span class="line">	<span class="built_in">AddClipboardFormatListener</span>(hwnd);</span><br><span class="line">	<span class="built_in">update</span>();</span><br><span class="line">	<span class="built_in">RemoveClipboardFormatListener</span>(hwnd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><p>受网络和翻译内容长度影响，可能需要多粘贴几次</p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://github.com/xastrix/lswap" title="GitHub - xastrix&#x2F;lswap: This is a command line tool for fast translating language to language by copying and pasting data to the clipboard, written in c&#x2F;c&#x2F;+&#x2F;+">GitHub - xastrix&#x2F;lswap: This is a command line tool for fast translating language to language by copying and pasting data to the clipboard, written in c&#x2F;c&#x2F;+&#x2F;+</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
+<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/工具与效率//" class="article-tag-list-link color1">工具与效率</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/09/19/2024-09-19-csdn-142368280/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-09-19-csdn-142358483" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1056,102 +1148,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-09-09-csdn-142058580" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/09/09/2024-09-09-csdn-142058580/">C++插件管理系统</a>
-    </h1>
-  
-
-        
-        <a href="/2024/09/09/2024-09-09-csdn-142058580/" class="archive-article-date">
-  	<time datetime="2024-09-09T06:41:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/142058580">https://blog.csdn.net/qq_30220519/article/details/142058580</a></p>
-</blockquote>
-<h6 id="插件加载目录结构"><a href="#插件加载目录结构" class="headerlink" title="插件加载目录结构"></a>插件加载目录结构</h6><blockquote>
-<p>execute<br>    plug.exe<br>    plugify.dll<br>    plugify.pconfig<br>    res<br>        cpp-lang-module.pmodule<br>        example_plugin.pplugin<br>        bin<br>            cpp-lang-module.dll<br>            example_plugin.dll</p>
-</blockquote>
-<h5 id="plugify-pconfig"><a href="#plugify-pconfig" class="headerlink" title="plugify.pconfig"></a>plugify.pconfig</h5><blockquote>
-<p>{<br>    “baseDir”: “res”,<br>    “logSeverity”: “debug”,<br>    “repositories”: [<br>    ],<br>    “preferOwnSymbols”: false<br>}</p>
-</blockquote>
-<h5 id="example-plugin-pplugin"><a href="#example-plugin-pplugin" class="headerlink" title="example_plugin.pplugin"></a>example_plugin.pplugin</h5><blockquote>
-<p>{<br>    “fileVersion”: 1,<br>    “version”: 1,<br>    “versionName”: “1.0”,<br>    “friendlyName”: “PluginCPP”,<br>    “description”: “An example of a plugin. This can be used as a starting point when creating your own plugin.”,<br>    “createdBy”: “untrustedmodders”,<br>    “createdByURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/">https://github.com/untrustedmodders/</a>“,<br>    “docsURL”: “<a target="_blank" rel="noopener" href="https://github.com/orgs/untrustedmodders/README.md">https://github.com/orgs/untrustedmodders/README.md</a>“,<br>    “downloadURL”: “<a target="_blank" rel="noopener" href="https://github.com/orgs/untrustedmodders/example-repo.zip">https://github.com/orgs/untrustedmodders/example-repo.zip</a>“,<br>    “updateURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/plugify/issues">https://github.com/untrustedmodders/plugify/issues</a>“,<br>    “entryPoint”: “bin&#x2F;example_plugin”,<br>    “supportedPlatforms”: [],<br>    “languageModule”: {<br>        “name”: “cpp”<br>    },<br>    “dependencies”: [],<br>    “exportedMethods”: [<br>        {<br>            “name”: “MakePrint”,<br>            “funcName”: “MakePrint”,<br>            “paramTypes”: [<br>                {<br>                    “type”: “int32”,<br>                    “name”: “count”<br>                },<br>                {<br>                    “type”: “string”,<br>                    “name”: “message”<br>                }<br>            ],<br>            “retType”: {<br>                “type”: “void”<br>            }<br>        }<br>    ]<br>}</p>
-</blockquote>
-<h5 id="cpp-lang-module-pmodule"><a href="#cpp-lang-module-pmodule" class="headerlink" title="cpp-lang-module.pmodule"></a>cpp-lang-module.pmodule</h5><blockquote>
-<p>{<br>    “fileVersion”: 1,<br>    “version”: 0,<br>    “versionName”: “v0”,<br>    “friendlyName”: “Cpp language module”,<br>    “language”: “cpp”,<br>    “description”: “Adds support for C++ plugins”,<br>    “createdBy”: “untrustedmodders”,<br>    “createdByURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/">https://github.com/untrustedmodders/</a>“,<br>    “docsURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/cpp-lang-module/blob/main/README.md">https://github.com/untrustedmodders/cpp-lang-module/blob/main/README.md</a>“,<br>    “downloadURL”: “<a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/cpp-lang-module/releases/download/v0/cpp-lang-module.zip">https://github.com/untrustedmodders/cpp-lang-module/releases/download/v0/cpp-lang-module.zip</a>“,<br>    “updateURL”: “<a target="_blank" rel="noopener" href="https://untrustedmodders.github.io/cpp-lang-module/cpp-lang-module.json">https://untrustedmodders.github.io/cpp-lang-module/cpp-lang-module.json</a>“,<br>    “supportedPlatforms”: [],<br>    “forceLoad”: false<br>}</p>
-</blockquote>
-<h5 id="插件定义"><a href="#插件定义" class="headerlink" title="插件定义"></a>插件定义</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/cpp_plugin.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugin_export.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ExamplePlugin</span> : <span class="keyword">public</span> plugify::IPluginEntry &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnPluginStart</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Example Start!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnPluginEnd</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Example End!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">MakePrint</span><span class="params">(<span class="type">int</span> count, <span class="type">const</span> std::string&amp; message)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; count; ++i) &#123;</span><br><span class="line">			std::cout &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; g_examplePlugin;</span><br><span class="line"></span><br><span class="line"><span class="built_in">EXPOSE_PLUGIN</span>(PLUGIN_API, &amp;g_examplePlugin)</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line"><span class="function">PLUGIN_API <span class="type">void</span> <span class="title">MakePrint</span><span class="params">(<span class="type">int</span> count, <span class="type">const</span> std::string&amp; message)</span> </span>&#123;</span><br><span class="line">	g_examplePlugin.<span class="built_in">MakePrint</span>(count, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="模块定义"><a href="#模块定义" class="headerlink" title="模块定义"></a>模块定义</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/assembly.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/plugin.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/plugify_provider.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/language_module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;plugify/cpp_plugin.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;module_export.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;array&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CppLanguageModule</span> <span class="keyword">final</span> : <span class="keyword">public</span> plugify::ILanguageModule &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">CppLanguageModule</span>() = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ILanguageModule</span></span><br><span class="line">	<span class="function">plugify::InitResult <span class="title">Initialize</span><span class="params">(std::weak_ptr&lt;plugify::IPlugifyProvider&gt; provider, plugify::ModuleRef <span class="keyword">module</span>)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Shutdown</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnMethodExport</span><span class="params">(plugify::PluginRef plugin)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function">plugify::LoadResult <span class="title">OnPluginLoad</span><span class="params">(plugify::PluginRef plugin)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnPluginStart</span><span class="params">(plugify::PluginRef plugin)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">OnPluginEnd</span><span class="params">(plugify::PluginRef plugin)</span> <span class="keyword">override</span></span>;</span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">IsDebugBuild</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">const</span> std::shared_ptr&lt;plugify::IPlugifyProvider&gt;&amp; <span class="title">GetProvider</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> _provider; &#125;</span><br><span class="line">	<span class="function">plugify::MemAddr <span class="title">GetNativeMethod</span><span class="params">(std::string_view methodName)</span> <span class="type">const</span></span>;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">GetNativeMethod</span><span class="params">(std::string_view methodName, plugify::MemAddr* addressDest)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	std::shared_ptr&lt;plugify::IPlugifyProvider&gt; _provider;</span><br><span class="line">	</span><br><span class="line">	std::map&lt;plugify::UniqueId, AssemblyHolder&gt; _assemblyMap;</span><br><span class="line">	std::unordered_map&lt;std::string, plugify::MemAddr, string_hash, std::equal_to&lt;&gt;&gt; _nativesMap;</span><br><span class="line">	</span><br><span class="line">	std::vector&lt;plugify::MemAddr*&gt; _addresses;</span><br><span class="line"></span><br><span class="line">	<span class="type">static</span> std::array&lt;<span class="type">void</span>*, 15&gt; _pluginApi;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ILanguageModule</span></span><br><span class="line"><span class="function">InitResult <span class="title">CppLanguageModule::Initialize</span><span class="params">(std::weak_ptr&lt;IPlugifyProvider&gt; provider, ModuleRef <span class="comment">/*module*/</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!(_provider = provider.<span class="built_in">lock</span>())) &#123;</span><br><span class="line">		<span class="keyword">return</span> ErrorData&#123; <span class="string">&quot;Provider not exposed&quot;</span> &#125;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	_provider-&gt;<span class="built_in">Log</span>(<span class="string">&quot;[CPPLM]  Inited!&quot;</span>, Severity::Debug);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> InitResultData&#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">plug.exe</span><br><span class="line">plugify init</span><br><span class="line">[+] Info: Plugify Init!</span><br><span class="line">[+] Info: Version: 1.0.0.0</span><br><span class="line">[+] Info: Git: [v35-1-g08987de]:(v35) - Fix cmake typo <span class="keyword">in</span> <span class="built_in">test</span> on main at <span class="string">&#x27;Sun Sep 1 09:21:31 2024&#x27;</span></span><br><span class="line">[+] Info: Compiled on: Windows-10.0.19045 from: Ninja with: <span class="string">&#x27;MSVC&#x27;</span></span><br><span class="line">[~] Debug: Loading <span class="built_in">local</span> packages</span><br><span class="line">[~] Debug: Loading remote packages</span><br><span class="line">[#] Error: Packages manifest from <span class="string">&#x27;https://github.com/untrustedmodders/plugify/issues&#x27;</span> has JSON parsing error: 8:1: expected_brace</span><br><span class="line">   &lt;!DOCTYPE html&gt;</span><br><span class="line">   ^</span><br><span class="line">[~] Debug: PackageManager loaded <span class="keyword">in</span> 788.826ms</span><br><span class="line">[~] Debug: [CPPLM] Inited!</span><br><span class="line">Example Start!</span><br><span class="line">[~] Debug: PluginManager loaded <span class="keyword">in</span> 10.951ms</span><br></pre></td></tr></table></figure>
-
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a target="_blank" rel="noopener" href="https://github.com/untrustedmodders/cpp-lang-module" title="GitHub - untrustedmodders&#x2F;cpp-lang-module: C++ Language Module">GitHub - untrustedmodders&#x2F;cpp-lang-module: C++ Language Module</a></p>
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/156773083/05f11fd31dd8466e.png"></p>
-<p><img src="/images/csdn/156773083/e349bc39c2d46b88.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/09/09/2024-09-09-csdn-142058580/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -1551,6 +1547,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>

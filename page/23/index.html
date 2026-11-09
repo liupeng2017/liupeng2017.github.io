@@ -204,6 +204,99 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-06-06-csdn-139508912" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/06/06/2024-06-06-csdn-139508912/">C++ 高性能CMS服务框架</a>
+    </h1>
+  
+
+        
+        <a href="/2024/06/06/2024-06-06-csdn-139508912/" class="archive-article-date">
+  	<time datetime="2024-06-06T12:03:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-06-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139508912">https://blog.csdn.net/qq_30220519/article/details/139508912</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/ArthurSonzogni/cppcms" title="GitHub - ArthurSonzogni&#x2F;cppcms: CppCMS Framework">GitHub - ArthurSonzogni&#x2F;cppcms: CppCMS Framework</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;booster/backtrace.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">foo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">throw</span> booster::<span class="built_in">runtime_error</span>(<span class="string">&quot;My Error&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">foo</span>()<span class="number">+20</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="built_in">bar</span>() &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(std::exception <span class="type">const</span> &amp;e)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; std::endl;</span><br><span class="line">		std::cerr &lt;&lt; booster::<span class="built_in">trace</span>(e);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">	My Error</span><br><span class="line">	<span class="number">00007</span>FFCA447BE91: booster::stack_trace::trace <span class="number">+0x31</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F491D: booster::backtrace::backtrace <span class="number">+0x7d</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F4CF5: booster::runtime_error::runtime_error <span class="number">+0x35</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F1CEC: foo <span class="number">+0x3c</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F1D3B: bar <span class="number">+0xb</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F1D6C: main <span class="number">+0x1c</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F7779: invoke_main <span class="number">+0x39</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F7622: __scrt_common_main_seh <span class="number">+0x132</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F74DE: __scrt_common_main <span class="number">+0xe</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F780E: mainCRTStartup <span class="number">+0xe</span></span><br><span class="line">	<span class="number">00007</span>FFD17127614: BaseThreadInitThunk <span class="number">+0x14</span></span><br><span class="line">	<span class="number">00007</span>FFD181C26A1: RtlUserThreadStart <span class="number">+0x21</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cppcms/service.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cppcms/application.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cppcms/applications_pool.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cppcms/http_response.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">unit_test</span> : <span class="keyword">public</span> cppcms::application &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">unit_test</span>(cppcms::service &amp;s) : cppcms::<span class="built_in">application</span>(s) &#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">main</span><span class="params">(std::string)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">response</span>().<span class="built_in">out</span>() &lt;&lt; <span class="string">&quot;This is test!&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="function">cppcms::service <span class="title">srv</span><span class="params">(argc,argv)</span></span>;</span><br><span class="line">		srv.<span class="built_in">applications_pool</span>().<span class="built_in">mount</span>(cppcms::<span class="built_in">create_pool</span>&lt;unit_test&gt;());</span><br><span class="line">		srv.<span class="built_in">run</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(std::exception <span class="type">const</span> &amp;e) &#123;</span><br><span class="line">		std::cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; std::endl;</span><br><span class="line">		<span class="keyword">return</span> EXIT_FAILURE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/06/06/2024-06-06-csdn-139508912/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-06-06-csdn-139508363" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1005,1045 +1098,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-05-31-csdn-139346743" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/05/31/2024-05-31-csdn-139346743/">C++编码规范</a>
-    </h1>
-  
-
-        
-        <a href="/2024/05/31/2024-05-31-csdn-139346743/" class="archive-article-date">
-  	<time datetime="2024-05-31T02:52:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139346743">https://blog.csdn.net/qq_30220519/article/details/139346743</a></p>
-</blockquote>
-<h3 id="一般性原则"><a href="#一般性原则" class="headerlink" title="一般性原则"></a>一般性原则</h3><h4 id="遵守尽可能减少意外性的原则"><a href="#遵守尽可能减少意外性的原则" class="headerlink" title="遵守尽可能减少意外性的原则"></a>遵守尽可能减少意外性的原则</h4><blockquote>
-<p>编码流程化，认真仔细地考虑各种情况，并提供应对</p>
-</blockquote>
-<h4 id="最初即完成"><a href="#最初即完成" class="headerlink" title="最初即完成"></a>最初即完成</h4><blockquote>
-<p>原型或实验性编码的一部分进入到最终代码，即使代码最终不会成为产品，但其他人可能因为阅读此代码而增加了负担。若编码人员会从一开始就一贯地适用这些规则，则评审人员会高度评价作者的专业意识和预见性。</p>
-</blockquote>
-<h4 id="脱离规则"><a href="#脱离规则" class="headerlink" title="脱离规则"></a>脱离规则</h4><blockquote>
-<p>没有完美的标准，也没有普遍适用的标准，有时也会需要脱离确立的标准。在决定无视规则之前，你首先必须确认理解规则存在的理由和不应用规则时的结果。在此基础上，如果你觉得有必要违反规定，那就把理由记录下来。</p>
-</blockquote>
-<ol>
-<li>经常有充分的理由而偏离规则</li>
-<li>编码标准的目的是帮助能够沟通的队伍</li>
-<li>编码规范应根据通用的标准制定，是团队共识的结晶，不是个人意志的体现</li>
-</ol>
-<h3 id="命名规则"><a href="#命名规则" class="headerlink" title="命名规则"></a>命名规则</h3><blockquote>
-<p>命名要表达清晰、明确的含义，要有描述性<br>少用缩写，特别是不常用、不直观的缩写，附：<a href="#abbreviation">常用缩写</a></p>
-</blockquote>
-<ul>
-<li><p>文件名用大小写区分，增加可读性</p>
-</li>
-<li><p>类名以公司简称开头，防止命名冲突，标识代码层级</p>
-</li>
-<li><p>以小写字母开头，以大写字母分割单词，类名和函数名</p>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">getName</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>成员变量加前缀m_，注意：struct也要加</p>
-</li>
-<li><p>静态变量、全局变量要加前缀s_或g_</p>
-</li>
-<li><p>命名方式动词+名词、名词或者形容词＋名词、动宾结构</p>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setAddress</span><span class="params">(<span class="type">const</span> Address&amp; cAddress)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>函数名要准确描述函数的功能</p>
-</li>
-<li><p>函数内的变量、参数用小写字母开头的单词组合而成，可以以类型为前缀</p>
-</li>
-<li><p>返回bool的函数命名，is + 形容詞，can + 动词，has + 过去分词</p>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isEmpty</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span></span>; <span class="comment">// 应理解为动词，清空</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">canGet</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">hasChanged</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isContains</span><span class="params">(Object)</span></span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">containsKey</span><span class="params">(Key)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (Object.<span class="built_in">isContains</span>(obj)) <span class="comment">// 在if、while等语句中更容易阅读（更连贯）</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>注意命名的对称性</li>
-</ul>
-<p>add&#x2F;remove<br>insert&#x2F;delete<br>get&#x2F;set<br>begin&#x2F;end<br><em><strong>start&#x2F;stop(start不对应end)</strong></em><br>from&#x2F;to<br>send&#x2F;receive<br>first&#x2F;last<br>get&#x2F;release<br>put&#x2F;get<br>up&#x2F;down<br>show&#x2F;hide<br>source&#x2F;target<br>open&#x2F;close<br>source&#x2F;destination<br>src&#x2F;dest<br>increment&#x2F;decrement<br>lock&#x2F;unlock<br>old&#x2F;new<br>next&#x2F;previous<br>read&#x2F;write</p>
-<ul>
-<li><p>变量声明类型放前，定义如typedef类型在后</p>
-</li>
-<li><p>智能指针的定义以Sp&#x2F;Wp&#x2F;Up结尾</p>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> DatasetSp = std::shared_ptr&lt;Dataset&gt;; <span class="comment">// 统一标识、简洁明了</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>禁止滥用省略名称</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> temp = <span class="built_in">sqrt</span>(X); <span class="comment">// 错误示例：滥用命名temp，没有含义</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>省略形式的单词以大写开头，后续小写</li>
-</ul>
-<blockquote>
-<p>class XMLString → class XmlString<br>loadXMLDocument() → loadXmlDocument()</p>
-</blockquote>
-<ul>
-<li>局部变量可以使用常见易懂的缩写，但特殊情况仍需注释</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Polyline3d poly;</span><br><span class="line">ServletContext sc = <span class="built_in">getServletContext</span>(); <span class="comment">// sc是狭长的类型名缩写</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>宏定义用大写字母和下划线命名</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> RETURN_MAX(a, b) ((a) &gt; (b) ? (a) : (b)) <span class="comment">// 较好的示例</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GOLDENSECTION 0.618 <span class="comment">// 错误示例，应该是GOLDEN_SECTION</span></span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>宏定义尽量短，展开后是多行的，最好改为函数（无法调试）</p>
-</li>
-<li><p>枚举类型尽量不要写具体数值（很多情况下数值没有含义），除非需要序列化（此时应备注该枚举的数值已固定）</p>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum class</span> <span class="title class_">GeometryType</span></span><br><span class="line">&#123;</span><br><span class="line">    kUnknown, <span class="comment">// 未知状态尽量设为0</span></span><br><span class="line">    kLine, <span class="comment">// 如果这里写了具体数值，那么维护者就要小心翼翼地考虑它们大小、顺序</span></span><br><span class="line">    kCircle,</span><br><span class="line">    kRectangle</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>不希望被调用的内部实现函数，以下划线开头</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Segment3d</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">move</span><span class="params">(<span class="type">const</span> Vector3d&amp; vct)</span></span>; <span class="comment">// move函数内调用_move，将两个强相关的函数放到一起方便维护</span></span><br><span class="line">    <span class="type">void</span> _move(<span class="type">const</span> Matrix3d&amp; mat); <span class="comment">// 不希望将_move放到private中，又不希望它被外部调用</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>单数&#x2F;复数形式代表不同含义，如：Point&#x2F;Points</li>
-</ul>
-<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><blockquote>
-<p>自动生成开发文档工具：Doxygen</p>
-</blockquote>
-<ul>
-<li><p>注释的书写应遵循简洁明了的原则，目的是增强软件的可维护性</p>
-</li>
-<li><p>函数的概括性注释写在头文件中，函数的细节性注释写在源文件的相应位置</p>
-</li>
-<li><p>注释需要维护，代码变更后应一并修改相关注释，保证后期的可读性</p>
-</li>
-</ul>
-<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><h4 id="类"><a href="#类" class="headerlink" title="类"></a>类</h4><ul>
-<li>类的职责要明确、单一</li>
-</ul>
-<blockquote>
-<p>一个文件内最好只有一个类，小的数据类不必单独占一个文件</p>
-</blockquote>
-<ul>
-<li><p>类的函数放在对应的cpp文件，不要分散在不同文件（便于查找，加快链接速度）</p>
-</li>
-<li><p>如果类中定义了成员变量，请尽可能地提供构造函数</p>
-</li>
-</ul>
-<blockquote>
-<p>若没有提供构造函数，编译器会默认生成，极有可能使成员变量未能正确初始化，进而引发不确定的后果</p>
-</blockquote>
-<ul>
-<li>将类的所有数据成员声明为private，提供get&#x2F;set方法访问它们，尽量避免用struct而统一用class关键字</li>
-</ul>
-<blockquote>
-<p>应禁止class中公开的成员变量，这么做可以集中控制访问点、修改点，更符合OOP的封装特性<br>提供对外”接口”时，保证不会破坏内部数据的整合性</p>
-</blockquote>
-<ul>
-<li>使用多态替代分支判断</li>
-</ul>
-<blockquote>
-<p>当遇到两处以上的switch或if&#x2F;else时，就要考虑使用多态<br>使用多态时，应从设计的角度考虑代码块之间的关系</p>
-</blockquote>
-<ul>
-<li>使用到了继承，就要使用虚析构函数</li>
-</ul>
-<blockquote>
-<p>防止释放基类指针时，子类申请的内存泄漏<br>如果子类没有申请内存，那么不存在泄露问题，但是仍然可以加上virtual</p>
-</blockquote>
-<ul>
-<li>通过类的构造函数初始化对象，析构函数释放对象</li>
-</ul>
-<blockquote>
-<p>避免使用无参构造函数初始化对象后，紧接着通过其它方式初始化成员变量（此时应该叫赋值）<br>避免在子类的构造函数体内对基类数据进行赋值</p>
-<blockquote>
-<p>小心基类的构造、析构陷阱：<br>避免在基类的构造函数内调用虚函数，此时子类还没有构造出来<br>避免在基类的析构函数内调用虚函数，此时子类已析构</p>
-</blockquote>
-</blockquote>
-<ul>
-<li>重写基类的虚函数时，请使用override关键字表明重写意图</li>
-</ul>
-<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><ul>
-<li><p>避免写大而全的函数，一个函数只做一件事</p>
-</li>
-<li><p>尽量限制一个函数的行数在200以内，最好在一个视口内能显示全</p>
-</li>
-<li><p>单行代码不要超过100字，按逻辑分割</p>
-</li>
-</ul>
-<p>-函数中的代码要尽早返回，减少大括号划分的代码层次</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 错误示例，括号层级太深，阅读困难</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getEntityDoSomething</span><span class="params">(std::shared_ptr&lt;Database&gt; pDb, <span class="type">int</span> id)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::shared_ptr&lt;BlockTable&gt; pBlockTable;</span><br><span class="line">	<span class="keyword">if</span> (pDb &amp;&amp; pDb-&gt;<span class="built_in">getSymbolTable</span>(pBlockTable, kForRead))</span><br><span class="line">	&#123;</span><br><span class="line">		std::shared_ptr&lt;BlockTableRecord&gt; pBlockTableRecord;</span><br><span class="line">		<span class="keyword">if</span> (pBlockTable-&gt;<span class="built_in">getAt</span>(MODEL_SPACE, pBlockTableRecord, kForRead))</span><br><span class="line">		&#123;</span><br><span class="line">			std::shared_ptr&lt;BlockTableRecordIterator&gt; pIterator;</span><br><span class="line">			pBlockTableRecord-&gt;newIterator(pIterator);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> (; !pIterator-&gt;done(); pIterator-&gt;<span class="built_in">step</span>())</span><br><span class="line">			&#123;</span><br><span class="line">				std::shared_ptr&lt;Entity&gt; pEntity;</span><br><span class="line">				<span class="keyword">if</span> (pIterator-&gt;<span class="built_in">getEntity</span>(pEntity, kForRead))</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span> (pEntity-&gt;<span class="built_in">isKindOf</span>(MyEntity::<span class="built_in">desc</span>()))</span><br><span class="line">					&#123;</span><br><span class="line">						<span class="keyword">if</span> (<span class="built_in">dynamic_pointer_cast</span>&lt;MyEntity&gt;(pEntity) == id)</span><br><span class="line">						&#123;</span><br><span class="line">							<span class="comment">// ... // 核心逻辑位于函数的第七级，可读性较差</span></span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="comment">// ...</span></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 较好的示例，异常条件提前返回了，降低了关注度</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getEntityDoSomething2</span><span class="params">(std::shared_ptr&lt;Database&gt; pDb, <span class="type">int</span> id)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!pDb)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	std::shared_ptr&lt;BlockTable&gt; pBlockTable;</span><br><span class="line">	<span class="keyword">if</span> (pDb-&gt;<span class="built_in">getSymbolTable</span>(pBlockTable, kForRead))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	std::shared_ptr&lt;BlockTableRecord&gt; pBlockTableRecord;</span><br><span class="line">	<span class="keyword">if</span> (!pBlockTable-&gt;<span class="built_in">getAt</span>(MODEL_SPACE, pBlockTableRecord, kForRead))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	std::shared_ptr&lt;BlockTableRecordIterator&gt; pIterator;</span><br><span class="line">	pBlockTableRecord-&gt;newIterator(pIterator);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (; !pIterator-&gt;done(); pIterator-&gt;<span class="built_in">step</span>())</span><br><span class="line">	&#123;</span><br><span class="line">		std::shared_ptr&lt;Entity&gt; pEntity;</span><br><span class="line">		<span class="keyword">if</span> (!pIterator-&gt;<span class="built_in">getEntity</span>(pEntity, kForRead))</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (pEntity-&gt;<span class="built_in">isKindOf</span>(MyEntity::<span class="built_in">desc</span>()))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">dynamic_pointer_cast</span>&lt;MyEntity&gt;(pEntity) != id)</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			<span class="comment">// ... // 核心逻辑位于函数的第三级，可读性较好</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>内联函数应在10行以内</li>
-</ul>
-<blockquote>
-<p>只有精简的函数能形成内联<br>inline关键字对析构函数、递归函数、带循环的函数无效</p>
-</blockquote>
-<ul>
-<li>除内置类型外，在所有能用const &amp;的地方用上”const &amp;”</li>
-</ul>
-<blockquote>
-<p>C++11及以后的标准中，实现了移动构造的对象可以不写”const &amp;”，不写的效率甚至更高一点点</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// “const int &amp;count”和&quot;int count&quot;效果一样，为了避免函数声明过长，内置类型尽量不要写&quot;const &amp;&quot;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">calculate</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt; &amp;arrObjectId, <span class="type">const</span> std::string &amp;strName, <span class="type">int</span> count)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>空指针防御由函数提供者保证</li>
-</ul>
-<blockquote>
-<p>由调用者保证有以下问题：忘记写判断、软件不稳定、代码不简洁</p>
-</blockquote>
-<ul>
-<li><p>好的函数重载是参数数量不同，这样会方便阅读</p>
-</li>
-<li><p>大量的套壳函数（函数内只有一两行代码）是不优雅的</p>
-</li>
-<li><p>函数实现尽量不要放在头文件，降低编译时间</p>
-</li>
-<li><p>禁止使用goto关键字</p>
-</li>
-</ul>
-<blockquote>
-<p>肆意改变程序流会增加代码阅读难度<br>goto有且仅有一个好处：跳出多层循环</p>
-</blockquote>
-<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><ul>
-<li><p>业务逻辑中禁止使用静态变量，除非有非用不可的理由</p>
-</li>
-<li><p>小心隐式转换，不要让型别轻易转换，考虑使用constexpr</p>
-</li>
-<li><p>成员变量的初始化，尽可能在初始化列表中完成</p>
-</li>
-</ul>
-<blockquote>
-<p>构造函数内”初始化”成员变量，其实是给对象赋值</p>
-<blockquote>
-<p>注意：<br>执行顺序：头文件就地初始化 -&gt; 列表初始化 -&gt; 构造函数赋值<br>自定义对象的初始化可能涉及数据的拷贝，尽可能在初始化列表中完成<br>成员变量在初始化列表中的构造顺序，不是初始化列表中的顺序，而是class中定义的先后顺序（对象依赖）</p>
-</blockquote>
-</blockquote>
-<ul>
-<li><p>不要进行没有意义的初始化，如：std::string strName &#x3D; “”;</p>
-</li>
-<li><p>局部变量的初始化时机，RAII(Resource Acquisition Is Initialization)</p>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 错误示例</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> index;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    index = start + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 使用index</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 较好的示例</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="type">int</span> index = start + <span class="number">1</span>; <span class="comment">// 就地初始化，就近初始化</span></span><br><span class="line">    <span class="comment">// 使用index</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>用括号明确复杂表达式的优先级</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (A || (B &amp;&amp; C)) <span class="comment">// 较好的示例</span></span><br><span class="line"><span class="keyword">if</span> (A || B &amp;&amp; C) <span class="comment">// 错误示例</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>递增变量时，使用前置递增，如：++i&#x2F;++iterator</li>
-</ul>
-<h4 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h4><ul>
-<li>积极使用STL，在标准库能够提供实现时，不要自己实现</li>
-</ul>
-<blockquote>
-<p>能使用更简洁、逻辑一致的方法名<br>通过标准收藏类的接口，可以不改变接口而更换实现<br>写出更通用、更规范、安全行更高、兼容性更强的代码</p>
-</blockquote>
-<ul>
-<li><p>在编写业务逻辑时，绝大多数情况应该使用智能指针替代原生指针</p>
-</li>
-<li><p>头文件中尽量减少对其它头文件的包含，不要写using其它命名空间，如：using namespace std;</p>
-</li>
-</ul>
-<blockquote>
-<p>头文件中使用的引用或指针类型，只需要声明，不用包含<br>包含这个头文件的地方也被强制使用了命名空间，容易造成名称混乱<br>降低编译依赖、减少编译时间</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Object</span></span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; m_arrId; <span class="comment">// 错误示例，此程序的头文件中包含了std命名空间，应该是std::vector&lt;int&gt; m_arrId;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>不要使用复杂的模板编程</li>
-</ul>
-<blockquote>
-<p>泛型编程是编程范式层面的选择之一，适合大型的、底层的库开发，如boost&#x2F;STL<br>对于使用C++不是很熟练的人来说比较晦涩，编译信息很不友好，调试、维护也比较麻烦<br>过多的模板参数是不友好的</p>
-</blockquote>
-<ul>
-<li>不要使用复杂的lambda表达式</li>
-</ul>
-<blockquote>
-<p>主流的编程范式仍然是面向对象，它足够成熟，有很多设计模式可复用<br>函数式编程可以封装设计模式，但它还不成熟，没有成熟的设计范式可用</p>
-<blockquote>
-<p>一旦lambda表达式引用的外部变量失效，可能造成程序崩溃（野指针），且很难调试问题<br>由于业务的复杂性，存在多个闭包嵌套的情形，此时函数的可读性极差，要了解所有上下文代码，程序流可能在底层、上层间来回穿梭</p>
-</blockquote>
-</blockquote>
-<ul>
-<li><p>不完全正确、有待继续完成的、暂未实施的内容，用TODO标识</p>
-</li>
-<li><p>在编码之前与上一任作者交流</p>
-</li>
-</ul>
-<blockquote>
-<p>确认做的东西在Lib中是否存在<br>要继承某个class时，向它的制作者咨询，确认是否通用的方式，这样能使整体紧凑…</p>
-</blockquote>
-<ul>
-<li>具有迷惑性的代码是邪恶的</li>
-</ul>
-<blockquote>
-<p>写出让平均程序员明白的代码，例如运算符的顺序、关于初始化的规则等，<br>不带入任何人都未必能充满自信的回答的假设，使用()明确运算顺序，进行明确的初始化等</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 较好的示例</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SWAP_INT(a,b) &#123; \</span></span><br><span class="line"><span class="meta">    int temp = a; \</span></span><br><span class="line"><span class="meta">    a = b;       \</span></span><br><span class="line"><span class="meta">    b = temp;    \</span></span><br><span class="line"><span class="meta">&#125;</span></span><br><span class="line"><span class="comment">// 错误示例</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SWAP_INT(a,b) &#123;a += b -= (a = b-a);&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><ul>
-<li>设计复杂的东西是一件错误的事情</li>
-</ul>
-<blockquote>
-<p>设计上遇到困难时，多数情况应重视简洁明了（KISS原则），尝试将问题分解成简单的小块</p>
-</blockquote>
-<ul>
-<li>用组合代替继承</li>
-</ul>
-<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><blockquote>
-<p>实际项目中的性能数据要从测试中得出，不能仅靠时间复杂度分析，更不能依靠猜测<br>在测试之后做性能调整，不应该从最开始就过分介意性能问题，易读性和维护性优先，性能在测定后改善</p>
-</blockquote>
-<ul>
-<li><p>在保证软件系统的正确性、稳定性、可读性及可测性的前提下，尽可能地提高软件的性能</p>
-</li>
-<li><p>在保证程序质量的前提下，通过压缩代码量、去掉不必要代码以及减少不必要的局部和全局变量，来提高空间效率</p>
-</li>
-<li><p>减少循环嵌套层次</p>
-</li>
-<li><p>将变量声明放到循环外面</p>
-</li>
-<li><p>在多重循环中，应将最忙的循环放在最内层</p>
-</li>
-<li><p>避免循环体内含判断语句，应将循环语句置于判断语句的代码块之中</p>
-</li>
-</ul>
-<blockquote>
-<p>循环语句不被执行</p>
-</blockquote>
-<ul>
-<li><p>尽量用乘法或其它方法代替除法，特别是浮点运算中的除法</p>
-</li>
-<li><p>针对执行代码，不要在循环中做重复的事情，特别是IO操作</p>
-</li>
-</ul>
-<blockquote>
-<p>重复读写文档，重复读写数据等操作</p>
-</blockquote>
-<ul>
-<li>不要对动态数组使用removeAt、insertAt方法，除非有非用不可的理由</li>
-</ul>
-<blockquote>
-<p>这么做大概率会触发动态数组的内存搬迁</p>
-</blockquote>
-<ul>
-<li>一般情况下，优先使用动态数组而非关联容器</li>
-</ul>
-<blockquote>
-<p>在内存不吃紧的软件中，动态数组的内存分配策略可以大大减少new的时间，map、set在每次插入、删除元素时要调整树的平衡</p>
-</blockquote>
-<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><h4 id="常用缩写"><a href="#常用缩写" class="headerlink" title="常用缩写"></a>常用缩写</h4><blockquote>
-<p>注：蓝色为常用的</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>缩写</th>
-<th>全称</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>addr</td>
-<td>Address</td>
-<td></td>
-</tr>
-<tr>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
-<td>adm</td>
-<td>Administrator</td>
-<td></td>
-</tr>
-<tr>
-<td>app</td>
-<td>Application</td>
-<td></td>
-</tr>
-<tr>
-<td>arg</td>
-<td>Argument argc?argv?</td>
-<td></td>
-</tr>
-<tr>
-<td>asm</td>
-<td>assemble 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>asyn</td>
-<td>asynchronization</td>
-<td></td>
-</tr>
-<tr>
-<td>avg</td>
-<td>average 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>db</td>
-<td>Database</td>
-<td></td>
-</tr>
-<tr>
-<td>bk</td>
-<td>back</td>
-<td></td>
-</tr>
-<tr>
-<td>bmp</td>
-<td>Bitmap</td>
-<td></td>
-</tr>
-<tr>
-<td>btn</td>
-<td>Button</td>
-<td>尽量只在控件ID命名时使用</td>
-</tr>
-<tr>
-<td>buf</td>
-<td>Buffer</td>
-<td></td>
-</tr>
-<tr>
-<td>calc</td>
-<td>Calculate</td>
-<td></td>
-</tr>
-<tr>
-<td>chg</td>
-<td>Change 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>clk</td>
-<td>Click</td>
-<td></td>
-</tr>
-<tr>
-<td>clr</td>
-<td>color</td>
-<td></td>
-</tr>
-<tr>
-<td>cmd</td>
-<td>Command</td>
-<td></td>
-</tr>
-<tr>
-<td>cmp</td>
-<td>Compare</td>
-<td></td>
-</tr>
-<tr>
-<td>col</td>
-<td>Column</td>
-<td></td>
-</tr>
-<tr>
-<td>coord</td>
-<td>coordinates</td>
-<td></td>
-</tr>
-<tr>
-<td>cpy</td>
-<td>copy</td>
-<td></td>
-</tr>
-<tr>
-<td>ctl</td>
-<td>Control</td>
-<td></td>
-</tr>
-<tr>
-<td>cur</td>
-<td>Current</td>
-<td></td>
-</tr>
-<tr>
-<td>cyl</td>
-<td>Cylinder</td>
-<td></td>
-</tr>
-<tr>
-<td>dbg</td>
-<td>Debug</td>
-<td></td>
-</tr>
-<tr>
-<td>dbl</td>
-<td>Double</td>
-<td></td>
-</tr>
-<tr>
-<td>dec</td>
-<td>Decrease</td>
-<td></td>
-</tr>
-<tr>
-<td>def</td>
-<td>default</td>
-<td></td>
-</tr>
-<tr>
-<td>del</td>
-<td>Delete</td>
-<td></td>
-</tr>
-<tr>
-<td>dest</td>
-<td>Destination</td>
-<td></td>
-</tr>
-<tr>
-<td>dev</td>
-<td>Device?Develop? 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>dict</td>
-<td>dictionary</td>
-<td></td>
-</tr>
-<tr>
-<td>diff</td>
-<td>different</td>
-<td></td>
-</tr>
-<tr>
-<td>dir</td>
-<td>directory</td>
-<td></td>
-</tr>
-<tr>
-<td>disp</td>
-<td>Display 不是那么友好</td>
-<td></td>
-</tr>
-<tr>
-<td>div</td>
-<td>Divide 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>dlg</td>
-<td>Dialog</td>
-<td></td>
-</tr>
-<tr>
-<td>doc</td>
-<td>Document</td>
-<td></td>
-</tr>
-<tr>
-<td>drv</td>
-<td>Driver 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>dyna</td>
-<td>Dynamic 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>env</td>
-<td>Environment</td>
-<td></td>
-</tr>
-<tr>
-<td>err</td>
-<td>error</td>
-<td></td>
-</tr>
-<tr>
-<td>ext</td>
-<td>Extend</td>
-<td>Windows的旧风格，以Ex开头的函数…建议弃用</td>
-</tr>
-<tr>
-<td>exec</td>
-<td>execute</td>
-<td></td>
-</tr>
-<tr>
-<td>flg</td>
-<td>flag 多写一个字母会更友好</td>
-<td></td>
-</tr>
-<tr>
-<td>frm</td>
-<td>Frame 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>func</td>
-<td>Function fun</td>
-<td></td>
-</tr>
-<tr>
-<td>grp</td>
-<td>group 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>horz</td>
-<td>Horizontal hor</td>
-<td></td>
-</tr>
-<tr>
-<td>idx</td>
-<td>Index 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>img</td>
-<td>Image</td>
-<td></td>
-</tr>
-<tr>
-<td>imp</td>
-<td>Implement</td>
-<td></td>
-</tr>
-<tr>
-<td>inc</td>
-<td>Increase 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>info</td>
-<td>Information</td>
-<td></td>
-</tr>
-<tr>
-<td>init</td>
-<td>Initialize</td>
-<td></td>
-</tr>
-<tr>
-<td>ins</td>
-<td>Insert 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>inst</td>
-<td>Instance 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>intr</td>
-<td>Interrupt 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>len</td>
-<td>Length</td>
-<td></td>
-</tr>
-<tr>
-<td>lib</td>
-<td>Library</td>
-<td></td>
-</tr>
-<tr>
-<td>lnk</td>
-<td>Link 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>log</td>
-<td>logical</td>
-<td></td>
-</tr>
-<tr>
-<td>lst</td>
-<td>List</td>
-<td></td>
-</tr>
-<tr>
-<td>max</td>
-<td>maximum</td>
-<td></td>
-</tr>
-<tr>
-<td>mem</td>
-<td>Memory 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>mgr</td>
-<td>Manager 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>mid</td>
-<td>middle</td>
-<td></td>
-</tr>
-<tr>
-<td>min</td>
-<td>minimum</td>
-<td></td>
-</tr>
-<tr>
-<td>msg</td>
-<td>Message</td>
-<td></td>
-</tr>
-<tr>
-<td>multi</td>
-<td>Multiply</td>
-<td></td>
-</tr>
-<tr>
-<td>num</td>
-<td>Number</td>
-<td></td>
-</tr>
-<tr>
-<td>obj</td>
-<td>Object</td>
-<td></td>
-</tr>
-<tr>
-<td>ofs</td>
-<td>Offset</td>
-<td></td>
-</tr>
-<tr>
-<td>org</td>
-<td>Origin</td>
-<td></td>
-</tr>
-<tr>
-<td>param</td>
-<td>Parameter</td>
-<td></td>
-</tr>
-<tr>
-<td>pic</td>
-<td>picture 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>pkg</td>
-<td>package 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>pt</td>
-<td>Point</td>
-<td></td>
-</tr>
-<tr>
-<td>pos</td>
-<td>Position</td>
-<td></td>
-</tr>
-<tr>
-<td>pre</td>
-<td>previous</td>
-<td></td>
-</tr>
-<tr>
-<td>prg</td>
-<td>program 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>prn</td>
-<td>Print 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>proc</td>
-<td>Process</td>
-<td></td>
-</tr>
-<tr>
-<td>prop</td>
-<td>Properties 不是那么明确</td>
-<td></td>
-</tr>
-<tr>
-<td>psw</td>
-<td>Password</td>
-<td>不是那么明确</td>
-</tr>
-<tr>
-<td>ptr</td>
-<td>Pointer</td>
-<td></td>
-</tr>
-<tr>
-<td>pub</td>
-<td>Public 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>rc</td>
-<td>rect?作为返回值的rc?</td>
-<td></td>
-</tr>
-<tr>
-<td>ref</td>
-<td>Reference</td>
-<td></td>
-</tr>
-<tr>
-<td>reg</td>
-<td>Register</td>
-<td></td>
-</tr>
-<tr>
-<td>req</td>
-<td>request</td>
-<td></td>
-</tr>
-<tr>
-<td>res</td>
-<td>Resource</td>
-<td></td>
-</tr>
-<tr>
-<td>ret</td>
-<td>return</td>
-<td></td>
-</tr>
-<tr>
-<td>rgn</td>
-<td>region</td>
-<td>不那么常用</td>
-</tr>
-<tr>
-<td>scr</td>
-<td>screen</td>
-<td></td>
-</tr>
-<tr>
-<td>sec</td>
-<td>Second</td>
-<td></td>
-</tr>
-<tr>
-<td>seg</td>
-<td>Segment</td>
-<td></td>
-</tr>
-<tr>
-<td>sel</td>
-<td>Select</td>
-<td></td>
-</tr>
-<tr>
-<td>src</td>
-<td>Source</td>
-<td></td>
-</tr>
-<tr>
-<td>std</td>
-<td>Standard</td>
-<td></td>
-</tr>
-<tr>
-<td>stg</td>
-<td>Storage</td>
-<td></td>
-</tr>
-<tr>
-<td>stm</td>
-<td>Stream?Statement? 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>str</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>sub</td>
-<td>Subtract</td>
-<td></td>
-</tr>
-<tr>
-<td>sum</td>
-<td>Summation</td>
-<td></td>
-</tr>
-<tr>
-<td>svr</td>
-<td>Server</td>
-<td>弃用，不明确或不够明确</td>
-</tr>
-<tr>
-<td>sync</td>
-<td>Synchronization</td>
-<td></td>
-</tr>
-<tr>
-<td>sys</td>
-<td>System</td>
-<td></td>
-</tr>
-<tr>
-<td>tbl</td>
-<td>Table 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>temp</td>
-<td>Temporary</td>
-<td></td>
-</tr>
-<tr>
-<td>trans</td>
-<td>translate?transation?transparent?</td>
-<td></td>
-</tr>
-<tr>
-<td>tst</td>
-<td>Test</td>
-<td>弃用，不良的缩写方式，多写一个字母对阅读者更友好</td>
-</tr>
-<tr>
-<td>txt</td>
-<td>text</td>
-<td>弃用，txt更指代文件，text更指代文本</td>
-</tr>
-<tr>
-<td>unk</td>
-<td>Unknown</td>
-<td></td>
-</tr>
-<tr>
-<td>upd</td>
-<td>Update 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>upg</td>
-<td>Upgrade 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>util</td>
-<td>Utility</td>
-<td></td>
-</tr>
-<tr>
-<td>var</td>
-<td>Variable</td>
-<td></td>
-</tr>
-<tr>
-<td>ver</td>
-<td>Version</td>
-<td>不是很好</td>
-</tr>
-<tr>
-<td>vert</td>
-<td>Vertical ver,vec</td>
-<td></td>
-</tr>
-<tr>
-<td>vir</td>
-<td>Virus?Virtual? 弃用</td>
-<td></td>
-</tr>
-<tr>
-<td>wnd</td>
-<td>Window</td>
-<td></td>
-</tr>
-</tbody></table>
-<h3 id="创作不易，-小小的支持一下吧！"><a href="#创作不易，-小小的支持一下吧！" class="headerlink" title="创作不易， 小小的支持一下吧！"></a>创作不易， 小小的支持一下吧！</h3><p><img src="/images/csdn/139574266/d2e64fabd552c53a.png" alt="微信"></p>
-<p><img src="/images/csdn/139574266/d2bee1b9bc24f8c6.jpg" alt="支付宝"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/05/31/2024-05-31-csdn-139346743/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/22/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/24/">Next &raquo;</a>
@@ -2443,6 +1497,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>

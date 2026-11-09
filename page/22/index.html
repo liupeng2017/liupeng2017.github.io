@@ -204,6 +204,106 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2024-06-09-csdn-139566971" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/06/09/2024-06-09-csdn-139566971/">C++ MPI多进程并发</a>
+    </h1>
+  
+
+        
+        <a href="/2024/06/09/2024-06-09-csdn-139566971/" class="archive-article-date">
+  	<time datetime="2024-06-09T14:27:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-06-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139566971">https://blog.csdn.net/qq_30220519/article/details/139566971</a></p>
+</blockquote>
+<h6 id="下载"><a href="#下载" class="headerlink" title="下载"></a><a target="_blank" rel="noopener" href="https://www.mpich.org/static/downloads/1.4/" title="下载">下载</a></h6><h6 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h6><p>mpiexec -n 8 $PROCESS_COUNT x64\Debug\$TARGET.exe   多进程并发启动</p>
+<p>mpiexec -f hosts.txt -n 3 $PROCESS_COUNT x64\Debug\$TARGET.exe     联机并发进程，其它联机电脑需在相同路径下有所有程序</p>
+<blockquote>
+<p>&#x2F;&#x2F;hosts.txt</p>
+<p>192.168.86.16<br>192.168.86.123<br>192.168.86.108</p>
+</blockquote>
+<h6 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span>       <span class="comment">// For strlen() function</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mpi.h&gt;</span>          <span class="comment">// For MPI programming functions</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_STRING (100)</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> _tmain(<span class="type">int</span> argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> greeting[MAX_STRING];</span><br><span class="line">	<span class="type">int</span> comm_sz;            <span class="comment">// Number of processes</span></span><br><span class="line">	<span class="type">int</span> my_rank;            <span class="comment">// My process rank</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">MPI_Init</span>(<span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">MPI_Comm_size</span>(MPI_COMM_WORLD, &amp;comm_sz);</span><br><span class="line">	<span class="built_in">MPI_Comm_rank</span>(MPI_COMM_WORLD, &amp;my_rank);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (my_rank != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">sprintf</span>(greeting, <span class="string">&quot;Greetings from process %d of %d!&quot;</span>, my_rank, comm_sz);</span><br><span class="line">		<span class="built_in">MPI_Send</span>(greeting, <span class="built_in">strlen</span>(greeting) + <span class="number">1</span>, MPI_CHAR, <span class="number">0</span>, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Greetings from process %d of %d!\n&quot;</span>, my_rank, comm_sz);</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> q = <span class="number">1</span>; q &lt; comm_sz; q++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">MPI_Recv</span>(greeting, MAX_STRING, MPI_CHAR, q, <span class="number">0</span>, MPI_COMM_WORLD, MPI_STATUS_IGNORE);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, greeting);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">MPI_Finalize</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h6><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/captainfeng/article/details/80927437?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control" title="win10环境下vs2013+mpich2并行环境搭建_vs2013 mpich-CSDN博客">win10环境下vs2013+mpich2并行环境搭建_vs2013 mpich-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u011367208/article/details/105043867" title="MPI并行环境配置（Windows 10＋VSIDE Community 2019）_amd mpi并行-CSDN博客">MPI并行环境配置（Windows 10＋VSIDE Community 2019）_amd mpi并行-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cjsh_123456/article/details/80285887" title="windows下安装mpich2_如何安装spmd。exe-CSDN博客">windows下安装mpich2_如何安装spmd。exe-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.mpich.org/static/downloads/1.4/" title="Index of &#x2F;static&#x2F;downloads&#x2F;1.4">Index of &#x2F;static&#x2F;downloads&#x2F;1.4</a></p>
+<hr>
+<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
+<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/06/09/2024-06-09-csdn-139566971/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+
+
+
+
+  
     <article id="post-2024-06-08-csdn-139549350" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1085,99 +1185,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-2024-06-06-csdn-139508912" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/06/06/2024-06-06-csdn-139508912/">C++ 高性能CMS服务框架</a>
-    </h1>
-  
-
-        
-        <a href="/2024/06/06/2024-06-06-csdn-139508912/" class="archive-article-date">
-  	<time datetime="2024-06-06T12:03:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-06-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本文作者原创，首发在本博客；CSDN 上的同名文章已标注为转载并回链到本页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30220519/article/details/139508912">https://blog.csdn.net/qq_30220519/article/details/139508912</a></p>
-</blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/ArthurSonzogni/cppcms" title="GitHub - ArthurSonzogni&#x2F;cppcms: CppCMS Framework">GitHub - ArthurSonzogni&#x2F;cppcms: CppCMS Framework</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;booster/backtrace.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">foo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">throw</span> booster::<span class="built_in">runtime_error</span>(<span class="string">&quot;My Error&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">foo</span>()<span class="number">+20</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="built_in">bar</span>() &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(std::exception <span class="type">const</span> &amp;e)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; std::endl;</span><br><span class="line">		std::cerr &lt;&lt; booster::<span class="built_in">trace</span>(e);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">	My Error</span><br><span class="line">	<span class="number">00007</span>FFCA447BE91: booster::stack_trace::trace <span class="number">+0x31</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F491D: booster::backtrace::backtrace <span class="number">+0x7d</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F4CF5: booster::runtime_error::runtime_error <span class="number">+0x35</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F1CEC: foo <span class="number">+0x3c</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F1D3B: bar <span class="number">+0xb</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F1D6C: main <span class="number">+0x1c</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F7779: invoke_main <span class="number">+0x39</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F7622: __scrt_common_main_seh <span class="number">+0x132</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F74DE: __scrt_common_main <span class="number">+0xe</span></span><br><span class="line">	<span class="number">00007</span>FF6BF2F780E: mainCRTStartup <span class="number">+0xe</span></span><br><span class="line">	<span class="number">00007</span>FFD17127614: BaseThreadInitThunk <span class="number">+0x14</span></span><br><span class="line">	<span class="number">00007</span>FFD181C26A1: RtlUserThreadStart <span class="number">+0x21</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cppcms/service.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cppcms/application.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cppcms/applications_pool.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cppcms/http_response.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">unit_test</span> : <span class="keyword">public</span> cppcms::application &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">unit_test</span>(cppcms::service &amp;s) : cppcms::<span class="built_in">application</span>(s) &#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">main</span><span class="params">(std::string)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">response</span>().<span class="built_in">out</span>() &lt;&lt; <span class="string">&quot;This is test!&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="function">cppcms::service <span class="title">srv</span><span class="params">(argc,argv)</span></span>;</span><br><span class="line">		srv.<span class="built_in">applications_pool</span>().<span class="built_in">mount</span>(cppcms::<span class="built_in">create_pool</span>&lt;unit_test&gt;());</span><br><span class="line">		srv.<span class="built_in">run</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(std::exception <span class="type">const</span> &amp;e) &#123;</span><br><span class="line">		std::cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; std::endl;</span><br><span class="line">		<span class="keyword">return</span> EXIT_FAILURE;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="创作不易，小小的支持一下吧！"><a href="#创作不易，小小的支持一下吧！" class="headerlink" title="创作不易，小小的支持一下吧！"></a><strong>创作不易，小小的支持一下吧！</strong></h2><p><img src="/images/csdn/141143565/b8fb4f87d7b82913.png"></p>
-<p><img src="/images/csdn/141143565/1378625ad1415cc8.jpg"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CPP与Qt//" class="article-tag-list-link color2">CPP与Qt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/06/06/2024-06-06-csdn-139508912/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/21/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/23/">Next &raquo;</a>
@@ -1577,6 +1584,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">博客运维</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">WinPE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Windows 11</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">系统安装</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">U盘启动</a>
               </li>
             
             <div class="clearfix"></div>
