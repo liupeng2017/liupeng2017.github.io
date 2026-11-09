@@ -648,6 +648,9 @@ var _hmt = _hmt || [];
 <ul>
 <li><strong>企业 &#x2F; 教育用户</strong>：由单位统一部署的 KMS 服务器或 MAK 批量授权激活，服务器地址找单位 IT 要，不要在网上随便填来路不明的 KMS 地址。</li>
 </ul>
+<blockquote>
+<p>顺便说清楚一件事：网上很多教程教你用 <code>slmgr -skms</code> 把客户端指向某个公开的 KMS 服务器来「激活」，这条路绕开的是正版授权，不合规；来路不明的公开地址还可能返回被篡改的激活响应，等于给机器引入一个不可控的授权来源。KMS 这套机制本身是给拥有批量许可的组织用的——KMS 主机由组织自己部署在内网，客户端每 180 天续期一次，微软官方文档写得很清楚：<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-server/get-started/kms-activation-planning">https://learn.microsoft.com/zh-cn/windows-server/get-started/kms-activation-planning</a>。个人用户没有批量授权，老老实实买零售密钥，或者靠数字许可证就够了。</p>
+</blockquote>
 <p>想确认激活状态，管理员终端里依次执行：</p>
 <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">slmgr -xpr</span><br><span class="line">slmgr -dli</span><br><span class="line">slmgr -dlv</span><br></pre></td></tr></table></figure>
 
